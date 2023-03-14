@@ -1,3 +1,25 @@
+# Coding Style
+
+## We use semicolons
+
+## We use single quotes
+
+## We use 2 spaces for indentation
+
+## We use camelCase for variables, functions and methods
+
+## We use PascalCase for classes and components
+
+## We use UPPERCASE for constants
+
+## We use trailing commas
+
+## We use spaces around operators
+
+# For fixing coding style
+
+### Run ESlint. Do "npm run lint" in the terminal, to make fixes automatically, do "npm run lint:fix"
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
