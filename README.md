@@ -16,6 +16,10 @@
 
 ## We use spaces around operators
 
+# For fixing coding style
+
+### Run ESlint. Do "npm run lint" in the terminal, to make fixes automatically, do "npm run lint:fix"
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
