@@ -7,7 +7,6 @@ import { ROUTES } from './routes/routes';
 function App() {
   return (
     <div className="App">
-      <h1>Sprint</h1>
       <Routes>
         <Route path={ROUTES.HOME} element={''} />
         <Route path={ROUTES.MY_CALENDER} element={''} />
