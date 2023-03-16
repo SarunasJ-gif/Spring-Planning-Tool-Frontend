@@ -1,17 +1,22 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import ShareIcon from '@mui/icons-material/Share';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import Avatar from '@mui/material/Avatar';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  MenuItem,
+  Menu,
+  Avatar,
+} from '@mui/material/';
+
+import {
+  AccountCircle,
+  Share,
+  Notifications,
+  MoreVert,
+  CalendarToday,
+} from '@mui/icons-material/';
 
 export default function NavigationBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -79,15 +84,13 @@ export default function NavigationBar() {
     >
       <MenuItem>
         <IconButton size="large" aria-label="new mails" color="inherit">
-          <ShareIcon />
+          <Share />
         </IconButton>
-        <p>Share</p>
       </MenuItem>
       <MenuItem>
         <IconButton size="large" aria-label="new notifications" color="inherit">
-          <NotificationsIcon />
+          <Notifications />
         </IconButton>
-        <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -116,14 +119,18 @@ export default function NavigationBar() {
             sx={{ mr: 2 }}
           >
             <Avatar>
-              <CalendarTodayIcon sx={{ color: 'black' }} />
+              <CalendarToday sx={{ color: 'black' }} />
             </Avatar>
           </IconButton>
           <Typography
-            variant="h6"
+            variant="h1"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' }, fontWeight: 600 }}
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              fontWeight: 600,
+              fontSize: 24,
+            }}
           >
             Sprint Planner
           </Typography>
@@ -134,10 +141,10 @@ export default function NavigationBar() {
               aria-label="show 4 new mails"
               color="inherit"
             >
-              <NotificationsIcon />
+              <Notifications />
             </IconButton>
             <IconButton size="large" aria-label="share" color="inherit">
-              <ShareIcon />
+              <Share />
             </IconButton>
             <IconButton
               size="large"
@@ -160,7 +167,7 @@ export default function NavigationBar() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MoreVert />
             </IconButton>
           </Box>
         </Toolbar>
