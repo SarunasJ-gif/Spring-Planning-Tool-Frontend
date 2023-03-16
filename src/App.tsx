@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import NavigationBar from './NavigationBar';
 
 import './App.css';
 import theme from './theme';
@@ -10,7 +11,7 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />
+        <NavigationBar />
       </ThemeProvider>
       ,
     </>
