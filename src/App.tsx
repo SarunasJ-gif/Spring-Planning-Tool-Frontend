@@ -8,6 +8,7 @@ import { Routes } from 'react-router-dom';
 import './App.css';
 import { ROUTES } from './routes/routes';
 import theme from './theme';
+import SideBar from './components/Sidebar/Sidebar';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path={ROUTES.MANAGER_TEAM} element={''} />
           <Route path={ROUTES.NEW_SPRINT} element={''} />
         </Routes>
+        <SideBar />
       </ThemeProvider>
     </>
   );
