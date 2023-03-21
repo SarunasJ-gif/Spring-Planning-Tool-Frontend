@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
 
 
 
@@ -11,7 +11,7 @@ type TaskKeyProps = {
 };
 
 function TaskKey(props: TaskKeyProps) {
-    const KeyStyle = styled(Paper)(({ theme }) => ({
+    const KeyStyle = styled(Button)(({ theme }) => ({
         color: props.color,
         backgroundColor: props.backgroundColor,
         ...theme.typography.body2,

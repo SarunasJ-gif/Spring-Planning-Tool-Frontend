@@ -12,13 +12,14 @@ import SideBar from './components/Sidebar/Sidebar';
 import TaskKey from './components/TaskKey/TaskKey';
 
 
+
 function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <NavigationBar />
-        <TaskKey key={''} color={''} backgroundColor={''} />
+        <TaskKey key={'SFD-192'} color={'white'} backgroundColor={'blue'} />
         <Routes>
           <Route path={ROUTES.HOME} element={''} />
           <Route path={ROUTES.MY_CALENDER} element={''} />
