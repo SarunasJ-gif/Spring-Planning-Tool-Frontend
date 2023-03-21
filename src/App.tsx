@@ -13,8 +13,6 @@ import { useAppDispatch } from './store/store';
 import { getUser } from './actions/user/userActions';
 import TaskKey from './components/TaskKey/TaskKey';
 
-
-
 function App() {
   const dispatch = useAppDispatch();
 
@@ -27,14 +25,14 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <NavigationBar />
-        <TaskKey key={'SFD-192'} color={'white'} backgroundColor={'blue'} />
+        <TaskKey taskKey={'SFD-192'} color={'white'} backgroundColor={'blue'} />
         <Routes>
           <Route path={ROUTES.HOME} element={''} />
           <Route path={ROUTES.MY_CALENDER} element={''} />
           <Route path={ROUTES.MANAGER_TEAM} element={''} />
           <Route path={ROUTES.NEW_SPRINT} element={''} />
         </Routes>
-        <SideBar />
+        {/*<SideBar />*/}
       </ThemeProvider>
     </>
   );
