@@ -25,7 +25,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <NavigationBar />
-        <TaskKey taskKey={'SFD-192'} color={'white'} backgroundColor={'blue'} />
+        <TaskKey taskKey={'SFD-192'} keyColor={'white'} keyBackgroundColor={'blue'} />
         <Routes>
           <Route path={ROUTES.HOME} element={''} />
           <Route path={ROUTES.MY_CALENDER} element={''} />
