@@ -2,23 +2,29 @@
 
 ## We use semicolons
 
-## We use single quotes
+## Single quotes
 
-## We use 2 spaces for indentation
+## 2 spaces for indentation
 
-## We use camelCase for variables, functions and methods
+## camelCase for variables, functions and methods
 
-## We use PascalCase for classes and components
+## PascalCase for classes and components
 
-## We use UPPERCASE for constants
+## UPPERCASE for constants
 
-## We use trailing commas
+## Trailing commas
 
-## We use spaces around operators
+## Spaces around operators
 
 # For fixing coding style
 
 ### Run ESlint. Do "npm run lint" in the terminal, to make fixes automatically, do "npm run lint:fix"
+
+# REDUX
+
+## For effectively debugging of application's state changes, download and install Redux DevTools Extension
+
+## For more information about Redux, see [Redux documentation](https://redux.js.org/)
 
 # Getting Started with Create React App
 
