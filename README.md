@@ -1,26 +1,28 @@
 # Coding Style
 
-## We use semicolons
+## • We use semicolons
 
-## Single quotes
+## • Single quotes
 
-## 2 spaces for indentation
+## • 2 spaces for indentation
 
-## camelCase for variables, functions and methods
+## • camelCase for variables, functions and methods
 
-## PascalCase for classes and components
+## • PascalCase for classes and components
 
-## UPPERCASE for constants
+## • UPPERCASE for constants
 
-## Trailing commas
+## • Trailing commas
 
-## Spaces around operators
+## • Spaces around operators
 
 # For fixing coding style
 
-### Run ESlint. Do "npm run lint" in the terminal, to make fixes automatically, do "npm run lint:fix"
+## Run ESlint. Do "npm run lint" in the terminal, to make fixes automatically, do "npm run lint:fix"
 
-# REDUX
+## Husky will run ESlint before every commit
+
+# Redux
 
 ## For effectively debugging of application's state changes, download and install Redux DevTools Extension
 

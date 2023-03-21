@@ -1,6 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { UserActionTypes } from '../../actions/user/userActions';
 
+//User is example data, remove and remake when implementing real data according to the task at hand
+
 export interface User {
   name: string;
   email: string;
