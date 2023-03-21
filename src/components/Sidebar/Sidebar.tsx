@@ -1,10 +1,6 @@
 import * as React from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import IconButton from '@mui/material/IconButton';
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 
 import {
   List,
@@ -12,12 +8,14 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Box,
+  IconButton,
 } from '@mui/material';
 import {
   EventNoteRounded,
   AddCircleRounded,
-  ListRounded,
   PeopleRounded,
+  ArrowCircleLeft,
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -42,37 +40,6 @@ const closedMixin = (theme: Theme): CSSObject => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -125,16 +92,12 @@ export default function MiniDrawer() {
               height: '30px',
             }}
           >
-            <ArrowCircleLeftIcon sx={{ fontSize: '40px' }} />
+            <ArrowCircleLeft sx={{ fontSize: '40px' }} />
           </IconButton>
         )}
 
         <List>
           {[
-            // {
-            //   text: 'MY CALENDAR',
-            //   icon: <ListRounded sx={{ fontSize: '32px' }} />,
-            // },
             {
               text: 'ADD SPRINT',
               icon: (
@@ -149,7 +112,7 @@ export default function MiniDrawer() {
               text: 'MANAGE TEAM',
               icon: <PeopleRounded sx={{ fontSize: '32px' }} />,
             },
-          ].map((item, index) => (
+          ].map((item) => (
             <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 onClick={handleDrawer}
