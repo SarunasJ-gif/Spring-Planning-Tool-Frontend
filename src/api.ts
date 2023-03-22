@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
-require('dotenv').config();
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
@@ -55,9 +57,10 @@ const put = async <T>(
 
 const remove = async <T>(
   url: string,
+  data?: object,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
-  return request<T>('delete', url, undefined, config);
+  return request<T>('delete', url, data, config);
 };
 
 const patch = async <T>(
