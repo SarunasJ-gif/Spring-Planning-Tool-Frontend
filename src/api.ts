@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use((config) => {
 const request = async <T>(
   method: string,
   url: string,
-  data?: any,
+  data?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   return axiosInstance
@@ -41,7 +41,7 @@ const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
 
 const post = async <T>(
   url: string,
-  data?: any,
+  data?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   return request<T>('post', url, data, config);
@@ -49,7 +49,7 @@ const post = async <T>(
 
 const put = async <T>(
   url: string,
-  data?: any,
+  data?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   return request<T>('put', url, data, config);
@@ -65,7 +65,7 @@ const remove = async <T>(
 
 const patch = async <T>(
   url: string,
-  data?: any,
+  data?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   return request<T>('patch', url, data, config);
