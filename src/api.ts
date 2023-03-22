@@ -15,14 +15,14 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-const request = async <T>(
+const request = async <Type>(
   method: string,
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<T> => {
+): Promise<Type> => {
   return axiosInstance
-    .request<T>({
+    .request<Type>({
       method,
       url,
       data,
@@ -35,40 +35,43 @@ const request = async <T>(
     });
 };
 
-const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-  return request<T>('get', url, undefined, config);
+const get = async <Type>(
+  url: string,
+  config?: AxiosRequestConfig,
+): Promise<Type> => {
+  return request<Type>('get', url, undefined, config);
 };
 
-const post = async <T>(
+const post = async <Type>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<T> => {
-  return request<T>('post', url, data, config);
+): Promise<Type> => {
+  return request<Type>('post', url, data, config);
 };
 
-const put = async <T>(
+const put = async <Type>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<T> => {
-  return request<T>('put', url, data, config);
+): Promise<Type> => {
+  return request<Type>('put', url, data, config);
 };
 
-const remove = async <T>(
+const remove = async <Type>(
   url: string,
   data?: object,
   config?: AxiosRequestConfig,
-): Promise<T> => {
-  return request<T>('delete', url, data, config);
+): Promise<Type> => {
+  return request<Type>('delete', url, data, config);
 };
 
-const patch = async <T>(
+const patch = async <Type>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<T> => {
-  return request<T>('patch', url, data, config);
+): Promise<Type> => {
+  return request<Type>('patch', url, data, config);
 };
 
 export { get, post, put, remove, patch };
