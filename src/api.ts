@@ -1,105 +1,71 @@
-import axios from 'axios';
-import { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+require('dotenv').config();
 
-class Api {
-  private baseUrl: string;
+const axiosInstance = axios.create({
+  baseURL: process.env.BASE_URL,
+});
 
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
+axiosInstance.interceptors.request.use((config) => {
+  const token = config.headers.Authorization || localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
+  return config;
+});
 
-  async get<T>(
-    url: string,
-    token?: string,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
-    try {
-      const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
-      const response = await axios.get(`${this.baseUrl}${url}`, {
-        ...config,
-        headers,
-      });
-      return response.data;
-    } catch (error) {
+const request = async <T>(
+  method: string,
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return axiosInstance
+    .request<T>({
+      method,
+      url,
+      data,
+      ...config,
+    })
+    .then((response) => response.data)
+    .catch((error) => {
       console.error(error);
       throw error;
-    }
-  }
+    });
+};
 
-  async post<T>(
-    url: string,
-    data?: any,
-    token?: string,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
-    try {
-      const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
-      const response = await axios.post(`${this.baseUrl}${url}`, data, {
-        ...config,
-        headers,
-      });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
+const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
+  return request<T>('get', url, undefined, config);
+};
 
-  async put<T>(
-    url: string,
-    data?: any,
-    token?: string,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
-    try {
-      const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
-      const response = await axios.put(`${this.baseUrl}${url}`, data, {
-        ...config,
-        headers,
-      });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
+const post = async <T>(
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return request<T>('post', url, data, config);
+};
 
-  async delete<T>(
-    url: string,
-    token?: string,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
-    try {
-      const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
-      const response = await axios.delete(`${this.baseUrl}${url}`, {
-        ...config,
-        headers,
-      });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
+const put = async <T>(
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return request<T>('put', url, data, config);
+};
 
-  async patch<T>(
-    url: string,
-    data?: any,
-    token?: string,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
-    try {
-      const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
-      const response = await axios.patch(`${this.baseUrl}${url}`, data, {
-        ...config,
-        headers,
-      });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-}
+const remove = async <T>(
+  url: string,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return request<T>('delete', url, undefined, config);
+};
 
-export default Api;
+const patch = async <T>(
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return request<T>('patch', url, data, config);
+};
+
+export { get, post, put, remove, patch };
