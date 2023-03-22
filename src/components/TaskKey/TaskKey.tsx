@@ -18,7 +18,11 @@ function TaskKey(props: TaskKeyProps) {
         alignItems: "center",
         textAlign: "center",
         verticalAlign: "middle",
-        fontFamily: 'Sans Serif Bold',
+        fontFamily: 'Open Sans',
+        fontStyle: 'normal',
+        fontWeight: 600,
+        fontSize: 12,
+        lineHeight: 16,
         width: 90,
         height: 35,
 
