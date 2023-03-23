@@ -1,77 +1,72 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
 });
 
-axiosInstance.interceptors.request.use((config) => {
-  const token = config.headers.Authorization || localStorage.getItem('token');
+axiosInstance.interceptors.request.use(async (config) => {
+  const token =
+    config.headers.Authorization ||
+    (await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(localStorage.getItem('token'));
+      }, 0);
+    }));
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
 
-const request = async <Type>(
+const request = async <T>(
   method: string,
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<Type> => {
+): Promise<T> => {
   return axiosInstance
-    .request<Type>({
+    .request<T>({
       method,
       url,
       data,
       ...config,
     })
-    .then((response) => response.data)
-    .catch((error) => {
-      console.error(error);
-      throw error;
-    });
+    .then((response) => response.data);
+};
+const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
+  return request<T>('get', url, undefined, config);
 };
 
-const get = async <Type>(
-  url: string,
-  config?: AxiosRequestConfig,
-): Promise<Type> => {
-  return request<Type>('get', url, undefined, config);
-};
-
-const post = async <Type>(
+const post = async <T>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<Type> => {
-  return request<Type>('post', url, data, config);
+): Promise<T> => {
+  return request<T>('post', url, data, config);
 };
 
-const put = async <Type>(
+const put = async <T>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<Type> => {
-  return request<Type>('put', url, data, config);
+): Promise<T> => {
+  return request<T>('put', url, data, config);
 };
 
-const remove = async <Type>(
-  url: string,
-  data?: object,
-  config?: AxiosRequestConfig,
-): Promise<Type> => {
-  return request<Type>('delete', url, data, config);
-};
-
-const patch = async <Type>(
+const remove = async <T>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<Type> => {
-  return request<Type>('patch', url, data, config);
+): Promise<T> => {
+  return request<T>('delete', url, data, config);
+};
+
+const patch = async <T>(
+  url: string,
+  data?: unknown,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return request<T>('patch', url, data, config);
 };
 
 export { get, post, put, remove, patch };
