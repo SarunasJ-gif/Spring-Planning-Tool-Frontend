@@ -28,21 +28,24 @@ const request = async <T>(
     .request<T>({
       method,
       url,
-      data,
       ...config,
+      data,
     })
-    .then((response) => response.data);
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    });
 };
 const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-  return request<T>('get', url, undefined, config);
+  return request<T>('get', url, config);
 };
 
 const post = async <T>(
   url: string,
-  data?: unknown,
   config?: AxiosRequestConfig,
+  data?: unknown,
 ): Promise<T> => {
-  return request<T>('post', url, data, config);
+  return request<T>('post', url, config, data);
 };
 
 const put = async <T>(
