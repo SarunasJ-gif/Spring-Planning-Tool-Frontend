@@ -7,7 +7,6 @@ import theme from './theme';
 import { RouterProvider } from 'react-router';
 import { useAppDispatch } from './store/store';
 import { getUser } from './actions/user/userActions';
-import TaskKey from './components/TaskKey/TaskKey';
 import { routes } from './routes/routes';
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
       </ThemeProvider>
     </>
   );
-
 }
 
 export default App;

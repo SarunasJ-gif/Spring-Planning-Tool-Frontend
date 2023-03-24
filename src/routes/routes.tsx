@@ -7,6 +7,7 @@ import NavigationBar from '../components/NavigationBar/NavigationBar';
 import MiniDrawer from '../components/Sidebar/Sidebar';
 import { Endpoint } from './Endpoint';
 import MainPage from '../components/MainPage/MainPage';
+import ManageTeam from '../pages/manage-team/ManageTeam';
 
 const routeOptions: RouteObject[] = [
   {
@@ -25,6 +26,10 @@ const routeOptions: RouteObject[] = [
       {
         path: Endpoint.ADD_SPRINT,
         element: '',
+      },
+      {
+        path: Endpoint.MANAGE_TEAM,
+        element: <ManageTeam />,
       },
     ],
   },
