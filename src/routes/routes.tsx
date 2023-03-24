@@ -7,6 +7,7 @@ import NavigationBar from '../components/NavigationBar/NavigationBar';
 import MiniDrawer from '../components/Sidebar/Sidebar';
 import { Endpoint } from './Endpoint';
 import MainPage from '../components/MainPage/MainPage';
+import NotFound from '../components/ErrorPage/NotFound';
 
 const routeOptions: RouteObject[] = [
   {
@@ -18,6 +19,10 @@ const routeOptions: RouteObject[] = [
       </>
     ),
     children: [
+      {
+        path: Endpoint.ERROR_PAGE,
+        element: <NotFound />,
+      },
       {
         path: Endpoint.MAIN_PAGE,
         element: <MainPage />,
