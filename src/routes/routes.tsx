@@ -1,6 +1,6 @@
 import React, { Component, ErrorInfo } from 'react';
 import type { Router as RemixRouter } from '@remix-run/router';
-import { Outlet, Route, RouteObject } from 'react-router';
+import { Outlet, RouteObject } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
