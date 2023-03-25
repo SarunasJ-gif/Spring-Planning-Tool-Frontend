@@ -6,9 +6,9 @@ interface Task {
   key: string;
   description: string;
   type: string;
-  old_points: number;
-  remaining_points: number;
-  new_points: number;
+  oldPoints: number;
+  remainingPoints: number;
+  newPoints: number;
 }
 
 function TaskList() {
