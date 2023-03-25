@@ -45,7 +45,7 @@ const post = async <T>(
   config?: AxiosRequestConfig,
   data?: unknown,
 ): Promise<T> => {
-  return request<T>('post', url, config, data);
+  return request<T>('post', url, data, config);
 };
 
 const put = async <T>(
