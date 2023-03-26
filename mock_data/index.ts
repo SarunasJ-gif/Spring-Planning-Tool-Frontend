@@ -5,7 +5,7 @@ import fs from 'fs';
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT;
+const port = 8080;
 
 app.get('/task', (req: Request, res: Response) => {
   const data = fs.readFileSync('mock_task.json', 'utf-8');

@@ -26,9 +26,9 @@ function TaskList() {
           <h2>{task.key}</h2>
           <p>{task.description}</p>
           <p>{task.type}</p>
-          <p>{task.old_points}</p>
-          <p>{task.remaining_points}</p>
-          <p>{task.new_points}</p>
+          <p>{task.oldPoints}</p>
+          <p>{task.remainingPoints}</p>
+          <p>{task.newPoints}</p>
         </div>
       ))}
     </div>
