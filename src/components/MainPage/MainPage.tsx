@@ -12,8 +12,8 @@ function MainPage() {
         <Typography variant="body2">29/09/2021 - 10/12/2021</Typography>
       </Box>
 
-      <Box sx={{ mt: 4 }}>
-        <Accordion>
+      <Box sx={{ mt: 4, justifyContent: 'left' }}>
+        <Accordion sx={{ display: 'flex', justifyContent: 'left' }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
           >
@@ -24,7 +24,7 @@ function MainPage() {
         </Accordion>
       </Box>
       <Box sx={{ mt: 2 }}>
-        <Accordion>
+        <Accordion sx={{ display: 'flex', justifyContent: 'left' }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
           >
@@ -35,7 +35,7 @@ function MainPage() {
         </Accordion>
       </Box>
       <Box sx={{ mt: 2 }}>
-        <Accordion>
+        <Accordion sx={{ display: 'flex', justifyContent: 'left' }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
           >
