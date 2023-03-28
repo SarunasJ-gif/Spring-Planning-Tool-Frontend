@@ -4,7 +4,7 @@ import { Outlet, RouteObject } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
 
 import NavigationBar from '../components/NavigationBar/NavigationBar';
-import MiniDrawer from '../components/Sidebar/Sidebar';
+import Sidebar from '../components/Sidebar/Sidebar';
 import { Endpoint } from './Endpoint';
 import MainPage from '../components/MainPage/MainPage';
 
@@ -13,7 +13,7 @@ const routeOptions: RouteObject[] = [
     element: (
       <>
         <NavigationBar />
-        <MiniDrawer />
+        <Sidebar />
         <Outlet />
       </>
     ),
