@@ -65,6 +65,7 @@ const Drawer = styled(MuiDrawer, {
   ...(open && {
     ...openedMixin(theme),
     '& .MuiDrawer-paper': openedMixin(theme),
+
   }),
   ...(!open && {
     ...closedMixin(theme),
@@ -115,57 +116,159 @@ export default function Sidebar() {
           </IconButton>
         )}
 
-        <List sx={{}}>
-          {[
-            {
-              link: Endpoint.ADD_SPRINT,
-              text: 'ADD SPRINT',
-              icon: (
-                <AddCircleRounded sx={{ fontSize: '40px', color: 'blue' }} />
-              ),
-            },
-            {
-              text: Endpoint.ALL_SPRINTS,
-              link: '/all-sprints',
-              icon: <EventNoteRounded sx={{ fontSize: '32px' }} />,
-            },
-            {
-              link: Endpoint.MANAGE_TEAM,
-              text: 'MANAGE TEAM',
-              icon: <PeopleRounded sx={{ fontSize: '32px' }} />,
-            },
-          ].map((item) => (
-            <Link to={item.link} className='link'>
-              <ListItem key={item.text} disablePadding sx={{ justifyContent: 'center', }}>
-                <ListItemButton
-                  onClick={handleDrawer}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    {item.icon}
-                    <div>{item.text}</div>
-                  </ListItemIcon>
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
-        </List>
+        <Link to={Endpoint.ADD_SPRINT} className='link'>
+          <IconButton
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <AddCircleRounded sx={{ fontSize: '40px', color: 'blue' }} />
+            <Typography>ADD SPRINT</Typography>
+          </IconButton>
+        </Link>
+
+
+
+        <IconButton
+          onClick={handleDrawer}
+          sx={{
+            minWidth: 0,
+            mr: open ? 3 : 'auto',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}
+        >
+          <EventNoteRounded sx={{ fontSize: '32px' }} />
+          <Typography>ALL SPRINTS</Typography>
+          <Link to={Endpoint.ALL_SPRINTS} className='link'></Link>
+        </IconButton>
+
+
+
+        <Link to={Endpoint.MANAGE_TEAM} className='link'>
+          <IconButton
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <PeopleRounded sx={{ fontSize: '32px' }} />
+            <Typography>MANAGE TEAM</Typography>
+          </IconButton>
+        </Link>
+
+
+
       </Drawer>
     </Box >
   );
 }
+
+
+
+//-------------------------------------------------
+// Almost success
+//-------------------------------------------------
+
+// export default function Sidebar() {
+//   const [open, setOpen] = React.useState(false);
+
+//   const handleDrawer = () => {
+//     setOpen(!open);
+//   };
+
+//   return (
+//     <Box
+//       sx={{
+//         '& .MuiPaper-root': {
+//           marginTop: '64px',
+//         },
+//       }}
+//     >
+//       <Drawer
+//         variant="permanent"
+//         open={open}
+//         sx={{
+//           boxShadow: 'rgba(0, 0, 0, 0.3) 0px 0px 10px 0px',
+//         }}
+//       >
+
+//         {open && (
+//           <IconButton
+//             onClick={handleDrawer}
+//             sx={{
+//               position: 'fixed',
+//               top: '85px',
+//               left: '225px',
+//               width: '30px',
+//               height: '30px',
+//             }}
+//           >
+//             <ArrowCircleLeft sx={{ fontSize: '40px' }} />
+//           </IconButton>
+//         )}
+
+//         <List sx={{}}>
+//           {[
+//             {
+//               link: Endpoint.ADD_SPRINT,
+//               text: 'ADD SPRINT',
+//               icon: (
+//                 <AddCircleRounded sx={{ fontSize: '40px', color: 'blue' }} />
+//               ),
+//             },
+//             {
+//               text: 'ALL SPRINTS',
+//               link: Endpoint.ALL_SPRINTS,
+//               icon: <EventNoteRounded sx={{ fontSize: '32px' }} />,
+//             },
+//             {
+//               link: Endpoint.MANAGE_TEAM,
+//               text: 'MANAGE TEAM',
+//               icon: <PeopleRounded sx={{ fontSize: '32px' }} />,
+//             },
+//           ].map((item) => (
+//             <Link to={item.link} className='link'>
+//               <ListItem key={item.text} disablePadding sx={{ justifyContent: 'center', }}>
+//                 <ListItemButton
+//                   onClick={handleDrawer}
+//                   sx={{
+//                     minHeight: 48,
+//                     justifyContent: open ? 'initial' : 'center',
+//                     px: 2.5,
+//                   }}
+//                 >
+//                   <ListItemIcon
+//                     sx={{
+//                       minWidth: 0,
+//                       mr: open ? 3 : 'auto',
+//                       justifyContent: 'center',
+//                       alignItems: 'center',
+//                       flexDirection: 'column',
+//                     }}
+//                   >
+//                     {item.icon}
+//                     <div>{item.text}</div>
+//                   </ListItemIcon>
+//                 </ListItemButton>
+//               </ListItem>
+//             </Link>
+//           ))}
+//         </List>
+//       </Drawer>
+//     </Box >
+//   );
+// }
+
+//--------------------------------------------
 
 
 
