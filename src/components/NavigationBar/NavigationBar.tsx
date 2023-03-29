@@ -102,7 +102,6 @@ export default function NavigationBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -118,8 +117,8 @@ export default function NavigationBar() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <Avatar>
-              <CalendarToday sx={{ color: 'black' }} />
+            <Avatar sx={{ bgcolor: '#D8DAFF' }}>
+              <CalendarToday sx={{ color: '#262e96' }} />
             </Avatar>
           </IconButton>
           <Typography
