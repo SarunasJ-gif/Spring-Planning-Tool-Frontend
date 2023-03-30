@@ -15,18 +15,11 @@ import {
 import { Lock } from '@mui/icons-material';
 import theme from '../../theme';
 import { post } from '../../api';
+import Copyright from '../Copyright/Copyright';
 
 interface FormData {
   email: string;
   password: string;
-}
-
-function Copyright() {
-  return (
-    <Typography color="#ACACAC" align="center" fontSize={13}>
-      COPYRIGHT © SPRINTPLANNER BY W-TEAM
-    </Typography>
-  );
 }
 
 export default function Login() {
