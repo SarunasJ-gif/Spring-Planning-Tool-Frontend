@@ -56,11 +56,11 @@ const routeOptions: RouteObject[] = [
         path: Endpoint.ADD_SPRINT,
         element: '',
       },
-      {
-        path: Endpoint.LOGIN,
-        element: <Login />,
-      },
     ],
+  },
+  {
+    path: Endpoint.LOGIN,
+    element: <Login />,
   },
   {
     path: '*',

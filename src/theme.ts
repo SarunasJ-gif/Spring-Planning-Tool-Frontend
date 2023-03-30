@@ -1,5 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 
+require('typeface-poppins');
+require('typeface-open-sans');
+require('typeface-roboto');
+
 const theme = createTheme({
   palette: {
     primary: {

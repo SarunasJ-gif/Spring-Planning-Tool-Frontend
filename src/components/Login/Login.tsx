@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React from 'react';
+import { useState } from 'react';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 
 import {
   Avatar,
@@ -15,6 +16,8 @@ import {
 } from '@mui/material';
 
 import { Lock } from '@mui/icons-material';
+import theme from '../../theme';
+import { post } from '../../api';
 
 function Copyright(props: any) {
   return (
@@ -24,30 +27,29 @@ function Copyright(props: any) {
   );
 }
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#404CFA',
-    },
-    secondary: {
-      main: '#E5E5E5',
-    },
-  },
-  typography: {
-    fontFamily: '"Poppins", sans-serif',
-  },
-});
-
 export default function Login() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
 
+    const email = data.get('email') as string;
+    if (!email.includes('@') || !email.includes('.')) {
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
+    try {
+      const response = await post('/login', undefined, {
+        email: data.get('email'),
+        password: data.get('password'),
+      });
+      console.log(response);
+    } catch (error: any) {
+      setErrorMessage(error.message);
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -113,6 +115,11 @@ export default function Login() {
               </Grid>
             </Grid>
           </Box>
+          {errorMessage && (
+            <Typography color="error" sx={{ mt: 1 }}>
+              {errorMessage}
+            </Typography>
+          )}
         </Box>
         <Copyright sx={{ mt: 4, mb: 4 }} />
       </Container>
