@@ -1,27 +1,29 @@
-import React from 'react';
-import { useState } from 'react';
-
-import { ThemeProvider } from '@mui/material/styles';
-
+import React, { useState, FormEvent } from 'react';
 import {
-  Avatar,
-  Button,
-  CssBaseline,
-  TextField,
-  Link,
-  Grid,
-  Box,
+  ThemeProvider,
   Typography,
   Container,
+  Box,
+  TextField,
+  Button,
+  CssBaseline,
+  Link,
+  Grid,
+  Avatar,
 } from '@mui/material';
 
 import { Lock } from '@mui/icons-material';
 import theme from '../../theme';
 import { post } from '../../api';
 
-function Copyright(props: any) {
+interface FormData {
+  email: string;
+  password: string;
+}
+
+function Copyright() {
   return (
-    <Typography color="#ACACAC" align="center" fontSize={13} {...props}>
+    <Typography color="#ACACAC" align="center" fontSize={13}>
       COPYRIGHT © SPRINTPLANNER BY W-TEAM
     </Typography>
   );
@@ -30,7 +32,7 @@ function Copyright(props: any) {
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -41,15 +43,18 @@ export default function Login() {
     }
 
     try {
-      const response = await post('/login', undefined, {
-        email: data.get('email'),
-        password: data.get('password'),
+      const response = await post<FormData>('/login', undefined, {
+        email: data.get('email') as string,
+        password: data.get('password') as string,
       });
       console.log(response);
-    } catch (error: any) {
-      setErrorMessage(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      }
     }
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -121,7 +126,9 @@ export default function Login() {
             </Typography>
           )}
         </Box>
-        <Copyright sx={{ mt: 4, mb: 4 }} />
+        <Box sx={{ mt: 4, mb: 4 }}>
+          <Copyright />
+        </Box>
       </Container>
     </ThemeProvider>
   );
