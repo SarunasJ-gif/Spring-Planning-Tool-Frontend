@@ -55,6 +55,7 @@ const NotFound = ({ marginTop }: { marginTop?: string }) => {
         <Button
           onClick={handleClick}
           sx={{
+            fontFamily: 'Roboto',
             varient: 'contained',
             display: 'flex',
             flexDirection: 'column',
@@ -75,7 +76,7 @@ const NotFound = ({ marginTop }: { marginTop?: string }) => {
             },
           }}
         >
-          <Typography fontFamily={'Roboto'}>Back to main page</Typography>
+          Back to main page
         </Button>
       </Box>
     </ThemeProvider>
