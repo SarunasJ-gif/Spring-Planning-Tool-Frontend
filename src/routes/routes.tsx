@@ -8,6 +8,7 @@ import MiniDrawer from '../components/Sidebar/Sidebar';
 import { Endpoint } from './Endpoint';
 import MainPage from '../components/MainPage/MainPage';
 import ManageTeam from '../pages/manage-team/ManageTeam';
+import TEST from '../pages/manage-team/DataTable';
 
 const routeOptions: RouteObject[] = [
   {
@@ -30,6 +31,10 @@ const routeOptions: RouteObject[] = [
       {
         path: Endpoint.MANAGE_TEAM,
         element: <ManageTeam />,
+      },
+      {
+        path: Endpoint.TEST,
+        element: <TEST />,
       },
     ],
   },
