@@ -1,10 +1,10 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
 });
 
-axiosInstance.interceptors.request.use(async (config) => {
+axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig ) => {
   const token =
     config.headers.Authorization ||
     (await new Promise((resolve) => {
@@ -31,7 +31,7 @@ const request = async <T>(
       ...config,
       data,
     })
-    .then((response) => {
+    .then((response: AxiosResponse<T>) => {
       console.log(response.data);
       return response.data;
     });

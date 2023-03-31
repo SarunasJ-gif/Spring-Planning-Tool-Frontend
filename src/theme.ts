@@ -6,6 +6,9 @@ import 'typeface-roboto';
 
 const theme = createTheme({
   palette: {
+    background: {
+      default: '#E5E5E5',
+    },
     primary: {
       main: '#404CFA',
     },
@@ -14,7 +17,12 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Poppins", sans-serif',
+    fontFamily: 'Poppins',
+    h4: {
+      fontWeight: '100',
+      fontSize: '20px',
+      border: 'none',
+    },
   },
 });
 
