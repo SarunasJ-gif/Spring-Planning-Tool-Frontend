@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import {
   ThemeProvider,
   Typography,
@@ -11,8 +11,9 @@ import {
   Grid,
   Avatar,
 } from '@mui/material';
-
 import { Lock } from '@mui/icons-material';
+import { useForm } from 'react-hook-form';
+
 import theme from '../../theme';
 import { post } from '../../api';
 import Copyright from '../Copyright/Copyright';
@@ -23,29 +24,17 @@ interface FormData {
 }
 
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    const email = data.get('email') as string;
-    if (!email.includes('@') || !email.includes('.')) {
-      setErrorMessage('Please enter a valid email address.');
-      return;
-    }
-
-    try {
-      const response = await post<FormData>('/login', undefined, {
-        email: data.get('email') as string,
-        password: data.get('password') as string,
-      });
-      console.log(response);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
-      }
-    }
+  const onSubmit = (data: FormData) => {
+    post<FormData>('/login', undefined, data).catch((error) => {
+      setErrorMessage(error.message);
+    });
   };
 
   return (
@@ -71,7 +60,7 @@ export default function Login() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -81,25 +70,31 @@ export default function Login() {
               fullWidth
               id="email"
               label="Email Address"
-              name="email"
               autoComplete="email"
               autoFocus
-              error={errorMessage.includes('email')}
-              helperText={
-                errorMessage.includes('email')
-                  ? 'Please enter a valid email address.'
-                  : null
-              }
+              {...register('email', {
+                required: 'Please enter your email',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i,
+                  message: 'Please enter a valid email address',
+                },
+              })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              {...register('password', {
+                required: 'Please enter your password',
+              })}
+              error={!!errors.password}
+              helperText={errors.password?.message}
             />
             <Button
               type="submit"

@@ -14,49 +14,33 @@ import {
 
 import { Lock } from '@mui/icons-material';
 import { post } from '../../api';
+
+import { useForm } from 'react-hook-form';
 import theme from '../../theme';
 import Copyright from '../Copyright/Copyright';
 
 interface FormData {
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 export default function Register() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    const email = data.get('email') as string;
-    if (!email.includes('@') || !email.includes('.')) {
-      setErrorMessage('Please enter a valid email address.');
-      return;
-    }
-
-    const password = data.get('password') as string;
-    const confirmPassword = data.get('confirmPassword') as string;
-    if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match.');
-      return;
-    } else if (password.length < 8) {
-      setErrorMessage('Password must be at least 8 characters long.');
-      return;
-    }
-
-    try {
-      const response = await post<FormData>('/register', undefined, {
-        email,
-        password,
-      });
-      console.log(response);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
-      }
-    }
+  const onSubmit = (data: FormData) => {
+    post<FormData>('/register', undefined, data).catch((error) => {
+      setErrorMessage(error.message);
+    });
   };
+
+  const password = watch('password');
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,7 +65,7 @@ export default function Register() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -91,35 +75,46 @@ export default function Register() {
               fullWidth
               id="email"
               label="Email Address"
-              name="email"
               autoComplete="email"
               autoFocus
-              error={errorMessage.includes('email')}
-              helperText={
-                errorMessage.includes('email')
-                  ? 'Please enter a valid email address.'
-                  : null
-              }
+              {...register('email', {
+                required: 'Please enter your email',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Please enter a valid email address',
+                },
+              })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              {...register('password', {
+                required: 'Please enter your password',
+              })}
+              error={!!errors.password}
+              helperText={errors.password?.message}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="confirmPassword"
               label="Confirm Password"
               type="password"
               id="confirm-password"
               autoComplete="current-password"
+              {...register('confirmPassword', {
+                validate: (value) =>
+                  value === password || 'The passwords do not match',
+              })}
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword?.message}
             />
             <Button
               type="submit"
@@ -145,9 +140,9 @@ export default function Register() {
         </Box>
         <Box sx={{ mt: 3, mb: 3 }}>
           <Typography variant="body2" color="textSecondary" align="center">
-            By registering, you agree to our{' '}
-            <Link href="#">Terms of Service</Link> and{' '}
-            <Link href="#">Privacy Policy</Link>.
+            By registering, you agree to our
+            <Link href="/"> Terms of Service</Link> and
+            <Link href="/"> Privacy Policy</Link>.
           </Typography>
         </Box>
         <Copyright />
