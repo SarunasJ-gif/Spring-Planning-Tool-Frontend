@@ -35,7 +35,11 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const onSubmit = (data: FormData) => {
-    post<FormData>('/register', undefined, data).catch((error) => {
+    const { email, password } = data;
+    post<{ email: string; password: string }>('/register', undefined, {
+      email,
+      password,
+    }).catch((error) => {
       setErrorMessage(error.message);
     });
   };
