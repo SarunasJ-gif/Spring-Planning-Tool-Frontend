@@ -2,7 +2,7 @@ import * as React from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
-import Data from '../../../mock_data/mock_sprints.json';
+import Data from './mock_sprint.json';
 
 
 import {

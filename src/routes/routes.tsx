@@ -42,7 +42,6 @@ const routeOptions: RouteObject[] = [
       <>
         <NavigationBar />
         <Sidebar />
-        <Outlet />
         <MyErrorBoundary>
           <Outlet />
         </MyErrorBoundary>
