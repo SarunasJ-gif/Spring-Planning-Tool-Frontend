@@ -9,6 +9,7 @@ import { Endpoint } from './Endpoint';
 import MainPage from '../components/MainPage/MainPage';
 import NotFound from '../components/ErrorPage/NotFound';
 import Login from '../components/Login/Login';
+import Register from '../components/Register/Register';
 
 type MyErrorBoundaryProps = {
   children: React.ReactNode;
@@ -61,6 +62,10 @@ const routeOptions: RouteObject[] = [
   {
     path: Endpoint.LOGIN,
     element: <Login />,
+  },
+  {
+    path: Endpoint.REGISTER,
+    element: <Register />,
   },
   {
     path: '*',
