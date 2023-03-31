@@ -7,7 +7,7 @@ import 'typeface-roboto';
 const theme = createTheme({
   palette: {
     background: {
-      default: '#E5E5E5',
+      default: '#FAFBFD',
     },
     primary: {
       main: '#404CFA',
