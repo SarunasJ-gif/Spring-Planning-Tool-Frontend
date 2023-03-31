@@ -23,7 +23,7 @@ export default function ManageTeam() {
           color="textPrimary"
           fontWeight="bold"
           gutterBottom
-          fontFamily="Open sans"
+          fontFamily="Poppins"
         >
           {'Manage team'}
         </Typography>

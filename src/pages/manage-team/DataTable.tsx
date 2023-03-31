@@ -15,6 +15,7 @@ import {
   GridCellModesModel,
 } from '@mui/x-data-grid';
 import Avatar from '@mui/material/Avatar';
+import Popover from './Popover';
 
 interface SelectedCellParams {
   id: GridRowId;
@@ -67,7 +68,6 @@ function MySpecialButtonsSave() {
 function SelectEditInputCell(props: GridRenderCellParams) {
   const { id, value, field } = props;
   const apiRef = useGridApiContext();
-
   const handleChange = async (event: SelectChangeEvent) => {
     await apiRef.current.setEditCellValue({
       id,
@@ -76,7 +76,6 @@ function SelectEditInputCell(props: GridRenderCellParams) {
     });
     apiRef.current.stopCellEditMode({ id, field });
   };
-
   return (
     <Select
       value={value}
@@ -85,6 +84,7 @@ function SelectEditInputCell(props: GridRenderCellParams) {
       sx={{ height: 1 }}
       native
       autoFocus
+      className="dropdown-menu"
     >
       <option>Designer</option>
       <option>Front-end</option>
@@ -95,6 +95,8 @@ function SelectEditInputCell(props: GridRenderCellParams) {
 const renderSelectEditInputCell: GridColDef['renderCell'] = (params) => {
   return <SelectEditInputCell {...params} />;
 };
+
+//
 
 export default function StartEditButtonGrid() {
   const [selectedCellParams, setSelectedCellParams] =
@@ -141,6 +143,17 @@ export default function StartEditButtonGrid() {
           ['&:hover .MuiOutlinedInput-notchedOutline']: {
             border: 'none',
           },
+          ['& .MuiDataGrid-cell--editing']: {
+            border: 'none',
+            outline: 'none',
+          },
+          ['& .MuiDataGrid-editInputCell']: {
+            border: 'none',
+            outline: 'none',
+          },
+          ['& .MuiDataGrid-withBorderColor']: {
+            outline: 'none',
+          },
           ['& .Mui-focused .MuiOutlinedInput-notchedOutline']: {
             border: 'none',
           },
@@ -161,9 +174,18 @@ const columns: GridColDef[] = [
     field: 'avatar',
     headerName: '',
     type: 'string',
-    width: 50,
+    width: 110,
     editable: false,
-    renderCell: () => <Avatar>XX</Avatar>,
+    renderCell: () => (
+      <Avatar
+        style={{
+          display: 'flex',
+        }}
+        sx={{ ml: 4 }}
+      >
+        XX
+      </Avatar>
+    ),
   },
   { field: 'name', headerName: 'Name', width: 250, editable: false },
   {

@@ -1,9 +1,10 @@
 import { createTheme } from '@mui/material/styles';
+import 'typeface-poppins';
 
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'Open Sans',
+      'Poppins',
       '-apple-system',
       'BlinkMacSystemFont',
       'Segoe UI',
@@ -34,23 +35,23 @@ const theme = createTheme({
       fontFamily: 'Poppins',
     },
     subtitle1: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Poppins',
     },
     subtitle2: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Poppins',
     },
     body1: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Poppins',
     },
     body2: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Poppins',
     },
     button: {
       fontFamily: 'Poppins',
       textTransform: 'none',
     },
     caption: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Poppins',
     },
     overline: {
       fontFamily: 'Poppins',
