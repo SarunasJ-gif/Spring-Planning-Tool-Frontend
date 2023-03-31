@@ -2,6 +2,8 @@ import * as React from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
+import Data from '../../../mock_data/mock_member.json';
+
 
 import {
   Box,
@@ -9,6 +11,7 @@ import {
   Paper,
   Typography,
   Button,
+  List,
 } from '@mui/material';
 import {
   EventNoteRounded,
@@ -17,9 +20,10 @@ import {
   ArrowLeft,
 } from '@mui/icons-material';
 
-import { text } from 'stream/consumers';
+
 import MainPage from '../MainPage/MainPage';
 import { Endpoint } from '../../routes/Endpoint';
+
 
 const drawerWidth = 240;
 
@@ -65,6 +69,57 @@ const Item = styled(Paper)(({ theme }) => ({
   color: 'black',
   backgroundColor: 'white',
 }));
+
+
+const AllData = [
+  {
+    "id": 1,
+    "key": "SFD-175",
+    "description": "Create collapsable card component with styles",
+    "type": "Goal",
+    "oldPoints": "3",
+    "remainingPoints": "1",
+    "newPoints": "2"
+  },
+  {
+    "id": 2,
+    "key": "SFD-170",
+    "description": "Update role handling",
+    "type": "Technical",
+    "oldPoints": "5",
+    "remainingPoints": "4",
+    "newPoints": "2"
+  },
+  {
+    "id": 3,
+    "key": "SAA-1",
+    "description": "Create general page layout",
+    "type": "Goal",
+    "oldPoints": "4",
+    "remainingPoints": "1",
+    "newPoints": "0"
+  },
+  {
+    "id": 4,
+    "key": "SAM-2",
+    "description": "Set up react app",
+    "type": "Goal",
+    "oldPoints": "7",
+    "remainingPoints": "5",
+    "newPoints": "1"
+  },
+  {
+    "id": 5,
+    "key": "KFS-52",
+    "description": "Create login form",
+    "type": "Technical",
+    "oldPoints": "5",
+    "remainingPoints": "2",
+    "newPoints": "2"
+  }
+]
+
+
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(false);
@@ -113,43 +168,45 @@ export default function Sidebar() {
             }} />
           </IconButton>
         )}
-        <Link to={Endpoint.ADD_SPRINT} className="link">
-          <Button
-            sx={{
-              minWidth: 0,
-              mr: open ? 3 : 'auto',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              height: '120px',
-              top: 20,
-            }}
-          >
-            <AddCircleRounded sx={{ fontSize: '50px', color: 'blue' }} />
-            <Typography sx={{
-              color: '#696969',
-              alignItems: 'center',
-              textAlign: 'center',
-              verticalAlign: 'middle',
-              fontFamily: 'Open Sans',
-              fontStyle: 'normal',
-              fontWeight: 600,
-              fontSize: 12,
-            }}>ADD</Typography>
-            <Typography sx={{
-              color: '#696969',
-              alignItems: 'center',
-              textAlign: 'center',
-              verticalAlign: 'middle',
-              fontFamily: 'Open Sans',
-              fontStyle: 'normal',
-              fontWeight: 600,
-              fontSize: 12,
-            }}>SPRINT</Typography>
-          </Button>
-        </Link>
+
         {!open && (
           <>
+            <Link to={Endpoint.ADD_SPRINT} className="link"></Link>
+            <Button
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                height: '120px',
+                top: 20,
+              }}
+            >
+              <AddCircleRounded sx={{ fontSize: '50px', color: 'blue' }} />
+              <Typography sx={{
+                color: '#696969',
+                alignItems: 'center',
+                textAlign: 'center',
+                verticalAlign: 'middle',
+                fontFamily: 'Open Sans',
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: 12,
+              }}>ADD</Typography>
+              <Typography sx={{
+                color: '#696969',
+                alignItems: 'center',
+                textAlign: 'center',
+                verticalAlign: 'middle',
+                fontFamily: 'Open Sans',
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: 12,
+              }}>SPRINT</Typography>
+            </Button>
+
+
             <Button
               onClick={handleDrawer}
               sx={{
@@ -222,7 +279,65 @@ export default function Sidebar() {
             </Link>
           </>
         )}
-        {open && <Typography >List of Sourcery Students Sprints</Typography>}
+        {open &&
+          (
+            <>
+              <Button
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 1 : 'auto',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  height: '120px',
+                  top: 20,
+                }}
+              >
+                <AddCircleRounded sx={{ fontSize: '50px', color: 'blue', marginRight: '150px', }} />
+                <Typography sx={{
+                  color: '#696969',
+                  alignItems: 'center',
+                  textAlign: 'left',
+                  verticalAlign: 'middle',
+                  fontFamily: 'Open Sans',
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  fontSize: 13,
+                  position: 'absolute',
+                }}>ADD SPRINT</Typography>
+
+
+              </Button>
+              <Typography
+                sx={{
+                  color: '#696969',
+                  alignItems: 'center',
+                  textAlign: 'left',
+                  verticalAlign: 'middle',
+                  fontFamily: 'Open Sans',
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  fontSize: 13,
+                  marginLeft: '20px',
+                  marginTop: '50px',
+                }}>All SPRINTS</Typography>
+              <Typography sx={{
+                color: '#696969',
+                alignItems: 'center',
+                textAlign: 'center',
+                verticalAlign: 'middle',
+                fontFamily: 'Open Sans',
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: 18,
+              }}>
+                {AllData.map((post: any) => {
+                  return <h5>"Sourcery Students" - Sprint {post.id}</h5>;
+                }).reverse()}
+              </Typography>
+            </>
+
+          )}
       </Drawer>
     </Box>
   );
