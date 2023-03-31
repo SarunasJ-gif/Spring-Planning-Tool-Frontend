@@ -50,6 +50,9 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Link href="/">
+        <Typography margin={2}>Return to main page</Typography>
+      </Link>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -81,6 +84,12 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              error={errorMessage.includes('email')}
+              helperText={
+                errorMessage.includes('email')
+                  ? 'Please enter a valid email address.'
+                  : null
+              }
             />
             <TextField
               margin="normal"
