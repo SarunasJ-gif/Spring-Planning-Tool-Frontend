@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import image from './404error.png';
 import { Endpoint } from '../../routes/Endpoint';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Open Sans',
-    fontWeightBold: 600,
     h2: {
       fontSize: '36px',
       lineHeight: '44px',
       color: '#979797',
       textAlign: 'center',
+      fontWeight: 600,
     },
     h3: {
       fontSize: '24px',
@@ -20,6 +21,7 @@ const theme = createTheme({
       color: '#979797',
       letterSpacing: '-1.5px',
       textAlign: 'center',
+      fontWeight: 600,
     },
   },
 });
@@ -53,6 +55,7 @@ const NotFound = ({ marginTop }: { marginTop?: string }) => {
         <Button
           onClick={handleClick}
           sx={{
+            fontFamily: 'Roboto',
             varient: 'contained',
             display: 'flex',
             flexDirection: 'column',
@@ -73,7 +76,7 @@ const NotFound = ({ marginTop }: { marginTop?: string }) => {
             },
           }}
         >
-          BACK TO MAIN PAGE
+          Back to main page
         </Button>
       </Box>
     </ThemeProvider>

@@ -8,6 +8,7 @@ import MiniDrawer from '../components/Sidebar/Sidebar';
 import { Endpoint } from './Endpoint';
 import MainPage from '../components/MainPage/MainPage';
 import NotFound from '../components/ErrorPage/NotFound';
+import Login from '../components/Login/Login';
 
 type MyErrorBoundaryProps = {
   children: React.ReactNode;
@@ -56,6 +57,10 @@ const routeOptions: RouteObject[] = [
         element: '',
       },
     ],
+  },
+  {
+    path: Endpoint.LOGIN,
+    element: <Login />,
   },
   {
     path: '*',
