@@ -8,6 +8,7 @@ import {
   MenuItem,
   Menu,
   Avatar,
+  Link,
 } from '@mui/material/';
 
 import {
@@ -102,7 +103,6 @@ export default function NavigationBar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -111,17 +111,19 @@ export default function NavigationBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <Avatar>
-              <CalendarToday sx={{ color: 'black' }} />
-            </Avatar>
-          </IconButton>
+          <Link href="/">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+            >
+              <Avatar sx={{ bgcolor: '#D8DAFF' }}>
+                <CalendarToday sx={{ color: '#262e96' }} />
+              </Avatar>
+            </IconButton>
+          </Link>
           <Typography
             variant="h1"
             noWrap
@@ -134,6 +136,7 @@ export default function NavigationBar() {
           >
             Sprint Planner
           </Typography>
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
