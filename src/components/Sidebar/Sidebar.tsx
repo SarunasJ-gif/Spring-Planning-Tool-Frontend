@@ -2,7 +2,7 @@ import * as React from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
-import Data from '../../../mock_data/mock_member.json';
+import Data from '../../../mock_data/mock_sprints.json';
 
 
 import {
@@ -69,55 +69,6 @@ const Item = styled(Paper)(({ theme }) => ({
   color: 'black',
   backgroundColor: 'white',
 }));
-
-
-const AllData = [
-  {
-    "id": 1,
-    "key": "SFD-175",
-    "description": "Create collapsable card component with styles",
-    "type": "Goal",
-    "oldPoints": "3",
-    "remainingPoints": "1",
-    "newPoints": "2"
-  },
-  {
-    "id": 2,
-    "key": "SFD-170",
-    "description": "Update role handling",
-    "type": "Technical",
-    "oldPoints": "5",
-    "remainingPoints": "4",
-    "newPoints": "2"
-  },
-  {
-    "id": 3,
-    "key": "SAA-1",
-    "description": "Create general page layout",
-    "type": "Goal",
-    "oldPoints": "4",
-    "remainingPoints": "1",
-    "newPoints": "0"
-  },
-  {
-    "id": 4,
-    "key": "SAM-2",
-    "description": "Set up react app",
-    "type": "Goal",
-    "oldPoints": "7",
-    "remainingPoints": "5",
-    "newPoints": "1"
-  },
-  {
-    "id": 5,
-    "key": "KFS-52",
-    "description": "Create login form",
-    "type": "Technical",
-    "oldPoints": "5",
-    "remainingPoints": "2",
-    "newPoints": "2"
-  }
-]
 
 
 
@@ -331,7 +282,7 @@ export default function Sidebar() {
                 fontWeight: 600,
                 fontSize: 18,
               }}>
-                {AllData.map((post: any) => {
+                {Data.map((post: any) => {
                   return <h5>"Sourcery Students" - Sprint {post.id}</h5>;
                 }).reverse()}
               </Typography>
