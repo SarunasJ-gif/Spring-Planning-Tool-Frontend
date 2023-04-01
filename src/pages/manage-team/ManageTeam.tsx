@@ -1,20 +1,14 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { Typography, Box } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import DataTable from './DataTable';
+import BottomTable from './BottomTable';
 import TopTable from './TopTable';
+import CreateNewMember from './CreateNewMember';
 
 export default function ManageTeam() {
-  const [saveClicked, setSaveClicked] = useState(false);
-  const handleSaveClick = () => {
-    setSaveClicked(true);
-  };
-
   return (
     <Box sx={{ height: 500, width: '100%', marginLeft: 10 }}>
       <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
@@ -48,19 +42,11 @@ export default function ManageTeam() {
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <Button
-                      variant={saveClicked ? 'contained' : 'outlined'}
-                      color="primary"
-                      size="small"
-                      onClick={handleSaveClick}
-                      sx={{ mt: 1, mr: 2, mb: 0, fontFamily: 'Poppins' }}
-                    >
-                      + Add New member
-                    </Button>
+                    <CreateNewMember />
                   </Grid>
                 </Grid>
               </Box>
-              <DataTable />
+              <BottomTable />
             </TableContainer>
           </Grid>
         </Grid>
