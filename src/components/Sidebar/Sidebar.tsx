@@ -4,14 +4,10 @@ import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
 import Data from './mock_sprint.json';
 
-
 import {
   Box,
   IconButton,
-  Paper,
-  Typography,
   Button,
-  List,
 } from '@mui/material';
 import {
   EventNoteRounded,
@@ -20,12 +16,11 @@ import {
   ArrowLeft,
 } from '@mui/icons-material';
 
-
-import MainPage from '../MainPage/MainPage';
 import { Endpoint } from '../../routes/Endpoint';
+import { TypographyItem } from '../TypographyItem/TypographyItem';
+import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
 
-
-const drawerWidth = 240;
+const drawerWidth = 295;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -65,11 +60,6 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Item = styled(Paper)(({ theme }) => ({
-  color: 'black',
-  backgroundColor: 'white',
-}));
-
 
 
 export default function Sidebar() {
@@ -92,7 +82,7 @@ export default function Sidebar() {
         sx={{
           boxShadow: 'rgba(0, 0, 0, 0.3) 0px 0px 10px 0px',
           '& .MuiDrawer-paper': {
-            width: open ? '240px' : '80px',
+            width: open ? '295px' : '80px',
           },
         }}
       >
@@ -102,193 +92,132 @@ export default function Sidebar() {
             sx={{
               position: 'fixed',
               top: '85px',
-              left: '225px',
+              left: '280px',
               width: '30px',
               height: '30px',
             }}
           >
-            <ArrowLeft sx={{
-              color: '#000000',
-              fontSize: "35px",
-              "&:hover": { color: '#000000' },
-              bgcolor: '#ffffff',
-              borderRadius: '50px',
-              border: 1,
-              borderWidth: '1px',
-              borderColor: '#9E9E9E'
-            }} />
+            <ArrowLeft
+              sx={{
+                color: '#000000',
+                fontSize: '35px',
+                '&:hover': { color: '#000000' },
+                bgcolor: '#ffffff',
+                borderRadius: '50px',
+                border: 1,
+                borderWidth: '1px',
+                borderColor: '#9E9E9E',
+              }}
+            />
           </IconButton>
         )}
 
         {!open && (
           <>
             <Link to={Endpoint.ADD_SPRINT} className="link"></Link>
-            <Button
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                height: '120px',
-                top: 20,
-              }}
-            >
+            <SidebarIconButton >
               <AddCircleRounded sx={{ fontSize: '50px', color: 'blue' }} />
-              <Typography sx={{
-                color: '#696969',
-                alignItems: 'center',
-                textAlign: 'center',
-                verticalAlign: 'middle',
-                fontFamily: 'Open Sans',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                fontSize: 12,
-              }}>ADD</Typography>
-              <Typography sx={{
-                color: '#696969',
-                alignItems: 'center',
-                textAlign: 'center',
-                verticalAlign: 'middle',
-                fontFamily: 'Open Sans',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                fontSize: 12,
-              }}>SPRINT</Typography>
-            </Button>
-
-
-            <Button
-              onClick={handleDrawer}
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                height: '120px',
-                top: 20,
-              }}
-            >
-              <EventNoteRounded sx={{ fontSize: '32px', color: '#696969' }} />
-              <Typography sx={{
-                color: '#696969',
-                alignItems: 'center',
-                textAlign: 'center',
-                verticalAlign: 'middle',
-                fontFamily: 'Open Sans',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                fontSize: 12,
-              }}>ALL</Typography>
-              <Typography sx={{
-                color: '#696969',
-                alignItems: 'center',
-                textAlign: 'center',
-                verticalAlign: 'middle',
-                fontFamily: 'Open Sans',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                fontSize: 12,
-              }}>SPRINTS</Typography>
-              <Link to={Endpoint.ALL_SPRINTS} className="link"></Link>
-            </Button>
-            <Link to={Endpoint.MANAGE_TEAM} className="link">
-              <Button
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                  height: '120px',
-                  top: 20,
-                }}
+              <TypographyItem
+                textAlignKey={'center'}
+                fontSizeKey={12}
+                fontFamilyKey={'Open Sans'}
+                fontStyleKey={'normal'}
               >
+                ADD
+              </TypographyItem>
+              <TypographyItem
+                textAlignKey={'center'}
+                fontSizeKey={12}
+                fontFamilyKey={'Open Sans'}
+                fontStyleKey={'normal'}
+              >
+                SPRINT
+              </TypographyItem>
+            </SidebarIconButton>
+
+            <SidebarIconButton
+              onClick={handleDrawer} >
+              <EventNoteRounded sx={{ fontSize: '32px', color: '#696969' }} />
+              <TypographyItem
+                textAlignKey={'center'}
+                fontSizeKey={12}
+                fontFamilyKey={'Open Sans'}
+                fontStyleKey={'normal'}
+              >
+                ALL
+              </TypographyItem>
+              <TypographyItem
+                textAlignKey={'center'}
+                fontSizeKey={12}
+                fontFamilyKey={'Open Sans'}
+                fontStyleKey={'normal'}
+              >
+                SPRINTS
+              </TypographyItem>
+              <Link to={Endpoint.ALL_SPRINTS} className="link"></Link>
+            </SidebarIconButton>
+            <Link to={Endpoint.MANAGE_TEAM} className="link">
+              <SidebarIconButton>
                 <PeopleRounded sx={{ fontSize: '32px', color: '#696969' }} />
-                <Typography sx={{
-                  color: '#696969',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  verticalAlign: 'middle',
-                  fontFamily: 'Open Sans',
-                  fontStyle: 'normal',
-                  fontWeight: 600,
-                  fontSize: 12,
-                }}>MANAGE</Typography>
-                <Typography sx={{
-                  color: '#696969',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  verticalAlign: 'middle',
-                  fontFamily: 'Open Sans',
-                  fontStyle: 'normal',
-                  fontWeight: 600,
-                  fontSize: 12,
-                }}>TEAM</Typography>
-              </Button>
+                <TypographyItem
+                  textAlignKey={'center'}
+                  fontSizeKey={12}
+                  fontFamilyKey={'Open Sans'}
+                  fontStyleKey={'normal'}
+                >
+                  MANAGE
+                </TypographyItem>
+                <TypographyItem
+                  textAlignKey={'center'}
+                  fontSizeKey={12}
+                  fontFamilyKey={'Open Sans'}
+                  fontStyleKey={'normal'}
+                >
+                  TEAM
+                </TypographyItem>
+              </SidebarIconButton>
             </Link>
           </>
         )}
-        {open &&
-          (
-            <>
-              <Button
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 1 : 'auto',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                  height: '120px',
-                  top: 20,
-                }}
+        {open && (
+          <>
+            <SidebarIconButton>
+              <AddCircleRounded
+                sx={{ fontSize: '50px', color: 'blue', marginRight: '200px' }}
+              />
+              <TypographyItem
+                textAlignKey={'left'}
+                fontSizeKey={13}
+                fontFamilyKey={'Roboto'}
+                fontStyleKey={'normal'}
+                position='absolute'
+                marginRight='50px'
               >
-                <AddCircleRounded sx={{ fontSize: '50px', color: 'blue', marginRight: '150px', }} />
-                <Typography sx={{
-                  color: '#696969',
-                  alignItems: 'center',
-                  textAlign: 'left',
-                  verticalAlign: 'middle',
-                  fontFamily: 'Open Sans',
-                  fontStyle: 'normal',
-                  fontWeight: 600,
-                  fontSize: 13,
-                  position: 'absolute',
-                }}>ADD SPRINT</Typography>
-
-
-              </Button>
-              <Typography
-                sx={{
-                  color: '#696969',
-                  alignItems: 'center',
-                  textAlign: 'left',
-                  verticalAlign: 'middle',
-                  fontFamily: 'Open Sans',
-                  fontStyle: 'normal',
-                  fontWeight: 600,
-                  fontSize: 13,
-                  marginLeft: '20px',
-                  marginTop: '50px',
-                }}>All SPRINTS</Typography>
-              <Typography sx={{
-                color: '#696969',
-                alignItems: 'center',
-                textAlign: 'center',
-                verticalAlign: 'middle',
-                fontFamily: 'Open Sans',
-                fontStyle: 'normal',
-                fontWeight: 600,
-                fontSize: 18,
-              }}>
-                {Data.map((post: any) => {
-                  return <h5>"Sourcery Students" - Sprint {post.id}</h5>;
-                }).reverse()}
-              </Typography>
-            </>
-
-          )}
+                ADD SPRINT
+              </TypographyItem>
+            </SidebarIconButton>
+            <TypographyItem
+              textAlignKey={'left'}
+              fontSizeKey={13}
+              fontFamilyKey={'sans-serif'}
+              fontStyleKey={'normal'}
+              marginLeft='25px'
+              marginTop='50px'            >
+              ALL SPRINTS
+            </TypographyItem>
+            <TypographyItem
+              textAlignKey={'center'}
+              fontSizeKey={18}
+              fontFamilyKey={'Avenir'}
+              fontStyleKey={'normal'}
+              marginRight='55px'
+            >
+              {Data.map((post: any) => {
+                return <h5>"Sourcery Students" - Sprint {post.id}</h5>;
+              }).reverse()}
+            </TypographyItem>
+          </>
+        )}
       </Drawer>
     </Box>
   );
