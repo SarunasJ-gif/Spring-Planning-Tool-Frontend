@@ -12,10 +12,6 @@ code {
     monospace;
 }
 
-.font-link {
-  font-family: 'Poppins';
-}
-
 .highlighted {
-  background-color: rgb(173, 161, 255);
-}
+  background-color: #ada1ff;
+  }
