@@ -1,16 +1,21 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import { useState } from 'react';
-import { InputLabel, MenuItem, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Select,
+  SelectChangeEvent,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  TextField,
+} from '@mui/material';
+import { Role } from '../../enums/enums';
 
-export default function MaxWidthDialog() {
-  const [Role, setRole] = React.useState('');
+export default function AddNewMemberDialog() {
+  const [role, setRole] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
   const handleClickOpen = () => {
@@ -26,7 +31,7 @@ export default function MaxWidthDialog() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Button
         variant={saveClicked ? 'contained' : 'outlined'}
         color="primary"
@@ -48,7 +53,6 @@ export default function MaxWidthDialog() {
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle sx={{ textAlign: 'center' }}>
-          {' '}
           <h5>Create new member</h5>
         </DialogTitle>
         <DialogContent
@@ -73,12 +77,12 @@ export default function MaxWidthDialog() {
             <Select
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
-              value={Role}
+              value={role}
               onChange={handleChange}
             >
-              <MenuItem value={'Designer'}>Designer</MenuItem>
-              <MenuItem value={'Front-End'}>Front-End</MenuItem>
-              <MenuItem value={'Back-End'}>Back-End</MenuItem>
+              <MenuItem value={Role.DESIGNER}>Designer</MenuItem>
+              <MenuItem value={Role.FRONT_END}>Front-End</MenuItem>
+              <MenuItem value={Role.BACK_END}>Back-End</MenuItem>
             </Select>
           </FormControl>
         </DialogContent>
@@ -91,6 +95,6 @@ export default function MaxWidthDialog() {
           </Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

@@ -1,16 +1,19 @@
 import * as React from 'react';
-import { Typography, Box } from '@mui/material';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import TableContainer from '@mui/material/TableContainer';
-import Paper from '@mui/material/Paper';
+import {
+  Typography,
+  Box,
+  Container,
+  Grid,
+  TableContainer,
+  Paper,
+} from '@mui/material';
 import BottomTable from './BottomTable';
 import TopTable from './TopTable';
 import CreateNewMember from './CreateNewMember';
 
 export default function ManageTeam() {
   return (
-    <Box sx={{ height: 500, width: '100%', marginLeft: 10 }}>
+    <Box sx={{ height: '100%', width: '100%', marginLeft: 10 }}>
       <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
         <Typography
           variant="h5"
@@ -19,7 +22,7 @@ export default function ManageTeam() {
           gutterBottom
           fontFamily="Poppins"
         >
-          {'Manage team'}
+          Manage team
         </Typography>
         <Grid container spacing={7}>
           <Grid item xs={12} md={0} lg={0}>

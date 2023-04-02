@@ -1,15 +1,20 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Avatar from '@mui/material/Avatar';
+import React, { useState } from 'react';
 import avatarImage from '../../images/avatar/avatar1.jpg';
-import { Typography } from '@mui/material';
-export default function MySpecialButtonsRemove(props: { name: any }) {
+import {
+  Typography,
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Avatar,
+} from '@mui/material';
+
+interface RemoveButtonProps {
+  name: string;
+}
+export default function RemoveButton(props: RemoveButtonProps) {
   const [saveClicked, setSaveClicked] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 

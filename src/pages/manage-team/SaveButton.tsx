@@ -1,13 +1,11 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import React, { useState } from 'react';
+import { Box, Button } from '@mui/material';
 
-interface Props {
+interface SaveButtonProps {
   onClick: () => void;
 }
 
-export default function MySpecialButtonsSave(props: Props) {
+export default function SaveButton(props: SaveButtonProps) {
   const [saveClicked, setSaveClicked] = useState(false);
   const handleSaveClick = () => {
     setSaveClicked(true);

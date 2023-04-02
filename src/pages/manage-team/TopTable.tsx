@@ -1,11 +1,18 @@
 import * as React from 'react';
-import TableCell from '@mui/material/TableCell';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import {
+  TableCell,
+  Paper,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  styled,
+} from '@mui/material';
+
+const LeftAlignedTableCell = styled(TableCell)(() => ({
+  textAlign: 'left',
+}));
 
 function createData(
   name: string,
@@ -17,24 +24,24 @@ function createData(
 }
 const rowsTop = [createData('JustasTeam', 5, 12, 847)];
 
-export default function ManageTeam() {
+export default function TopTable() {
   return (
     <TableContainer component={Paper}>
       <Table size="medium" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>
+            <LeftAlignedTableCell>
               <b>Team Name</b>
-            </TableCell>
-            <TableCell align="left">
+            </LeftAlignedTableCell>
+            <LeftAlignedTableCell>
               <b>Members</b>
-            </TableCell>
-            <TableCell align="left">
+            </LeftAlignedTableCell>
+            <LeftAlignedTableCell>
               <b>Projetcs completed</b>
-            </TableCell>
-            <TableCell align="left">
+            </LeftAlignedTableCell>
+            <LeftAlignedTableCell>
               <b>Task completed</b>
-            </TableCell>
+            </LeftAlignedTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -43,16 +50,16 @@ export default function ManageTeam() {
               key={rowsTop.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell
+              <LeftAlignedTableCell
                 component="th"
                 scope="rowsTop"
                 style={{ width: '350px' }}
               >
                 {rowsTop.name}
-              </TableCell>
-              <TableCell align="left">{rowsTop.members}</TableCell>
-              <TableCell align="left">{rowsTop.projects}</TableCell>
-              <TableCell align="left">{rowsTop.tasks}</TableCell>
+              </LeftAlignedTableCell>
+              <LeftAlignedTableCell>{rowsTop.members}</LeftAlignedTableCell>
+              <LeftAlignedTableCell>{rowsTop.projects}</LeftAlignedTableCell>
+              <LeftAlignedTableCell>{rowsTop.tasks}</LeftAlignedTableCell>
             </TableRow>
           ))}
         </TableBody>
