@@ -1,12 +1,12 @@
 import React, { Component, ErrorInfo } from 'react';
 import type { Router as RemixRouter } from '@remix-run/router';
-import { Outlet, Route, RouteObject } from 'react-router';
+import { Outlet, RouteObject } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
-
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import MiniDrawer from '../components/Sidebar/Sidebar';
 import { Endpoint } from './Endpoint';
 import MainPage from '../components/MainPage/MainPage';
+import ManageTeam from '../pages/manage-team/ManageTeam';
 import NotFound from '../components/ErrorPage/NotFound';
 import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
@@ -56,6 +56,10 @@ const routeOptions: RouteObject[] = [
       {
         path: Endpoint.ADD_SPRINT,
         element: '',
+      },
+      {
+        path: Endpoint.MANAGE_TEAM,
+        element: <ManageTeam />,
       },
     ],
   },
