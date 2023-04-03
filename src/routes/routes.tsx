@@ -3,7 +3,7 @@ import type { Router as RemixRouter } from '@remix-run/router';
 import { Outlet, RouteObject } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
-import MiniDrawer from '../components/Sidebar/Sidebar';
+import Sidebar from '../components/Sidebar/Sidebar';
 import { Endpoint } from './Endpoint';
 import MainPage from '../components/MainPage/MainPage';
 import ManageTeam from '../pages/manage-team/ManageTeam';
@@ -42,10 +42,11 @@ const routeOptions: RouteObject[] = [
     element: (
       <>
         <NavigationBar />
-        <MiniDrawer />
-        <MyErrorBoundary>
-          <Outlet />
-        </MyErrorBoundary>
+        <Sidebar>
+          <MyErrorBoundary>
+            <Outlet />
+          </MyErrorBoundary>
+        </Sidebar>
       </>
     ),
     children: [
@@ -59,7 +60,7 @@ const routeOptions: RouteObject[] = [
       },
       {
         path: Endpoint.MANAGE_TEAM,
-        element: <ManageTeam />,
+        element: '',
       },
     ],
   },
