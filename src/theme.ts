@@ -6,19 +6,6 @@ import 'typeface-open-sans';
 import 'typeface-roboto';
 
 const theme = createTheme({
-  typography: {
-    fontFamily: ['Poppins'].join(','),
-    h1: {
-      fontFamily: 'Poppins',
-    },
-    h5: {
-      fontFamily: 'Poppins',
-    },
-    button: {
-      fontFamily: 'Poppins',
-      textTransform: 'none',
-    },
-  },
   palette: {
     background: {
       default: '#FAFBFD',
@@ -36,6 +23,16 @@ const theme = createTheme({
       fontWeight: '100',
       fontSize: '20px',
       border: 'none',
+    },
+    h1: {
+      fontFamily: 'Poppins',
+    },
+    h5: {
+      fontFamily: 'Poppins',
+    },
+    button: {
+      fontFamily: 'Poppins',
+      textTransform: 'none',
     },
   },
 });

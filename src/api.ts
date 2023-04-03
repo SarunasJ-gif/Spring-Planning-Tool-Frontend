@@ -49,7 +49,7 @@ const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
 const post = async <T>(
   url: string,
   config?: AxiosRequestConfig,
-  data?: undefined,
+  data?: unknown,
 ): Promise<T> => {
   return request<T>('post', url, data, config);
 };
