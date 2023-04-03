@@ -4,4 +4,5 @@ export enum Endpoint {
   ALL_SPRINTS = '/all-sprints',
   MANAGE_TEAM = '/manage-team',
   LOGIN = '/login',
+  REGISTER = '/register',
 }

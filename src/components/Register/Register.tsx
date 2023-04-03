@@ -13,29 +13,38 @@ import {
 } from '@mui/material';
 
 import { Lock } from '@mui/icons-material';
+import { post } from '../../api';
+
 import { useForm } from 'react-hook-form';
 import theme from '../../theme';
-import { post } from '../../api';
 import Copyright from '../Copyright/Copyright';
 
 interface FormData {
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
-export default function Login() {
+export default function Register() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const onSubmit = (data: FormData) => {
-    post<FormData>('/login', undefined, data).catch((error) => {
+    const { email, password } = data;
+    post<{ email: string; password: string }>('/register', undefined, {
+      email,
+      password,
+    }).catch((error) => {
       setErrorMessage(error.message);
     });
   };
+
+  const password = watch('password');
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,7 +65,7 @@ export default function Login() {
             <Lock sx={{ fontSize: 40, color: '#000' }} />
           </Avatar>
           <Typography component="h1" variant="h5" fontWeight={'medium'}>
-            Login Form
+            Register
           </Typography>
           <Box
             component="form"
@@ -75,7 +84,7 @@ export default function Login() {
               {...register('email', {
                 required: 'Please enter your email',
                 pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i,
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: 'Please enter a valid email address',
                 },
               })}
@@ -96,23 +105,33 @@ export default function Login() {
               error={!!errors.password}
               helperText={errors.password?.message}
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              label="Confirm Password"
+              type="password"
+              id="confirm-password"
+              autoComplete="current-password"
+              {...register('confirmPassword', {
+                validate: (value) =>
+                  value === password || 'The passwords do not match',
+              })}
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword?.message}
+            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Log In
+              Register
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/login" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/register" variant="body2">
-                  Need an account? Register
+                <Link href="/login" variant="body2">
+                  Already have an account? Log in
                 </Link>
               </Grid>
             </Grid>
@@ -123,9 +142,14 @@ export default function Login() {
             </Typography>
           )}
         </Box>
-        <Box sx={{ mt: 4, mb: 4 }}>
-          <Copyright />
+        <Box sx={{ mt: 3, mb: 3 }}>
+          <Typography variant="body2" color="textSecondary" align="center">
+            By registering, you agree to our
+            <Link href="/"> Terms of Service</Link> and
+            <Link href="/"> Privacy Policy</Link>.
+          </Typography>
         </Box>
+        <Copyright />
       </Container>
     </ThemeProvider>
   );

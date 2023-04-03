@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import 'typeface-poppins';
 
 import 'typeface-poppins';
 import 'typeface-open-sans';
@@ -7,7 +8,7 @@ import 'typeface-roboto';
 const theme = createTheme({
   palette: {
     background: {
-      default: '#E5E5E5',
+      default: '#FAFBFD',
     },
     primary: {
       main: '#404CFA',
@@ -22,6 +23,16 @@ const theme = createTheme({
       fontWeight: '100',
       fontSize: '20px',
       border: 'none',
+    },
+    h1: {
+      fontFamily: 'Poppins',
+    },
+    h5: {
+      fontFamily: 'Poppins',
+    },
+    button: {
+      fontFamily: 'Poppins',
+      textTransform: 'none',
     },
   },
 });

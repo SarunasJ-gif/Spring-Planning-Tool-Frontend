@@ -1,0 +1,33 @@
+import React, { useState } from 'react';
+import { Box, Button } from '@mui/material';
+
+interface SaveButtonProps {
+  onClick: () => void;
+}
+
+export default function SaveButton(props: SaveButtonProps) {
+  const [saveClicked, setSaveClicked] = useState(false);
+  const handleSaveClick = () => {
+    setSaveClicked(true);
+    props.onClick();
+    // handle any other save click logic here
+  };
+  return (
+    <Box>
+      <Button
+        variant={saveClicked ? 'contained' : 'outlined'}
+        color="primary"
+        size="small"
+        onClick={handleSaveClick}
+        sx={{
+          '&:hover': {
+            backgroundColor: 'blue',
+            color: 'white',
+          },
+        }}
+      >
+        Save
+      </Button>
+    </Box>
+  );
+}
