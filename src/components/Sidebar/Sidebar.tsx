@@ -108,25 +108,26 @@ export default function Sidebar(props: { children: React.ReactNode }) {
 
         {!open && (
           <>
-            <Link to={Endpoint.ADD_SPRINT} className="link"></Link>
             <SidebarIconButton>
-              <AddCircleRounded sx={{ fontSize: '50px', color: 'blue' }} />
-              <TypographyItem
-                textAlignKey={'center'}
-                fontSizeKey={12}
-                fontFamilyKey={'Open Sans'}
-                fontStyleKey={'normal'}
-              >
-                ADD
-              </TypographyItem>
-              <TypographyItem
-                textAlignKey={'center'}
-                fontSizeKey={12}
-                fontFamilyKey={'Open Sans'}
-                fontStyleKey={'normal'}
-              >
-                SPRINT
-              </TypographyItem>
+              <Link to={Endpoint.ADD_SPRINT} className="link">
+                <AddCircleRounded sx={{ fontSize: '50px', color: 'blue' }} />
+                <TypographyItem
+                  textAlignKey={'center'}
+                  fontSizeKey={12}
+                  fontFamilyKey={'Open Sans'}
+                  fontStyleKey={'normal'}
+                >
+                  ADD
+                </TypographyItem>
+                <TypographyItem
+                  textAlignKey={'center'}
+                  fontSizeKey={12}
+                  fontFamilyKey={'Open Sans'}
+                  fontStyleKey={'normal'}
+                >
+                  SPRINT
+                </TypographyItem>
+              </Link>
             </SidebarIconButton>
 
             <SidebarIconButton onClick={handleDrawer}>
@@ -149,8 +150,9 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               </TypographyItem>
               <Link to={Endpoint.ALL_SPRINTS} className="link"></Link>
             </SidebarIconButton>
-            <Link to={Endpoint.MANAGE_TEAM} className="link">
-              <SidebarIconButton>
+
+            <SidebarIconButton>
+              <Link to={Endpoint.MANAGE_TEAM} className="link">
                 <PeopleRounded sx={{ fontSize: '32px', color: '#696969' }} />
                 <TypographyItem
                   textAlignKey={'center'}
@@ -168,8 +170,8 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                 >
                   TEAM
                 </TypographyItem>
-              </SidebarIconButton>
-            </Link>
+              </Link>
+            </SidebarIconButton>
           </>
         )}
         {open && (
@@ -207,13 +209,17 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               marginRight="55px"
             >
               {Data.map((post: any) => (
-                <h5 key={post.id}>Sourcery Students - Sprint {post.id}</h5>
+                <h5 key={post.id}>
+                  &ldquo;Sourcery Students&ldquo; - Sprint {post.id}
+                </h5>
               )).reverse()}
             </TypographyItem>
           </>
         )}
       </Drawer>
-      <Box sx={{ paddingLeft: open ? '295px' : '0' }}>{props.children}</Box>
+      <Box sx={{ paddingLeft: open ? '295px' : '0', transition: '.3s' }}>
+        {props.children}
+      </Box>
     </Box>
   );
 }

@@ -24,8 +24,10 @@ function MainPage() {
           </AccordionSummary>
         </SAccordion>
       </Box>
-      <Box sx={{ mt: 2 }}>
-        <SAccordion sx={{ display: 'flex', justifyContent: 'left' }}>
+      <Box sx={{ mt: 4 }}>
+        <SAccordion
+          sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
           >
@@ -33,8 +35,10 @@ function MainPage() {
           </AccordionSummary>
         </SAccordion>
       </Box>
-      <Box sx={{ mt: 2 }}>
-        <SAccordion sx={{ display: 'flex', justifyContent: 'left' }}>
+      <Box sx={{ mt: 4 }}>
+        <SAccordion
+          sx={{ display: 'flex', justifyContent: 'left', top: '-58px' }}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
           >

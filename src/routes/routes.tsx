@@ -57,6 +57,10 @@ const routeOptions: RouteObject[] = [
         path: Endpoint.ADD_SPRINT,
         element: '',
       },
+      {
+        path: Endpoint.MANAGE_TEAM,
+        element: '',
+      },
     ],
   },
   {
