@@ -41,10 +41,11 @@ const routeOptions: RouteObject[] = [
     element: (
       <>
         <NavigationBar />
-        <Sidebar />
-        <MyErrorBoundary>
-          <Outlet />
-        </MyErrorBoundary>
+        <Sidebar>
+          <MyErrorBoundary>
+            <Outlet />
+          </MyErrorBoundary>
+        </Sidebar>
       </>
     ),
     children: [

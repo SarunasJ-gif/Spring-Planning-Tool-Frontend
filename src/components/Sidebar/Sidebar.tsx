@@ -4,11 +4,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
 import Data from './mock_sprint.json';
 
-import {
-  Box,
-  IconButton,
-  Button,
-} from '@mui/material';
+import { Box, IconButton, Button } from '@mui/material';
 import {
   EventNoteRounded,
   AddCircleRounded,
@@ -60,9 +56,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-
-
-export default function Sidebar() {
+export default function Sidebar(props: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
@@ -115,7 +109,7 @@ export default function Sidebar() {
         {!open && (
           <>
             <Link to={Endpoint.ADD_SPRINT} className="link"></Link>
-            <SidebarIconButton >
+            <SidebarIconButton>
               <AddCircleRounded sx={{ fontSize: '50px', color: 'blue' }} />
               <TypographyItem
                 textAlignKey={'center'}
@@ -135,8 +129,7 @@ export default function Sidebar() {
               </TypographyItem>
             </SidebarIconButton>
 
-            <SidebarIconButton
-              onClick={handleDrawer} >
+            <SidebarIconButton onClick={handleDrawer}>
               <EventNoteRounded sx={{ fontSize: '32px', color: '#696969' }} />
               <TypographyItem
                 textAlignKey={'center'}
@@ -190,8 +183,8 @@ export default function Sidebar() {
                 fontSizeKey={13}
                 fontFamilyKey={'Roboto'}
                 fontStyleKey={'normal'}
-                position='absolute'
-                marginRight='50px'
+                position="absolute"
+                marginRight="50px"
               >
                 ADD SPRINT
               </TypographyItem>
@@ -201,8 +194,9 @@ export default function Sidebar() {
               fontSizeKey={13}
               fontFamilyKey={'sans-serif'}
               fontStyleKey={'normal'}
-              marginLeft='25px'
-              marginTop='50px'            >
+              marginLeft="25px"
+              marginTop="50px"
+            >
               ALL SPRINTS
             </TypographyItem>
             <TypographyItem
@@ -210,15 +204,16 @@ export default function Sidebar() {
               fontSizeKey={18}
               fontFamilyKey={'Avenir'}
               fontStyleKey={'normal'}
-              marginRight='55px'
+              marginRight="55px"
             >
-              {Data.map((post: any) => {
-                return <h5>"Sourcery Students" - Sprint {post.id}</h5>;
-              }).reverse()}
+              {Data.map((post: any) => (
+                <h5 key={post.id}>Sourcery Students - Sprint {post.id}</h5>
+              )).reverse()}
             </TypographyItem>
           </>
         )}
       </Drawer>
+      <Box sx={{ paddingLeft: open ? '295px' : '0' }}>{props.children}</Box>
     </Box>
   );
 }

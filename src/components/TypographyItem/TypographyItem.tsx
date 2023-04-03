@@ -1,7 +1,5 @@
-
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
-
 
 type TypographyProps = {
   textAlignKey: any;
@@ -10,9 +8,7 @@ type TypographyProps = {
   fontStyleKey: string;
 };
 
-
-export const TypographyItem = styled(Typography)((props: TypographyProps) =>
-({
+export const TypographyItem = styled(Typography)((props: TypographyProps) => ({
   color: '#696969',
   alignItems: 'center',
   textAlign: props.textAlignKey,
@@ -22,11 +18,3 @@ export const TypographyItem = styled(Typography)((props: TypographyProps) =>
   fontWeight: 600,
   fontSize: props.fontSizeKey,
 }));
-
-
-
-
-
-
-
-

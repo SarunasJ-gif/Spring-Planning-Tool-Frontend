@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { Paper } from '@mui/material';
-import theme from '../../theme';
 
 type TaskKeyProps = {
   taskKey: string;
