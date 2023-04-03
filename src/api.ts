@@ -1,22 +1,28 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: process.env.BASE_URL,
 });
 
-axiosInstance.interceptors.request.use(async (config) => {
-  const token =
-    config.headers.Authorization ||
-    (await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(localStorage.getItem('token'));
-      }, 0);
-    }));
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+axiosInstance.interceptors.request.use(
+  async (config: InternalAxiosRequestConfig) => {
+    const token =
+      config.headers.Authorization ||
+      (await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(localStorage.getItem('token'));
+        }, 0);
+      }));
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+);
 
 const request = async <T>(
   method: string,
@@ -31,7 +37,7 @@ const request = async <T>(
       ...config,
       data,
     })
-    .then((response) => {
+    .then((response: AxiosResponse<T>) => {
       console.log(response.data);
       return response.data;
     });

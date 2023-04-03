@@ -10,7 +10,7 @@
 
 # production
 /build
-
+/mock_data/dist
 # misc
 .DS_Store
 .env
