@@ -12,8 +12,6 @@ import {
   Grid,
 } from '@mui/material';
 
-import TaskKey from './../TaskKey/TaskKey';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -23,21 +21,23 @@ import PopUp from './PopUp';
 
 interface PointData {
   id: number;
+  type: string;
   aPoints: number;
   bPoints: number;
   cPoints: number;
-  goal: string;
 }
-enum Goal {
-  Goal1 = 'A Goal',
-  Goal2 = 'B Goal',
-  Goal3 = 'C Goal',
+enum gType {
+  Goal = 'Goal',
+  Technical = 'Technical',
+  Null = '',
 }
 
 const initialPointData: PointData[] = [
-  { id: 1, aPoints: 0, bPoints: 20, cPoints: 5, goal: Goal.Goal1 },
-  { id: 2, aPoints: 0, bPoints: 15, cPoints: 2, goal: Goal.Goal2 },
-  { id: 3, aPoints: 0, bPoints: 25, cPoints: 7, goal: Goal.Goal3 },
+  { id: 1, aPoints: 0, bPoints: 0, cPoints: 5, type: gType.Goal },
+  { id: 2, aPoints: 3, bPoints: 1, cPoints: 0, type: gType.Technical },
+  { id: 3, aPoints: 5, bPoints: 2, cPoints: 0, type: gType.Null },
+  { id: 4, aPoints: 0, bPoints: 0, cPoints: 5, type: gType.Goal },
+  { id: 5, aPoints: 0, bPoints: 0, cPoints: 5, type: gType.Null },
 ];
 
 export default function TopTable() {
@@ -90,7 +90,7 @@ export default function TopTable() {
   const handlePointDataChange = (
     index: number,
     field: keyof PointData,
-    value: number,
+    value: string,
   ) => {
     setPointData((prevPointData) =>
       prevPointData.map((point, i) =>
@@ -103,8 +103,7 @@ export default function TopTable() {
 
   return (
     <TableContainer component={Paper}>
-      <Grid container alignItems="left" justifyContent="space-between">
-        <Grid></Grid>
+      <Grid container alignItems="left" justifyContent="right">
         <Grid>
           <Button
             variant={saveClicked ? 'contained' : 'outlined'}
@@ -126,99 +125,91 @@ export default function TopTable() {
         </Grid>
       </Grid>
       <Table size="medium" aria-label="a dense table">
-        <TableHead sx={{ bgcolor: 'grey.50', color: 'grey' }}>
-          <TableRow sx={{ color: 'grey.500' }}>
+        <TableHead sx={{ bgcolor: 'grey.50' }}>
+          <TableRow>
             <TableCell>Key</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Type</TableCell>
-            <TableCell>Old pts.</TableCell>
-            <TableCell>Remaining pts.</TableCell>
-            <TableCell>New pts.</TableCell>
+            <TableCell align="center">Old pts.</TableCell>
+            <TableCell align="center">Remaining pts.</TableCell>
+            <TableCell align="center">New pts.</TableCell>
             <TableCell>Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {pointData.map((point, index) => (
             <TableRow key={point.id}>
-              <TableCell component="th" scope="rowsTop" sx={{ mt: 0 }}>
+              <TableCell
+                component="th"
+                scope="rowsTop"
+                sx={{ border: '1px solid #ddd', width: 170 }}
+              >
                 <div style={{ display: 'flex', alignItems: 'justify' }}>
-                  <TaskKey
-                    taskKey={'SFD-173'}
-                    keyColor={''}
-                    keyBackgroundColor={''}
+                  <TextField
+                    id="key"
+                    label=""
+                    variant="standard"
+                    sx={{ minWidth: 70 }}
                   />
                   <PopUp />
                 </div>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ minWidth: 400 }}>
                 <TextField
                   id="standard-basic"
                   label=""
                   variant="standard"
-                  sx={{ mt: 2, width: '500px' }}
+                  sx={{ width: 600 }}
                 />
               </TableCell>
-              <TableCell>
-                <FormControl variant="standard" sx={{ mt: 0, width: 100 }}>
-                  <InputLabel id={`point-goal-label-${point.id}`}>
-                    Goal
-                  </InputLabel>
+              <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                <FormControl variant="standard">
                   <Select
-                    labelId={`point-goal-label-${point.id}`}
-                    id={`point-goal-select-${point.id}`}
-                    value={point.goal}
+                    id={`point-type-select-${point.id}`}
+                    value={point.type}
+                    displayEmpty
                     onChange={(event) =>
                       handlePointDataChange(
                         index,
-                        'goal',
+                        'type',
                         event.target.value as string,
                       )
                     }
-                    label="goal"
-                    sx={{ mt: 2, Width: 80 }}
                   >
-                    <MenuItem value={Goal.Goal1}>Goal A</MenuItem>
-                    <MenuItem value={Goal.Goal2}>Goal B</MenuItem>
-                    <MenuItem value={Goal.Goal3}>Goal C</MenuItem>
+                    <MenuItem value={gType.Goal}>Goal</MenuItem>
+                    <MenuItem value={gType.Technical}>Technical</MenuItem>
                   </Select>
                 </FormControl>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
                 <TextField
                   id={`aPoints${point.id}`}
                   label=""
                   variant="standard"
                   value={point.aPoints}
                   onChange={handleAPointsChange(point.id)}
-                  sx={{ mt: 2, Width: 80 }}
                 />
               </TableCell>
-              <TableCell sx={{ mt: 2, Width: 80 }}>
+              <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
                 <TextField
                   id={`bPoints${point.id}`}
                   label=""
                   variant="standard"
                   value={point.bPoints}
                   onChange={handleBPointsChange(point.id)}
-                  sx={{ mt: 2, Width: 80 }}
                 />
               </TableCell>
-              <TableCell sx={{ mt: 2, Width: 80 }}>
+              <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
                 <TextField
                   id={`cPoints${point.id}`}
                   label=""
                   variant="standard"
                   value={point.cPoints}
                   onChange={handleCPointsChange(point.id)}
-                  sx={{ mt: 2, Width: 80 }}
                 />
               </TableCell>
-              <TableCell>
-                <IconButton
-                  aria-label="delete"
-                  color="default"
-                  sx={{ mt: 2, Width: 80 }}
-                >
+              <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
+                <IconButton aria-label="delete" color="default">
                   <DeleteForeverIcon />
                 </IconButton>
               </TableCell>
@@ -228,16 +219,20 @@ export default function TopTable() {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell>Total</TableCell>
-            <TableCell align="center">
+            <TableCell align="center" sx={{ border: '1px solid #ddd' }}>
               {` ${pointData.reduce((acc, point) => acc + point.aPoints, 0)}`}
             </TableCell>
-            <TableCell align="center">
-              {` ${pointData.reduce((acc, point) => acc + point.bPoints, 0)}`}
-            </TableCell>
-            <TableCell align="center">
-              {`${pointData.reduce((acc, point) => acc + point.cPoints, 0)}`}
+            <TableCell align="right">
+              <div style={{ marginRight: '-22px' }}>
+                {' '}
+                {` ${pointData.reduce(
+                  (acc, point) => acc + point.bPoints + point.cPoints,
+                  0,
+                )}`}
+              </div>
             </TableCell>
             <TableCell></TableCell>
+            <TableCell sx={{ border: '1px solid #ddd' }}></TableCell>
           </TableRow>
         </TableBody>
       </Table>
