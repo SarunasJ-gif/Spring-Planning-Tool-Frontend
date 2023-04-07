@@ -31,7 +31,15 @@ export default function ColorPickerPopover() {
   const id = open ? 'color-picker-popover' : undefined;
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        border: '0.1px solid lightgrey',
+        borderRadius: '5px',
+        marginLeft: '10px',
+      }}
+    >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Button
           aria-describedby={id}
@@ -42,7 +50,7 @@ export default function ColorPickerPopover() {
             minWidth: '25px',
             backgroundColor: selectedColor,
           }}
-          sx={{ ml: 2 }}
+          sx={{ ml: 1 }}
         ></Button>
         <ColorizeIcon />
       </div>

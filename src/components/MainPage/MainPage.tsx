@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Typography, AccordionSummary } from '@mui/material/';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SAccordion } from '../../style/AccordionStyle';
-// import NewTask from '../NewTask/NewTask';
+import NewTask from '../NewTask/NewTask';
 
 function MainPage() {
   return (
@@ -18,7 +18,7 @@ function MainPage() {
 
       <Box sx={{ mt: 4 }}>
         <SAccordion sx={{ display: 'flex', justifyContent: 'left' }}>
-          {/* <NewTask /> */}
+          <NewTask />
           <AccordionSummary
             expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
           >

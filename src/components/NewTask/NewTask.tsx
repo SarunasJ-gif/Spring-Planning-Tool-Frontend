@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
   TableCell,
   Paper,
@@ -16,34 +16,90 @@ import TaskKey from './../TaskKey/TaskKey';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Button } from '@mui/material';
 import PopUp from './PopUp';
 
-function createData(
-  key: number,
-  description: string,
-  type: string,
-  oldPts: number,
-  remPts: number,
-  newPts: number,
-) {
-  return { key, description, oldPts, remPts, newPts };
+interface PointData {
+  id: number;
+  aPoints: number;
+  bPoints: number;
+  cPoints: number;
+  goal: string;
+}
+enum Goal {
+  Goal1 = 'A Goal',
+  Goal2 = 'B Goal',
+  Goal3 = 'C Goal',
 }
 
-const rows = [createData(0, '', '', 1, 1, 1), createData(1, '', '', 3, 5, 7)];
+const initialPointData: PointData[] = [
+  { id: 1, aPoints: 0, bPoints: 20, cPoints: 5, goal: Goal.Goal1 },
+  { id: 2, aPoints: 0, bPoints: 15, cPoints: 2, goal: Goal.Goal2 },
+  { id: 3, aPoints: 0, bPoints: 25, cPoints: 7, goal: Goal.Goal3 },
+];
 
 export default function TopTable() {
-  const [goal, setGoal] = React.useState('');
+  const [pointData, setPointData] = useState<PointData[]>(initialPointData);
+  const handleAPointsChange =
+    (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPointData((prevPointData) => {
+        return prevPointData.map((point) => {
+          if (point.id === id) {
+            return {
+              ...point,
+              aPoints: parseInt(event.target.value),
+            };
+          }
+          return point;
+        });
+      });
+    };
 
-  const handleChange2 = (event: SelectChangeEvent) => {
-    setGoal(event.target.value);
+  const handleBPointsChange =
+    (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPointData((prevPointData) => {
+        return prevPointData.map((point) => {
+          if (point.id === id) {
+            return {
+              ...point,
+              bPoints: parseInt(event.target.value),
+            };
+          }
+          return point;
+        });
+      });
+    };
+
+  const handleCPointsChange =
+    (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPointData((prevPointData) => {
+        return prevPointData.map((point) => {
+          if (point.id === id) {
+            return {
+              ...point,
+              cPoints: parseInt(event.target.value),
+            };
+          }
+          return point;
+        });
+      });
+    };
+
+  const handlePointDataChange = (
+    index: number,
+    field: keyof PointData,
+    value: number,
+  ) => {
+    setPointData((prevPointData) =>
+      prevPointData.map((point, i) =>
+        i === index ? { ...point, [field]: value } : point,
+      ),
+    );
   };
+
   const [saveClicked] = React.useState(false);
-  const totalMembers = rows.reduce((total, row) => total + row.oldPts, 0);
-  const totalProjects = rows.reduce((total, row) => total + row.remPts, 0);
-  const totalTasks = rows.reduce((total, row) => total + row.newPts, 0);
 
   return (
     <TableContainer component={Paper}>
@@ -57,7 +113,7 @@ export default function TopTable() {
             sx={{
               mt: 1,
               mr: 2,
-              mb: 0,
+              mb: 1,
               fontFamily: 'Poppins',
               '&:hover': {
                 backgroundColor: 'blue',
@@ -70,8 +126,8 @@ export default function TopTable() {
         </Grid>
       </Grid>
       <Table size="medium" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
+        <TableHead sx={{ bgcolor: 'grey.50', color: 'grey' }}>
+          <TableRow sx={{ color: 'grey.500' }}>
             <TableCell>Key</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Type</TableCell>
@@ -82,8 +138,8 @@ export default function TopTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((rows) => (
-            <TableRow key={rows.description}>
+          {pointData.map((point, index) => (
+            <TableRow key={point.id}>
               <TableCell component="th" scope="rowsTop" sx={{ mt: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'justify' }}>
                   <TaskKey
@@ -99,52 +155,61 @@ export default function TopTable() {
                   id="standard-basic"
                   label=""
                   variant="standard"
-                  sx={{ mt: 2, minWidth: 120 }}
+                  sx={{ mt: 2, width: '500px' }}
                 />
               </TableCell>
               <TableCell>
                 <FormControl variant="standard" sx={{ mt: 0, width: 100 }}>
-                  <InputLabel id="demo-simple-select-standard-label">
+                  <InputLabel id={`point-goal-label-${point.id}`}>
                     Goal
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    value={goal}
-                    onChange={handleChange2}
+                    labelId={`point-goal-label-${point.id}`}
+                    id={`point-goal-select-${point.id}`}
+                    value={point.goal}
+                    onChange={(event) =>
+                      handlePointDataChange(
+                        index,
+                        'goal',
+                        event.target.value as string,
+                      )
+                    }
                     label="goal"
                     sx={{ mt: 2, Width: 80 }}
                   >
-                    <MenuItem value={10}>Goal</MenuItem>
-                    <MenuItem value={20}>Goal2</MenuItem>
-                    <MenuItem value={30}>Goal3</MenuItem>
+                    <MenuItem value={Goal.Goal1}>Goal A</MenuItem>
+                    <MenuItem value={Goal.Goal2}>Goal B</MenuItem>
+                    <MenuItem value={Goal.Goal3}>Goal C</MenuItem>
                   </Select>
                 </FormControl>
               </TableCell>
               <TableCell>
                 <TextField
-                  id="standard-basic1"
+                  id={`aPoints${point.id}`}
                   label=""
                   variant="standard"
-                  value={rows.oldPts}
+                  value={point.aPoints}
+                  onChange={handleAPointsChange(point.id)}
                   sx={{ mt: 2, Width: 80 }}
                 />
               </TableCell>
               <TableCell sx={{ mt: 2, Width: 80 }}>
                 <TextField
-                  id="standard-basic2"
+                  id={`bPoints${point.id}`}
                   label=""
                   variant="standard"
-                  value={rows.remPts}
+                  value={point.bPoints}
+                  onChange={handleBPointsChange(point.id)}
                   sx={{ mt: 2, Width: 80 }}
                 />
               </TableCell>
               <TableCell sx={{ mt: 2, Width: 80 }}>
                 <TextField
-                  id="standard-basic3"
+                  id={`cPoints${point.id}`}
                   label=""
                   variant="standard"
-                  value={rows.newPts}
+                  value={point.cPoints}
+                  onChange={handleCPointsChange(point.id)}
                   sx={{ mt: 2, Width: 80 }}
                 />
               </TableCell>
@@ -159,13 +224,19 @@ export default function TopTable() {
               </TableCell>
             </TableRow>
           ))}
-          <TableRow>
+          <TableRow sx={{ bgcolor: 'grey.50' }}>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell>Total</TableCell>
-            <TableCell>{totalMembers}</TableCell>
-            <TableCell>{totalProjects}</TableCell>
-            <TableCell>{totalTasks}</TableCell>
+            <TableCell align="center">
+              {` ${pointData.reduce((acc, point) => acc + point.aPoints, 0)}`}
+            </TableCell>
+            <TableCell align="center">
+              {` ${pointData.reduce((acc, point) => acc + point.bPoints, 0)}`}
+            </TableCell>
+            <TableCell align="center">
+              {`${pointData.reduce((acc, point) => acc + point.cPoints, 0)}`}
+            </TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableBody>
