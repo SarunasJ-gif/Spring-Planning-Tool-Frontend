@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 
 type TypographyProps = {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   textAlignKey: any;
   fontSizeKey: number;
   fontFamilyKey: string;

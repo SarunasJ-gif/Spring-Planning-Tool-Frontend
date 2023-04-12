@@ -114,7 +114,7 @@ export default function Register() {
               id="confirm-password"
               autoComplete="current-password"
               {...register('confirmPassword', {
-                validate: (value) =>
+                validate: (value: any) =>
                   value === password || 'The passwords do not match',
               })}
               error={!!errors.confirmPassword}
