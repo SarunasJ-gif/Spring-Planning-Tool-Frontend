@@ -4,7 +4,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
 import Data from './mock_sprint.json';
 
-import { Box, IconButton, Button } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import {
   EventNoteRounded,
   AddCircleRounded,
