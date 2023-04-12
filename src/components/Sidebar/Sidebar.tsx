@@ -208,7 +208,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               fontStyleKey={'normal'}
               marginRight="55px"
             >
-              {Data.map((post: any) => (
+              {Data.map((post: { id: number }) => (
                 <h5 key={post.id}>
                   &ldquo;Sourcery Students&ldquo; - Sprint {post.id}
                 </h5>
