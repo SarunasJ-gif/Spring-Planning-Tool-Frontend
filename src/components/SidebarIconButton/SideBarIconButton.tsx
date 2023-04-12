@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 
 export const SidebarIconButton = styled(Button)((open) => ({
   minWidth: 0,
