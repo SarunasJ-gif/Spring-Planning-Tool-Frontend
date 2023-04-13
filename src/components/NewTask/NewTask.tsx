@@ -10,6 +10,7 @@ import {
   TextField,
   IconButton,
   Grid,
+  Typography,
 } from '@mui/material';
 
 import MenuItem from '@mui/material/MenuItem';
@@ -103,8 +104,19 @@ export default function TopTable() {
 
   return (
     <TableContainer component={Paper}>
-      <Grid container alignItems="left" justifyContent="right">
-        <Grid>
+      <Grid container alignItems="center" justifyContent="space-between">
+        <Grid item>
+          <Typography
+            sx={{
+              ml: 2,
+            }}
+          >
+            <h3>
+              <b>Tasks</b>
+            </h3>
+          </Typography>
+        </Grid>
+        <Grid item>
           <Button
             variant={saveClicked ? 'contained' : 'outlined'}
             color="primary"
@@ -124,118 +136,133 @@ export default function TopTable() {
           </Button>
         </Grid>
       </Grid>
-      <Table size="medium" aria-label="a dense table">
-        <TableHead sx={{ bgcolor: 'grey.50' }}>
-          <TableRow>
-            <TableCell>Key</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell align="center">Old pts.</TableCell>
-            <TableCell align="center">Remaining pts.</TableCell>
-            <TableCell align="center">New pts.</TableCell>
-            <TableCell>Delete</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {pointData.map((point, index) => (
-            <TableRow key={point.id}>
-              <TableCell
-                component="th"
-                scope="rowsTop"
-                sx={{ border: '1px solid #ddd', width: 170 }}
-              >
-                <div style={{ display: 'flex', alignItems: 'justify' }}>
+      {pointData.length === 0 ? (
+        <Table size="medium" sx={{ border: '1px solid #ddd' }}>
+          <TableCell
+            sx={{
+              width: 1700,
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              height: '80px',
+            }}
+          >
+            No task created.
+          </TableCell>
+        </Table>
+      ) : (
+        <Table size="medium" aria-label="a dense table">
+          <TableHead sx={{ bgcolor: 'grey.50' }}>
+            <TableRow>
+              <TableCell>Key</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell align="center">Old pts.</TableCell>
+              <TableCell align="center">Remaining pts.</TableCell>
+              <TableCell align="center">New pts.</TableCell>
+              <TableCell>Delete</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {pointData.map((point, index) => (
+              <TableRow key={point.id}>
+                <TableCell
+                  component="th"
+                  scope="rowsTop"
+                  sx={{ border: '1px solid #ddd', width: 170 }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'justify' }}>
+                    <TextField
+                      id="key"
+                      label=""
+                      variant="standard"
+                      sx={{ minWidth: 70 }}
+                    />
+                    <PopUp />
+                  </div>
+                </TableCell>
+                <TableCell sx={{ minWidth: 400 }}>
                   <TextField
-                    id="key"
+                    id="standard-basic"
                     label=""
                     variant="standard"
-                    sx={{ minWidth: 70 }}
+                    sx={{ width: 600 }}
                   />
-                  <PopUp />
+                </TableCell>
+                <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                  <FormControl variant="standard">
+                    <Select
+                      id={`point-type-select-${point.id}`}
+                      value={point.type}
+                      displayEmpty
+                      onChange={(event) =>
+                        handlePointDataChange(
+                          index,
+                          'type',
+                          event.target.value as string,
+                        )
+                      }
+                    >
+                      <MenuItem value={gType.Goal}>Goal</MenuItem>
+                      <MenuItem value={gType.Technical}>Technical</MenuItem>
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                  <TextField
+                    id={`aPoints${point.id}`}
+                    label=""
+                    variant="standard"
+                    value={point.aPoints}
+                    onChange={handleAPointsChange(point.id)}
+                  />
+                </TableCell>
+                <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                  <TextField
+                    id={`bPoints${point.id}`}
+                    label=""
+                    variant="standard"
+                    value={point.bPoints}
+                    onChange={handleBPointsChange(point.id)}
+                  />
+                </TableCell>
+                <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                  <TextField
+                    id={`cPoints${point.id}`}
+                    label=""
+                    variant="standard"
+                    value={point.cPoints}
+                    onChange={handleCPointsChange(point.id)}
+                  />
+                </TableCell>
+                <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
+                  <IconButton aria-label="delete" color="default">
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+            <TableRow sx={{ bgcolor: 'grey.50' }}>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell>Total</TableCell>
+              <TableCell align="center" sx={{ border: '1px solid #ddd' }}>
+                {` ${pointData.reduce((acc, point) => acc + point.aPoints, 0)}`}
+              </TableCell>
+              <TableCell align="right">
+                <div style={{ marginRight: '-22px' }}>
+                  {' '}
+                  {` ${pointData.reduce(
+                    (acc, point) => acc + point.bPoints + point.cPoints,
+                    0,
+                  )}`}
                 </div>
               </TableCell>
-              <TableCell sx={{ minWidth: 400 }}>
-                <TextField
-                  id="standard-basic"
-                  label=""
-                  variant="standard"
-                  sx={{ width: 600 }}
-                />
-              </TableCell>
-              <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
-                <FormControl variant="standard">
-                  <Select
-                    id={`point-type-select-${point.id}`}
-                    value={point.type}
-                    displayEmpty
-                    onChange={(event) =>
-                      handlePointDataChange(
-                        index,
-                        'type',
-                        event.target.value as string,
-                      )
-                    }
-                  >
-                    <MenuItem value={gType.Goal}>Goal</MenuItem>
-                    <MenuItem value={gType.Technical}>Technical</MenuItem>
-                  </Select>
-                </FormControl>
-              </TableCell>
-              <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
-                <TextField
-                  id={`aPoints${point.id}`}
-                  label=""
-                  variant="standard"
-                  value={point.aPoints}
-                  onChange={handleAPointsChange(point.id)}
-                />
-              </TableCell>
-              <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
-                <TextField
-                  id={`bPoints${point.id}`}
-                  label=""
-                  variant="standard"
-                  value={point.bPoints}
-                  onChange={handleBPointsChange(point.id)}
-                />
-              </TableCell>
-              <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
-                <TextField
-                  id={`cPoints${point.id}`}
-                  label=""
-                  variant="standard"
-                  value={point.cPoints}
-                  onChange={handleCPointsChange(point.id)}
-                />
-              </TableCell>
-              <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
-                <IconButton aria-label="delete" color="default">
-                  <DeleteForeverIcon />
-                </IconButton>
-              </TableCell>
+              <TableCell></TableCell>
+              <TableCell sx={{ border: '1px solid #ddd' }}></TableCell>
             </TableRow>
-          ))}
-          <TableRow sx={{ bgcolor: 'grey.50' }}>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell>Total</TableCell>
-            <TableCell align="center" sx={{ border: '1px solid #ddd' }}>
-              {` ${pointData.reduce((acc, point) => acc + point.aPoints, 0)}`}
-            </TableCell>
-            <TableCell align="right">
-              <div style={{ marginRight: '-22px' }}>
-                {' '}
-                {` ${pointData.reduce(
-                  (acc, point) => acc + point.bPoints + point.cPoints,
-                  0,
-                )}`}
-              </div>
-            </TableCell>
-            <TableCell></TableCell>
-            <TableCell sx={{ border: '1px solid #ddd' }}></TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      )}
     </TableContainer>
   );
 }
