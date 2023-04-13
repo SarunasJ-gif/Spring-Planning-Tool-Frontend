@@ -1,3 +1,6 @@
-FROM nginx:1.16.1-alpine
-COPY build/ /usr/share/nginx/html
-COPY ../../../../../kau-2023-spring-edvinas-fe/nginx.conf /etc/nginx/conf.d/default.conf
+FROM alpine:latest
+WORKDIR /app
+COPY build/ .
+ENV PORT=3000
+EXPOSE 3000
+CMD ["npx", "serve", "-s", "."]
