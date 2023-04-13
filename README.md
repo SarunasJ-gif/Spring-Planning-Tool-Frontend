@@ -12,7 +12,7 @@
 
 ## • UPPERCASE for constants
 
-## • Trailing commas
+• Trailing commas
 
 ## • Spaces around operators
 
