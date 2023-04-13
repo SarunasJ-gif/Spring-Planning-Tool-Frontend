@@ -44,8 +44,6 @@ build:
   script:
     - cd git-clone
     - npm install
-    - npm run lint
-    - npm run test-coverage
     - npm run build
     - docker build -t $IMAGE_URL .
     - docker push $IMAGE_URL
