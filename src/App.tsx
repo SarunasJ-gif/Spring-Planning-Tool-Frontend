@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <ThemeProvider theme={theme}>
