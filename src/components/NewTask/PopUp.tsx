@@ -1,9 +1,7 @@
 import * as React from 'react';
-import Popover from '@mui/material/Popover';
-import Button from '@mui/material/Button';
-import { ChromePicker } from 'react-color';
+import { Popover , Button, Box } from '@mui/material';
+import { ChromePicker, ColorResult } from 'react-color';
 import ColorizeIcon from '@mui/icons-material/Colorize';
-import { ColorResult } from 'react-color';
 
 export default function ColorPickerPopover() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -32,7 +30,7 @@ export default function ColorPickerPopover() {
   const id = open ? 'color-picker-popover' : undefined;
 
   return (
-    <div
+    <Box
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -41,7 +39,7 @@ export default function ColorPickerPopover() {
         marginLeft: '10px',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Box style={{ display: 'flex', alignItems: 'center' }}>
         <Button
           aria-describedby={id}
           onClick={handleClick}
@@ -54,7 +52,7 @@ export default function ColorPickerPopover() {
           sx={{ ml: 1 }}
         ></Button>
         <ColorizeIcon />
-      </div>
+      </Box>
       <Popover
         id={id}
         open={open}
@@ -65,7 +63,7 @@ export default function ColorPickerPopover() {
           horizontal: 'left',
         }}
       >
-        <div
+        <Box
           style={{
             fontSize: '16px',
             lineHeight: '24px',
@@ -75,8 +73,8 @@ export default function ColorPickerPopover() {
           }}
         >
           Pick a Color
-        </div>
-        <div
+        </Box>
+        <Box
           style={{
             padding: '16px',
             display: 'flex',
@@ -100,7 +98,7 @@ export default function ColorPickerPopover() {
               },
             }}
           />
-          <div
+          <Box
             style={{
               display: 'flex',
               justifyContent: 'right',
@@ -109,7 +107,7 @@ export default function ColorPickerPopover() {
               marginTop: '16px',
             }}
           >
-            <div>
+            <Box>
               <Button
                 onClick={handleClose}
                 color="primary"
@@ -124,10 +122,10 @@ export default function ColorPickerPopover() {
               >
                 OK
               </Button>
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Box>
+        </Box>
       </Popover>
-    </div>
+    </Box>
   );
 }

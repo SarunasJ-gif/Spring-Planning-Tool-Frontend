@@ -11,84 +11,64 @@ import {
   IconButton,
   Grid,
   Typography,
+  MenuItem,
+  FormControl,
+  Select,
+  Button,
+  Box
 } from '@mui/material';
-
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { Button } from '@mui/material';
 import PopUp from './PopUp';
+import { goalType } from './../../enums/enums'; 
+import produce from 'immer';
+import { StyledTableCell } from './styles.js';
 
 interface PointData {
   id: number;
   type: string;
-  aPoints: number;
-  bPoints: number;
-  cPoints: number;
-}
-enum gType {
-  Goal = 'Goal',
-  Technical = 'Technical',
-  Null = '',
+  oldPoints: number;
+  remainingPoints: number;
+  newPoints: number;
 }
 
 const initialPointData: PointData[] = [
-  { id: 1, aPoints: 0, bPoints: 0, cPoints: 5, type: gType.Goal },
-  { id: 2, aPoints: 3, bPoints: 1, cPoints: 0, type: gType.Technical },
-  { id: 3, aPoints: 5, bPoints: 2, cPoints: 0, type: gType.Null },
-  { id: 4, aPoints: 0, bPoints: 0, cPoints: 5, type: gType.Goal },
-  { id: 5, aPoints: 0, bPoints: 0, cPoints: 5, type: gType.Null },
+  { id: 1, oldPoints: 0, remainingPoints: 0, newPoints: 5, type: goalType.Goal },
+  { id: 2, oldPoints: 3, remainingPoints: 1, newPoints: 0, type: goalType.Technical },
+  { id: 3, oldPoints: 5, remainingPoints: 2, newPoints: 0, type: goalType.Null },
+  { id: 4, oldPoints: 0, remainingPoints: 0, newPoints: 5, type: goalType.Goal },
+  { id: 5, oldPoints: 0, remainingPoints: 0, newPoints: 5, type: goalType.Null },
 ];
 
 export default function TopTable() {
   const [pointData, setPointData] = useState<PointData[]>(initialPointData);
-  const handleAPointsChange =
-    (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setPointData((prevPointData) => {
-        return prevPointData.map((point) => {
-          if (point.id === id) {
-            return {
-              ...point,
-              aPoints: parseInt(event.target.value),
-            };
-          }
-          return point;
-        });
-      });
-    };
+  const handleOldPointsChange = (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPointData(produce((draft) => {
+      const point = draft.find((point) => point.id === id);
+      if (point) {
+        point.oldPoints = parseInt(event.target.value);
+      }
+    }));
+  };
 
-  const handleBPointsChange =
-    (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setPointData((prevPointData) => {
-        return prevPointData.map((point) => {
-          if (point.id === id) {
-            return {
-              ...point,
-              bPoints: parseInt(event.target.value),
-            };
-          }
-          return point;
-        });
-      });
-    };
+  const handleRemainingPointsChange = (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPointData(produce((draft) => {
+      const point = draft.find((point) => point.id === id);
+      if (point) {
+        point.remainingPoints = parseInt(event.target.value);
+      }
+    }));
+  };
+  
+  const handleNewPointsChange = (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPointData(produce((draft) => {
+      const point = draft.find((point) => point.id === id);
+      if (point) {
+        point.newPoints = parseInt(event.target.value);
+      }
+    }));
+  };
 
-  const handleCPointsChange =
-    (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setPointData((prevPointData) => {
-        return prevPointData.map((point) => {
-          if (point.id === id) {
-            return {
-              ...point,
-              cPoints: parseInt(event.target.value),
-            };
-          }
-          return point;
-        });
-      });
-    };
-
-  const handlePointDataChange = (
+  const handleGoalTypeChange = (
     index: number,
     field: keyof PointData,
     value: string,
@@ -100,7 +80,17 @@ export default function TopTable() {
     );
   };
 
-  const [saveClicked] = React.useState(false);
+const calculateTotalOldPoints = (pointData: any[]) => {
+  return pointData.reduce((acc: any, point: { oldPoints: any; }) => acc + point.oldPoints, 0);
+};
+
+const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
+  return pointData.reduce(
+    (acc: any, point: { remainingPoints: any; newPoints: any; }) => acc + point.remainingPoints + point.newPoints,
+    0
+  );
+};
+
 
   return (
     <TableContainer component={Paper}>
@@ -118,7 +108,7 @@ export default function TopTable() {
         </Grid>
         <Grid item>
           <Button
-            variant={saveClicked ? 'contained' : 'outlined'}
+            variant="outlined"
             color="primary"
             size="small"
             sx={{
@@ -136,19 +126,21 @@ export default function TopTable() {
           </Button>
         </Grid>
       </Grid>
+      <Table size="medium" aria-label="a dense table">
       {pointData.length === 0 ? (
-        <Table size="medium" sx={{ border: '1px solid #ddd' }}>
-          <TableCell
-            sx={{
-              width: 1700,
-              textAlign: 'center',
-              verticalAlign: 'middle',
-              height: '80px',
-            }}
-          >
-            No task created.
-          </TableCell>
-        </Table>
+        <TableCell size="medium" 
+  sx={{ 
+    border: '1px solid #ddd',
+    width: 1670,
+    textAlign: 'center',
+    height: '80px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+  No task created.
+</TableCell>
       ) : (
         <Table size="medium" aria-label="a dense table">
           <TableHead sx={{ bgcolor: 'grey.50' }}>
@@ -170,7 +162,7 @@ export default function TopTable() {
                   scope="rowsTop"
                   sx={{ border: '1px solid #ddd', width: 170 }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'justify' }}>
+                  <Box style={{ display: 'flex', alignItems: 'justify' }}>
                     <TextField
                       id="key"
                       label=""
@@ -178,62 +170,58 @@ export default function TopTable() {
                       sx={{ minWidth: 70 }}
                     />
                     <PopUp />
-                  </div>
+                  </Box>
                 </TableCell>
                 <TableCell sx={{ minWidth: 400 }}>
                   <TextField
                     id="standard-basic"
-                    label=""
                     variant="standard"
                     sx={{ width: 600 }}
                   />
                 </TableCell>
-                <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                <StyledTableCell>
                   <FormControl variant="standard">
                     <Select
                       id={`point-type-select-${point.id}`}
                       value={point.type}
                       displayEmpty
                       onChange={(event) =>
-                        handlePointDataChange(
+                        handleGoalTypeChange(
                           index,
                           'type',
                           event.target.value as string,
                         )
                       }
                     >
-                      <MenuItem value={gType.Goal}>Goal</MenuItem>
-                      <MenuItem value={gType.Technical}>Technical</MenuItem>
+                      <MenuItem value={goalType.Goal}>Goal</MenuItem>
+                      <MenuItem value={goalType.Technical}>Technical</MenuItem>
                     </Select>
                   </FormControl>
-                </TableCell>
-                <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                </StyledTableCell>
+                <StyledTableCell>
                   <TextField
-                    id={`aPoints${point.id}`}
-                    label=""
+                    id={`oldPoints${point.id}`}
                     variant="standard"
-                    value={point.aPoints}
-                    onChange={handleAPointsChange(point.id)}
+                    value={point.oldPoints}
+                    onChange={handleOldPointsChange(point.id)}
                   />
-                </TableCell>
-                <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                </StyledTableCell>
+                <StyledTableCell>
                   <TextField
-                    id={`bPoints${point.id}`}
-                    label=""
+                    id={`remainingPoints${point.id}`}
                     variant="standard"
-                    value={point.bPoints}
-                    onChange={handleBPointsChange(point.id)}
+                    value={point.remainingPoints}
+                    onChange={handleRemainingPointsChange(point.id)}
                   />
-                </TableCell>
-                <TableCell sx={{ border: '1px solid #ddd', width: 170 }}>
+                </StyledTableCell>
+                <StyledTableCell>
                   <TextField
-                    id={`cPoints${point.id}`}
-                    label=""
+                    id={`newPoints${point.id}`}
                     variant="standard"
-                    value={point.cPoints}
-                    onChange={handleCPointsChange(point.id)}
+                    value={point.newPoints}
+                    onChange={handleNewPointsChange(point.id)}
                   />
-                </TableCell>
+                </StyledTableCell>
                 <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
                   <IconButton aria-label="delete" color="default">
                     <DeleteForeverIcon />
@@ -241,28 +229,25 @@ export default function TopTable() {
                 </TableCell>
               </TableRow>
             ))}
-            <TableRow sx={{ bgcolor: 'grey.50' }}>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell>Total</TableCell>
-              <TableCell align="center" sx={{ border: '1px solid #ddd' }}>
-                {` ${pointData.reduce((acc, point) => acc + point.aPoints, 0)}`}
-              </TableCell>
-              <TableCell align="right">
-                <div style={{ marginRight: '-22px' }}>
-                  {' '}
-                  {` ${pointData.reduce(
-                    (acc, point) => acc + point.bPoints + point.cPoints,
-                    0,
-                  )}`}
-                </div>
-              </TableCell>
-              <TableCell></TableCell>
-              <TableCell sx={{ border: '1px solid #ddd' }}></TableCell>
-            </TableRow>
+<TableRow sx={{ bgcolor: 'grey.50' }}>
+  <TableCell></TableCell>
+  <TableCell></TableCell>
+  <TableCell>Total</TableCell>
+  <TableCell align="center" sx={{ border: '1px solid #ddd' }}>
+    {` ${calculateTotalOldPoints(pointData)}`}
+  </TableCell>
+  <TableCell align="right">
+    <Box style={{ marginRight: '-22px' }}>
+      {` ${calculateTotalRemainingAndNewPoints(pointData)}`}
+    </Box>
+  </TableCell>
+  <TableCell></TableCell>
+  <TableCell sx={{ border: '1px solid #ddd' }}></TableCell>
+</TableRow>
           </TableBody>
         </Table>
       )}
+        </Table>
     </TableContainer>
   );
 }

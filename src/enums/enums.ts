@@ -4,3 +4,9 @@ export enum Role {
   DESIGNER = 'Designer',
   TESTER = 'Tester',
 }
+
+export enum goalType {
+  Goal = 'Goal',
+  Technical = 'Technical',
+  Null = '',
+}
