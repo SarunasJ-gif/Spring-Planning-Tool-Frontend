@@ -1,11 +1,38 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 interface SprintCellProps {
   name: string;
+  setName: (name: string) => void;
 }
 
-export const SprintCell = ({ name }: SprintCellProps) => {
+export const SprintCell = ({ name, setName }: SprintCellProps) => {
+  const [editing, setEditing] = useState(false);
+  const [tempName, setTempName] = useState(name);
+
+  const handleDoubleClick = () => {
+    setEditing(true);
+  };
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (editing && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.setSelectionRange(tempName.length, tempName.length);
+    }
+  }, [editing]);
+  const handleBlur = () => {
+    setEditing(false);
+    setName(tempName);
+  };
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTempName(event.target.value);
+  };
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleBlur();
+    }
+  };
   return (
     <Box
       sx={{
@@ -38,22 +65,35 @@ export const SprintCell = ({ name }: SprintCellProps) => {
       >
         Sprint Name
       </Typography>
-      <Typography
-        variant="body1"
-        sx={{
-          fontFamily: 'Roboto',
-          fontStyle: 'normal',
-          fontWeight: 400,
-          fontSize: '16px',
-          lineHeight: '24px',
-          letterSpacing: '0.15px',
-          color: 'rgba(0, 0, 0, 0.87)',
-          marginTop: 'auto',
-          alignSelf: 'flex-start',
-        }}
-      >
-        {name}
-      </Typography>
+      {editing ? (
+        <input
+          ref={inputRef}
+          type="text"
+          value={tempName}
+          onChange={handleInputChange}
+          onBlur={handleBlur}
+          onKeyDown={handleInputKeyDown}
+        />
+      ) : (
+        <Typography
+          variant="body1"
+          sx={{
+            fontFamily: 'Roboto',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: '16px',
+            lineHeight: '24px',
+            letterSpacing: '0.15px',
+            color: 'rgba(0, 0, 0, 0.87)',
+            marginTop: 'auto',
+            alignSelf: 'flex-start',
+            cursor: 'text',
+          }}
+          onDoubleClick={handleDoubleClick}
+        >
+          {name}
+        </Typography>
+      )}
       <Box
         sx={{
           width: '100%',

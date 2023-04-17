@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { Typography, Box, Theme } from '@mui/material';
+import { Typography, Box, Theme, TextField } from '@mui/material';
 import { makeStyles } from '@mui/material/styles';
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import {
-  DateRangePicker,
-  DateRangePickerProps,
-  DateRange,
-} from '@mui/x-date-pickers-pro';
+import { DatePicker, DatePickerProps } from '@mui/x-date-pickers-pro';
 import { SprintCell } from './SprintCell';
 
 const theme = createTheme({
@@ -22,21 +18,34 @@ const theme = createTheme({
       lineHeight: '112px',
       letterSpacing: '-1.5px',
     },
+    body1: {
+      fontFamily: 'Roboto',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      fontSize: '16px',
+      lineHeight: '24px',
+      letterSpacing: '0.15px',
+      color: 'rgba(0, 0, 0, 0.87)',
+    },
   },
 });
 
-/*const useStyles = makeStyles((theme: Theme) => ({
-  dateRangePicker: {
-    backgroundColor: '#D8DAFF',
-  },
-}));*/
-
 export const TitleAndDate = () => {
-  const [value, setValue] = useState<DateRange<Dayjs>>([
-    dayjs('2021-09-12'),
-    dayjs('2021-10-12'),
-  ]);
-  //const classes=useStyles(theme);
+  const [startDate, setStartDate] = useState<Dayjs>(dayjs('2021-09-12'));
+  const [endDate, setEndDate] = useState<Dayjs>(dayjs('2021-10-12'));
+  const [name, setName] = useState<string>('"Sourcery Students" - Sprint');
+
+  const handleNameChange = (newName: string) => {
+    setName(newName);
+  };
+
+  const handleStartDateChange = (newValue: Dayjs | null) => {
+    setStartDate(newValue || dayjs());
+  };
+  const handleEndDateChange = (newValue: Dayjs | null) => {
+    setEndDate(newValue || dayjs());
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -57,7 +66,7 @@ export const TitleAndDate = () => {
           Add new sprint
         </Typography>
         <Box sx={{ marginTop: '12px' }}>
-          <SprintCell name={'"Sourcery Students - Sprint 18."'} />
+          <SprintCell name={name} setName={handleNameChange} />
         </Box>
       </Box>
       <Box
@@ -71,22 +80,58 @@ export const TitleAndDate = () => {
         }}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DateRangePicker', 'DateRangePicker']}>
-            <DemoItem component="DateRangePicker">
-              <DateRangePicker
-                value={value}
-                onChange={(newValue) => setValue(newValue)}
-                /*renderInput={(startProps, endProps) => (
-                  <React.Fragment>
-                    <input {...startProps.inputProps} />
-                    <span> to </span>
-                    <input {...endProps.inputProps} />
-                  </React.Fragment>
-                )}
-                startText={dayjs(value[0]).format("MMM DD, YYYY")}
-                endText={dayjs(value[1]).format("MMM DD, YYYY")}*/
-              />
-            </DemoItem>
+          <DemoContainer components={['DatePicker']}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <DemoItem component="DatePicker">
+                <Box sx={{ position: 'relative', width: '173px' }}>
+                  <DatePicker
+                    label="Start Date"
+                    value={startDate}
+                    onChange={handleStartDateChange}
+                    format="MMM DD, YYYY"
+                  />
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: '2px',
+                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      bottom: '0',
+                      left: '0',
+                    }}
+                  />
+                </Box>
+              </DemoItem>
+              <Box
+                sx={{
+                  marginLeft: '16px',
+                  marginRight: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Typography variant="body1">to</Typography>
+              </Box>
+              <DemoItem component="DatePicker">
+                <Box sx={{ position: 'relative', width: '173px' }}>
+                  <DatePicker
+                    label="End Date"
+                    value={endDate}
+                    onChange={handleEndDateChange}
+                    format="MMM DD, YYYY"
+                  />
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: '2px',
+                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      bottom: '0',
+                      left: '0',
+                    }}
+                  />
+                </Box>
+              </DemoItem>
+            </Box>
           </DemoContainer>
         </LocalizationProvider>
       </Box>
