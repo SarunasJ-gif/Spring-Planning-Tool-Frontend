@@ -23,6 +23,8 @@ import { goalType } from './../../enums/enums';
 import produce, { Draft } from 'immer';
 import { StyledTableCell } from '../../style/TableCellStyle.js';
 import MockedData from './mock_task.json';
+import { useSelector, useDispatch } from 'react-redux'
+import { Technical, Goal, Null } from './../../reducers/task/typeSlice'
 
 interface TaskData {
   key: string;
@@ -89,6 +91,8 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
     0
   );
 };
+
+const dispatch = useDispatch();
 
   return (
     <TableContainer component={Paper}>
@@ -193,8 +197,8 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
                         )
                       }
                     >
-                      <MenuItem value={goalType.Goal}>Goal</MenuItem>
-                      <MenuItem value={goalType.Technical}>Technical</MenuItem>
+                      <MenuItem value={goalType.Goal} onClick={() => dispatch(Goal())}>Goal</MenuItem>
+                      <MenuItem value={goalType.Technical} onClick={() => dispatch(Technical())}>Technical</MenuItem>
                     </Select>
                   </FormControl>
                 </StyledTableCell>
