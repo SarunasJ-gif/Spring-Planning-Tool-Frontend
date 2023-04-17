@@ -23,8 +23,8 @@ import { GoalType } from './../../enums/enums';
 import produce, { Draft } from 'immer';
 import { StyledTableCell } from '../../style/TableCellStyle.js';
 import MockedData from './mock_task.json';
-import { useSelector, useDispatch } from 'react-redux'
-import { Technical, Goal, Empty } from './../../reducers/task/typeSlice'
+import { useDispatch } from 'react-redux'
+import { Technical, Goal } from './../../reducers/task/typeSlice'
 
 interface TaskData {
   key: string;
