@@ -6,7 +6,7 @@ export enum Role {
 }
 
 export enum goalType {
-  Goal = 'Goal',
-  Technical = 'Technical',
-  Null = '',
+  GOAL_TYPE = 'Goal',
+  TECHNICAL_TYPE = 'Technical',
+  NULL_TYPE = '',
 }

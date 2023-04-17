@@ -197,8 +197,8 @@ const dispatch = useDispatch();
                         )
                       }
                     >
-                      <MenuItem value={goalType.Goal} onClick={() => dispatch(Goal())}>Goal</MenuItem>
-                      <MenuItem value={goalType.Technical} onClick={() => dispatch(Technical())}>Technical</MenuItem>
+                      <MenuItem value={goalType.GOAL_TYPE} onClick={() => dispatch(Goal())}>Goal</MenuItem>
+                      <MenuItem value={goalType.TECHNICAL_TYPE} onClick={() => dispatch(Technical())}>Technical</MenuItem>
                     </Select>
                   </FormControl>
                 </StyledTableCell>
