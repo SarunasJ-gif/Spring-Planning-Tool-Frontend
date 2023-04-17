@@ -182,6 +182,7 @@ const PlanTable: React.FC = () => {
                     >
                       <FormControl variant="standard" fullWidth>
                         <Select
+                          disableUnderline
                           sx={{
                             margin: 'auto',
                             width: '85%',
@@ -196,7 +197,6 @@ const PlanTable: React.FC = () => {
                           }
                           label="Task"
                         >
-                          <MenuItem value="">None</MenuItem>
                           <MenuItem value="Task">
                             {tasks[person]?.[day] === 'Task' ? (
                               <TaskKey
@@ -231,6 +231,7 @@ const PlanTable: React.FC = () => {
                               'Vacation'
                             )}
                           </MenuItem>
+                          <MenuItem value="">None</MenuItem>
                         </Select>
                       </FormControl>
                     </TableCell>
