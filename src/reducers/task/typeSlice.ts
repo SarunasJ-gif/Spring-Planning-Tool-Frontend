@@ -10,7 +10,7 @@ const typeSlice = createSlice({ name: 'type', initialState, reducers: {
     Empty(state) { state.GoalType = ""}  
 }})
 
-export const { Technical, Goal, Empty } = typeSlice.actions
+export const { Technical, Goal } = typeSlice.actions
 export default typeSlice.reducer;
 
 

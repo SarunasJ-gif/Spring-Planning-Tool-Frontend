@@ -76,9 +76,12 @@ export default function NewTask(): JSX.Element {
   };
 
   const handleGoalTypeChange = (index: number, field: keyof TaskData, value: GoalType) => {
-    setTasks((prevPointData) =>
-      prevPointData.map((point, i) => (i === index ? { ...point, [field]: value } : point))
-    );
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = {
+      ...updatedTasks[index],
+      [field]: value,
+    };
+    setTasks(updatedTasks);
   };
 
 const calculateTotalOldPoints = (pointData: any[]) => {
