@@ -31,10 +31,10 @@ const PEOPLE: string[] = [
 ];
 
 // You can change this to change the size of the sprint and the number of days in the table
-const DAYS_PER_WEEK = 10;
+const DAYS_PER_SPRINT = 10;
 
 const today = new Date();
-const amountOfDaysArray = Array.from({ length: DAYS_PER_WEEK }, (_, i) =>
+const amountOfDaysArray = Array.from({ length: DAYS_PER_SPRINT }, (_, i) =>
   addDays(today, i),
 );
 
@@ -117,7 +117,7 @@ const PlanTable: React.FC = () => {
       >
         <TableHead>
           <TableRow sx={{ height: '60px' }}>
-            <TableCell colSpan={DAYS_PER_WEEK + 1}>
+            <TableCell colSpan={DAYS_PER_SPRINT + 1}>
               <Typography variant="h5" fontWeight={500}>
                 Initial Plan
               </Typography>
@@ -130,7 +130,7 @@ const PlanTable: React.FC = () => {
               color: '#878787',
             }}
           >
-            {Array.from({ length: DAYS_PER_WEEK + 1 }, (_, i) => (
+            {Array.from({ length: DAYS_PER_SPRINT + 1 }, (_, i) => (
               <TableCell key={i} sx={{ textAlign: 'center', color: '#7C7D7C' }}>
                 {i === 0
                   ? ''
@@ -140,7 +140,7 @@ const PlanTable: React.FC = () => {
             <TableCell align="center">Total work days</TableCell>
           </TableRow>
           <TableRow sx={{ backgroundColor: '#F9FAFA', height: '48px' }}>
-            {Array.from({ length: DAYS_PER_WEEK + 1 }, (_, i) => (
+            {Array.from({ length: DAYS_PER_SPRINT + 1 }, (_, i) => (
               <TableCell key={i} sx={{ textAlign: 'center' }}>
                 {i === 0 ? '' : `${i}. ` + daysOfWeek[i % 5]}
               </TableCell>
@@ -152,7 +152,7 @@ const PlanTable: React.FC = () => {
           {Object.keys(tasks).length === 0 ? (
             <TableRow>
               <TableCell
-                colSpan={DAYS_PER_WEEK + 1}
+                colSpan={DAYS_PER_SPRINT + 1}
                 sx={{ textAlign: 'center' }}
               >
                 No tasks created
@@ -169,7 +169,7 @@ const PlanTable: React.FC = () => {
                 >
                   {person}
                 </TableCell>
-                {Array.from({ length: DAYS_PER_WEEK }, (_, i) => i + 1).map(
+                {Array.from({ length: DAYS_PER_SPRINT }, (_, i) => i + 1).map(
                   (day) => (
                     <TableCell
                       key={`${person}-${day}`}
