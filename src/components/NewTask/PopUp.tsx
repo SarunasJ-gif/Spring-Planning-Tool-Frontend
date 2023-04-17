@@ -1,14 +1,20 @@
 import * as React from 'react';
-import { Popover , Button, Box } from '@mui/material';
+import { Popover, Button, Box } from '@mui/material';
 import { ChromePicker, ColorResult } from 'react-color';
 import ColorizeIcon from '@mui/icons-material/Colorize';
 
-export default function ColorPickerPopover() {
+interface ColorPickerPopoverProps {
+  initialColor: string;
+}
+
+export default function ColorPickerPopover({
+  initialColor,
+}: ColorPickerPopoverProps) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
 
-  const [selectedColor, setSelectedColor] = React.useState('#E66465');
+  const [selectedColor, setSelectedColor] = React.useState(initialColor);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

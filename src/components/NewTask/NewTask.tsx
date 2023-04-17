@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
   TableCell,
   Paper,
@@ -20,63 +20,62 @@ import {
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PopUp from './PopUp';
 import { goalType } from './../../enums/enums'; 
-import produce from 'immer';
-import { StyledTableCell } from './styles.js';
+import produce, { Draft } from 'immer';
+import { StyledTableCell } from '../../style/TableCellStyle.js';
+import MockedData from './mock_task.json';
 
-interface PointData {
-  id: number;
+interface TaskData {
+  key: string;
+  color: string;
+  description: string;
   type: string;
   oldPoints: number;
   remainingPoints: number;
   newPoints: number;
 }
 
-const initialPointData: PointData[] = [
-  { id: 1, oldPoints: 0, remainingPoints: 0, newPoints: 5, type: goalType.Goal },
-  { id: 2, oldPoints: 3, remainingPoints: 1, newPoints: 0, type: goalType.Technical },
-  { id: 3, oldPoints: 5, remainingPoints: 2, newPoints: 0, type: goalType.Null },
-  { id: 4, oldPoints: 0, remainingPoints: 0, newPoints: 5, type: goalType.Goal },
-  { id: 5, oldPoints: 0, remainingPoints: 0, newPoints: 5, type: goalType.Null },
-];
+export default function NewTask(): JSX.Element {
+  const [tasks, setTasks] = useState<TaskData[]>([]);
+  useEffect(() => {
+    setTasks(MockedData);
+  }, []);
 
-export default function TopTable() {
-  const [pointData, setPointData] = useState<PointData[]>(initialPointData);
-  const handleOldPointsChange = (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPointData(produce((draft) => {
-      const point = draft.find((point) => point.id === id);
-      if (point) {
-        point.oldPoints = parseInt(event.target.value);
-      }
-    }));
+  const handleOldPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    setTasks(
+      produce((draft: Draft<TaskData[]>) => {
+        const point = draft.find((point) => point.key === key);
+        if (point) {
+          point.oldPoints = parseInt(event.target.value);
+        }
+      })
+    );
   };
 
-  const handleRemainingPointsChange = (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPointData(produce((draft) => {
-      const point = draft.find((point) => point.id === id);
-      if (point) {
-        point.remainingPoints = parseInt(event.target.value);
-      }
-    }));
-  };
-  
-  const handleNewPointsChange = (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPointData(produce((draft) => {
-      const point = draft.find((point) => point.id === id);
-      if (point) {
-        point.newPoints = parseInt(event.target.value);
-      }
-    }));
+  const handleRemainingPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    setTasks(
+      produce((draft: Draft<TaskData[]>) => {
+        const point = draft.find((point) => point.key === key);
+        if (point) {
+          point.remainingPoints = parseInt(event.target.value);
+        }
+      })
+    );
   };
 
-  const handleGoalTypeChange = (
-    index: number,
-    field: keyof PointData,
-    value: string,
-  ) => {
-    setPointData((prevPointData) =>
-      prevPointData.map((point, i) =>
-        i === index ? { ...point, [field]: value } : point,
-      ),
+  const handleNewPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    setTasks(
+      produce((draft: Draft<TaskData[]>) => {
+        const point = draft.find((point) => point.key === key);
+        if (point) {
+          point.newPoints = parseInt(event.target.value);
+        }
+      })
+    );
+  };
+
+  const handleGoalTypeChange = (index: number, field: keyof TaskData, value: goalType) => {
+    setTasks((prevPointData) =>
+      prevPointData.map((point, i) => (i === index ? { ...point, [field]: value } : point))
     );
   };
 
@@ -90,7 +89,6 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
     0
   );
 };
-
 
   return (
     <TableContainer component={Paper}>
@@ -127,7 +125,7 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
         </Grid>
       </Grid>
       <Table size="medium" aria-label="a dense table">
-      {pointData.length === 0 ? (
+      {tasks.length === 0 ? (
         <TableCell size="medium" 
   sx={{ 
     border: '1px solid #ddd',
@@ -155,8 +153,8 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {pointData.map((point, index) => (
-              <TableRow key={point.id}>
+            {tasks.map((point, index) => (
+              <TableRow key={point.key}>
                 <TableCell
                   component="th"
                   scope="rowsTop"
@@ -165,11 +163,11 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
                   <Box style={{ display: 'flex', alignItems: 'justify' }}>
                     <TextField
                       id="key"
-                      label=""
                       variant="standard"
                       sx={{ minWidth: 70 }}
+                      value={point.key}
                     />
-                    <PopUp />
+                    <PopUp initialColor={point.color} />
                   </Box>
                 </TableCell>
                 <TableCell sx={{ minWidth: 400 }}>
@@ -177,19 +175,21 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
                     id="standard-basic"
                     variant="standard"
                     sx={{ width: 600 }}
+                    value={point.description}
                   />
+                  
                 </TableCell>
                 <StyledTableCell>
                   <FormControl variant="standard">
                     <Select
-                      id={`point-type-select-${point.id}`}
+                      id={`point-type-select-${point.key}`}
                       value={point.type}
                       displayEmpty
                       onChange={(event) =>
                         handleGoalTypeChange(
                           index,
                           'type',
-                          event.target.value as string,
+                          event.target.value as goalType,
                         )
                       }
                     >
@@ -200,26 +200,26 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
                 </StyledTableCell>
                 <StyledTableCell>
                   <TextField
-                    id={`oldPoints${point.id}`}
+                    id={`oldPoints${point.key}`}
                     variant="standard"
                     value={point.oldPoints}
-                    onChange={handleOldPointsChange(point.id)}
+                    onChange={handleOldPointsChange(point.key)}
                   />
                 </StyledTableCell>
                 <StyledTableCell>
                   <TextField
-                    id={`remainingPoints${point.id}`}
+                    id={`remainingPoints${point.key}`}
                     variant="standard"
                     value={point.remainingPoints}
-                    onChange={handleRemainingPointsChange(point.id)}
+                    onChange={handleRemainingPointsChange(point.key)}
                   />
                 </StyledTableCell>
                 <StyledTableCell>
                   <TextField
-                    id={`newPoints${point.id}`}
+                    id={`newPoints${point.key}`}
                     variant="standard"
                     value={point.newPoints}
-                    onChange={handleNewPointsChange(point.id)}
+                    onChange={handleNewPointsChange(point.key)}
                   />
                 </StyledTableCell>
                 <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
@@ -234,11 +234,11 @@ const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
   <TableCell></TableCell>
   <TableCell>Total</TableCell>
   <TableCell align="center" sx={{ border: '1px solid #ddd' }}>
-    {` ${calculateTotalOldPoints(pointData)}`}
+    {` ${calculateTotalOldPoints(tasks)}`}
   </TableCell>
   <TableCell align="right">
     <Box style={{ marginRight: '-22px' }}>
-      {` ${calculateTotalRemainingAndNewPoints(pointData)}`}
+      {` ${calculateTotalRemainingAndNewPoints(tasks)}`}
     </Box>
   </TableCell>
   <TableCell></TableCell>
