@@ -19,12 +19,12 @@ import {
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PopUp from './PopUp';
-import { goalType } from './../../enums/enums'; 
+import { GoalType } from './../../enums/enums'; 
 import produce, { Draft } from 'immer';
 import { StyledTableCell } from '../../style/TableCellStyle.js';
 import MockedData from './mock_task.json';
 import { useSelector, useDispatch } from 'react-redux'
-import { Technical, Goal, Null } from './../../reducers/task/typeSlice'
+import { Technical, Goal, Empty } from './../../reducers/task/typeSlice'
 
 interface TaskData {
   key: string;
@@ -75,7 +75,7 @@ export default function NewTask(): JSX.Element {
     );
   };
 
-  const handleGoalTypeChange = (index: number, field: keyof TaskData, value: goalType) => {
+  const handleGoalTypeChange = (index: number, field: keyof TaskData, value: GoalType) => {
     setTasks((prevPointData) =>
       prevPointData.map((point, i) => (i === index ? { ...point, [field]: value } : point))
     );
@@ -193,12 +193,12 @@ const dispatch = useDispatch();
                         handleGoalTypeChange(
                           index,
                           'type',
-                          event.target.value as goalType,
+                          event.target.value as GoalType,
                         )
                       }
                     >
-                      <MenuItem value={goalType.GOAL_TYPE} onClick={() => dispatch(Goal())}>Goal</MenuItem>
-                      <MenuItem value={goalType.TECHNICAL_TYPE} onClick={() => dispatch(Technical())}>Technical</MenuItem>
+                      <MenuItem value={GoalType.GOAL_TYPE} onClick={() => dispatch(Goal())}>Goal</MenuItem>
+                      <MenuItem value={GoalType.TECHNICAL_TYPE} onClick={() => dispatch(Technical())}>Technical</MenuItem>
                     </Select>
                   </FormControl>
                 </StyledTableCell>

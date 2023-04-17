@@ -5,8 +5,8 @@ export enum Role {
   TESTER = 'Tester',
 }
 
-export enum goalType {
+export enum GoalType {
   GOAL_TYPE = 'Goal',
   TECHNICAL_TYPE = 'Technical',
-  NULL_TYPE = '',
+  NOT_SELECTED = '',
 }
