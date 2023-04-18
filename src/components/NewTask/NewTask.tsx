@@ -64,9 +64,7 @@ export default function NewTask(): JSX.Element {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
         const index = draft.findIndex((point) => point.key === key);
-        if (index !== -1) {
           draft[index].key = event.target.value;
-        }
       })
     );
   };
@@ -75,9 +73,7 @@ export default function NewTask(): JSX.Element {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
         const index = draft.findIndex((point) => point.key === key);
-        if (index !== -1) {
           draft[index].description = event.target.value;
-        }
       })
     );
   };
@@ -86,9 +82,7 @@ export default function NewTask(): JSX.Element {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
         const index = draft.findIndex((point) => point.key === key);
-        if (index !== -1) {
           draft[index].oldPoints = parseInt(event.target.value);
-        }
       })
     );
   };
@@ -97,9 +91,7 @@ export default function NewTask(): JSX.Element {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
         const index = draft.findIndex((point) => point.key === key);
-        if (index !== -1) {
           draft[index].remainingPoints = parseInt(event.target.value);
-        }
       })
     );
   };
@@ -108,9 +100,7 @@ export default function NewTask(): JSX.Element {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
         const index = draft.findIndex((point) => point.key === key);
-        if (index !== -1) {
           draft[index].newPoints = parseInt(event.target.value);
-        }
       })
     );
   };
