@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Typography, AccordionSummary } from '@mui/material/';
+import { Box, Typography, AccordionSummary, AccordionDetails } from '@mui/material/';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SAccordion } from '../../style/AccordionStyle';
 
@@ -22,6 +22,8 @@ function MainPage() {
           >
             <Typography>Tasks</Typography>
           </AccordionSummary>
+          <AccordionDetails>
+        </AccordionDetails>
         </SAccordion>
       </Box>
       <Box sx={{ mt: 4 }}>

@@ -1,4 +1,5 @@
-import { TableCell, styled } from '@material-ui/core';
+
+import { TableCell,styled } from '@mui/material';
 
 export const StyledTableCell = styled(TableCell)({
   border: '1px solid #ddd',
