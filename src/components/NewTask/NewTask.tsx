@@ -15,16 +15,17 @@ import {
   Box,
   Button,
   Typography,
-  Grid
+  Grid, Accordion, AccordionDetails, AccordionSummary
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PopUp from './PopUp';
-import { GoalType } from './../../enums/enums'; 
+import { GoalType } from '../../enums/enums'; 
 import produce, { Draft } from 'immer';
-import { StyledTableCell } from '../../style/TableCellStyle.js';
+import { StyledTableCell } from '../../style/TableCellStyle';
 import MockedData from './mock_task.json';
 import { useDispatch } from 'react-redux'
-import { Technical, Goal } from './../../reducers/task/typeSlice'
+import { Technical, Goal } from '../../reducers/task/typeSlice'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 interface TaskData {
   key: string;
@@ -38,17 +39,23 @@ interface TaskData {
 
 export default function NewTask(): JSX.Element {
   const [tasks, setTasks] = useState<TaskData[]>([]);
+
   const handleAddTask = () => {
-    setTasks([...tasks, {
-      key: "",
-      color: "#EC4226",
-      description: "",
-      type: "",
-      oldPoints: 0,
-      remainingPoints: 0,
-      newPoints: 0,
-    }]);
+    setTasks([
+      ...tasks,
+      {
+        key: '',
+        color: '#EC4226',
+        description: '',
+        type: '',
+        oldPoints: 0,
+        remainingPoints: 0,
+        newPoints: 0,
+      },
+    ]);
+     setExpanded('panel1');
   };
+
   useEffect(() => {
     setTasks(MockedData);
   }, []);
@@ -131,58 +138,94 @@ const handleDeleteTask = (key: string) => {
   setTasks(tasks.filter((task) => task.key !== key));
 };
 
+const [expanded, setExpanded] = React.useState<string | false>('panel1');
+
+const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+  if (
+    event.target &&
+    (event.target as HTMLElement).nodeName !== 'BUTTON' &&
+    (event.target as HTMLElement).nodeName !== 'svg'
+  ) {
+    setExpanded(isExpanded ? panel : false);
+  } else {
+    setExpanded(false);
+  }
+};
+
 const dispatch = useDispatch();
 
   return (
-    <TableContainer component={Paper}>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item>
-          <Typography
-            sx={{
-              ml: 2,
-            }}
-          >
-            <h3>
-              <b>Tasks</b>
-            </h3>
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="small"
-            onClick={handleAddTask}
-            sx={{
-              mt: 1,
-              mr: 2,
-              mb: 1,
-              fontFamily: 'Poppins',
-              '&:hover': {
-                backgroundColor: 'blue',
-                color: 'white',
-              },
-            }}
-          >
-            + ADD A TASK
-          </Button>
-        </Grid>
-      </Grid>
+        <Box sx={{ ml: 10 }}>
+      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <AccordionSummary
+          sx={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'left', height: 5, minHeight: 60}}
+        >
+          <Grid container alignItems="center" justifyContent="space-between">
+            <Grid item>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography
+                sx={{
+                  ml: 2,
+                }}
+              >
+                <h3>
+                  <b>Tasks</b>
+                </h3>
+              </Typography>
+              {expanded && (
+                <Button
+                  color="primary"
+                  size="small"
+                  sx={{
+                    ml: 2,
+                  }}
+                >
+                  <ArrowDropUpIcon />
+                </Button>
+              )}
+              </Box>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={handleAddTask}
+                sx={{
+                  fontFamily: 'Poppins',
+                  '&:hover': {
+                    backgroundColor: 'blue',
+                    color: 'white',
+                  },
+                }}
+              >
+                + ADD A TASK
+              </Button>
+            </Grid>
+          </Grid>
+        </AccordionSummary>
+        <AccordionDetails   
+          sx={{
+          padding: '8px 16px', // reduce top and bottom padding
+          marginTop: -8, // reduce top margin
+              }}
+              >
+              <TableContainer component={Paper}>
       <Table size="medium" aria-label="a dense table">
       {tasks.length === 0 ? (
         <TableCell size="medium" 
-  sx={{ 
-    border: '1px solid #ddd',
-    width: 1670,
-    textAlign: 'center',
-    height: '80px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}
->
-  No task created.
-</TableCell>
+           sx={{ 
+           border: '1px solid #ddd',
+           width: 1670,
+           textAlign: 'center',
+           height: '80px',
+           display: 'flex',
+           alignItems: 'center',
+           justifyContent: 'center',
+           }}
+           >
+           No task created.
+         </TableCell>
       ) : (
         <Table size="medium" aria-label="a dense table">
           <TableHead sx={{ bgcolor: 'grey.50' }}>
@@ -295,5 +338,9 @@ const dispatch = useDispatch();
       )}
         </Table>
     </TableContainer>
+        </AccordionDetails>
+      </Accordion>
+    </Box>
+
   );
 }
