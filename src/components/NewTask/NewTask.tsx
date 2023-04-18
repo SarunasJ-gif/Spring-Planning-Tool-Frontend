@@ -9,13 +9,13 @@ import {
   TableRow,
   TextField,
   IconButton,
-  Grid,
-  Typography,
   MenuItem,
   FormControl,
   Select,
+  Box,
   Button,
-  Box
+  Typography,
+  Grid
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PopUp from './PopUp';
@@ -38,13 +38,46 @@ interface TaskData {
 
 export default function NewTask(): JSX.Element {
   const [tasks, setTasks] = useState<TaskData[]>([]);
+  const handleAddTask = () => {
+    setTasks([...tasks, {
+      key: "",
+      color: "#EC4226",
+      description: "",
+      type: "",
+      oldPoints: 0,
+      remainingPoints: 0,
+      newPoints: 0,
+    }]);
+  };
   useEffect(() => {
     setTasks(MockedData);
   }, []);
+ 
+  const handleKeyChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    setTasks(
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        const index = draft.findIndex((point) => point.key === key);
+        if (index !== -1) {
+          draft[index].key = event.target.value;
+        }
+      })
+    );
+  };
+
+  const handleDescriptionChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    setTasks(
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        const index = draft.findIndex((point) => point.key === key);
+        if (index !== -1) {
+          draft[index].description = event.target.value;
+        }
+      })
+    );
+  };
 
   const handleOldPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
-      produce((draft: Draft<TaskData[]>) => {
+      produce(tasks, (draft: Draft<TaskData[]>) => {
         const index = draft.findIndex((point) => point.key === key);
         if (index !== -1) {
           draft[index].oldPoints = parseInt(event.target.value);
@@ -55,7 +88,7 @@ export default function NewTask(): JSX.Element {
   
   const handleRemainingPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
-      produce((draft: Draft<TaskData[]>) => {
+      produce(tasks, (draft: Draft<TaskData[]>) => {
         const index = draft.findIndex((point) => point.key === key);
         if (index !== -1) {
           draft[index].remainingPoints = parseInt(event.target.value);
@@ -66,7 +99,7 @@ export default function NewTask(): JSX.Element {
 
   const handleNewPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
-      produce((draft: Draft<TaskData[]>) => {
+      produce(tasks, (draft: Draft<TaskData[]>) => {
         const index = draft.findIndex((point) => point.key === key);
         if (index !== -1) {
           draft[index].newPoints = parseInt(event.target.value);
@@ -77,21 +110,12 @@ export default function NewTask(): JSX.Element {
   
   const handleGoalTypeChange = (index: number, field: keyof TaskData, value: GoalType) => {
     setTasks(
-      produce((draft: Draft<TaskData[]>) => {
-        draft[index][field] = value;
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        draft[index].type = value;
       })
     );
   };
     
-  // const handleGoalTypeChange = (index: number, field: keyof TaskData, value: GoalType) => {
-  //   const updatedTasks = [...tasks];
-  //   updatedTasks[index] = {
-  //     ...updatedTasks[index],
-  //     [field]: value,
-  //   };
-  //   setTasks(updatedTasks);
-  // };
-
 const calculateTotalOldPoints = (totals: TaskData[]) => {
   return totals.reduce((acc: number, point: { oldPoints: number; }) => acc + point.oldPoints, 0);
 };
@@ -101,6 +125,10 @@ const calculateTotalRemainingAndNewPoints = (totals: TaskData[]) => {
     (acc: number, point: { remainingPoints: number; newPoints: number; }) => acc + point.remainingPoints + point.newPoints,
     0
   );
+};
+
+const handleDeleteTask = (key: string) => {
+  setTasks(tasks.filter((task) => task.key !== key));
 };
 
 const dispatch = useDispatch();
@@ -124,6 +152,7 @@ const dispatch = useDispatch();
             variant="outlined"
             color="primary"
             size="small"
+            onClick={handleAddTask}
             sx={{
               mt: 1,
               mr: 2,
@@ -176,11 +205,12 @@ const dispatch = useDispatch();
                   sx={{ border: '1px solid #ddd', width: 170 }}
                 >
                   <Box style={{ display: 'flex', alignItems: 'justify' }}>
-                    <TextField
-                      id="key"
-                      variant="standard"
-                      sx={{ minWidth: 70 }}
-                      value={point.key}
+                  <TextField
+                     id="key"
+                     variant="standard"
+                     sx={{ minWidth: 70 }}
+                     value={point.key}
+                     onChange={handleKeyChange(point.key)}
                     />
                     <PopUp initialColor={point.color} />
                   </Box>
@@ -191,6 +221,7 @@ const dispatch = useDispatch();
                     variant="standard"
                     sx={{ width: 600 }}
                     value={point.description}
+                    onChange={handleDescriptionChange(point.key)}
                   />
                   
                 </TableCell>
@@ -238,7 +269,7 @@ const dispatch = useDispatch();
                   />
                 </StyledTableCell>
                 <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
-                  <IconButton aria-label="delete" color="default">
+                 <IconButton onClick={() => handleDeleteTask(point.key)}>
                     <DeleteForeverIcon />
                   </IconButton>
                 </TableCell>
