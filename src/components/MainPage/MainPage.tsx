@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Box, Typography, AccordionSummary } from '@mui/material/';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SAccordion } from '../../style/AccordionStyle';
+import NewTask from '../NewTask/NewTask';
 
 function MainPage() {
   return (
@@ -22,6 +23,7 @@ function MainPage() {
           >
             <Typography>Tasks</Typography>
           </AccordionSummary>
+          <NewTask />
         </SAccordion>
       </Box>
       <Box sx={{ mt: 4 }}>

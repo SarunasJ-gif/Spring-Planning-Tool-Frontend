@@ -45,20 +45,20 @@ export default function NewTask(): JSX.Element {
   const handleOldPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce((draft: Draft<TaskData[]>) => {
-        const point = draft.find((point) => point.key === key);
-        if (point) {
-          point.oldPoints = parseInt(event.target.value);
+        const index = draft.findIndex((point) => point.key === key);
+        if (index !== -1) {
+          draft[index].oldPoints = parseInt(event.target.value);
         }
       })
     );
   };
-
+  
   const handleRemainingPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce((draft: Draft<TaskData[]>) => {
-        const point = draft.find((point) => point.key === key);
-        if (point) {
-          point.remainingPoints = parseInt(event.target.value);
+        const index = draft.findIndex((point) => point.key === key);
+        if (index !== -1) {
+          draft[index].remainingPoints = parseInt(event.target.value);
         }
       })
     );
@@ -67,30 +67,38 @@ export default function NewTask(): JSX.Element {
   const handleNewPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce((draft: Draft<TaskData[]>) => {
-        const point = draft.find((point) => point.key === key);
-        if (point) {
-          point.newPoints = parseInt(event.target.value);
+        const index = draft.findIndex((point) => point.key === key);
+        if (index !== -1) {
+          draft[index].newPoints = parseInt(event.target.value);
         }
       })
     );
   };
-
+  
   const handleGoalTypeChange = (index: number, field: keyof TaskData, value: GoalType) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index] = {
-      ...updatedTasks[index],
-      [field]: value,
-    };
-    setTasks(updatedTasks);
+    setTasks(
+      produce((draft: Draft<TaskData[]>) => {
+        draft[index][field] = value;
+      })
+    );
   };
+    
+  // const handleGoalTypeChange = (index: number, field: keyof TaskData, value: GoalType) => {
+  //   const updatedTasks = [...tasks];
+  //   updatedTasks[index] = {
+  //     ...updatedTasks[index],
+  //     [field]: value,
+  //   };
+  //   setTasks(updatedTasks);
+  // };
 
-const calculateTotalOldPoints = (pointData: any[]) => {
-  return pointData.reduce((acc: any, point: { oldPoints: any; }) => acc + point.oldPoints, 0);
+const calculateTotalOldPoints = (totals: TaskData[]) => {
+  return totals.reduce((acc: number, point: { oldPoints: number; }) => acc + point.oldPoints, 0);
 };
 
-const calculateTotalRemainingAndNewPoints = (pointData: any[]) => {
-  return pointData.reduce(
-    (acc: any, point: { remainingPoints: any; newPoints: any; }) => acc + point.remainingPoints + point.newPoints,
+const calculateTotalRemainingAndNewPoints = (totals: TaskData[]) => {
+  return totals.reduce(
+    (acc: number, point: { remainingPoints: number; newPoints: number; }) => acc + point.remainingPoints + point.newPoints,
     0
   );
 };
