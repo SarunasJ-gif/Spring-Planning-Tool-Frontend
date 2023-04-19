@@ -14,7 +14,6 @@ function MainPage() {
           29/09/2021 - 10/12/2021
         </Typography>
       </Box>
-
       <Box sx={{ mt: 4 }}>
         <SAccordion sx={{ display: 'flex', justifyContent: 'left' }}>
           <AccordionSummary
