@@ -1,10 +1,8 @@
 import NewTask from "../../components/NewTask/NewTask";
 
 function AddSprint() {
-
   return (
-<NewTask />
+          <NewTask />
   );
 }
-
 export default AddSprint;

@@ -15,7 +15,7 @@ import {
   Box,
   Button,
   Typography,
-  Grid, Accordion, AccordionDetails, AccordionSummary
+  Grid
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PopUp from './PopUp';
@@ -26,6 +26,7 @@ import MockedData from './mock_task.json';
 import { useDispatch } from 'react-redux'
 import { Technical, Goal } from '../../reducers/task/typeSlice'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 interface TaskData {
   keyValue: string;
@@ -36,10 +37,8 @@ interface TaskData {
   remainingPoints: number;
   newPoints: number;
 }
-
 export default function NewTask(): JSX.Element {
   const [tasks, setTasks] = useState<TaskData[]>([]);
-
   const handleAddTask = () => {
     setTasks([
       ...tasks,
@@ -53,13 +52,11 @@ export default function NewTask(): JSX.Element {
         newPoints: 0,
       },
     ]);
-     setExpanded('panel1');
+    setExpanded(false);
   };
-
   useEffect(() => {
     setTasks(MockedData);
   }, []);
- 
   const handleKeyChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
@@ -68,7 +65,7 @@ export default function NewTask(): JSX.Element {
       })
     );
   };
-
+  
   const handleDescriptionChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
@@ -113,44 +110,34 @@ export default function NewTask(): JSX.Element {
     );
   };
     
-const calculateTotalOldPoints = (totals: TaskData[]) => {
-  return totals.reduce((acc: number, point: { oldPoints: number; }) => acc + point.oldPoints, 0);
+  const calculateTotalOldPoints = (totals: TaskData[]) => {
+    return totals.reduce((acc: number, point: { oldPoints: number; }) => acc + point.oldPoints, 0);
+  };
+
+  const calculateTotalRemainingAndNewPoints = (totals: TaskData[]) => {
+    return totals.reduce(
+      (acc: number, point: { remainingPoints: number; newPoints: number; }) => acc + point.remainingPoints + point.newPoints,
+      0
+    );
+  };
+  const handleDeleteTask = (key: string) => {
+    setTasks(tasks.filter((task) => task.keyValue !== key));
+  };
+
+const [expanded, setExpanded] = useState(false);
+
+const handleAccordionToggle = () => {
+  setExpanded(!expanded);
 };
-
-const calculateTotalRemainingAndNewPoints = (totals: TaskData[]) => {
-  return totals.reduce(
-    (acc: number, point: { remainingPoints: number; newPoints: number; }) => acc + point.remainingPoints + point.newPoints,
-    0
-  );
-};
-
-const handleDeleteTask = (key: string) => {
-  setTasks(tasks.filter((task) => task.keyValue !== key));
-};
-
-const [expanded, setExpanded] = React.useState<string | false>('panel1');
-
-const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-  if (
-    event.target &&
-    (event.target as HTMLElement).nodeName !== 'BUTTON' &&
-    (event.target as HTMLElement).nodeName !== 'svg'
-  ) {
-    setExpanded(isExpanded ? panel : false);
-  } else {
-    setExpanded(false);
-  }
-};
-
 const dispatch = useDispatch();
 
   return (
-        <Box sx={{ ml: 10 }}>
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
+    <Box sx={{ ml: 10 }}> 
+      <Accordion expanded={!expanded}>
+      <AccordionSummary
           sx={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'left', height: 5, minHeight: 60}}
         >
-          <Grid container alignItems="center" justifyContent="space-between">
+      <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography
@@ -162,17 +149,16 @@ const dispatch = useDispatch();
                   <b>Tasks</b>
                 </h3>
               </Typography>
-              {expanded && (
-                <Button
-                  color="primary"
-                  size="small"
-                  sx={{
-                    ml: 2,
-                  }}
-                >
-                  <ArrowDropUpIcon />
-                </Button>
-              )}
+            <Button
+              color="primary"
+              size="small"
+              onClick={handleAccordionToggle}
+              sx={{
+                ml: 2,
+              }}
+            > 
+             <ArrowDropUpIcon sx={{ transform: expanded ? 'rotate(180deg)' : 'none' }} />
+            </Button>
               </Box>
             </Grid>
             <Grid item>
@@ -198,8 +184,7 @@ const dispatch = useDispatch();
           sx={{
           padding: '8px 16px', // reduce top and bottom padding
           marginTop: -8, // reduce top margin
-              }}
-              >
+              }}>
               <TableContainer component={Paper}>
       <Table size="medium" aria-label="a dense table">
       {tasks.length === 0 ? (
@@ -313,11 +298,11 @@ const dispatch = useDispatch();
   <TableCell></TableCell>
   <TableCell>Total</TableCell>
   <TableCell align="center" sx={{ border: '1px solid #ddd' }}>
-    {` ${calculateTotalOldPoints(tasks)}`}
+  {` ${calculateTotalOldPoints(tasks)}`}
   </TableCell>
   <TableCell align="right">
     <Box style={{ marginRight: '-22px' }}>
-      {` ${calculateTotalRemainingAndNewPoints(tasks)}`}
+    {` ${calculateTotalRemainingAndNewPoints(tasks)}`}
     </Box>
   </TableCell>
   <TableCell></TableCell>
@@ -328,9 +313,9 @@ const dispatch = useDispatch();
       )}
         </Table>
     </TableContainer>
+ 
         </AccordionDetails>
       </Accordion>
     </Box>
-
   );
 }
