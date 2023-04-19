@@ -1,0 +1,7 @@
+.invalid {
+  border: 1px solid red !important;
+  background-color: red !important;
+}
+.MuiInputBase-input {
+  z-index: 1;
+}

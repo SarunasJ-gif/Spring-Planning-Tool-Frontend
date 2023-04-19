@@ -1,39 +1,17 @@
 import React, { useState } from 'react';
-import { Typography, Box, Theme, TextField } from '@mui/material';
-import { makeStyles } from '@mui/material/styles';
+import { Typography, Box, ThemeProvider } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import { DatePicker, DatePickerProps } from '@mui/x-date-pickers-pro';
+import { DatePicker } from '@mui/x-date-pickers-pro';
 import { SprintCell } from './SprintCell';
-
-const theme = createTheme({
-  typography: {
-    h1: {
-      fontFamily: 'Poppins',
-      fontWeight: 600,
-      fontSize: '34px',
-      lineHeight: '112px',
-      letterSpacing: '-1.5px',
-    },
-    body1: {
-      fontFamily: 'Roboto',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      fontSize: '16px',
-      lineHeight: '24px',
-      letterSpacing: '0.15px',
-      color: 'rgba(0, 0, 0, 0.87)',
-    },
-  },
-});
+import theme from './theme';
 
 export const TitleAndDate = () => {
-  const [startDate, setStartDate] = useState<Dayjs>(dayjs('2021-09-12'));
-  const [endDate, setEndDate] = useState<Dayjs>(dayjs('2021-10-12'));
-  const [name, setName] = useState<string>('"Sourcery Students" - Sprint');
+  const [startDate, setStartDate] = useState<Dayjs>(dayjs(''));
+  const [endDate, setEndDate] = useState<Dayjs>(dayjs(''));
+  const [name, setName] = useState<string>('');
 
   const handleNameChange = (newName: string) => {
     setName(newName);
@@ -83,21 +61,18 @@ export const TitleAndDate = () => {
           <DemoContainer components={['DatePicker']}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <DemoItem component="DatePicker">
-                <Box sx={{ position: 'relative', width: '173px' }}>
+                <Box
+                  sx={{
+                    position: 'relative',
+                    width: '173px',
+                    borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
+                  }}
+                >
                   <DatePicker
                     label="Start Date"
                     value={startDate}
                     onChange={handleStartDateChange}
                     format="MMM DD, YYYY"
-                  />
-                  <Box
-                    sx={{
-                      width: '100%',
-                      height: '2px',
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                      bottom: '0',
-                      left: '0',
-                    }}
                   />
                 </Box>
               </DemoItem>
@@ -113,21 +88,18 @@ export const TitleAndDate = () => {
                 <Typography variant="body1">to</Typography>
               </Box>
               <DemoItem component="DatePicker">
-                <Box sx={{ position: 'relative', width: '173px' }}>
+                <Box
+                  sx={{
+                    position: 'relative',
+                    width: '173px',
+                    borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
+                  }}
+                >
                   <DatePicker
                     label="End Date"
                     value={endDate}
                     onChange={handleEndDateChange}
                     format="MMM DD, YYYY"
-                  />
-                  <Box
-                    sx={{
-                      width: '100%',
-                      height: '2px',
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                      bottom: '0',
-                      left: '0',
-                    }}
                   />
                 </Box>
               </DemoItem>
