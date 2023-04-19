@@ -41,6 +41,26 @@ const amountOfDaysArray = Array.from({ length: DAYS_PER_SPRINT }, (_, i) =>
 const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
 const PlanTable: React.FC = () => {
+  // const [tasks, setTasks] = useState<any>([
+  //   { member: { name: 'test', workingDays: [{ dayDate: '2023-04-18', task: '' }, { dayDate: '2023-04-19', task: '' }] } },
+  // ]);
+  // const [showNotification, setShowNotification] = useState<boolean>(true);
+  // const [totalWorkDays, setTotalWorkDays] = useState<number>(0);
+  //
+  // const handleTaskChange = (person: string, day: number, value: string) => {
+  // const task = produce(tasks, tasksDraft => {
+  //   const memberIndex = tasksDraft.findeIndex(o => o.id === id);
+  //   const tasksIndex = tasksDraft[memberIndex].workingDays.findeIndex(o => o.id === id);
+  //   tasksDraft[memberIndex].workingDays[tasksIndex].task === task;
+  // });
+  // setTasks((prevTasks) => ({
+  //   ...prevTasks,
+  //   [person]: {
+  //     ...prevTasks[person],
+  //     [day]: value,
+  //   },
+  // }));
+  // };
   const [tasks, setTasks] = useState<Tasks>({
     'Laura Sunshine': {
       1: 'Task',
