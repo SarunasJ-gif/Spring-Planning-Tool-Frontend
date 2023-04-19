@@ -9,6 +9,7 @@ import MainPage from '../components/MainPage/MainPage';
 import NotFound from '../components/ErrorPage/NotFound';
 import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
+import ManageTeam from '../pages/manage-team/ManageTeam';
 import AddSprint from '../pages/add-sprint/AddSprint';
 
 type MyErrorBoundaryProps = {
@@ -60,7 +61,7 @@ const routeOptions: RouteObject[] = [
       },
       {
         path: Endpoint.MANAGE_TEAM,
-        element: '',
+        element: <ManageTeam />,
       },
     ],
   },
