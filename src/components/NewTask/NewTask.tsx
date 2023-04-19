@@ -28,7 +28,7 @@ import { Technical, Goal } from '../../reducers/task/typeSlice'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 interface TaskData {
-  key: string;
+  keyValue: string;
   color: string;
   description: string;
   type: string;
@@ -44,7 +44,7 @@ export default function NewTask(): JSX.Element {
     setTasks([
       ...tasks,
       {
-        key: '',
+        keyValue: '',
         color: '#EC4226',
         description: '',
         type: '',
@@ -63,8 +63,8 @@ export default function NewTask(): JSX.Element {
   const handleKeyChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.key === key);
-          draft[index].key = event.target.value;
+        const index = draft.findIndex((point) => point.keyValue === key);
+          draft[index].keyValue = event.target.value;
       })
     );
   };
@@ -72,7 +72,7 @@ export default function NewTask(): JSX.Element {
   const handleDescriptionChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.key === key);
+        const index = draft.findIndex((point) => point.keyValue === key);
           draft[index].description = event.target.value;
       })
     );
@@ -81,7 +81,7 @@ export default function NewTask(): JSX.Element {
   const handleOldPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.key === key);
+        const index = draft.findIndex((point) => point.keyValue === key);
           draft[index].oldPoints = parseInt(event.target.value);
       })
     );
@@ -90,7 +90,7 @@ export default function NewTask(): JSX.Element {
   const handleRemainingPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.key === key);
+        const index = draft.findIndex((point) => point.keyValue === key);
           draft[index].remainingPoints = parseInt(event.target.value);
       })
     );
@@ -99,7 +99,7 @@ export default function NewTask(): JSX.Element {
   const handleNewPointsChange = (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
     setTasks(
       produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.key === key);
+        const index = draft.findIndex((point) => point.keyValue === key);
           draft[index].newPoints = parseInt(event.target.value);
       })
     );
@@ -125,7 +125,7 @@ const calculateTotalRemainingAndNewPoints = (totals: TaskData[]) => {
 };
 
 const handleDeleteTask = (key: string) => {
-  setTasks(tasks.filter((task) => task.key !== key));
+  setTasks(tasks.filter((task) => task.keyValue !== key));
 };
 
 const [expanded, setExpanded] = React.useState<string | false>('panel1');
@@ -231,7 +231,7 @@ const dispatch = useDispatch();
           </TableHead>
           <TableBody>
             {tasks.map((point, index) => (
-              <TableRow key={point.key}>
+              <TableRow key={index}>
                 <TableCell
                   component="th"
                   scope="rowsTop"
@@ -239,11 +239,11 @@ const dispatch = useDispatch();
                 >
                   <Box style={{ display: 'flex', alignItems: 'justify' }}>
                   <TextField
-                     id="key"
+                     id="keyValue"
                      variant="standard"
                      sx={{ minWidth: 70 }}
-                     value={point.key}
-                     onChange={handleKeyChange(point.key)}
+                     value={point.keyValue}
+                     onChange={handleKeyChange(point.keyValue)}
                     />
                     <PopUp initialColor={point.color} />
                   </Box>
@@ -254,14 +254,14 @@ const dispatch = useDispatch();
                     variant="standard"
                     sx={{ width: 600 }}
                     value={point.description}
-                    onChange={handleDescriptionChange(point.key)}
+                    onChange={handleDescriptionChange(point.keyValue)}
                   />
                   
                 </TableCell>
                 <StyledTableCell>
                   <FormControl variant="standard">
                     <Select
-                      id={`point-type-select-${point.key}`}
+                      id={`point-type-select-${point.keyValue}`}
                       value={point.type}
                       displayEmpty
                       onChange={(event) =>
@@ -279,30 +279,30 @@ const dispatch = useDispatch();
                 </StyledTableCell>
                 <StyledTableCell>
                   <TextField
-                    id={`oldPoints${point.key}`}
+                    id={`oldPoints${point.keyValue}`}
                     variant="standard"
                     value={point.oldPoints}
-                    onChange={handleOldPointsChange(point.key)}
+                    onChange={handleOldPointsChange(point.keyValue)}
                   />
                 </StyledTableCell>
                 <StyledTableCell>
                   <TextField
-                    id={`remainingPoints${point.key}`}
+                    id={`remainingPoints${point.keyValue}`}
                     variant="standard"
                     value={point.remainingPoints}
-                    onChange={handleRemainingPointsChange(point.key)}
+                    onChange={handleRemainingPointsChange(point.keyValue)}
                   />
                 </StyledTableCell>
                 <StyledTableCell>
                   <TextField
-                    id={`newPoints${point.key}`}
+                    id={`newPoints${point.keyValue}`}
                     variant="standard"
                     value={point.newPoints}
-                    onChange={handleNewPointsChange(point.key)}
+                    onChange={handleNewPointsChange(point.keyValue)}
                   />
                 </StyledTableCell>
                 <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
-                 <IconButton onClick={() => handleDeleteTask(point.key)}>
+                 <IconButton onClick={() => handleDeleteTask(point.keyValue)}>
                     <DeleteForeverIcon />
                   </IconButton>
                 </TableCell>
