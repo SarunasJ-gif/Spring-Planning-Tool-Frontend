@@ -30,7 +30,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 interface TaskData {
   keyValue: string;
-  color: string;
+  keyColor: string;
   description: string;
   type: string;
   oldPoints: number;
@@ -44,7 +44,7 @@ export default function NewTask(): JSX.Element {
       ...tasks,
       {
         keyValue: '',
-        color: '#EC4226',
+        keyColor: '#EC4226',
         description: '',
         type: '',
         oldPoints: 0,
@@ -230,7 +230,7 @@ const dispatch = useDispatch();
                      value={point.keyValue}
                      onChange={handleKeyChange(point.keyValue)}
                     />
-                    <PopUp initialColor={point.color} />
+                    <PopUp initialColor={point.keyColor} />
                   </Box>
                 </TableCell>
                 <TableCell sx={{ minWidth: 400 }}>
