@@ -28,33 +28,29 @@ export const TitleAndDate = () => {
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          position: 'absolute',
           width: '491px',
           height: '100px',
-          left: '60px',
-          top: '88.5px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           color: '#000000',
+          marginLeft: '60px',
+          marginTop: '32.5px',
+          padding: '0px',
         }}
       >
         <Typography variant="h1" sx={{ textAlign: 'center' }}>
           Add new sprint
         </Typography>
-        <Box sx={{ marginTop: '12px' }}>
-          <SprintCell name={name} setName={handleNameChange} />
-        </Box>
+        <SprintCell name={name} setName={handleNameChange} />
       </Box>
       <Box
         sx={{
-          position: 'absolute',
           width: '512px',
           height: '349px',
-          left: '505px',
-          top: '167px',
-          marginLeft: '52px',
+          marginLeft: '600px',
+          marginTop: '-20px',
         }}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -63,7 +59,6 @@ export const TitleAndDate = () => {
               <DemoItem component="DatePicker">
                 <Box
                   sx={{
-                    position: 'relative',
                     width: '173px',
                     borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
                   }}
@@ -90,7 +85,6 @@ export const TitleAndDate = () => {
               <DemoItem component="DatePicker">
                 <Box
                   sx={{
-                    position: 'relative',
                     width: '173px',
                     borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
                   }}

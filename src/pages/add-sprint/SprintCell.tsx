@@ -8,12 +8,13 @@ interface SprintCellProps {
 }
 
 export const SprintCell = ({ name, setName }: SprintCellProps) => {
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(name.length === 0);
   const [tempName, setTempName] = useState(name);
   const [isInvalid, setIsInvalid] = useState(tempName.length === 0);
 
   const handleDoubleClick = () => {
     setEditing(true);
+    setTempName(name || '');
   };
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -25,13 +26,20 @@ export const SprintCell = ({ name, setName }: SprintCellProps) => {
   }, [editing]);
 
   const handleBlur = () => {
-    setEditing(false);
-    setIsInvalid(tempName.length === 0);
-    setName(tempName);
+    if (tempName.trim().length === 0) {
+      setEditing(true);
+      setTempName('');
+      setIsInvalid(true);
+    } else {
+      setEditing(false);
+      setIsInvalid(false);
+      setName(tempName.trim());
+    }
   };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTempName(event.target.value);
-    setIsInvalid(false);
+    const value = event.target.value;
+    setTempName(value);
+    setIsInvalid(value.trim().length === 0);
   };
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -41,18 +49,19 @@ export const SprintCell = ({ name, setName }: SprintCellProps) => {
 
   return (
     <Box
+      className="SprintCell"
       sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'left',
-        width: '296px',
-        height: '65px',
+        width: '328px',
         padding: '12px',
+        marginTop: '15px',
         backgroundColor: '#D8DAFF',
         border: '1px solid #E1E5EB',
         borderRadius: '4px 4px 0px 0px',
         boxSizing: 'border-box',
-        marginLeft: '60px',
+        marginLeft: '85px',
         borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
       }}
     >
@@ -80,7 +89,8 @@ export const SprintCell = ({ name, setName }: SprintCellProps) => {
             onChange={handleInputChange}
             onBlur={handleBlur}
             onKeyDown={handleInputKeyDown}
-            className={isInvalid ? 'invalid' : ''}
+            className={`${isInvalid ? 'invalid' : ''}`}
+            style={{ width: '100%' }}
           />
         ) : (
           <Typography
