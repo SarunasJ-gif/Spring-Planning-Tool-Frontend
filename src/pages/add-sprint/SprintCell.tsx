@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, ThemeProvider, Typography } from '@mui/material';
 import './SprintCell.css';
+import theme from './theme';
 
 interface SprintCellProps {
   name: string;
@@ -48,36 +49,25 @@ export const SprintCell = ({ name, setName }: SprintCellProps) => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <Box
       className="SprintCell"
       sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'left',
-        width: '328px',
+        width: '350px',
         padding: '12px',
         marginTop: '15px',
         backgroundColor: '#D8DAFF',
         border: '1px solid #E1E5EB',
         borderRadius: '4px 4px 0px 0px',
         boxSizing: 'border-box',
-        marginLeft: '85px',
+        marginLeft: '110px',
         borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
       }}
     >
-      <Typography
-        variant="caption"
-        sx={{
-          fontFamily: 'Roboto',
-          fontStyle: 'normal',
-          fontWeight: 400,
-          fontSize: '12px',
-          lineHeight: '16px',
-          letterSpacing: '0.4px',
-          color: 'rgba(0, 0, 0, 0.6)',
-          alignSelf: 'flex-start',
-        }}
-      >
+      <Typography variant="caption">
         Sprint Name
       </Typography>
       <div onDoubleClick={handleDoubleClick}>
@@ -114,5 +104,6 @@ export const SprintCell = ({ name, setName }: SprintCellProps) => {
         )}
       </div>
     </Box>
+    </ThemeProvider>
   );
 };

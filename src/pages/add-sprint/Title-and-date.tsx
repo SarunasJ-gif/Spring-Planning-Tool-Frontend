@@ -35,7 +35,7 @@ export const TitleAndDate = () => {
           alignItems: 'center',
           justifyContent: 'center',
           color: '#000000',
-          marginLeft: '60px',
+          marginLeft: '-10px',
           marginTop: '32.5px',
           padding: '0px',
         }}
@@ -48,19 +48,25 @@ export const TitleAndDate = () => {
       <Box
         sx={{
           width: '512px',
-          height: '349px',
-          marginLeft: '600px',
-          marginTop: '-20px',
+          height: '160px',
+          marginLeft: '550px',
+          marginTop: '-20.5px',
         }}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker']}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <DemoItem component="DatePicker">
+              <DemoItem component="DatePicker" >
                 <Box
                   sx={{
+                    backgroundColor: '#D8DAFF',
                     width: '173px',
+                    border: '1px solid #E1E5EB',
+                    borderRadius: '4px 4px 0px 0px',
+                    boxSizing: 'border-box',
                     borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
+                    borderBottomLeftRadius: '4px',
+                    borderBottomRightRadius: '4px',
                   }}
                 >
                   <DatePicker
@@ -85,8 +91,14 @@ export const TitleAndDate = () => {
               <DemoItem component="DatePicker">
                 <Box
                   sx={{
+                    backgroundColor: '#D8DAFF',
                     width: '173px',
+                    border: '1px solid #E1E5EB',
+                    borderRadius: '4px 4px 0px 0px',
+                    boxSizing: 'border-box',
                     borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
+                    borderBottomLeftRadius: '4px',
+                    borderBottomRightRadius: '4px',
                   }}
                 >
                   <DatePicker

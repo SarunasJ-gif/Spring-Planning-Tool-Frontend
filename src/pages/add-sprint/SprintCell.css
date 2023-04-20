@@ -1,5 +1,5 @@
 .invalid {
-  background-color: red !important;
+  border: 2px solid red;
 }
 .SprintCell {
   height: 65px;

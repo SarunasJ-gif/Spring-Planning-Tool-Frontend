@@ -18,6 +18,16 @@ const theme = createTheme({
       letterSpacing: '0.15px',
       color: 'rgba(0, 0, 0, 0.87)',
     },
+    caption: {
+          fontFamily: 'Roboto',
+          fontStyle: 'normal',
+          fontWeight: 400,
+          fontSize: '12px',
+          lineHeight: '16px',
+          letterSpacing: '0.4px',
+          color: 'rgba(0, 0, 0, 0.6)',
+          alignSelf: 'flex-start',
+    },
   },
 });
 
