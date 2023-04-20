@@ -1,12 +1,15 @@
-import React from 'react';
+import { useState } from 'react';
+import NewTask, { TaskData } from '../../components/NewTask/NewTask';
 import PlanTable from '../../components/PlanTable/PlanTable';
+import mocktasks from '../../components/NewTask/mock_task.json';
 
 function AddSprint() {
+  const [tasks, setTasks] = useState<TaskData[]>(mocktasks);
   return (
     <>
-      <PlanTable />
+      <NewTask tasks={tasks} setTasks={setTasks} />
+      <PlanTable taskss={tasks} />
     </>
   );
 }
-
 export default AddSprint;

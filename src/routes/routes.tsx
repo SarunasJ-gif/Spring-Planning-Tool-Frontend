@@ -6,10 +6,10 @@ import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Sidebar from '../components/Sidebar/Sidebar';
 import { Endpoint } from './Endpoint';
 import MainPage from '../pages/MainPage/MainPage';
-import ManageTeam from '../pages/manage-team/ManageTeam';
 import NotFound from '../components/ErrorPage/NotFound';
 import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
+import ManageTeam from '../pages/manage-team/ManageTeam';
 import AddSprint from '../pages/add-sprint/AddSprint';
 
 type MyErrorBoundaryProps = {
