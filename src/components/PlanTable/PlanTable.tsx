@@ -13,15 +13,40 @@ import {
 } from '@mui/material';
 import { Info, Task } from '@mui/icons-material';
 import TaskKey from '../TaskKey/TaskKey';
-import { format, addDays } from 'date-fns';
+import { format, addDays, differenceInBusinessDays } from 'date-fns';
+import produce from 'immer';
 
-interface Task {
-  [day: number]: string | undefined;
+interface Sprint {
+  [id: string]: any;
+  title: string;
+  startDate: string;
+  endDate: string;
+  tasks: Task[];
+  members: Member[];
 }
 
-interface Tasks {
-  [person: string]: Task | undefined;
-}
+type Task = {
+  key: string;
+  keyColor: string;
+  keyBackgroundColor: string;
+  description: string;
+  type: string;
+  oldPoints: number;
+  remainingPoints: number;
+  newPoints: number;
+};
+
+type MemberWorkingDay = {
+  day: string;
+  task: Task;
+};
+
+type Member = {
+  firstName: string;
+  lastName: string;
+  memberId: string;
+  workingDays: MemberWorkingDay[];
+};
 
 const PEOPLE: string[] = [
   'Laura Sunshine',
@@ -30,7 +55,6 @@ const PEOPLE: string[] = [
   'John Smith',
 ];
 
-// You can change this to change the size of the sprint and the number of days in the table
 const DAYS_PER_SPRINT = 10;
 
 const today = new Date();
@@ -41,36 +65,100 @@ const amountOfDaysArray = Array.from({ length: DAYS_PER_SPRINT }, (_, i) =>
 const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
 const PlanTable: React.FC = () => {
-  // const [tasks, setTasks] = useState<any>([
-  //   { member: { name: 'test', workingDays: [{ dayDate: '2023-04-18', task: '' }, { dayDate: '2023-04-19', task: '' }] } },
-  // ]);
-  // const [showNotification, setShowNotification] = useState<boolean>(true);
-  // const [totalWorkDays, setTotalWorkDays] = useState<number>(0);
-  //
-  // const handleTaskChange = (person: string, day: number, value: string) => {
-  // const task = produce(tasks, tasksDraft => {
-  //   const memberIndex = tasksDraft.findeIndex(o => o.id === id);
-  //   const tasksIndex = tasksDraft[memberIndex].workingDays.findeIndex(o => o.id === id);
-  //   tasksDraft[memberIndex].workingDays[tasksIndex].task === task;
-  // });
-  // setTasks((prevTasks) => ({
-  //   ...prevTasks,
-  //   [person]: {
-  //     ...prevTasks[person],
-  //     [day]: value,
-  //   },
-  // }));
-  // };
-  const [tasks, setTasks] = useState<Tasks>({
-    'Laura Sunshine': {
-      1: 'Task',
-      2: 'Vacation',
-    },
-    'Matt Brook': {
-      3: 'Task',
-      6: 'Task',
-      7: 'Education',
-    },
+  const [tasks, setTasks] = useState<Sprint>({
+    title: 'Sprint',
+    startDate: '2023-04-19',
+    endDate: '2023-04-25',
+    tasks: [
+      {
+        key: 'SFD-170',
+        keyColor: '#FFFFFF',
+        keyBackgroundColor: '#83dc9c',
+        description: 'Update role handling',
+        type: 'Technical',
+        oldPoints: 5,
+        remainingPoints: 4,
+        newPoints: 2,
+      },
+      {
+        key: 'SFD-171',
+        keyColor: '#000000',
+        keyBackgroundColor: '#6fa0e9',
+        description: 'Update role handling',
+        type: 'Technical',
+        oldPoints: 5,
+        remainingPoints: 4,
+        newPoints: 2,
+      },
+    ],
+    members: [
+      {
+        firstName: 'Laura',
+        lastName: 'Sunshine',
+        memberId: '1',
+        workingDays: [
+          {
+            day: '2023-04-19',
+            task: {
+              key: 'SFD-171',
+              keyColor: '#000000',
+              keyBackgroundColor: '#FF0000',
+              description: 'Update role handling',
+              type: 'Technical',
+              oldPoints: 5,
+              remainingPoints: 4,
+              newPoints: 2,
+            },
+          },
+          {
+            day: '2023-04-21',
+            task: {
+              key: 'SFD-171',
+              keyColor: '#0000FF',
+              keyBackgroundColor: '#FF0000',
+              description: 'Update role handling',
+              type: 'Technical',
+              oldPoints: 5,
+              remainingPoints: 4,
+              newPoints: 2,
+            },
+          },
+        ],
+      },
+      {
+        firstName: 'Test',
+        lastName: 'Member',
+        memberId: '2',
+        workingDays: [
+          {
+            day: '2021-12-01',
+            task: {
+              key: 'SFD-171',
+              keyColor: '#000000',
+              keyBackgroundColor: '#FF0000',
+              description: 'Update role handling',
+              type: 'Technical',
+              oldPoints: 5,
+              remainingPoints: 4,
+              newPoints: 2,
+            },
+          },
+          {
+            day: '2021-12-02',
+            task: {
+              key: 'SFD-171',
+              keyColor: '#0000FF',
+              keyBackgroundColor: '#FF0000',
+              description: 'Update role handling',
+              type: 'Technical',
+              oldPoints: 5,
+              remainingPoints: 4,
+              newPoints: 2,
+            },
+          },
+        ],
+      },
+    ],
   });
   const [showNotification, setShowNotification] = useState<boolean>(true);
   const [totalWorkDays, setTotalWorkDays] = useState<number>(0);
@@ -169,7 +257,7 @@ const PlanTable: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(tasks).length === 0 ? (
+          {tasks.tasks.length === 0 ? (
             <TableRow>
               <TableCell
                 colSpan={DAYS_PER_SPRINT + 1}
@@ -179,20 +267,20 @@ const PlanTable: React.FC = () => {
               </TableCell>
             </TableRow>
           ) : (
-            PEOPLE.map((person) => (
-              <TableRow key={person} sx={{ height: '48px' }}>
+            tasks.members.map((member) => (
+              <TableRow key={member.memberId} sx={{ height: '48px' }}>
                 <TableCell
                   sx={{
                     borderRight: '1px solid #e0e0e0',
                     minWidth: '200px',
                   }}
                 >
-                  {person}
+                  {member.firstName} {member.lastName}
                 </TableCell>
                 {Array.from({ length: DAYS_PER_SPRINT }, (_, i) => i + 1).map(
                   (day) => (
                     <TableCell
-                      key={`${person}-${day}`}
+                      key={`${member}-${day}`}
                       sx={{
                         '&:hover': {
                           backgroundColor: '#F0F1F3',
@@ -203,34 +291,32 @@ const PlanTable: React.FC = () => {
                       <FormControl variant="standard" fullWidth>
                         <Select
                           disableUnderline
+                          inputProps={{ IconComponent: () => null }}
                           sx={{
                             margin: 'auto',
                             width: '85%',
                           }}
-                          value={tasks[person]?.[day] ?? ''}
+                          value={tasks[member.memberId]?.[day] ?? ''}
                           onChange={(e) =>
                             handleTaskChange(
-                              person,
+                              member.memberId,
                               day,
                               e.target.value as string,
                             )
                           }
                           label="Task"
                         >
-                          <MenuItem value="Task">
-                            {tasks[person]?.[day] === 'Task' ? (
+                          {tasks.tasks.map((task) => (
+                            <MenuItem value="Task" key={task.key}>
                               <TaskKey
-                                taskKey={'SFD-182'}
-                                keyColor={'#FFFFFF'}
-                                keyBackgroundColor={'#1AC889'}
+                                taskKey={task.key}
+                                keyColor={task.keyColor}
+                                keyBackgroundColor={task.keyBackgroundColor}
                               />
-                            ) : (
-                              // Will need to be changed to be dynamic based on the task using template strings
-                              'SFD-182'
-                            )}
-                          </MenuItem>
+                            </MenuItem>
+                          ))}
                           <MenuItem value="Education">
-                            {tasks[person]?.[day] === 'Education' ? (
+                            {tasks[member.memberId]?.[day] === 'Education' ? (
                               <TaskKey
                                 taskKey={'Education'}
                                 keyColor={'#FFFFFF'}
@@ -241,7 +327,7 @@ const PlanTable: React.FC = () => {
                             )}
                           </MenuItem>
                           <MenuItem value="Vacation">
-                            {tasks[person]?.[day] === 'Vacation' ? (
+                            {tasks[member.memberId]?.[day] === 'Vacation' ? (
                               <TaskKey
                                 taskKey={'Vacation'}
                                 keyColor={'#FFFFFF'}
@@ -265,8 +351,11 @@ const PlanTable: React.FC = () => {
                   }}
                 >
                   {
-                    Object.values(tasks[person] || {}).filter(
-                      (value) => value === 'Task',
+                    Object.values(tasks[member.memberId] || {}).filter(
+                      (value) =>
+                        value === 'Task' ||
+                        value === 'Technical' ||
+                        value === 'Goal',
                     ).length
                   }
                 </TableCell>

@@ -1,34 +1,21 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface TasksState {
-  tasks: {
-    [person: string]: {
-      [day: string]: string;
-    };
-  };
-}
-
-const initialState: TasksState = {
-  tasks: {},
+import { createSlice } from '@reduxjs/toolkit';
+const initialState = {
+  GoalType: '',
 };
-
-export const tasksSlice = createSlice({
-  name: 'tasks',
+const typeSlice = createSlice({
+  name: 'type',
   initialState,
   reducers: {
-    setTask: (
-      state,
-      action: PayloadAction<{ person: string; day: string; task: string }>,
-    ) => {
-      const { person, day, task } = action.payload;
-      if (!state.tasks[person]) {
-        state.tasks[person] = {};
-      }
-      state.tasks[person][day] = task;
+    Technical(state) {
+      state.GoalType = 'Technical';
+    },
+    Goal(state) {
+      state.GoalType = 'Goal';
+    },
+    Empty(state) {
+      state.GoalType = '';
     },
   },
 });
-
-export const { setTask } = tasksSlice.actions;
-
-export default tasksSlice.reducer;
+export const { Technical, Goal } = typeSlice.actions;
+export default typeSlice.reducer;
