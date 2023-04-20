@@ -35,7 +35,7 @@ export const TitleAndDate = () => {
           alignItems: 'center',
           justifyContent: 'center',
           color: '#000000',
-          marginLeft: '-10px',
+          marginLeft: '-45px',
           marginTop: '32.5px',
           padding: '0px',
         }}
