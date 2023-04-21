@@ -8,7 +8,7 @@ function AddSprint() {
   return (
     <>
       <NewTask tasks={tasks} setTasks={setTasks} />
-      <PlanTable taskss={tasks} />
+      <PlanTable planTableTasks={tasks} />
     </>
   );
 }
