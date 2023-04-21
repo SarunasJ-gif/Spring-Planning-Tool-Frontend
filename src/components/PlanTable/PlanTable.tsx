@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { Info, Task } from '@mui/icons-material';
 import TaskKey from '../TaskKey/TaskKey';
-import { format, addDays, differenceInBusinessDays } from 'date-fns';
+import { format } from 'date-fns';
 import produce from 'immer';
 import { TaskData } from '../NewTask/NewTask';
 
@@ -240,7 +240,7 @@ export default function PlanTable(props: PlanTableProps) {
         }));
       }),
     );
-  }, [setSprint, member]);
+  }, [setSprint, planTableTasks, member, sprint]);
 
   const [businessDays, setBusinessDays] = useState<string[]>([]);
   const [daysOfWeek, setDaysOfWeek] = useState<string[]>([]);
@@ -272,7 +272,7 @@ export default function PlanTable(props: PlanTableProps) {
       setBusinessDays(days);
       setDaysOfWeek(daysOfWeek);
     }
-  }, [sprint.endDate, sprint.startDate]);
+  }, [setBusinessDays, setDaysOfWeek, sprint.endDate, sprint.members, sprint.startDate, sprint.tasks]);
   return (
     <>
       {showNotification && (

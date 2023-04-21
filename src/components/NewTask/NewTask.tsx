@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import {
   TableCell,
   Paper,
@@ -23,7 +23,7 @@ import { GoalType } from '../../enums/enums';
 import produce, { Draft } from 'immer';
 import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch } from 'react-redux';
-import { Technical, Goal } from '../../reducers/task/typeSlice';
+import { Technical, Goal } from '../../redux/task/typeSlice';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 
