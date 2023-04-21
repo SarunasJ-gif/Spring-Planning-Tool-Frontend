@@ -9,7 +9,7 @@ function AddSprint() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: "92vh",
+        height: "93vh",
       }}
     >
       <NewTask />
