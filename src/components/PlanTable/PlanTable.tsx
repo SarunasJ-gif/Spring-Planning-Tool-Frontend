@@ -56,17 +56,7 @@ const Sprint: Sprint = {
   title: '',
   startDate: '2023-04-24',
   endDate: '2023-05-05',
-  tasks: [
-    {
-      keyValue: 'ASDF!123',
-      keyColor: '#FF0000',
-      description: 'Task 1',
-      type: 'Goal',
-      oldPoints: 0,
-      remainingPoints: 0,
-      newPoints: 0,
-    },
-  ],
+  tasks: [],
   members: [
     {
       firstName: 'John',
@@ -85,38 +75,147 @@ const Sprint: Sprint = {
             newPoints: 0,
           },
         },
+        {
+          day: '2023-04-25',
+          task: {
+            keyValue: 'QWERTY!456',
+            keyColor: '#0000FF',
+            description: 'Task 2',
+            type: 'Task',
+            oldPoints: 3,
+            remainingPoints: 2,
+            newPoints: 1,
+          },
+        },
+      ],
+    },
+    {
+      firstName: 'Jane',
+      lastName: 'Smith',
+      memberId: '2',
+      workingDays: [
+        {
+          day: '2023-04-24',
+          task: {
+            keyValue: 'ZXCVB!789',
+            keyColor: '#00FF00',
+            description: 'Task 3',
+            type: 'Bug',
+            oldPoints: 2,
+            remainingPoints: 1,
+            newPoints: 0,
+          },
+        },
+        {
+          day: '2023-04-26',
+          task: {
+            keyValue: 'ASDF!123',
+            keyColor: '#FF0000',
+            description: 'Task 1',
+            type: 'Goal',
+            oldPoints: 0,
+            remainingPoints: 0,
+            newPoints: 0,
+          },
+        },
       ],
     },
   ],
 };
 
+const initialMembers = [
+  {
+    firstName: 'John',
+    lastName: 'Doe',
+    memberId: '1',
+    workingDays: [
+      {
+        day: '2023-04-24',
+        task: {
+          keyValue: 'ASDF!123',
+          keyColor: '#FF0000',
+          description: 'Task 1',
+          type: 'Goal',
+          oldPoints: 0,
+          remainingPoints: 0,
+          newPoints: 0,
+        },
+      },
+      {
+        day: '2023-04-25',
+        task: {
+          keyValue: 'QWERTY!456',
+          keyColor: '#0000FF',
+          description: 'Task 2',
+          type: 'Task',
+          oldPoints: 3,
+          remainingPoints: 2,
+          newPoints: 1,
+        },
+      },
+    ],
+  },
+  {
+    firstName: 'Jane',
+    lastName: 'Smith',
+    memberId: '2',
+    workingDays: [
+      {
+        day: '2023-04-24',
+        task: {
+          keyValue: 'ZXCVB!789',
+          keyColor: '#00FF00',
+          description: 'Task 3',
+          type: 'Bug',
+          oldPoints: 2,
+          remainingPoints: 1,
+          newPoints: 0,
+        },
+      },
+      {
+        day: '2023-04-26',
+        task: {
+          keyValue: 'ASDF!123',
+          keyColor: '#FF0000',
+          description: 'Task 1',
+          type: 'Goal',
+          oldPoints: 0,
+          remainingPoints: 0,
+          newPoints: 0,
+        },
+      },
+    ],
+  },
+];
+
 export default function PlanTable(props: PlanTableProps) {
   const { planTableTasks } = props;
-  const [member, setMember] = useState<Member[]>(Sprint.members);
+  const [member, setMember] = useState<Member[]>(initialMembers);
   const [sprint, setSprint] = useState<Sprint>(Sprint);
   const [showNotification, setShowNotification] = useState<boolean>(true);
   const [totalWorkDays, setTotalWorkDays] = useState<number>(0);
 
   const handleTaskChange = (
-    person: Member,
-    dayIndex: number,
+    person: string,
+    day: number,
     value: string,
+    id: string,
   ) => {
-    setSprint((prevState) =>
-      produce(prevState, (draft) => {
-        const memberIndex = draft.members.findIndex(
-          (m) => m.memberId === person.memberId,
-        );
-        const workingDayIndex = draft.members[
-          memberIndex
-        ].workingDays.findIndex((w) => w.day === businessDays[dayIndex]);
-
-        draft.members[memberIndex].workingDays[workingDayIndex].task.keyValue =
-          value;
-      }),
-    );
+    const task = produce(sprint, (tasksDraft) => {
+      const memberIndex = tasksDraft.findIndex((o: any) => o.id === id);
+      const tasksIndex = tasksDraft[memberIndex].workingDays.findIndex(
+        (o: any) => o.id === id,
+      );
+      tasksDraft[memberIndex].workingDays[tasksIndex].task = task;
+    });
+    setSprint((prevTasks) => ({
+      ...prevTasks,
+      [person]: {
+        ...prevTasks[person],
+        [day]: value,
+      },
+    }));
   };
-
   const handleClearNotification = () => {
     setShowNotification(false);
   };
@@ -176,6 +275,7 @@ export default function PlanTable(props: PlanTableProps) {
   }, [sprint.endDate, sprint.startDate]);
   return (
     <>
+      {console.log(sprint.tasks)}
       {showNotification && (
         <Typography
           sx={{
@@ -252,7 +352,7 @@ export default function PlanTable(props: PlanTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sprint.tasks.length === 0 ? (
+          {!sprint.tasks ? (
             <TableRow>
               <TableCell
                 colSpan={businessDays.length + 1}
@@ -293,9 +393,17 @@ export default function PlanTable(props: PlanTableProps) {
                           maSelectrgin: 'auto',
                           width: '85%',
                         }}
-                        value={sprint[member.memberId]?.[day] ?? ''}
+                        value={
+                          sprint[member.memberId]?.workingDays[day]?.task
+                            ?.type ?? ''
+                        }
                         onChange={(event) =>
-                          handleTaskChange(member, day, event.target.value)
+                          handleTaskChange(
+                            member.memberId,
+                            day,
+                            event.target.value,
+                            member.memberId,
+                          )
                         }
                         label="Task"
                       >
@@ -303,7 +411,7 @@ export default function PlanTable(props: PlanTableProps) {
                           <MenuItem value={task.keyValue} key={task.keyValue}>
                             <TaskKey
                               taskKey={task.keyValue}
-                              keyColor={task.keyColor}
+                              keyColor="#FFFFFF"
                               keyBackgroundColor={task.keyColor}
                             />
                           </MenuItem>
