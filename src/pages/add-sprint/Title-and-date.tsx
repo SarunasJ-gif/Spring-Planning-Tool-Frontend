@@ -11,11 +11,8 @@ import theme from './theme';
 export const TitleAndDate = () => {
   const [startDate, setStartDate] = useState<Dayjs>(dayjs(''));
   const [endDate, setEndDate] = useState<Dayjs>(dayjs(''));
-  const [name, setName] = useState<string>('');
+  const [name] = useState<string>('');
 
-  const handleNameChange = (newName: string) => {
-    setName(newName);
-  };
 
   const handleStartDateChange = (newValue: Dayjs | null) => {
     setStartDate(newValue || dayjs());
@@ -43,14 +40,14 @@ export const TitleAndDate = () => {
         <Typography variant="h1" sx={{ textAlign: 'center' }}>
           Add new sprint
         </Typography>
-        <SprintCell name={name} setName={handleNameChange} />
+        <SprintCell name={name} />
       </Box>
       <Box
         sx={{
           width: '512px',
-          height: '160px',
-          marginLeft: '550px',
-          marginTop: '-20.5px',
+          height: '123px',
+          marginLeft: '500px',
+          marginTop: '-32px',
         }}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -64,9 +61,7 @@ export const TitleAndDate = () => {
                     border: '1px solid #E1E5EB',
                     borderRadius: '4px 4px 0px 0px',
                     boxSizing: 'border-box',
-                    borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
-                    borderBottomLeftRadius: '4px',
-                    borderBottomRightRadius: '4px',
+                    background: 'rgba(33, 33, 33, 0.08)',
                   }}
                 >
                   <DatePicker
@@ -74,6 +69,7 @@ export const TitleAndDate = () => {
                     value={startDate}
                     onChange={handleStartDateChange}
                     format="MMM DD, YYYY"
+                    slotProps={{ textField: { variant: 'filled' } }}
                   />
                 </Box>
               </DemoItem>
@@ -96,9 +92,7 @@ export const TitleAndDate = () => {
                     border: '1px solid #E1E5EB',
                     borderRadius: '4px 4px 0px 0px',
                     boxSizing: 'border-box',
-                    borderBottom: '2px solid rgba(0, 0, 0, 0.6)',
-                    borderBottomLeftRadius: '4px',
-                    borderBottomRightRadius: '4px',
+                    background: 'rgba(33, 33, 33, 0.08)',
                   }}
                 >
                   <DatePicker
@@ -106,6 +100,7 @@ export const TitleAndDate = () => {
                     value={endDate}
                     onChange={handleEndDateChange}
                     format="MMM DD, YYYY"
+                    slotProps={{ textField: { variant: 'filled' } }}
                   />
                 </Box>
               </DemoItem>
