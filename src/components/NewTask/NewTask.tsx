@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import {
   TableCell,
   Paper,
@@ -46,57 +46,62 @@ export default function NewTask(props: TasksProps): JSX.Element {
   const { tasks, setTasks } = props;
 
   const handleKeyChange =
-    (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+      (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       setTasks(
         produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === key);
+          const index = draft.findIndex((point) => point.keyValue === value);
           draft[index].keyValue = event.target.value;
         }),
       );
     };
 
   const handleDescriptionChange =
-    (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+      (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       setTasks(
         produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === key);
+          const index = draft.findIndex((point) => point.keyValue === value);
           draft[index].description = event.target.value;
         }),
       );
     };
 
   const handleOldPointsChange =
-    (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       setTasks(
         produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === key);
-          draft[index].oldPoints = parseInt(event.target.value);
+          const index = draft.findIndex((point) => point.keyValue === value);
+          draft[index].oldPoints = event.target.value ? parseInt(event.target.value) : 0;
         }),
       );
     };
 
   const handleRemainingPointsChange =
-    (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       setTasks(
         produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === key);
-          draft[index].remainingPoints = parseInt(event.target.value);
+          const index = draft.findIndex((point) => point.keyValue === value);
+          draft[index].remainingPoints = event.target.value ? parseInt(event.target.value) : 0;
         }),
       );
     };
 
   const handleNewPointsChange =
-    (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       setTasks(
         produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === key);
-          draft[index].newPoints = parseInt(event.target.value);
+          const index = draft.findIndex((point) => point.keyValue === value);
+          draft[index].newPoints = event.target.value ? parseInt(event.target.value) : 0;
         }),
       );
     };
 
-  const handleDeleteTask = (key: string) => {
-    setTasks(tasks.filter((task) => task.keyValue !== key));
+  const handleDeleteTask = (value: string) => {
+      setTasks(
+          produce(tasks, (draft: Draft<TaskData[]>) => {
+              const index = draft.findIndex((point) => point.keyValue === value);
+              draft.splice(index, 1)
+          }),
+      );
   };
 
   const handleTypeChange = (index: number, value: GoalType) => {
@@ -254,7 +259,7 @@ export default function NewTask(props: TasksProps): JSX.Element {
                               variant="standard"
                               sx={{ minWidth: 70 }}
                               value={point.keyValue}
-                              onChange={() => handleKeyChange(point.keyValue)}
+                              onChange={(event) => handleKeyChange(point.keyValue, event)}
                             />
                             <PopUp initialColor={point.keyColor} />
                           </Box>
@@ -265,8 +270,7 @@ export default function NewTask(props: TasksProps): JSX.Element {
                             variant="standard"
                             sx={{ width: 600 }}
                             value={point.description}
-                            onChange={() =>
-                              handleDescriptionChange(point.keyValue)
+                            onChange={(event) => handleDescriptionChange(point.keyValue, event)
                             }
                           />
                         </TableCell>
@@ -303,8 +307,7 @@ export default function NewTask(props: TasksProps): JSX.Element {
                             id={`oldPoints${point.keyValue}`}
                             variant="standard"
                             value={point.oldPoints}
-                            onChange={() =>
-                              handleOldPointsChange(point.keyValue)
+                            onChange={(event) => handleOldPointsChange(point.keyValue, event)
                             }
                           />
                         </StyledTableCell>
@@ -313,8 +316,7 @@ export default function NewTask(props: TasksProps): JSX.Element {
                             id={`remainingPoints${point.keyValue}`}
                             variant="standard"
                             value={point.remainingPoints}
-                            onChange={() =>
-                              handleRemainingPointsChange(point.keyValue)
+                            onChange={(event) => handleRemainingPointsChange(point.keyValue, event)
                             }
                           />
                         </StyledTableCell>
@@ -323,8 +325,7 @@ export default function NewTask(props: TasksProps): JSX.Element {
                             id={`newPoints${point.keyValue}`}
                             variant="standard"
                             value={point.newPoints}
-                            onChange={() =>
-                              handleNewPointsChange(point.keyValue)
+                            onChange={(event) => handleNewPointsChange(point.keyValue, event)
                             }
                           />
                         </StyledTableCell>

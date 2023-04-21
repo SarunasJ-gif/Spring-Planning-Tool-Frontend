@@ -275,7 +275,6 @@ export default function PlanTable(props: PlanTableProps) {
   }, [sprint.endDate, sprint.startDate]);
   return (
     <>
-      {console.log(sprint.tasks)}
       {showNotification && (
         <Typography
           sx={{
