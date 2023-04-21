@@ -9,6 +9,8 @@ import MainPage from '../components/MainPage/MainPage';
 import NotFound from '../components/ErrorPage/NotFound';
 import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
+import ManageTeam from '../pages/manage-team/ManageTeam';
+import AddSprint from '../pages/add-sprint/AddSprint';
 
 type MyErrorBoundaryProps = {
   children: React.ReactNode;
@@ -55,11 +57,11 @@ const routeOptions: RouteObject[] = [
       },
       {
         path: Endpoint.ADD_SPRINT,
-        element: '',
+        element: <AddSprint />,
       },
       {
         path: Endpoint.MANAGE_TEAM,
-        element: '',
+        element: <ManageTeam />,
       },
     ],
   },
