@@ -1,8 +1,14 @@
+import React from 'react';
+import { TitleAndDate } from './Title-and-date';
 import NewTask from "../../components/NewTask/NewTask";
 
-function AddSprint() {
+const AddSprint = () => {
   return (
-          <NewTask />
+    <>
+      <TitleAndDate />
+      <NewTask />
+    </>
   );
-}
+};
+
 export default AddSprint;

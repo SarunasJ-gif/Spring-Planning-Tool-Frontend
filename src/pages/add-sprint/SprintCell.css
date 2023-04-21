@@ -1,0 +1,10 @@
+.invalid {
+  border: 2px solid red;
+}
+.SprintCell {
+  height: 65px;
+  min-height: 65px;
+}
+.MuiInputBase-input {
+  z-index: 1;
+}

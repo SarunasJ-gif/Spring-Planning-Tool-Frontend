@@ -177,19 +177,21 @@ export default function Sidebar(props: { children: React.ReactNode }) {
         {open && (
           <>
             <SidebarIconButton>
-              <AddCircleRounded
-                sx={{ fontSize: '50px', color: 'blue', marginRight: '200px' }}
-              />
-              <TypographyItem
-                textAlignKey={'left'}
-                fontSizeKey={13}
-                fontFamilyKey={'Roboto'}
-                fontStyleKey={'normal'}
-                position="absolute"
-                marginRight="50px"
-              >
-                ADD SPRINT
-              </TypographyItem>
+              <Link to={Endpoint.ADD_SPRINT} className="link">
+                <AddCircleRounded
+                  sx={{ fontSize: '50px', color: 'blue', marginRight: '200px' }}
+                />
+                <TypographyItem
+                  textAlignKey={'left'}
+                  fontSizeKey={13}
+                  fontFamilyKey={'Roboto'}
+                  fontStyleKey={'normal'}
+                  position="absolute"
+                  marginRight="50px"
+                >
+                  ADD SPRINT
+                </TypographyItem>
+              </Link>
             </SidebarIconButton>
             <TypographyItem
               textAlignKey={'left'}
