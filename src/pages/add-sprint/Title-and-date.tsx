@@ -16,9 +16,17 @@ export const TitleAndDate = () => {
 
   const handleStartDateChange = (newValue: Dayjs | null) => {
     setStartDate(newValue || dayjs());
+    if (endDate.isValid() && newValue && newValue.isAfter(endDate)) {
+      setEndDate(newValue);
+    }
   };
+
   const handleEndDateChange = (newValue: Dayjs | null) => {
-    setEndDate(newValue || dayjs());
+    if (newValue && newValue.isBefore(startDate)) {
+      setEndDate(startDate);
+    } else {
+      setEndDate(newValue || dayjs());
+    }
   };
 
   return (
