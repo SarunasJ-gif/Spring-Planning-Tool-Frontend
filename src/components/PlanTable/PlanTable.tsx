@@ -41,7 +41,7 @@ type MemberWorkingDay = {
   task: Task;
 };
 
-type Member = {
+export type Member = {
   firstName: string;
   lastName: string;
   memberId: string;
