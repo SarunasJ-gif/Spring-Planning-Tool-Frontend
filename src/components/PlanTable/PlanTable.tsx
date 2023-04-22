@@ -201,46 +201,40 @@ export default function PlanTable(props: PlanTableProps) {
     value: string,
     id: string,
   ) => {
-    const task = produce(sprint, (tasksDraft) => {
-      const memberIndex = tasksDraft.findIndex((o: any) => o.id === id);
-      const tasksIndex = tasksDraft[memberIndex].workingDays.findIndex(
-        (o: any) => o.id === id,
+    const task = produce(sprint, (sprintDraft) => {
+      const memberIndex = sprintDraft.members.findIndex((o: Member) => o.memberId === id);
+      const tasksIndex = sprintDraft[memberIndex].workingDays.findIndex(
+        (o: MemberWorkingDay) => o.day === day.toString(),
       );
-      tasksDraft[memberIndex].workingDays[tasksIndex].task = task;
+      sprintDraft[memberIndex].workingDays[tasksIndex].task = task;
     });
-    setSprint((prevTasks) => ({
-      ...prevTasks,
-      [person]: {
-        ...prevTasks[person],
-        [day]: value,
-      },
-    }));
+    setSprint(task);
   };
   const handleClearNotification = () => {
     setShowNotification(false);
   };
 
-  useEffect(() => {
-    setSprint(
-      produce(sprint, (draft) => {
-        draft.members = member.map((memberObject) => ({
-          firstName: memberObject.firstName,
-          lastName: memberObject.lastName,
-          memberId: memberObject.memberId,
-          workingDays: [],
-        }));
-        draft.tasks = planTableTasks.map((task) => ({
-          keyValue: task.keyValue,
-          keyColor: task.keyColor,
-          description: task.description,
-          type: task.type,
-          oldPoints: task.oldPoints,
-          remainingPoints: task.remainingPoints,
-          newPoints: task.newPoints,
-        }));
-      }),
-    );
-  }, [setSprint, planTableTasks, member, sprint]);
+  // useEffect(() => {
+  //   setSprint(
+  //     produce(sprint, (draft) => {
+  //       draft.members = member.map((memberObject) => ({
+  //         firstName: memberObject.firstName,
+  //         lastName: memberObject.lastName,
+  //         memberId: memberObject.memberId,
+  //         workingDays: [],
+  //       }));
+  //       draft.tasks = planTableTasks.map((task) => ({
+  //         keyValue: task.keyValue,
+  //         keyColor: task.keyColor,
+  //         description: task.description,
+  //         type: task.type,
+  //         oldPoints: task.oldPoints,
+  //         remainingPoints: task.remainingPoints,
+  //         newPoints: task.newPoints,
+  //       }));
+  //     }),
+  //   );
+  // }, [setSprint, planTableTasks, member, sprint]);
 
   const [businessDays, setBusinessDays] = useState<string[]>([]);
   const [daysOfWeek, setDaysOfWeek] = useState<string[]>([]);
