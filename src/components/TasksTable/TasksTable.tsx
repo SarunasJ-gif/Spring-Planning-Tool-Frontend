@@ -22,28 +22,21 @@ import PopUp from './PopUp';
 import { GoalType } from '../../enums/enums';
 import produce, { Draft } from 'immer';
 import { StyledTableCell } from '../../style/TableCellStyle';
-import { useDispatch } from 'react-redux';
-import { Technical, Goal } from '../../redux/task/typeSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-
-export interface TaskData {
-  keyValue: string;
-  keyColor: string;
-  description: string;
-  type: string;
-  oldPoints: number;
-  remainingPoints: number;
-  newPoints: number;
-}
+import {NewSprint} from "../../redux/NewSprint/NewSprintReducer";
+import {addTask} from "../../redux/NewSprint/NewSprintActions";
+import { TaskData } from '../../types/NewSprintTypes';
 
 interface TasksProps {
   tasks: TaskData[];
   setTasks: (tasks: TaskData[]) => void;
 }
 
-export default function NewTask(props: TasksProps): JSX.Element {
+export default function TasksTable(props: TasksProps): JSX.Element {
   const { tasks, setTasks } = props;
+  const reduxStateTasks = useSelector<NewSprint>(state => state?.sprint?.tasks);
 
   const handleKeyChange =
       (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -113,17 +106,20 @@ export default function NewTask(props: TasksProps): JSX.Element {
   };
 
   const handleAddTask = () => {
+    const newTaskObject: TaskData = {
+            keyValue: '',
+            keyColor: '#EC4226',
+            description: '',
+            type: '',
+            oldPoints: 0,
+            remainingPoints: 0,
+            newPoints: 0,
+        };
+
+    dispatch(addTask(newTaskObject));
     setTasks([
       ...tasks,
-      {
-        keyValue: '',
-        keyColor: '#EC4226',
-        description: '',
-        type: '',
-        oldPoints: 0,
-        remainingPoints: 0,
-        newPoints: 0,
-      },
+        newTaskObject
     ]);
     setExpanded(false);
   };
@@ -289,13 +285,11 @@ export default function NewTask(props: TasksProps): JSX.Element {
                             >
                               <MenuItem
                                 value={GoalType.GOAL_TYPE}
-                                onClick={() => dispatch(Goal())}
                               >
                                 Goal
                               </MenuItem>
                               <MenuItem
                                 value={GoalType.TECHNICAL_TYPE}
-                                onClick={() => dispatch(Technical())}
                               >
                                 Technical
                               </MenuItem>

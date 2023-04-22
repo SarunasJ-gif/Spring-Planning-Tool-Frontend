@@ -8,7 +8,7 @@ import { DatePicker } from '@mui/x-date-pickers-pro';
 import { SprintCell } from './SprintCell';
 import theme from './theme';
 
-export const TitleAndDate = () => {
+export const NewSprintInformation = () => {
   const [startDate, setStartDate] = useState<Dayjs>(dayjs(''));
   const [endDate, setEndDate] = useState<Dayjs>(dayjs(''));
   const [name] = useState<string>('');

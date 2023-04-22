@@ -1,9 +1,8 @@
 import produce from "immer";
 import * as actions from "./NewSprintActionType";
-import { TaskData } from "../../components/NewTask/NewTask";
-import { Member } from "../../components/PlanTable/PlanTable";
+import { Member, TaskData } from "../../types/NewSprintTypes";
 
-const initialState: {
+export type NewSprint = {
     sprint: {
         title: string,
         startDate: string | null,
@@ -12,7 +11,8 @@ const initialState: {
         memberTeamId: string | null
         members: Member[]
     }
-} = {
+}
+const initialState: NewSprint = {
     sprint: {
         title: "",
         startDate: null,
@@ -24,7 +24,7 @@ const initialState: {
 };
 
 // @ts-ignore
-export default (state = initialState, { type, payload }) => {
+const reducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case actions.ADD_TASK:
             return produce(state, draftState => {
@@ -39,3 +39,5 @@ export default (state = initialState, { type, payload }) => {
             return state;
     }
 };
+
+export default reducer;

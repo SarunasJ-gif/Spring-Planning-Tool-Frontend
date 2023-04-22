@@ -11,48 +11,13 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import { Info, Task } from '@mui/icons-material';
+import { Info } from '@mui/icons-material';
 import TaskKey from '../TaskKey/TaskKey';
 import { format } from 'date-fns';
-import produce from 'immer';
-import { TaskData } from '../NewTask/NewTask';
+import produce, {Draft} from 'immer';
+import { Member, MemberWorkingDay, Sprint } from "../../types/NewSprintTypes";
 
-interface Sprint {
-  [id: string]: any;
-  title: string;
-  startDate: string;
-  endDate: string;
-  tasks: Task[];
-  members: Member[];
-}
-
-type Task = {
-  keyValue: string;
-  keyColor: string;
-  description: string;
-  type: string;
-  oldPoints: number;
-  remainingPoints: number;
-  newPoints: number;
-};
-
-type MemberWorkingDay = {
-  day: string;
-  task: Task;
-};
-
-export type Member = {
-  firstName: string;
-  lastName: string;
-  memberId: string;
-  workingDays: MemberWorkingDay[];
-};
-
-interface PlanTableProps {
-  planTableTasks: TaskData[];
-}
-
-const Sprint: Sprint = {
+const initialSprint: Sprint = {
   title: '',
   startDate: '2023-04-24',
   endDate: '2023-05-05',
@@ -188,10 +153,8 @@ const initialMembers = [
   },
 ];
 
-export default function PlanTable(props: PlanTableProps) {
-  const { planTableTasks } = props;
-  const [member, setMember] = useState<Member[]>(initialMembers);
-  const [sprint, setSprint] = useState<Sprint>(Sprint);
+export default function PlanTable() {
+  const [sprint, setSprint] = useState<Sprint>(initialSprint);
   const [showNotification, setShowNotification] = useState<boolean>(true);
   const [totalWorkDays, setTotalWorkDays] = useState<number>(0);
 
@@ -201,7 +164,7 @@ export default function PlanTable(props: PlanTableProps) {
     value: string,
     id: string,
   ) => {
-    const task = produce(sprint, (sprintDraft) => {
+    const task = produce(sprint, (sprintDraft: Draft<Sprint>) => {
       const memberIndex = sprintDraft.members.findIndex((o: Member) => o.memberId === id);
       const tasksIndex = sprintDraft[memberIndex].workingDays.findIndex(
         (o: MemberWorkingDay) => o.day === day.toString(),
@@ -355,7 +318,7 @@ export default function PlanTable(props: PlanTableProps) {
               </TableCell>
             </TableRow>
           ) : (
-            Sprint.members.map((member) => (
+            sprint.members.map((member) => (
               <TableRow key={member.memberId} sx={{ height: '48px' }}>
                 <TableCell
                   sx={{
