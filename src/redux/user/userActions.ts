@@ -1,5 +1,5 @@
-import { User } from '../../reducers/user/userReducer';
-import { AppDispatch } from '../../store/store';
+import { User } from './userReducer';
+import {AppDispatch} from "../store";
 
 export enum UserActionTypes {
   GET_CURRENT_USER = 'user/getCurrentUser',

@@ -89,6 +89,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               left: '280px',
               width: '30px',
               height: '30px',
+              zIndex: 1,
             }}
           >
             <ArrowLeft
