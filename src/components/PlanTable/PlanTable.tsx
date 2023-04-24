@@ -14,8 +14,8 @@ import {
 import { Info } from '@mui/icons-material';
 import TaskKey from '../TaskKey/TaskKey';
 import { format } from 'date-fns';
-import produce, {Draft} from 'immer';
-import { Member, MemberWorkingDay, Sprint } from "../../types/NewSprintTypes";
+import produce, { Draft } from 'immer';
+import { Member, MemberWorkingDay, Sprint } from '../../types/NewSprintTypes';
 
 const initialSprint: Sprint = {
   title: '',
@@ -165,7 +165,9 @@ export default function PlanTable() {
     id: string,
   ) => {
     const task = produce(sprint, (sprintDraft: Draft<Sprint>) => {
-      const memberIndex = sprintDraft.members.findIndex((o: Member) => o.memberId === id);
+      const memberIndex = sprintDraft.members.findIndex(
+        (o: Member) => o.memberId === id,
+      );
       const tasksIndex = sprintDraft[memberIndex].workingDays.findIndex(
         (o: MemberWorkingDay) => o.day === day.toString(),
       );
@@ -229,7 +231,14 @@ export default function PlanTable() {
       setBusinessDays(days);
       setDaysOfWeek(daysOfWeek);
     }
-  }, [setBusinessDays, setDaysOfWeek, sprint.endDate, sprint.members, sprint.startDate, sprint.tasks]);
+  }, [
+    setBusinessDays,
+    setDaysOfWeek,
+    sprint.endDate,
+    sprint.members,
+    sprint.startDate,
+    sprint.tasks,
+  ]);
   return (
     <>
       {showNotification && (

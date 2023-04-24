@@ -25,8 +25,8 @@ import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import {NewSprint} from "../../redux/NewSprint/NewSprintReducer";
-import {addTask} from "../../redux/NewSprint/NewSprintActions";
+import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
+import { addTask } from '../../redux/NewSprint/NewSprintActions';
 import { TaskData } from '../../types/NewSprintTypes';
 
 interface TasksProps {
@@ -36,65 +36,83 @@ interface TasksProps {
 
 export default function TasksTable(props: TasksProps): JSX.Element {
   const { tasks, setTasks } = props;
-  const reduxStateTasks = useSelector<NewSprint>(state => state?.sprint?.tasks);
+  const reduxStateTasks = useSelector<NewSprint>(
+    (state) => state?.sprint?.tasks,
+  );
 
-  const handleKeyChange =
-      (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setTasks(
-        produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === value);
-          draft[index].keyValue = event.target.value;
-        }),
-      );
-    };
+  const handleKeyChange = (
+    value: string,
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setTasks(
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        const index = draft.findIndex((point) => point.keyValue === value);
+        draft[index].keyValue = event.target.value;
+      }),
+    );
+  };
 
-  const handleDescriptionChange =
-      (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setTasks(
-        produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === value);
-          draft[index].description = event.target.value;
-        }),
-      );
-    };
+  const handleDescriptionChange = (
+    value: string,
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setTasks(
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        const index = draft.findIndex((point) => point.keyValue === value);
+        draft[index].description = event.target.value;
+      }),
+    );
+  };
 
-  const handleOldPointsChange =
-    (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setTasks(
-        produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === value);
-          draft[index].oldPoints = event.target.value ? parseInt(event.target.value) : 0;
-        }),
-      );
-    };
+  const handleOldPointsChange = (
+    value: string,
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setTasks(
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        const index = draft.findIndex((point) => point.keyValue === value);
+        draft[index].oldPoints = event.target.value
+          ? parseInt(event.target.value)
+          : 0;
+      }),
+    );
+  };
 
-  const handleRemainingPointsChange =
-    (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setTasks(
-        produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === value);
-          draft[index].remainingPoints = event.target.value ? parseInt(event.target.value) : 0;
-        }),
-      );
-    };
+  const handleRemainingPointsChange = (
+    value: string,
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setTasks(
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        const index = draft.findIndex((point) => point.keyValue === value);
+        draft[index].remainingPoints = event.target.value
+          ? parseInt(event.target.value)
+          : 0;
+      }),
+    );
+  };
 
-  const handleNewPointsChange =
-    (value: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setTasks(
-        produce(tasks, (draft: Draft<TaskData[]>) => {
-          const index = draft.findIndex((point) => point.keyValue === value);
-          draft[index].newPoints = event.target.value ? parseInt(event.target.value) : 0;
-        }),
-      );
-    };
+  const handleNewPointsChange = (
+    value: string,
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    setTasks(
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        const index = draft.findIndex((point) => point.keyValue === value);
+        draft[index].newPoints = event.target.value
+          ? parseInt(event.target.value)
+          : 0;
+      }),
+    );
+  };
 
   const handleDeleteTask = (value: string) => {
-      setTasks(
-          produce(tasks, (draft: Draft<TaskData[]>) => {
-              const index = draft.findIndex((point) => point.keyValue === value);
-              draft.splice(index, 1)
-          }),
-      );
+    setTasks(
+      produce(tasks, (draft: Draft<TaskData[]>) => {
+        const index = draft.findIndex((point) => point.keyValue === value);
+        draft.splice(index, 1);
+      }),
+    );
   };
 
   const handleTypeChange = (index: number, value: GoalType) => {
@@ -107,20 +125,17 @@ export default function TasksTable(props: TasksProps): JSX.Element {
 
   const handleAddTask = () => {
     const newTaskObject: TaskData = {
-            keyValue: '',
-            keyColor: '#EC4226',
-            description: '',
-            type: '',
-            oldPoints: 0,
-            remainingPoints: 0,
-            newPoints: 0,
-        };
+      keyValue: '',
+      keyColor: '#EC4226',
+      description: '',
+      type: '',
+      oldPoints: 0,
+      remainingPoints: 0,
+      newPoints: 0,
+    };
 
     dispatch(addTask(newTaskObject));
-    setTasks([
-      ...tasks,
-        newTaskObject
-    ]);
+    setTasks([...tasks, newTaskObject]);
     setExpanded(false);
   };
 
@@ -255,7 +270,9 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                               variant="standard"
                               sx={{ minWidth: 70 }}
                               value={point.keyValue}
-                              onChange={(event) => handleKeyChange(point.keyValue, event)}
+                              onChange={(event) =>
+                                handleKeyChange(point.keyValue, event)
+                              }
                             />
                             <PopUp initialColor={point.keyColor} />
                           </Box>
@@ -266,7 +283,8 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             variant="standard"
                             sx={{ width: 600 }}
                             value={point.description}
-                            onChange={(event) => handleDescriptionChange(point.keyValue, event)
+                            onChange={(event) =>
+                              handleDescriptionChange(point.keyValue, event)
                             }
                           />
                         </TableCell>
@@ -283,14 +301,10 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                                 )
                               }
                             >
-                              <MenuItem
-                                value={GoalType.GOAL_TYPE}
-                              >
+                              <MenuItem value={GoalType.GOAL_TYPE}>
                                 Goal
                               </MenuItem>
-                              <MenuItem
-                                value={GoalType.TECHNICAL_TYPE}
-                              >
+                              <MenuItem value={GoalType.TECHNICAL_TYPE}>
                                 Technical
                               </MenuItem>
                             </Select>
@@ -301,7 +315,8 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             id={`oldPoints${point.keyValue}`}
                             variant="standard"
                             value={point.oldPoints}
-                            onChange={(event) => handleOldPointsChange(point.keyValue, event)
+                            onChange={(event) =>
+                              handleOldPointsChange(point.keyValue, event)
                             }
                           />
                         </StyledTableCell>
@@ -310,7 +325,8 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             id={`remainingPoints${point.keyValue}`}
                             variant="standard"
                             value={point.remainingPoints}
-                            onChange={(event) => handleRemainingPointsChange(point.keyValue, event)
+                            onChange={(event) =>
+                              handleRemainingPointsChange(point.keyValue, event)
                             }
                           />
                         </StyledTableCell>
@@ -319,7 +335,8 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             id={`newPoints${point.keyValue}`}
                             variant="standard"
                             value={point.newPoints}
-                            onChange={(event) => handleNewPointsChange(point.keyValue, event)
+                            onChange={(event) =>
+                              handleNewPointsChange(point.keyValue, event)
                             }
                           />
                         </StyledTableCell>

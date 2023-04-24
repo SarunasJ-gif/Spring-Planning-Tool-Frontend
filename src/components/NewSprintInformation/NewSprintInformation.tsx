@@ -13,7 +13,6 @@ export const NewSprintInformation = () => {
   const [endDate, setEndDate] = useState<Dayjs>(dayjs(''));
   const [name] = useState<string>('');
 
-
   const handleStartDateChange = (newValue: Dayjs | null) => {
     setStartDate(newValue || dayjs());
   };
@@ -32,7 +31,6 @@ export const NewSprintInformation = () => {
           alignItems: 'center',
           justifyContent: 'center',
           color: '#000000',
-          marginLeft: '-45px',
           marginTop: '32.5px',
           padding: '0px',
         }}
@@ -53,7 +51,7 @@ export const NewSprintInformation = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker']}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <DemoItem component="DatePicker" >
+              <DemoItem component="DatePicker">
                 <Box
                   sx={{
                     backgroundColor: '#D8DAFF',
