@@ -8,11 +8,10 @@ import { DatePicker } from '@mui/x-date-pickers-pro';
 import { SprintCell } from './SprintCell';
 import theme from './theme';
 
-export const TitleAndDate = () => {
+export const NewSprintInformation = () => {
   const [startDate, setStartDate] = useState<Dayjs>(dayjs(''));
   const [endDate, setEndDate] = useState<Dayjs>(dayjs(''));
   const [name] = useState<string>('');
-
 
   const handleStartDateChange = (newValue: Dayjs | null) => {
     setStartDate(newValue || dayjs());
@@ -40,7 +39,6 @@ export const TitleAndDate = () => {
           alignItems: 'center',
           justifyContent: 'center',
           color: '#000000',
-          marginLeft: '-45px',
           marginTop: '32.5px',
           padding: '0px',
         }}
@@ -61,7 +59,7 @@ export const TitleAndDate = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker']}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <DemoItem component="DatePicker" >
+              <DemoItem component="DatePicker">
                 <Box
                   sx={{
                     backgroundColor: '#D8DAFF',

@@ -24,6 +24,7 @@ function TaskKey(props: TaskKeyProps) {
     lineHeight: 16,
     width: 90,
     height: 35,
+    margin: '0!important',
   }));
   return <KeyStyle>{props.taskKey}</KeyStyle>;
 }
