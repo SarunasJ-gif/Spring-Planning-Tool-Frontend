@@ -22,10 +22,9 @@ import PopUp from './PopUp';
 import { GoalType } from '../../enums/enums';
 import produce, { Draft } from 'immer';
 import { StyledTableCell } from '../../style/TableCellStyle';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
 import { addTask } from '../../redux/NewSprint/NewSprintActions';
 import { TaskData } from '../../types/NewSprintTypes';
 
