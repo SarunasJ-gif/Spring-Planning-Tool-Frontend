@@ -24,7 +24,7 @@ export const SprintCell = ({ name, setName }: SprintCellProps) => {
       inputRef.current.focus();
       inputRef.current.setSelectionRange(tempName.length, tempName.length);
     }
-  }, [editing]);
+  }, [editing, tempName.length]);
 
   const handleBlur = () => {
     if (tempName.trim().length === 0) {
