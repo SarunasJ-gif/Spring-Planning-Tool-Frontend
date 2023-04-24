@@ -36,9 +36,10 @@ interface TasksProps {
 
 export default function TasksTable(props: TasksProps): JSX.Element {
   const { tasks, setTasks } = props;
-  const reduxStateTasks = useSelector<NewSprint>(
-    (state) => state?.sprint?.tasks,
-  );
+
+  //   const reduxStateTasks = useSelector<NewSprint>(
+  //     (state) => state?.sprint?.tasks,
+  //   );
 
   const handleKeyChange = (
     value: string,

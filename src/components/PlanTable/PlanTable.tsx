@@ -88,75 +88,10 @@ const initialSprint: Sprint = {
   ],
 };
 
-const initialMembers = [
-  {
-    firstName: 'John',
-    lastName: 'Doe',
-    memberId: '1',
-    workingDays: [
-      {
-        day: '2023-04-24',
-        task: {
-          keyValue: 'ASDF!123',
-          keyColor: '#FF0000',
-          description: 'Task 1',
-          type: 'Goal',
-          oldPoints: 0,
-          remainingPoints: 0,
-          newPoints: 0,
-        },
-      },
-      {
-        day: '2023-04-25',
-        task: {
-          keyValue: 'QWERTY!456',
-          keyColor: '#0000FF',
-          description: 'Task 2',
-          type: 'Task',
-          oldPoints: 3,
-          remainingPoints: 2,
-          newPoints: 1,
-        },
-      },
-    ],
-  },
-  {
-    firstName: 'Jane',
-    lastName: 'Smith',
-    memberId: '2',
-    workingDays: [
-      {
-        day: '2023-04-24',
-        task: {
-          keyValue: 'ZXCVB!789',
-          keyColor: '#00FF00',
-          description: 'Task 3',
-          type: 'Bug',
-          oldPoints: 2,
-          remainingPoints: 1,
-          newPoints: 0,
-        },
-      },
-      {
-        day: '2023-04-26',
-        task: {
-          keyValue: 'ASDF!123',
-          keyColor: '#FF0000',
-          description: 'Task 1',
-          type: 'Goal',
-          oldPoints: 0,
-          remainingPoints: 0,
-          newPoints: 0,
-        },
-      },
-    ],
-  },
-];
-
 export default function PlanTable() {
   const [sprint, setSprint] = useState<Sprint>(initialSprint);
   const [showNotification, setShowNotification] = useState<boolean>(true);
-  const [totalWorkDays, setTotalWorkDays] = useState<number>(0);
+  const totalWorkDays = 0;
 
   const handleTaskChange = (
     person: string,
