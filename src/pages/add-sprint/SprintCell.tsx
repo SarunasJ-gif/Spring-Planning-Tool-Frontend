@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, ThemeProvider, Typography } from '@mui/material';
 import './SprintCell.css';
-import theme from './theme';
+import theme from '../../theme';
+
 
 interface SprintCellProps {
   name: string;
