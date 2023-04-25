@@ -28,7 +28,6 @@ interface LoginResponse {
 }
 
 export default function Login() {
-  
   const {
     register,
     handleSubmit,
@@ -36,7 +35,6 @@ export default function Login() {
   } = useForm<FormData>();
 
   const [errorMessage, setErrorMessage] = useState<string>('');
-    
   const onSubmit = async (data: FormData) => {
     try {
       const response = await post('/login', {}, data) as LoginResponse;
