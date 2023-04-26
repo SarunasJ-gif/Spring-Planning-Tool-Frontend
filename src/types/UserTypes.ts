@@ -3,7 +3,7 @@ export type FormData = {
     password: string;
   };
   
-  export type LoginResponse = {
+export type LoginResponse = {
     ok: boolean;
     accessToken: string;
   };
