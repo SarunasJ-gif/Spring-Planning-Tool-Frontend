@@ -17,15 +17,7 @@ import { useForm } from 'react-hook-form';
 import theme from '../../theme';
 import { post } from '../../api';
 import Copyright from '../Copyright/Copyright';
-
-interface FormData {
-  email: string;
-  password: string;
-}
-interface LoginResponse {
-  ok: boolean;
-  accessToken: string;
-}
+import { LoginResponse, FormData } from '../../types/UserTypes';
 
 export default function Login() {
   const {
@@ -35,14 +27,17 @@ export default function Login() {
   } = useForm<FormData>();
 
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const onSubmit = async (data: FormData) => {
-    try {
-      const response = await post('/login', {}, data) as LoginResponse;
-      localStorage.setItem('accessToken', response.accessToken);
-      window.location.href = "/";
-    } catch (error: any) {
-      setErrorMessage(error.message);
-    }
+
+  const onSubmit = (data: FormData) => {
+    post('/login', {}, data)
+      .then((response) => {
+        const loginResponse = response as LoginResponse;
+        localStorage.setItem('accessToken', loginResponse.accessToken);
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
   };
 
   return (
