@@ -18,8 +18,11 @@ import theme from '../../theme';
 import { post } from '../../api';
 import Copyright from '../Copyright/Copyright';
 import { LoginResponse, FormData } from '../../types/UserTypes';
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -33,7 +36,7 @@ export default function Login() {
       .then((response) => {
         const loginResponse = response as LoginResponse;
         localStorage.setItem('accessToken', loginResponse.accessToken);
-        window.location.href = "/";
+        navigate("/");
       })
       .catch((error) => {
         setErrorMessage(error.message);
