@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Box, ThemeProvider } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
@@ -16,20 +16,18 @@ export default function NewSprintInformation() {
     (state: { newSprint: Sprint }) => state.newSprint.sprint,
   );
 
-  console.log(startDate, endDate);
-
   const dispatch = useDispatch();
 
   const handleStartDateChange = (newValue: Dayjs | null) => {
-    if (endDate && newValue && newValue.isAfter(endDate)) {
+    if (dayjs(endDate).isBefore(newValue)) {
       dispatch(actions.updateEndDate(newValue));
     }
     dispatch(actions.updateStartDate(newValue));
   };
 
   const handleEndDateChange = (newValue: Dayjs | null) => {
-    if (startDate && newValue && newValue.isBefore(startDate)) {
-      dispatch(actions.updateEndDate(newValue));
+    if (dayjs(newValue).isBefore(startDate)) {
+      dispatch(actions.updateStartDate(newValue));
     }
     dispatch(actions.updateEndDate(newValue));
   };
