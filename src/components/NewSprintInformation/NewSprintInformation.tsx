@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, Box, ThemeProvider } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
@@ -7,25 +7,31 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers-pro';
 import { SprintCell } from './SprintCell';
 import theme from './theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { Sprint } from '../../types/NewSprintTypes';
+import * as actions from '../..//redux/NewSprint/NewSprintActions';
 
-export const NewSprintInformation = () => {
-  const [startDate, setStartDate] = useState<Dayjs>(dayjs(''));
-  const [endDate, setEndDate] = useState<Dayjs>(dayjs(''));
-  const [name] = useState<string>('');
+export default function NewSprintInformation() {
+  const { title, startDate, endDate } = useSelector(
+    (state: { newSprint: Sprint }) => state.newSprint.sprint,
+  );
+
+  console.log(startDate, endDate);
+
+  const dispatch = useDispatch();
 
   const handleStartDateChange = (newValue: Dayjs | null) => {
-    setStartDate(newValue || dayjs());
-    if (endDate.isValid() && newValue && newValue.isAfter(endDate)) {
-      setEndDate(newValue);
+    if (endDate && newValue && newValue.isAfter(endDate)) {
+      dispatch(actions.updateEndDate(newValue));
     }
+    dispatch(actions.updateStartDate(newValue));
   };
 
   const handleEndDateChange = (newValue: Dayjs | null) => {
-    if (newValue && newValue.isBefore(startDate)) {
-      setEndDate(startDate);
-    } else {
-      setEndDate(newValue || dayjs());
+    if (startDate && newValue && newValue.isBefore(startDate)) {
+      dispatch(actions.updateEndDate(newValue));
     }
+    dispatch(actions.updateEndDate(newValue));
   };
 
   return (
@@ -46,7 +52,7 @@ export const NewSprintInformation = () => {
         <Typography variant="h1" sx={{ textAlign: 'center' }}>
           Add new sprint
         </Typography>
-        <SprintCell name={name} />
+        <SprintCell name={title} />
       </Box>
       <Box
         sx={{
@@ -72,7 +78,7 @@ export const NewSprintInformation = () => {
                 >
                   <DatePicker
                     label="Start Date"
-                    value={startDate}
+                    value={dayjs(startDate)}
                     onChange={handleStartDateChange}
                     format="MMM DD, YYYY"
                     slotProps={{ textField: { variant: 'filled' } }}
@@ -103,7 +109,7 @@ export const NewSprintInformation = () => {
                 >
                   <DatePicker
                     label="End Date"
-                    value={endDate}
+                    value={dayjs(endDate)}
                     onChange={handleEndDateChange}
                     format="MMM DD, YYYY"
                     slotProps={{ textField: { variant: 'filled' } }}
@@ -116,4 +122,4 @@ export const NewSprintInformation = () => {
       </Box>
     </ThemeProvider>
   );
-};
+}
