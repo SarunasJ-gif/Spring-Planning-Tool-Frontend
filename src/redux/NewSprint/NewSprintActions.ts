@@ -10,3 +10,8 @@ export const removeTask = (keyValue: string) => ({
     type: actions.REMOVE_TASK,
     payload: keyValue
 });
+
+export const createSprintRequest = (sprintData: any) => ({
+    type: actions.CREATE_SPRINT_REQUEST,
+    payload: sprintData,
+  });

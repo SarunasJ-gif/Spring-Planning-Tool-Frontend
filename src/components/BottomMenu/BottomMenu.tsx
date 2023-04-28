@@ -1,6 +1,10 @@
 import { Box, Button } from '@mui/material';
 
-function BottomMenu() {
+function BottomMenu(props: { dispatch: (arg0: Promise<unknown>) => void; }) {
+  const handleCreateSprint = (sprintData: any) => {
+    props.dispatch(createSprint(sprintData));
+  }
+
   return (
     <Box
       sx={{
@@ -34,6 +38,7 @@ function BottomMenu() {
             marginRight: '15px',
             fontSize: '18px',
           }}
+          onClick={() => handleCreateSprint({ name: 'My Sprint', startDate: '2023-05-01', endDate: '2023-05-15' })}
         >
           ADD
         </Button>
@@ -54,3 +59,7 @@ function BottomMenu() {
 }
 
 export default BottomMenu;
+
+function createSprint(sprintData: any): Promise<unknown> {
+  throw new Error('Function not implemented.');
+}
