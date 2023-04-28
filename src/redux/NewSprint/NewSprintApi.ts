@@ -3,4 +3,4 @@
 
 import { post } from "../../api";
 
-export const createSprint = (sprint: unknown) => post("sprint", undefined, sprint);
+export const createSprint = (sprintData: unknown) => post("/sprint", undefined, sprintData);

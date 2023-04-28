@@ -12,11 +12,18 @@ import { Sprint } from '../../types/NewSprintTypes';
 import * as actions from '../..//redux/NewSprint/NewSprintActions';
 
 export default function NewSprintInformation() {
+
   const { title, startDate, endDate } = useSelector(
     (state: { newSprint: Sprint }) => state.newSprint.sprint,
   );
 
   const dispatch = useDispatch();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const newSprintData = { title, startDate, endDate }; 
+    dispatch(actions.createSprintRequest(newSprintData));
+  };
 
   const handleStartDateChange = (newValue: Dayjs | null) => {
     if (dayjs(endDate).isBefore(newValue)) {
