@@ -12,5 +12,7 @@ export function* createSprintSaga(action:any) {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function* () {
+
   yield takeLatest(CREATE_NEW_SPRINT, createSprintSaga);
+
 }
