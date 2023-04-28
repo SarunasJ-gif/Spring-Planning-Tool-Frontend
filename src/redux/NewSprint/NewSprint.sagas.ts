@@ -9,5 +9,5 @@
 // }
 //
 export default function* () {
-    // yield takeLatest(CREATE_NEW_SPRINT, createSprintSaga);
+  // yield takeLatest(CREATE_NEW_SPRINT, createSprintSaga);
 }
