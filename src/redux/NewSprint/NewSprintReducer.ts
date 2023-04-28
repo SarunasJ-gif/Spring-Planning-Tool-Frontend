@@ -35,6 +35,15 @@ const reducer = (state = initialState, { type, payload }) => {
                 const index = state.sprint.tasks.findIndex(o => o.keyValue === payload);
                 draftState.sprint.tasks.splice(index, 1);
             });
+        case actions.CREATE_SPRINT_REQUEST:
+            return produce(state, draftState => {
+                draftState.sprint.title = payload.title;
+                draftState.sprint.startDate = payload.startDate;
+                draftState.sprint.endDate = payload.endDate;
+                draftState.sprint.tasks = payload.tasks;
+                draftState.sprint.memberTeamId = payload.memberTeamId;
+                draftState.sprint.members = payload.members;
+});
         default:
             return state;
     }
