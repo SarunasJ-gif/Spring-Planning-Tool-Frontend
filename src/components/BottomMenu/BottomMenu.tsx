@@ -5,6 +5,13 @@ function BottomMenu(props: { dispatch: (arg0: Promise<unknown>) => void; }) {
     props.dispatch(createSprint(sprintData));
   }
 
+  function createSprint(sprintData: any): Promise<any> {
+    return new Promise((resolve) => {
+        resolve(sprintData);
+      }, 
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -60,6 +67,4 @@ function BottomMenu(props: { dispatch: (arg0: Promise<unknown>) => void; }) {
 
 export default BottomMenu;
 
-function createSprint(sprintData: any): Promise<unknown> {
-  throw new Error('Function not implemented.');
-}
+
