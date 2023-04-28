@@ -17,24 +17,30 @@ import { useForm } from 'react-hook-form';
 import theme from '../../theme';
 import { post } from '../../api';
 import Copyright from '../Copyright/Copyright';
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import { LoginResponse, FormData } from '../../types/UserTypes';
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const onSubmit = (data: FormData) => {
-    post<FormData>('/login', undefined, data).catch((error) => {
-      setErrorMessage(error.message);
-    });
+    post('/login', {}, data)
+      .then((response) => {
+        const loginResponse = response as LoginResponse;
+        localStorage.setItem('accessToken', loginResponse.accessToken);
+        navigate("/");
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
   };
 
   return (

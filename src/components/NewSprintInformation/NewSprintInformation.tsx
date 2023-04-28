@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, Box, ThemeProvider } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
@@ -7,18 +7,29 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers-pro';
 import { SprintCell } from './SprintCell';
 import theme from './theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { Sprint } from '../../types/NewSprintTypes';
+import * as actions from '../..//redux/NewSprint/NewSprintActions';
 
-export const TitleAndDate = () => {
-  const [startDate, setStartDate] = useState<Dayjs>(dayjs(''));
-  const [endDate, setEndDate] = useState<Dayjs>(dayjs(''));
-  const [name] = useState<string>('');
+export default function NewSprintInformation() {
+  const { title, startDate, endDate } = useSelector(
+    (state: { newSprint: Sprint }) => state.newSprint.sprint,
+  );
 
+  const dispatch = useDispatch();
 
   const handleStartDateChange = (newValue: Dayjs | null) => {
-    setStartDate(newValue || dayjs());
+    if (dayjs(endDate).isBefore(newValue)) {
+      dispatch(actions.updateEndDate(newValue));
+    }
+    dispatch(actions.updateStartDate(newValue));
   };
+
   const handleEndDateChange = (newValue: Dayjs | null) => {
-    setEndDate(newValue || dayjs());
+    if (dayjs(newValue).isBefore(startDate)) {
+      dispatch(actions.updateStartDate(newValue));
+    }
+    dispatch(actions.updateEndDate(newValue));
   };
 
   return (
@@ -32,7 +43,6 @@ export const TitleAndDate = () => {
           alignItems: 'center',
           justifyContent: 'center',
           color: '#000000',
-          marginLeft: '-45px',
           marginTop: '32.5px',
           padding: '0px',
         }}
@@ -40,7 +50,7 @@ export const TitleAndDate = () => {
         <Typography variant="h1" sx={{ textAlign: 'center' }}>
           Add new sprint
         </Typography>
-        <SprintCell name={name} />
+        <SprintCell name={title} />
       </Box>
       <Box
         sx={{
@@ -53,7 +63,7 @@ export const TitleAndDate = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker']}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <DemoItem component="DatePicker" >
+              <DemoItem component="DatePicker">
                 <Box
                   sx={{
                     backgroundColor: '#D8DAFF',
@@ -66,7 +76,7 @@ export const TitleAndDate = () => {
                 >
                   <DatePicker
                     label="Start Date"
-                    value={startDate}
+                    value={dayjs(startDate)}
                     onChange={handleStartDateChange}
                     format="MMM DD, YYYY"
                     slotProps={{ textField: { variant: 'filled' } }}
@@ -97,7 +107,7 @@ export const TitleAndDate = () => {
                 >
                   <DatePicker
                     label="End Date"
-                    value={endDate}
+                    value={dayjs(endDate)}
                     onChange={handleEndDateChange}
                     format="MMM DD, YYYY"
                     slotProps={{ textField: { variant: 'filled' } }}
@@ -110,4 +120,4 @@ export const TitleAndDate = () => {
       </Box>
     </ThemeProvider>
   );
-};
+}

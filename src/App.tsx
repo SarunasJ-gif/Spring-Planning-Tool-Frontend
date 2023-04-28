@@ -5,9 +5,9 @@ import 'typeface-poppins';
 import './App.css';
 import theme from './theme';
 import { RouterProvider } from 'react-router';
-import { useAppDispatch } from './store/store';
-import { getUser } from './actions/user/userActions';
+import { getUser } from './redux/user/userActions';
 import { routes } from './routes/routes';
+import {useAppDispatch} from "./redux/store";
 
 function App() {
   const dispatch = useAppDispatch();
