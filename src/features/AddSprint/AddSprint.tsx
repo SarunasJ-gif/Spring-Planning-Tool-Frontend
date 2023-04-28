@@ -10,33 +10,24 @@ import { TaskData } from "../../types/NewSprintTypes";
 
 function AddSprint() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
-
-  const handleCreateSprint = async (sprintData: any) => {
-    const response = await createSprint(sprintData);
-  }
-  const createSprint = async (sprintData: any): Promise<any> => {
-    return sprintData;
-  }
-
   return (
     <>
       <NewSprintInformation />
       <TasksTable tasks={tasks} setTasks={setTasks} />
       <PlanTable />
-    <Box 
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        height: "65vh",
-      }}
-    >
-     <BottomMenu
-          dispatch={handleCreateSprint}
-        />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '65vh',
+        }}
+      >
+        <BottomMenu />
       </Box>
     </>
   );
 }
 
 export default AddSprint;
+
