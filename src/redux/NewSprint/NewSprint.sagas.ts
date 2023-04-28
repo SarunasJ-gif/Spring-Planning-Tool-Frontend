@@ -1,21 +1,15 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import axios from 'axios';
-import {
-  CREATE_SPRINT_FAILURE,
-  CREATE_SPRINT_REQUEST,
-  CREATE_SPRINT_SUCCESS
-} from './NewSprintActionType';
+import { call, takeLatest } from "redux-saga/effects";
+import { CREATE_NEW_SPRINT } from "./NewSprintActionType";
+import { createSprint } from "./NewSprintApi";
 
-function* createSprintSaga(action: { payload: unknown; }): Generator<any, any, any> {
-  try {
-    const response = yield call(axios.post, '/sprint', action.payload);
-    yield put({ type: CREATE_SPRINT_SUCCESS, payload: response.data });
-  } catch (e) {
-    const error = e as Error;
-    yield put({ type: CREATE_SPRINT_FAILURE, error: error.message });
-  }
+export function* createSprintSaga(action:any) {
+    try {
+        yield call(createSprint, action.payload);
+    } catch (e) {
+        console.error(e);
+    }
 }
 
-export default function* watchCreateSprint() {
-  yield takeLatest(CREATE_SPRINT_REQUEST, createSprintSaga);
+export default function* () {
+  yield takeLatest(CREATE_NEW_SPRINT, createSprintSaga);
 }

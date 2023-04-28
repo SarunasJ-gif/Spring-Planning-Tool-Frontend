@@ -1,5 +1,4 @@
 export const ADD_TASK = "addTask";
 export const REMOVE_TASK = "removeTask";
-export const CREATE_SPRINT_REQUEST = "CREATE_SPRINT_REQUEST";
-export const CREATE_SPRINT_SUCCESS = "CREATE_SPRINT_SUCCESS";
-export const CREATE_SPRINT_FAILURE = "CREATE_SPRINT_FAILURE";
+export const CREATE_NEW_SPRINT = "createNewSprint";
+

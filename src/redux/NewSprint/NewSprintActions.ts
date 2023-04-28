@@ -12,6 +12,6 @@ export const removeTask = (keyValue: string) => ({
 });
 
 export const createSprintRequest = (sprintData: any) => ({
-    type: actions.CREATE_SPRINT_REQUEST,
+    type: actions.CREATE_NEW_SPRINT,
     payload: sprintData,
   });
