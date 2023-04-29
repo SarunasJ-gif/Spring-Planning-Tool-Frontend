@@ -55,21 +55,21 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   };
 
   const handleOldPointsChange = (
-    value: number,
+    value: string,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     dispatch(updateTaskOldPoints(value));
   };
 
   const handleRemainingPointsChange = (
-    value: number,
+    value: string,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     dispatch(updateTaskRemainingPoints(value));
   };
 
   const handleNewPointsChange = (
-    value: number,
+    value: string,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     dispatch(updateTaskNewPoints(value));
