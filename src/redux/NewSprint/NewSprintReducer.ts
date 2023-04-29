@@ -49,10 +49,6 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce(state, (draftState) => {
         draftState.sprint.title = payload;
       });
-    case actions.CREATE_NEW_SPRINT:
-      return produce(state, (draftState) => {
-        draftState.sprint = payload;
-      });
     default:
       return state;
   }

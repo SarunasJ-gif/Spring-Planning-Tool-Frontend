@@ -1,8 +1,8 @@
 import { all } from 'redux-saga/effects';
-import  createSprintSaga  from '../redux/NewSprint/NewSprint.sagas';
+import  newSprintSaga  from './NewSprint/NewSprint.sagas';
 
-export default function* sagas() {
+export default function* rootSaga() {
     yield all([
-        createSprintSaga,
+        newSprintSaga()
     ]);
 }

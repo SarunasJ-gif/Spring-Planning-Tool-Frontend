@@ -26,7 +26,8 @@ export const updateTitle = (title: string) => ({
   type: actions.UPDATE_TITLE,
   payload: title,
 });
-export const createSprintRequest = (sprintData: any) => ({
+
+export const createNewSprint = (sprintData: any) => ({
   type: actions.CREATE_NEW_SPRINT,
   payload: sprintData,
 });

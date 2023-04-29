@@ -4,13 +4,15 @@ import { createSprint } from "./NewSprintApi";
 
 export function* createSprintSaga(action:any) {
     try {
+         console.log("vyksta duomenu siuntimas");
+         console.log(action);
         yield call(createSprint, action.payload);
+       
     } catch (e) {
         console.error(e);
     }
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default function* () {
+export default function* newSprintSaga() {
   yield takeLatest(CREATE_NEW_SPRINT, createSprintSaga);
 }

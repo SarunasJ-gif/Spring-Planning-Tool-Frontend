@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Sprint } from '../../types/NewSprintTypes';
-import { createSprintRequest } from '../../redux/NewSprint/NewSprintActions';
+import { createNewSprint } from '../../redux/NewSprint/NewSprintActions';
 
 
 function BottomMenu() {
@@ -9,12 +9,12 @@ function BottomMenu() {
   const dispatch = useDispatch();
 
   const { title, startDate, endDate } = useSelector(
-    (state: { newSprint: Sprint }) => state.newSprint.sprint,
+    (state: { newSprint: Sprint }) => state?.newSprint?.sprint,
   );
 
   const handleButtonClick = () => {
     const newSprint = { title, startDate, endDate };
-    dispatch(createSprintRequest(newSprint));
+    dispatch(createNewSprint(newSprint));
   };
 
   return (
