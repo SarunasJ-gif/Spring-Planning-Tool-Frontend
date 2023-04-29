@@ -47,7 +47,7 @@ const reducer = (state = initialState, { type, payload }) => {
       });
     case actions.UPDATE_TITLE:
       return produce(state, (draftState) => {
-        draftState.sprint.title = payload.title;
+        draftState.sprint.title = payload;
       });
     default:
       return state;
