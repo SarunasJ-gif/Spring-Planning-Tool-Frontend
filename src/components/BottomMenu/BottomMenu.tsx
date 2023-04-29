@@ -1,6 +1,22 @@
 import { Box, Button } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { Sprint } from '../../types/NewSprintTypes';
+import { createSprintRequest } from '../../redux/NewSprint/NewSprintActions';
+
 
 function BottomMenu() {
+  
+  const dispatch = useDispatch();
+
+  const { title, startDate, endDate } = useSelector(
+    (state: { newSprint: Sprint }) => state.newSprint.sprint,
+  );
+
+  const handleButtonClick = () => {
+    const newSprint = { title, startDate, endDate };
+    dispatch(createSprintRequest(newSprint));
+  };
+
   return (
     <Box
       sx={{
@@ -34,6 +50,7 @@ function BottomMenu() {
             marginRight: '15px',
             fontSize: '18px',
           }}
+          onClick={handleButtonClick}
         >
           ADD
         </Button>
