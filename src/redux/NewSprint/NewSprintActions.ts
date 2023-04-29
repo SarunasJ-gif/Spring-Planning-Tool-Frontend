@@ -47,17 +47,17 @@ export const updateTaskType = (type: string) => ({
   payload: type,
 });
 
-export const updateTaskOldPoints = (oldPoints: number) => ({
+export const updateTaskOldPoints = (oldPoints: string) => ({
   type: actions.UPDATE_TASK_OLD_POINTS,
   payload: oldPoints,
 });
 
-export const updateTaskRemainingPoints = (remainingPoints: number) => ({
+export const updateTaskRemainingPoints = (remainingPoints: string) => ({
   type: actions.UPDATE_TASK_REMAINING_POINTS,
   payload: remainingPoints,
 });
 
-export const updateTaskNewPoints = (newPoints: number) => ({
+export const updateTaskNewPoints = (newPoints: string) => ({
   type: actions.UPDATE_TASK_OLD_POINTS,
   payload: newPoints,
 });
