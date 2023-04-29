@@ -51,7 +51,6 @@ const post = async <T>(
   config?: AxiosRequestConfig,
   data?: unknown,
 ): Promise<T> => {
-  console.log(process.env.REACT_APP_BASE_URL);
   return request<T>('post', url, data, config);
 };
 
