@@ -49,6 +49,42 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce(state, (draftState) => {
         draftState.sprint.title = payload;
       });
+    case actions.UPDATE_TASK_KEY_VALUE:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.keyValue;
+      });
+    case actions.UPDATE_TASK_KEY_COLOR:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.keyColor;
+      });
+    case actions.UPDATE_TASK_DESCRIPTION:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.description;
+      });
+    case actions.UPDATE_TASK_TYPE:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.type;
+      });
+    case actions.UPDATE_TASK_TYPE:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.type;
+      });
+    case actions.UPDATE_TASK_OLD_POINTS:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.oldPoints;
+      });
+    case actions.UPDATE_TASK_REMAINING_POINTS:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.remainingPoints;
+      });
+    case actions.UPDATE_TASK_REMAINING_POINTS:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.remainingPoints;
+      });
+    case actions.UPDATE_TASK_NEW_POINTS:
+      return produce(state, (draftState) => {
+        draftState.sprint.tasks = payload.task.newPoints;
+      });
     default:
       return state;
   }
