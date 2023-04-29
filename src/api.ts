@@ -5,7 +5,7 @@ import axios, {
 } from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 axiosInstance.interceptors.request.use(
@@ -51,6 +51,7 @@ const post = async <T>(
   config?: AxiosRequestConfig,
   data?: unknown,
 ): Promise<T> => {
+  console.log(process.env.REACT_APP_BASE_URL);
   return request<T>('post', url, data, config);
 };
 
