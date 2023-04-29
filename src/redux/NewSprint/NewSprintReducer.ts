@@ -65,17 +65,9 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce(state, (draftState) => {
         draftState.sprint.tasks = payload.task.type;
       });
-    case actions.UPDATE_TASK_TYPE:
-      return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.type;
-      });
     case actions.UPDATE_TASK_OLD_POINTS:
       return produce(state, (draftState) => {
         draftState.sprint.tasks = payload.task.oldPoints;
-      });
-    case actions.UPDATE_TASK_REMAINING_POINTS:
-      return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.remainingPoints;
       });
     case actions.UPDATE_TASK_REMAINING_POINTS:
       return produce(state, (draftState) => {

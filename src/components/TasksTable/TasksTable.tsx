@@ -25,7 +25,7 @@ import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import { addTask } from '../../redux/NewSprint/NewSprintActions';
+import { addTask, removeTask, updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/NewSprint/NewSprintActions';
 import { TaskData } from '../../types/NewSprintTypes';
 
 interface TasksProps {
@@ -44,66 +44,35 @@ export default function TasksTable(props: TasksProps): JSX.Element {
     value: string,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    setTasks(
-      produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.keyValue === value);
-        draft[index].keyValue = event.target.value;
-      }),
-    );
+    dispatch(updateTaskKeyValue(value));
   };
 
   const handleDescriptionChange = (
     value: string,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    setTasks(
-      produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.keyValue === value);
-        draft[index].description = event.target.value;
-      }),
-    );
+    dispatch(updateTaskDescription(value));
   };
 
   const handleOldPointsChange = (
-    value: string,
+    value: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    setTasks(
-      produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.keyValue === value);
-        draft[index].oldPoints = event.target.value
-          ? parseInt(event.target.value)
-          : 0;
-      }),
-    );
+    dispatch(updateTaskOldPoints(value));
   };
 
   const handleRemainingPointsChange = (
-    value: string,
+    value: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    setTasks(
-      produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.keyValue === value);
-        draft[index].remainingPoints = event.target.value
-          ? parseInt(event.target.value)
-          : 0;
-      }),
-    );
+    dispatch(updateTaskRemainingPoints(value));
   };
 
   const handleNewPointsChange = (
-    value: string,
+    value: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    setTasks(
-      produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.keyValue === value);
-        draft[index].newPoints = event.target.value
-          ? parseInt(event.target.value)
-          : 0;
-      }),
-    );
+    dispatch(updateTaskNewPoints(value));
   };
 
   const handleDeleteTask = (value: string) => {
@@ -113,14 +82,11 @@ export default function TasksTable(props: TasksProps): JSX.Element {
         draft.splice(index, 1);
       }),
     );
+    dispatch(removeTask(value));
   };
 
   const handleTypeChange = (index: number, value: GoalType) => {
-    setTasks(
-      produce(tasks, (draft: Draft<TaskData[]>) => {
-        draft[index].type = value;
-      }),
-    );
+    dispatch(updateTaskType(value));
   };
 
   const handleAddTask = () => {
