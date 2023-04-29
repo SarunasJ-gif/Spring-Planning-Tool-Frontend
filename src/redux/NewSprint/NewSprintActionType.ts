@@ -4,7 +4,6 @@ export const UPDATE_START_DATE = 'updateStartDate';
 export const UPDATE_END_DATE = 'updateEndDate';
 export const UPDATE_TITLE = 'updateTitle';
 export const UPDATE_TASK_KEY_VALUE = "updateTaskKeyValue";
-export const UPDATE_TASK_KEY_COLOR = "updateTaskKeyColor";
 export const UPDATE_TASK_DESCRIPTION = "updateTaskDescription";
 export const UPDATE_TASK_TYPE = "updateTaskType";
 export const UPDATE_TASK_OLD_POINTS = "updateTaskOldPoints";

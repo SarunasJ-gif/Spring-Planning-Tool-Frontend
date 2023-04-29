@@ -32,10 +32,6 @@ export const updateTaskKeyValue = (keyValue: string) => ({
   payload: keyValue,
 });
 
-export const updateTaskKeyColor = (keyColor: string) => ({
-  type: actions.UPDATE_TASK_KEY_COLOR,
-  payload: keyColor,
-});
 
 export const updateTaskDescription = (description: string) => ({
   type: actions.UPDATE_TASK_DESCRIPTION,

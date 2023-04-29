@@ -49,37 +49,55 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce(state, (draftState) => {
         draftState.sprint.title = payload;
       });
+
+
     case actions.UPDATE_TASK_KEY_VALUE:
       return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.keyValue;
-      });
-    case actions.UPDATE_TASK_KEY_COLOR:
-      return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.keyColor;
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.keyValue === payload,
+        );
+        draftState.sprint.tasks[index].keyValue = payload;
       });
     case actions.UPDATE_TASK_DESCRIPTION:
       return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.description;
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.description === payload,
+        );
+        draftState.sprint.tasks[index].description = payload;
       });
     case actions.UPDATE_TASK_TYPE:
       return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.type;
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.type === payload,
+        );
+        draftState.sprint.tasks[index].type = payload;
       });
     case actions.UPDATE_TASK_OLD_POINTS:
       return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.oldPoints;
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.oldPoints === payload,
+        );
+        draftState.sprint.tasks[index].oldPoints = payload;
       });
     case actions.UPDATE_TASK_REMAINING_POINTS:
       return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.remainingPoints;
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.remainingPoints === payload,
+        );
+        draftState.sprint.tasks[index].remainingPoints = payload;
       });
     case actions.UPDATE_TASK_NEW_POINTS:
       return produce(state, (draftState) => {
-        draftState.sprint.tasks = payload.task.newPoints;
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.newPoints === payload,
+        );
+        draftState.sprint.tasks[index].newPoints = payload;
       });
     default:
       return state;
   }
 };
-
 export default reducer;
+
+
+
