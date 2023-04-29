@@ -26,3 +26,13 @@ export const updateTitle = (title: string) => ({
   type: actions.UPDATE_TITLE,
   payload: title,
 });
+
+export const updateTaskKeyValue = (keyValue: string) => ({
+  type: actions.UPDATE_TASK_KEY_VALUE,
+  payload: keyValue,
+});
+
+export const updateTaskKeyColor = (keyColor: string) => ({
+  type: actions.UPDATE_TASK_KEY_COLOR,
+  payload: keyColor,
+})
