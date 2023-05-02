@@ -18,6 +18,7 @@ import { post } from '../../api';
 import { useForm } from 'react-hook-form';
 import theme from '../../theme';
 import Copyright from '../Copyright/Copyright';
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   email: string;
@@ -26,6 +27,7 @@ interface FormData {
 }
 
 export default function Register() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -39,9 +41,13 @@ export default function Register() {
     post<{ email: string; password: string }>('/register', {
       email,
       password,
-    }, undefined).catch((error) => {
-      setErrorMessage(error.message);
-    });
+    }, undefined)
+      .then(() => {
+        navigate('/login');
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data);
+      });
   };
 
   const password = watch('password');
