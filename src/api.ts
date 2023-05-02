@@ -12,7 +12,7 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
-const request = async <T>(
+const request = <T>(
   method: string,
   url: string,
   data?: unknown,
@@ -20,17 +20,13 @@ const request = async <T>(
 ): Promise<T> => {
   const token = localStorage.getItem('accessToken');
   if (token) {config = { headers: { Authorization: `Bearer ${token}` }}}
-  try {
-    const response = await axiosInstance.request<T>({
-      method,
-      url,
-      data,
-      ...config,
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  
+  return axiosInstance.request<T>({
+    method,
+    url,
+    data,
+    ...config,
+  }).then(response => response.data).catch(error => { throw error; });
 };
 
 const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
