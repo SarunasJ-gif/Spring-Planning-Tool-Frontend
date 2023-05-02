@@ -78,13 +78,13 @@ export default function TasksTable(): JSX.Element {
     dispatch(updateTaskType(id, event));
   };
 
-  const getRandomNumber = (min: number, max: number): number => {
+  const getRandomId = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min + 1) + min) * Date.now();
   };
 
   const handleAddTask = () => {
     const newTaskObject: TaskData = {
-      id: getRandomNumber(1, 1000),
+      id: getRandomId(1, 1000),
       keyValue: '',
       keyColor: '#EC4226',
       description: '',
