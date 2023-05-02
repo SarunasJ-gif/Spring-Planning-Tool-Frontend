@@ -9,7 +9,7 @@ function BottomMenu() {
   const dispatch = useDispatch();
 
   const sprint = useSelector((state: { newSprint: Sprint }) => state?.newSprint?.sprint);
-  
+
   const handleButtonClick = () => {
     const newSprint = { ...sprint };
     dispatch(createNewSprint(newSprint));

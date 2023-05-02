@@ -14,6 +14,7 @@ import * as actions from '../..//redux/NewSprint/NewSprintActions';
 export default function NewSprintInformation() {
   
   const dispatch = useDispatch();
+  
   const { title, startDate, endDate } = useSelector(
     (state: { newSprint: Sprint }) => state.newSprint.sprint,
   );

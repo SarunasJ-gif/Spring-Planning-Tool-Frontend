@@ -35,7 +35,7 @@ export default function Login() {
     post('/login', data)
       .then((response) => {
         const loginResponse = response as LoginResponse;
-        localStorage.setItem('accessToken', loginResponse.accessToken);
+        localStorage.setItem('token', loginResponse.accessToken);
         navigate("/");
       })
       .catch((error) => {
