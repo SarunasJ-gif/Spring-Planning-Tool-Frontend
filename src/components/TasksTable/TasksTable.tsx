@@ -22,11 +22,12 @@ import PopUp from './PopUp';
 import { GoalType } from '../../enums/enums';
 import produce, { Draft } from 'immer';
 import { StyledTableCell } from '../../style/TableCellStyle';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { addTask, removeTask, updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/NewSprint/NewSprintActions';
 import { TaskData } from '../../types/NewSprintTypes';
+import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
 
 interface TasksProps {
   tasks: TaskData[];
@@ -36,9 +37,11 @@ interface TasksProps {
 export default function TasksTable(props: TasksProps): JSX.Element {
   const { tasks, setTasks } = props;
 
-  //   const reduxStateTasks = useSelector<NewSprint>(
-  //     (state) => state?.sprint?.tasks,
-  //   );
+  const reduxStateTasks = useSelector<TaskData>(
+    (state) => state?.keyValue,
+  );
+
+  const dispatch = useDispatch();
 
   const handleKeyChange = (
     value: string,
@@ -55,21 +58,21 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   };
 
   const handleOldPointsChange = (
-    value: string,
+    value: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     dispatch(updateTaskOldPoints(value));
   };
 
   const handleRemainingPointsChange = (
-    value: string,
+    value: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     dispatch(updateTaskRemainingPoints(value));
   };
 
   const handleNewPointsChange = (
-    value: string,
+    value: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     dispatch(updateTaskNewPoints(value));
@@ -125,7 +128,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   const handleAccordionToggle = () => {
     setExpanded(!expanded);
   };
-  const dispatch = useDispatch();
+
 
   return (
     <Box sx={{ ml: 10 }}>
@@ -250,7 +253,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             sx={{ width: 600 }}
                             value={point.description}
                             onChange={(event) =>
-                              handleDescriptionChange(point.keyValue, event)
+                              handleDescriptionChange(point.description, event)
                             }
                           />
                         </TableCell>
@@ -282,7 +285,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             variant="standard"
                             value={point.oldPoints}
                             onChange={(event) =>
-                              handleOldPointsChange(point.keyValue, event)
+                              handleOldPointsChange(point.oldPoints, event)
                             }
                           />
                         </StyledTableCell>
@@ -292,7 +295,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             variant="standard"
                             value={point.remainingPoints}
                             onChange={(event) =>
-                              handleRemainingPointsChange(point.keyValue, event)
+                              handleRemainingPointsChange(point.remainingPoints, event)
                             }
                           />
                         </StyledTableCell>
@@ -302,7 +305,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             variant="standard"
                             value={point.newPoints}
                             onChange={(event) =>
-                              handleNewPointsChange(point.keyValue, event)
+                              handleNewPointsChange(point.newPoints, event)
                             }
                           />
                         </StyledTableCell>

@@ -1,6 +1,7 @@
 import produce from 'immer';
 import * as actions from './NewSprintActionType';
-import { Member, TaskData } from '../../types/NewSprintTypes';
+import { Member, Sprint, TaskData } from '../../types/NewSprintTypes';
+import { set } from 'immer/dist/internal';
 
 export type NewSprint = {
   sprint: {
@@ -54,10 +55,12 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_TASK_KEY_VALUE:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
-          (o) => o.keyValue === payload,
+          (o: TaskData) => o.keyValue === payload
         );
         draftState.sprint.tasks[index].keyValue = payload;
+
       });
+
     case actions.UPDATE_TASK_DESCRIPTION:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
