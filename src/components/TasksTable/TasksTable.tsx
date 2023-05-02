@@ -27,6 +27,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { addTask, removeTask, updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/NewSprint/NewSprintActions';
 import { Sprint, TaskData } from '../../types/NewSprintTypes';
 
+
 export default function TasksTable(): JSX.Element {
   const { tasks } = useSelector(
     (state: { newSprint: Sprint }) => state.newSprint.sprint,
@@ -77,11 +78,13 @@ export default function TasksTable(): JSX.Element {
     dispatch(updateTaskType(id, event));
   };
 
-  // RANDOM ID, id musat be number
+  const getRandomNumber = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min + 1) + min) * Date.now();
+  };
 
   const handleAddTask = () => {
     const newTaskObject: TaskData = {
-      id: 1,
+      id: getRandomNumber(1, 1000),
       keyValue: '',
       keyColor: '#EC4226',
       description: '',
