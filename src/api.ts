@@ -1,29 +1,19 @@
-import axios, {
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from 'axios';
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080',
-  // baseURL: process.env.BASE_URL,
+  baseURL: process.env.REACT_APP_BASE_URL,
+  timeout: 15000,
 });
 
-axiosInstance.interceptors.request.use(
-  async (config: InternalAxiosRequestConfig) => {
-    const token =
-      config.headers.Authorization ||
-      (await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(localStorage.getItem('token'));
-        }, 0);
-      }));
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-);
+axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    console.log("axios iraso tokena i headeri", token);
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  console.log("axios pilnas configas su tokenu?", config);
+  return config;
+});
 
 const request = async <T>(
   method: string,
@@ -31,28 +21,48 @@ const request = async <T>(
   data?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
-  return axiosInstance
-    .request<T>({
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    if (!config) {
+      config = {};
+    }
+    if (!config.headers) {
+      config.headers = {};
+    }
+    config.headers.Authorization = `Bearer ${token}`;
+    console.log(`requeste esantis Bearer ${token}`);
+  }
+  try {
+    console.log("paleidziamas kreipimasi i endpointa ",axiosInstance);
+    const response = await axiosInstance.request<T>({
       method,
       url,
-      ...config,
       data,
-    })
-    .then((response: AxiosResponse<T>) => {
-      console.log(response.data);
-      return response.data;
+      ...config,
     });
+    console.log("GAUTAS GERAS atsakymas", response.data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log('gaunama Axios error message: ', error.message);
+    }
+    console.error("Error occurred while making request with URL: ", url, " data: ", data, " config: ", config, " Error: ", error);
+    throw error;
+  }
 };
+
+
 const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-  return request<T>('get', url, config);
+  return request<T>('get', url, undefined, config);
 };
 
 const post = async <T>(
   url: string,
+  data?: any,
   config?: AxiosRequestConfig,
-  data?: unknown,
 ): Promise<T> => {
-  return request<T>('post', url, data, config);
+    console.log("POST funkcijos metodas aktyvuojamas URL: ", url, " data: ", data, " config: ", config);
+  return request<T>('post', url, data, config );
 };
 
 const put = async <T>(

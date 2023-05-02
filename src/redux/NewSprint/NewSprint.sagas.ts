@@ -4,8 +4,7 @@ import { createSprint } from "./NewSprintApi";
 
 export function* createSprintSaga(action:any) {
     try {
-         console.log("vyksta duomenu siuntimas");
-         console.log(action);
+         console.log("pradedama SAGA", action);
         yield call(createSprint, action.payload);
        
     } catch (e) {

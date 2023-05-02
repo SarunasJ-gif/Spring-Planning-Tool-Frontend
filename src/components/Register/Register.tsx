@@ -36,10 +36,10 @@ export default function Register() {
 
   const onSubmit = (data: FormData) => {
     const { email, password } = data;
-    post<{ email: string; password: string }>('/register', undefined, {
+    post<{ email: string; password: string }>('/register', {
       email,
       password,
-    }).catch((error) => {
+    }, undefined).catch((error) => {
       setErrorMessage(error.message);
     });
   };
