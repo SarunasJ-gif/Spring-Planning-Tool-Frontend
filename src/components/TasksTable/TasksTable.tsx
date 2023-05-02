@@ -25,9 +25,9 @@ import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import { addTask, removeTask, updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/NewSprint/NewSprintActions';
+import { addTask, removeTask, } from '../../redux/NewSprint/NewSprintActions';
+import { updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/TaskUpdate/TaskActions';
 import { TaskData } from '../../types/NewSprintTypes';
-import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
 
 interface TasksProps {
   tasks: TaskData[];
