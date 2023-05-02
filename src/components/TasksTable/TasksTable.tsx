@@ -25,9 +25,11 @@ import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import { addTask, removeTask, } from '../../redux/NewSprint/NewSprintActions';
-import { updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/TaskUpdate/TaskActions';
+import { addTask, removeTask, updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/NewSprint/NewSprintActions';
 import { TaskData } from '../../types/NewSprintTypes';
+
+
+
 
 interface TasksProps {
   tasks: TaskData[];
@@ -37,9 +39,9 @@ interface TasksProps {
 export default function TasksTable(props: TasksProps): JSX.Element {
   const { tasks, setTasks } = props;
 
-  const reduxStateTasks = useSelector<TaskData>(
-    (state) => state?.keyValue,
-  );
+  // const reduxStateTasks = useSelector<NewSprint>(
+  //   (state) => state?.sprint?.tasks,
+  // );
 
   const dispatch = useDispatch();
 
@@ -47,14 +49,21 @@ export default function TasksTable(props: TasksProps): JSX.Element {
     value: string,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    dispatch(updateTaskKeyValue(value));
+    dispatch(updateTaskKeyValue(event.target.value));
   };
+
+  // const reduxKeyValue = useSelector<TaskData>((state: { keyValue: string }) => state?.keyValue,);
+  // const handleKeyChange = (reduxKeyValue: string,
+  //   event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,) => {
+  //   dispatch(updateTaskKeyValue(reduxKeyValue));
+  // };
+
 
   const handleDescriptionChange = (
     value: string,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    dispatch(updateTaskDescription(value));
+    dispatch(updateTaskDescription(event.target.value));
   };
 
   const handleOldPointsChange = (

@@ -1,6 +1,6 @@
 import produce from 'immer';
 import * as actions from './NewSprintActionType';
-import { Member, Sprint, TaskData } from '../../types/NewSprintTypes';
+import { Member, TaskData } from '../../types/NewSprintTypes';
 import { set } from 'immer/dist/internal';
 
 export type NewSprint = {
@@ -23,6 +23,7 @@ const initialState: NewSprint = {
     members: [],
   },
 };
+
 
 // @ts-ignore
 const reducer = (state = initialState, { type, payload }) => {
@@ -51,51 +52,49 @@ const reducer = (state = initialState, { type, payload }) => {
         draftState.sprint.title = payload;
       });
 
+    case actions.UPDATE_TASK_KEY_VALUE:
+      return produce(state, (draftState) => {
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.keyValue === payload
+        );
+        draftState.sprint.tasks[index].keyValue = payload;
+      });
 
-    // case actions.UPDATE_TASK_KEY_VALUE:
-    //   return produce(state, (draftState) => {
-    //     const index = state.sprint.tasks.findIndex(
-    //       (o: TaskData) => o.keyValue === payload
-    //     );
-    //     draftState.sprint.tasks[index].keyValue = payload;
-
-    //   });
-
-    // case actions.UPDATE_TASK_DESCRIPTION:
-    //   return produce(state, (draftState) => {
-    //     const index = state.sprint.tasks.findIndex(
-    //       (o) => o.description === payload,
-    //     );
-    //     draftState.sprint.tasks[index].description = payload;
-    //   });
-    // case actions.UPDATE_TASK_TYPE:
-    //   return produce(state, (draftState) => {
-    //     const index = state.sprint.tasks.findIndex(
-    //       (o) => o.type === payload,
-    //     );
-    //     draftState.sprint.tasks[index].type = payload;
-    //   });
-    // case actions.UPDATE_TASK_OLD_POINTS:
-    //   return produce(state, (draftState) => {
-    //     const index = state.sprint.tasks.findIndex(
-    //       (o) => o.oldPoints === payload,
-    //     );
-    //     draftState.sprint.tasks[index].oldPoints = payload;
-    //   });
-    // case actions.UPDATE_TASK_REMAINING_POINTS:
-    //   return produce(state, (draftState) => {
-    //     const index = state.sprint.tasks.findIndex(
-    //       (o) => o.remainingPoints === payload,
-    //     );
-    //     draftState.sprint.tasks[index].remainingPoints = payload;
-    //   });
-    // case actions.UPDATE_TASK_NEW_POINTS:
-    //   return produce(state, (draftState) => {
-    //     const index = state.sprint.tasks.findIndex(
-    //       (o) => o.newPoints === payload,
-    //     );
-    //     draftState.sprint.tasks[index].newPoints = payload;
-    //   });
+    case actions.UPDATE_TASK_DESCRIPTION:
+      return produce(state, (draftState) => {
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.description === payload,
+        );
+        draftState.sprint.tasks[index].description = payload;
+      });
+    case actions.UPDATE_TASK_TYPE:
+      return produce(state, (draftState) => {
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.type === payload,
+        );
+        draftState.sprint.tasks[index].type = payload;
+      });
+    case actions.UPDATE_TASK_OLD_POINTS:
+      return produce(state, (draftState) => {
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.oldPoints === payload,
+        );
+        draftState.sprint.tasks[index].oldPoints = payload;
+      });
+    case actions.UPDATE_TASK_REMAINING_POINTS:
+      return produce(state, (draftState) => {
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.remainingPoints === payload,
+        );
+        draftState.sprint.tasks[index].remainingPoints = payload;
+      });
+    case actions.UPDATE_TASK_NEW_POINTS:
+      return produce(state, (draftState) => {
+        const index = state.sprint.tasks.findIndex(
+          (o) => o.newPoints === payload,
+        );
+        draftState.sprint.tasks[index].newPoints = payload;
+      });
     default:
       return state;
   }
