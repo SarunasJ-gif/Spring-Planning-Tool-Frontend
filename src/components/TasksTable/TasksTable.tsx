@@ -74,7 +74,7 @@ export default function TasksTable(): JSX.Element {
   };
 
   const handleTypeChange = (id: number, event: GoalType) => {
-    dispatch(updateTaskDescription(id, event));
+    dispatch(updateTaskType(id, event));
   };
 
   // RANDOM ID, id musat be number
