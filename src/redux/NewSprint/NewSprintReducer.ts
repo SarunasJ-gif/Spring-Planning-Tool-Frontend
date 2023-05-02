@@ -35,7 +35,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.REMOVE_TASK:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
-          (o) => o.keyValue === payload,
+          (o) => o.id === payload,
         );
         draftState.sprint.tasks.splice(index, 1);
       });
@@ -55,45 +55,45 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_TASK_KEY_VALUE:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
-          (o) => o.keyValue === payload
+          (o) => o.id === payload.id
         );
-        draftState.sprint.tasks[index].keyValue = payload;
+        draftState.sprint.tasks[index].keyValue = payload.value;
       });
 
     case actions.UPDATE_TASK_DESCRIPTION:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
-          (o) => o.description === payload,
+          (o) => o.id === payload.id,
         );
-        draftState.sprint.tasks[index].description = payload;
+        draftState.sprint.tasks[index].description = payload.value;
       });
     case actions.UPDATE_TASK_TYPE:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
-          (o) => o.type === payload,
+          (o) => o.id === payload.id,
         );
-        draftState.sprint.tasks[index].type = payload;
+        draftState.sprint.tasks[index].type = payload.value;
       });
     case actions.UPDATE_TASK_OLD_POINTS:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
-          (o) => o.oldPoints === payload,
+          (o) => o.id === payload.id,
         );
-        draftState.sprint.tasks[index].oldPoints = payload;
+        draftState.sprint.tasks[index].oldPoints = payload.value;
       });
     case actions.UPDATE_TASK_REMAINING_POINTS:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
-          (o) => o.remainingPoints === payload,
+          (o) => o.id === payload.id,
         );
-        draftState.sprint.tasks[index].remainingPoints = payload;
+        draftState.sprint.tasks[index].remainingPoints = payload.value;
       });
     case actions.UPDATE_TASK_NEW_POINTS:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex(
-          (o) => o.newPoints === payload,
+          (o) => o.id === payload.id,
         );
-        draftState.sprint.tasks[index].newPoints = payload;
+        draftState.sprint.tasks[index].newPoints = payload.value;
       });
     default:
       return state;

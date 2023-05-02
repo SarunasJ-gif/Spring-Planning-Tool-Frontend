@@ -7,9 +7,9 @@ export const addTask = (task: TaskData) => ({
   payload: task,
 });
 
-export const removeTask = (keyValue: string) => ({
+export const removeTask = (id: number) => ({
   type: actions.REMOVE_TASK,
-  payload: keyValue,
+  payload: id,
 });
 
 export const updateStartDate = (startDate: Dayjs | null) => ({
@@ -27,35 +27,35 @@ export const updateTitle = (title: string) => ({
   payload: title,
 });
 
-export const updateTaskKeyValue = (keyValue: string) => ({
+export const updateTaskKeyValue = (id: number, value: string) => ({
   type: actions.UPDATE_TASK_KEY_VALUE,
-  payload: keyValue,
+  payload: { id, value },
 });
 
 
-export const updateTaskDescription = (description: string) => ({
+export const updateTaskDescription = (id: number, value: string) => ({
   type: actions.UPDATE_TASK_DESCRIPTION,
-  payload: description,
+  payload: { id, value },
 });
 
-export const updateTaskType = (type: string) => ({
+export const updateTaskType = (id: number, value: string) => ({
   type: actions.UPDATE_TASK_TYPE,
-  payload: type,
+  payload: { id, value },
 });
 
-export const updateTaskOldPoints = (oldPoints: number) => ({
+export const updateTaskOldPoints = (id: number, value: number) => ({
   type: actions.UPDATE_TASK_OLD_POINTS,
-  payload: oldPoints,
+  payload: { id, value },
 });
 
-export const updateTaskRemainingPoints = (remainingPoints: number) => ({
+export const updateTaskRemainingPoints = (id: number, value: number) => ({
   type: actions.UPDATE_TASK_REMAINING_POINTS,
-  payload: remainingPoints,
+  payload: { id, value },
 });
 
-export const updateTaskNewPoints = (newPoints: number) => ({
-  type: actions.UPDATE_TASK_OLD_POINTS,
-  payload: newPoints,
+export const updateTaskNewPoints = (id: number, value: number) => ({
+  type: actions.UPDATE_TASK_NEW_POINTS,
+  payload: { id, value },
 });
 
 

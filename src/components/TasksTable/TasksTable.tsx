@@ -20,89 +20,68 @@ import {
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PopUp from './PopUp';
 import { GoalType } from '../../enums/enums';
-import produce, { Draft } from 'immer';
 import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { addTask, removeTask, updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/NewSprint/NewSprintActions';
-import { TaskData } from '../../types/NewSprintTypes';
+import { Sprint, TaskData } from '../../types/NewSprintTypes';
 
-
-
-
-interface TasksProps {
-  tasks: TaskData[];
-  setTasks: (tasks: TaskData[]) => void;
-}
-
-export default function TasksTable(props: TasksProps): JSX.Element {
-  const { tasks, setTasks } = props;
-
-  // const reduxStateTasks = useSelector<NewSprint>(
-  //   (state) => state?.sprint?.tasks,
-  // );
+export default function TasksTable(): JSX.Element {
+  const { tasks } = useSelector(
+    (state: { newSprint: Sprint }) => state.newSprint.sprint,
+  );
 
   const dispatch = useDispatch();
 
   const handleKeyChange = (
-    value: string,
+    id: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    dispatch(updateTaskKeyValue(event.target.value));
+    dispatch(updateTaskKeyValue(id, event.target.value));
   };
 
-  // const reduxKeyValue = useSelector<TaskData>((state: { keyValue: string }) => state?.keyValue,);
-  // const handleKeyChange = (reduxKeyValue: string,
-  //   event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,) => {
-  //   dispatch(updateTaskKeyValue(reduxKeyValue));
-  // };
-
-
   const handleDescriptionChange = (
-    value: string,
+    id: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    dispatch(updateTaskDescription(event.target.value));
+    dispatch(updateTaskDescription(id, event.target.value));
   };
 
   const handleOldPointsChange = (
-    value: number,
+    id: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    dispatch(updateTaskOldPoints(value));
+    dispatch(updateTaskOldPoints(id, Number(event.target.value)));
   };
 
   const handleRemainingPointsChange = (
-    value: number,
+    id: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    dispatch(updateTaskRemainingPoints(value));
+    dispatch(updateTaskRemainingPoints(id, Number(event.target.value)));
   };
 
   const handleNewPointsChange = (
-    value: number,
+    id: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    dispatch(updateTaskNewPoints(value));
+    dispatch(updateTaskNewPoints(id, Number(event.target.value)));
   };
 
-  const handleDeleteTask = (value: string) => {
-    setTasks(
-      produce(tasks, (draft: Draft<TaskData[]>) => {
-        const index = draft.findIndex((point) => point.keyValue === value);
-        draft.splice(index, 1);
-      }),
-    );
-    dispatch(removeTask(value));
+  const handleDeleteTask = (id: number) => {
+    dispatch(removeTask(id));
   };
 
-  const handleTypeChange = (index: number, value: GoalType) => {
-    dispatch(updateTaskType(value));
+  const handleTypeChange = (id: number, event: GoalType) => {
+    dispatch(updateTaskDescription(id, event));
   };
+
+  // RANDOM ID, id musat be number
 
   const handleAddTask = () => {
     const newTaskObject: TaskData = {
+      id: 1,
       keyValue: '',
       keyColor: '#EC4226',
       description: '',
@@ -113,7 +92,6 @@ export default function TasksTable(props: TasksProps): JSX.Element {
     };
 
     dispatch(addTask(newTaskObject));
-    setTasks([...tasks, newTaskObject]);
     setExpanded(false);
   };
 
@@ -137,7 +115,6 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   const handleAccordionToggle = () => {
     setExpanded(!expanded);
   };
-
 
   return (
     <Box sx={{ ml: 10 }}>
@@ -233,7 +210,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {tasks.map((point, index) => (
+                    {tasks.map((point: TaskData, index: number) => (
                       <TableRow key={index}>
                         <TableCell
                           component="th"
@@ -249,7 +226,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                               sx={{ minWidth: 70 }}
                               value={point.keyValue}
                               onChange={(event) =>
-                                handleKeyChange(point.keyValue, event)
+                                handleKeyChange(point.id, event)
                               }
                             />
                             <PopUp initialColor={point.keyColor} />
@@ -262,19 +239,19 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                             sx={{ width: 600 }}
                             value={point.description}
                             onChange={(event) =>
-                              handleDescriptionChange(point.description, event)
+                              handleDescriptionChange(point.id, event)
                             }
                           />
                         </TableCell>
                         <StyledTableCell>
                           <FormControl variant="standard">
                             <Select
-                              id={`point-type-select-${point.keyValue}`}
+                              id={`point-type-select-${point.id}`}
                               value={point.type}
                               displayEmpty
                               onChange={(event) =>
                                 handleTypeChange(
-                                  index,
+                                  point.id,
                                   event.target.value as GoalType,
                                 )
                               }
@@ -290,37 +267,37 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                         </StyledTableCell>
                         <StyledTableCell>
                           <TextField
-                            id={`oldPoints${point.keyValue}`}
+                            id={`oldPoints${point.id}`}
                             variant="standard"
                             value={point.oldPoints}
                             onChange={(event) =>
-                              handleOldPointsChange(point.oldPoints, event)
+                              handleOldPointsChange(point.id, event)
                             }
                           />
                         </StyledTableCell>
                         <StyledTableCell>
                           <TextField
-                            id={`remainingPoints${point.keyValue}`}
+                            id={`remainingPoints${point.id}`}
                             variant="standard"
                             value={point.remainingPoints}
                             onChange={(event) =>
-                              handleRemainingPointsChange(point.remainingPoints, event)
+                              handleRemainingPointsChange(point.id, event)
                             }
                           />
                         </StyledTableCell>
                         <StyledTableCell>
                           <TextField
-                            id={`newPoints${point.keyValue}`}
+                            id={`newPoints${point.id}`}
                             variant="standard"
                             value={point.newPoints}
                             onChange={(event) =>
-                              handleNewPointsChange(point.newPoints, event)
+                              handleNewPointsChange(point.id, event)
                             }
                           />
                         </StyledTableCell>
                         <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
                           <IconButton
-                            onClick={() => handleDeleteTask(point.keyValue)}
+                            onClick={() => handleDeleteTask(point.id)}
                           >
                             <DeleteForeverIcon />
                           </IconButton>
