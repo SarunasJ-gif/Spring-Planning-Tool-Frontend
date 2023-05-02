@@ -8,12 +8,10 @@ function BottomMenu() {
   
   const dispatch = useDispatch();
 
-  const { title, startDate, endDate } = useSelector(
-    (state: { newSprint: Sprint }) => state?.newSprint?.sprint,
-  );
-
+  const sprint = useSelector((state: { newSprint: Sprint }) => state?.newSprint?.sprint);
+  
   const handleButtonClick = () => {
-    const newSprint = { title, startDate, endDate };
+    const newSprint = { ...sprint };
     dispatch(createNewSprint(newSprint));
   };
 

@@ -41,7 +41,7 @@ export default function Register() {
     post<{ email: string; password: string }>('/register', {
       email,
       password,
-    }, undefined)
+    })
       .then(() => {
         navigate('/login');
       })

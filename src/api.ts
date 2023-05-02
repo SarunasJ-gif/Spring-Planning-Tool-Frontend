@@ -19,15 +19,7 @@ const request = async <T>(
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   const token = localStorage.getItem('accessToken');
-  if (token) {
-    if (!config) {
-      config = {};
-    }
-    if (!config.headers) {
-      config.headers = {};
-    }
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  if (token) {config = { headers: { Authorization: `Bearer ${token}` }}}
   try {
     const response = await axiosInstance.request<T>({
       method,
@@ -37,8 +29,6 @@ const request = async <T>(
     });
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-    }
     throw error;
   }
 };
@@ -49,7 +39,7 @@ const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
 
 const post = async <T>(
   url: string,
-  data?: any,
+  data?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
   return request<T>('post', url, data, config );
