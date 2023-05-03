@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Typography, AccordionSummary } from '@mui/material/';
 import { SAccordion } from '../../style/AccordionStyle';
 import TasksTable from '../../components/TasksTable/TasksTable';
-import { Sprint, TaskData } from '../../types/NewSprintTypes';
+import { Sprint } from '../../types/NewSprintTypes';
 import { ArrowDropDown } from '@mui/icons-material';
 import mock_task from '../../components/TasksTable/mock_task.json';
 
