@@ -7,9 +7,9 @@ export const addTask = (task: TaskData) => ({
   payload: task,
 });
 
-export const removeTask = (keyValue: string) => ({
+export const removeTask = (id: number) => ({
     type: actions.REMOVE_TASK,
-    payload: keyValue,
+    payload: id,
 });
 
 export const updateStartDate = (startDate: Dayjs | null) => ({
@@ -25,6 +25,36 @@ export const updateEndDate = (endDate: Dayjs | null) => ({
 export const updateTitle = (title: string) => ({
   type: actions.UPDATE_TITLE,
   payload: title,
+});
+
+export const updateTaskKeyValue = (id: number, value: string) => ({
+  type: actions.UPDATE_TASK_KEY_VALUE,
+  payload: { id, value },
+});
+
+export const updateTaskDescription = (id: number, value: string) => ({
+  type: actions.UPDATE_TASK_DESCRIPTION,
+  payload: { id, value },
+});
+
+export const updateTaskType = (id: number, value: string) => ({
+  type: actions.UPDATE_TASK_TYPE,
+  payload: { id, value },
+});
+
+export const updateTaskOldPoints = (id: number, value: number) => ({
+  type: actions.UPDATE_TASK_OLD_POINTS,
+  payload: { id, value },
+});
+
+export const updateTaskRemainingPoints = (id: number, value: number) => ({
+  type: actions.UPDATE_TASK_REMAINING_POINTS,
+  payload: { id, value },
+});
+
+export const updateTaskNewPoints = (id: number, value: number) => ({
+  type: actions.UPDATE_TASK_NEW_POINTS,
+  payload: { id, value },
 });
 
 export const createNewSprint = (sprintData: any) => ({
