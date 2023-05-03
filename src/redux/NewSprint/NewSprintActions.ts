@@ -8,8 +8,8 @@ export const addTask = (task: TaskData) => ({
 });
 
 export const removeTask = (id: number) => ({
-  type: actions.REMOVE_TASK,
-  payload: id,
+    type: actions.REMOVE_TASK,
+    payload: id,
 });
 
 export const updateStartDate = (startDate: Dayjs | null) => ({
@@ -31,7 +31,6 @@ export const updateTaskKeyValue = (id: number, value: string) => ({
   type: actions.UPDATE_TASK_KEY_VALUE,
   payload: { id, value },
 });
-
 
 export const updateTaskDescription = (id: number, value: string) => ({
   type: actions.UPDATE_TASK_DESCRIPTION,
@@ -58,5 +57,7 @@ export const updateTaskNewPoints = (id: number, value: number) => ({
   payload: { id, value },
 });
 
-
-
+export const createNewSprint = (sprintData: any) => ({
+  type: actions.CREATE_NEW_SPRINT,
+  payload: sprintData,
+});
