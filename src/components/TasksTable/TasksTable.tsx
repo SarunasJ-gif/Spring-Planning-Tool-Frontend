@@ -48,7 +48,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     setTasks(
-      produce(tasks, (draft: Draft<TaskData[]>) => {
+      produce(tasks, (draft: Draft<TaskDatsa[]>) => {
         const index = draft.findIndex((point) => point.keyValue === value);
         draft[index].keyValue = event.target.value;
       }),
