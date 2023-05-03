@@ -1,26 +1,49 @@
 import * as React from 'react';
 import { Box, Typography, AccordionSummary } from '@mui/material/';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SAccordion } from '../../style/AccordionStyle';
+import TasksTable from '../../components/TasksTable/TasksTable';
+import { Sprint, TaskData } from '../../types/NewSprintTypes';
+import { ArrowDropDown } from '@mui/icons-material';
+import mock_task from '../../components/TasksTable/mock_task.json';
 
-function MainPage() {
+export default function MainPage() {
+  const initialSprint: Sprint = {
+    title: 'Sourcery - Sprint 1',
+    startDate: '2023-04-24',
+    endDate: '2023-05-05',
+    tasks: mock_task,
+    members: [],
+  };
+  const sprint: Sprint = initialSprint;
   return (
     <Box sx={{ marginLeft: '30mm', marginRight: '10mm', mt: 4 }}>
-      <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-        &ldquo;Sourcery Students&rdquo; - Sprint 17
+      <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
+        &ldquo;{sprint.title}&rdquo;
       </Typography>
       <Box>
-        <Typography sx={{ fontFamily: 'Poppins' }}>
-          29/09/2021 - 10/12/2021
+        <Typography fontWeight={'bold'}>
+          {sprint.startDate} {' - '} {sprint.endDate}
         </Typography>
       </Box>
       <Box sx={{ mt: 4 }}>
-        <SAccordion sx={{ display: 'flex', justifyContent: 'left' }}>
+        <SAccordion
+          sx={{
+            display: 'flex',
+          }}
+        >
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
+            sx={{ zIndex: '1' }}
+            expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
           >
-            <Typography>Tasks</Typography>
+            <Typography variant="h4" fontWeight={500}>
+              Tasks
+            </Typography>
           </AccordionSummary>
+          <TasksTable
+            tasks={sprint.tasks}
+            setTasks={() => {}}
+            isEditMode={false}
+          />
         </SAccordion>
       </Box>
       <Box sx={{ mt: 4 }}>
@@ -28,9 +51,11 @@ function MainPage() {
           sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}
         >
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
+            expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
           >
-            <Typography>Current Plan</Typography>
+            <Typography variant="h4" fontWeight={500}>
+              Current Plan
+            </Typography>
           </AccordionSummary>
         </SAccordion>
       </Box>
@@ -39,14 +64,14 @@ function MainPage() {
           sx={{ display: 'flex', justifyContent: 'left', top: '-58px' }}
         >
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon style={{ fill: '#404CFA' }} />}
+            expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
           >
-            <Typography>Initial Plan</Typography>
+            <Typography variant="h4" fontWeight={500}>
+              Initial Plan
+            </Typography>
           </AccordionSummary>
         </SAccordion>
       </Box>
     </Box>
   );
 }
-
-export default MainPage;

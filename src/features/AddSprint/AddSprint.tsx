@@ -13,7 +13,7 @@ function AddSprint() {
   return (
     <>
       <NewSprintInformation />
-      <TasksTable tasks={tasks} setTasks={setTasks} />
+      <TasksTable tasks={tasks} setTasks={setTasks} isEditMode={true} />
       <PlanTable />
       <Box
         sx={{

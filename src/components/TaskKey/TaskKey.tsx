@@ -5,13 +5,12 @@ import { Paper } from '@mui/material';
 type TaskKeyProps = {
   taskKey: string;
   keyColor: string;
-  keyBackgroundColor: string;
+  keyBackgroundColor?: string;
 };
 
 function TaskKey(props: TaskKeyProps) {
   const KeyStyle = styled(Paper)(() => ({
-    color: props.keyColor,
-    backgroundColor: props.keyBackgroundColor,
+    backgroundColor: props.keyColor,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

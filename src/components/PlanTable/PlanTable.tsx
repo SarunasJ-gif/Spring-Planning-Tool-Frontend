@@ -311,8 +311,7 @@ export default function PlanTable() {
                           <MenuItem value={task.keyValue} key={task.keyValue}>
                             <TaskKey
                               taskKey={task.keyValue}
-                              keyColor="#FFFFFF"
-                              keyBackgroundColor={task.keyColor}
+                              keyColor={task.keyColor}
                             />
                           </MenuItem>
                         ))}
