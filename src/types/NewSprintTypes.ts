@@ -30,6 +30,7 @@ export type Member = {
 };
 
 export type TaskData = {
+    id: number;
     keyValue: string;
     keyColor: string;
     description: string;
