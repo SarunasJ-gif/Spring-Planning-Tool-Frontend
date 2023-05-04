@@ -86,6 +86,8 @@ const initialSprint: Sprint = {
       ],
     },
   ],
+  isHistorial: false,
+  isActive: false,
 };
 
 export default function PlanTable() {
@@ -311,7 +313,8 @@ export default function PlanTable() {
                           <MenuItem value={task.keyValue} key={task.keyValue}>
                             <TaskKey
                               taskKey={task.keyValue}
-                              keyColor={task.keyColor}
+                              keyColor="#FFFFFF"
+                              keyBackgroundColor={task.keyColor}
                             />
                           </MenuItem>
                         ))}

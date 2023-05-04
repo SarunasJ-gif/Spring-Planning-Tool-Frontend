@@ -2,19 +2,12 @@ import * as React from 'react';
 import { Box, Typography, AccordionSummary } from '@mui/material/';
 import { SAccordion } from '../../style/AccordionStyle';
 import TasksTable from '../../components/TasksTable/TasksTable';
-import { Sprint } from '../../types/NewSprintTypes';
 import { ArrowDropDown } from '@mui/icons-material';
-import mock_task from '../../components/TasksTable/mock_task.json';
+import { useSelector } from 'react-redux';
+import { Sprint } from '../../redux/Sprint/SprintReducer';
 
 export default function MainPage() {
-  const initialSprint: Sprint = {
-    title: 'Sourcery - Sprint 1',
-    startDate: '2023-04-24',
-    endDate: '2023-05-05',
-    tasks: mock_task,
-    members: [],
-  };
-  const sprint: Sprint = initialSprint;
+  const sprint = useSelector((state: { sprint: Sprint }) => state.sprint);
   return (
     <Box sx={{ marginLeft: '30mm', marginRight: '10mm', mt: 4 }}>
       <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
@@ -39,11 +32,7 @@ export default function MainPage() {
               Tasks
             </Typography>
           </AccordionSummary>
-          <TasksTable
-            tasks={sprint.tasks}
-            setTasks={() => {}}
-            isEditMode={false}
-          />
+          <TasksTable isEditMode={false} />
         </SAccordion>
       </Box>
       <Box sx={{ mt: 4 }}>

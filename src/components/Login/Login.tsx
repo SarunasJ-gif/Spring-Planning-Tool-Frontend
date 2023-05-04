@@ -32,10 +32,10 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const onSubmit = (data: FormData) => {
-    post('/login', {}, data)
+    post('/login', data)
       .then((response) => {
         const loginResponse = response as LoginResponse;
-        localStorage.setItem('accessToken', loginResponse.accessToken);
+        localStorage.setItem('token', loginResponse.accessToken);
         navigate("/");
       })
       .catch((error) => {
