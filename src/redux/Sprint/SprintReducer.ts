@@ -1,4 +1,3 @@
-import produce from 'immer';
 import { Member, TaskData } from '../../types/NewSprintTypes';
 import mock_task from '../../components/TasksTable/mock_task.json';
 
@@ -9,8 +8,8 @@ export type Sprint = {
   tasks: TaskData[];
   memberTeamId: string | null;
   members: Member[];
-  isHistorial: boolean | undefined;
-  isActive: boolean | undefined;
+  isHistorial: boolean | null;
+  isActive: boolean | null;
 };
 const initialState: Sprint = {
   title: 'Sourcery - Sprint 1',
@@ -19,8 +18,8 @@ const initialState: Sprint = {
   tasks: mock_task,
   members: [],
   memberTeamId: null,
-  isHistorial: undefined,
-  isActive: undefined,
+  isHistorial: null,
+  isActive: null,
 };
 
 // @ts-ignore
