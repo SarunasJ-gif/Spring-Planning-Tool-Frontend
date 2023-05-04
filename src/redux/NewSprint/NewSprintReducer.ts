@@ -1,6 +1,6 @@
-import produce from 'immer';
+import produce, { Draft } from 'immer';
 import * as actions from './NewSprintActionType';
-import { Member, TaskData } from '../../types/NewSprintTypes';
+import { Member, MemberWorkingDay, Sprint, TaskData } from '../../types/NewSprintTypes';
 
 export type NewSprint = {
   sprint: {
@@ -10,16 +10,98 @@ export type NewSprint = {
     tasks: TaskData[];
     memberTeamId: string | null;
     members: Member[];
+    businessDays: string[];
+    daysOfWeek: string[];
+    showNotification: boolean;
   };
 };
-const initialState: NewSprint = {
+export const initialState: NewSprint = {
   sprint: {
     title: '',
     startDate: null,
     endDate: null,
-    tasks: [],
+    tasks: [{
+      keyValue: 'SFX-2',
+      keyColor: '#EC4226',
+      description: '',
+      type: '',
+      oldPoints: 0,
+      remainingPoints: 0,
+      newPoints: 0,
+    },{
+      keyValue: '123',
+      keyColor: '#EC4226',
+      description: '',
+      type: '',
+      oldPoints: 0,
+      remainingPoints: 0,
+      newPoints: 0,
+    }],
     memberTeamId: null,
-    members: [],
+    members: [{
+      firstName: 'John',
+      lastName: 'Doe',
+      memberId: '1',
+      workingDays: [
+        {
+          day: '2023-04-24',
+          task: {
+            keyValue: 'ASDF!123',
+            keyColor: '#FF0000',
+            description: 'Task 1',
+            type: 'Goal',
+            oldPoints: 0,
+            remainingPoints: 0,
+            newPoints: 0,
+          },
+        },
+        {
+          day: '2023-04-25',
+          task: {
+            keyValue: 'QWERTY!456',
+            keyColor: '#0000FF',
+            description: 'Task 2',
+            type: 'Task',
+            oldPoints: 3,
+            remainingPoints: 2,
+            newPoints: 1,
+          },
+        },
+      ],
+    },{
+      firstName: 'Jane',
+      lastName: 'Smith',
+      memberId: '2',
+      workingDays: [
+        {
+          day: '2023-04-24',
+          task: {
+            keyValue: 'ZXCVB!789',
+            keyColor: '#00FF00',
+            description: 'Task 3',
+            type: 'Bug',
+            oldPoints: 2,
+            remainingPoints: 1,
+            newPoints: 0,
+          },
+        },
+        {
+          day: '2023-04-26',
+          task: {
+            keyValue: 'ASDF!123',
+            keyColor: '#FF0000',
+            description: 'Task 1',
+            type: 'Goal',
+            oldPoints: 0,
+            remainingPoints: 0,
+            newPoints: 0,
+          },
+        },
+      ],
+    }],
+    businessDays: [],
+    daysOfWeek: [],
+    showNotification: true,
   },
 };
 
@@ -47,8 +129,31 @@ const reducer = (state = initialState, { type, payload }) => {
       });
     case actions.UPDATE_TITLE:
       return produce(state, (draftState) => {
-        draftState.sprint.title = payload.title;
+        draftState.sprint.title = payload;
       });
+    case actions.UPDATE_TASK_ASSIGN:
+      return produce(state, (draftState) => {
+      const memberIndex = draftState.sprint.members.findIndex(
+          (o: Member) => o.memberId === payload.id,
+      );
+      const tasksIndex = draftState.sprint.members[memberIndex].workingDays.findIndex(
+          (o: MemberWorkingDay) => o.day === payload.day.toString(),
+      );
+      draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = payload.task;
+    });
+    case actions.UPDATE_BUSINESS_DAYS: {
+      const { businessDays, daysOfWeek } = payload;
+      return produce(state, (draftState) => {
+        draftState.sprint.businessDays = businessDays;
+        draftState.sprint.daysOfWeek = daysOfWeek;
+      });
+    }
+    case actions.UPDATE_SHOW_NOTIFICATION: {
+      return produce(state, (draftState) => {
+        draftState.sprint.showNotification = payload;
+      });
+    }
+    
     default:
       return state;
   }

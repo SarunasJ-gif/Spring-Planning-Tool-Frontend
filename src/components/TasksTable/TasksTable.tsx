@@ -25,7 +25,7 @@ import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch } from 'react-redux';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import { addTask } from '../../redux/NewSprint/NewSprintActions';
+import { addTask, removeTask } from '../../redux/NewSprint/NewSprintActions';
 import { TaskData } from '../../types/NewSprintTypes';
 
 interface TasksProps {
@@ -113,6 +113,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
         draft.splice(index, 1);
       }),
     );
+    dispatch(removeTask(value));
   };
 
   const handleTypeChange = (index: number, value: GoalType) => {

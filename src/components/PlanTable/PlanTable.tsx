@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Table,
   TableHead,
@@ -16,102 +16,31 @@ import TaskKey from '../TaskKey/TaskKey';
 import { format } from 'date-fns';
 import produce, { Draft } from 'immer';
 import { Member, MemberWorkingDay, Sprint } from '../../types/NewSprintTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateBusinessDays, updateTaskAssign, updateShowNotification } from '../../redux/NewSprint/NewSprintActions';
+import { RootState } from '../../redux/store';
 
-const initialSprint: Sprint = {
-  title: '',
-  startDate: '2023-04-24',
-  endDate: '2023-05-05',
-  tasks: [],
-  members: [
-    {
-      firstName: 'John',
-      lastName: 'Doe',
-      memberId: '1',
-      workingDays: [
-        {
-          day: '2023-04-24',
-          task: {
-            keyValue: 'ASDF!123',
-            keyColor: '#FF0000',
-            description: 'Task 1',
-            type: 'Goal',
-            oldPoints: 0,
-            remainingPoints: 0,
-            newPoints: 0,
-          },
-        },
-        {
-          day: '2023-04-25',
-          task: {
-            keyValue: 'QWERTY!456',
-            keyColor: '#0000FF',
-            description: 'Task 2',
-            type: 'Task',
-            oldPoints: 3,
-            remainingPoints: 2,
-            newPoints: 1,
-          },
-        },
-      ],
-    },
-    {
-      firstName: 'Jane',
-      lastName: 'Smith',
-      memberId: '2',
-      workingDays: [
-        {
-          day: '2023-04-24',
-          task: {
-            keyValue: 'ZXCVB!789',
-            keyColor: '#00FF00',
-            description: 'Task 3',
-            type: 'Bug',
-            oldPoints: 2,
-            remainingPoints: 1,
-            newPoints: 0,
-          },
-        },
-        {
-          day: '2023-04-26',
-          task: {
-            keyValue: 'ASDF!123',
-            keyColor: '#FF0000',
-            description: 'Task 1',
-            type: 'Goal',
-            oldPoints: 0,
-            remainingPoints: 0,
-            newPoints: 0,
-          },
-        },
-      ],
-    },
-  ],
-};
 
 export default function PlanTable() {
-  const [sprint, setSprint] = useState<Sprint>(initialSprint);
-  const [showNotification, setShowNotification] = useState<boolean>(true);
+  const dispatch = useDispatch();
+  const sprint = useSelector((state: RootState) => state.newSprint.sprint);
+  
+  //const [sprint, setSprint] = useState<Sprint>(initialSprint);
+  const handleClearNotification = () => {
+    dispatch(updateShowNotification(false));
+  };
   const totalWorkDays = 0;
 
+  /*const planTableState = useSelector((state: any)=>state);
+  console.log(planTableState);*/
   const handleTaskChange = (
     person: string,
     day: number,
     value: string,
     id: string,
   ) => {
-    const task = produce(sprint, (sprintDraft: Draft<Sprint>) => {
-      const memberIndex = sprintDraft.members.findIndex(
-        (o: Member) => o.memberId === id,
-      );
-      const tasksIndex = sprintDraft[memberIndex].workingDays.findIndex(
-        (o: MemberWorkingDay) => o.day === day.toString(),
-      );
-      sprintDraft[memberIndex].workingDays[tasksIndex].task = task;
-    });
-    setSprint(task);
-  };
-  const handleClearNotification = () => {
-    setShowNotification(false);
+    dispatch(updateTaskAssign(person, day, value, id));
+    //setSprint(task);
   };
 
   // useEffect(() => {
@@ -136,16 +65,15 @@ export default function PlanTable() {
   //   );
   // }, [setSprint, planTableTasks, member, sprint]);
 
-  const [businessDays, setBusinessDays] = useState<string[]>([]);
-  const [daysOfWeek, setDaysOfWeek] = useState<string[]>([]);
-
-  useEffect(() => {
+  
+  const workingDays = useMemo(() => {
+    const days: string[] = [];
+    const daysOfWeek: string[] = [];
+  
     if (sprint.endDate && sprint.startDate) {
       const startDate = new Date(sprint.startDate);
       const endDate = new Date(sprint.endDate);
-      const days: string[] = [];
-      const daysOfWeek: string[] = [];
-
+  
       for (
         let date = startDate;
         date <= endDate;
@@ -154,29 +82,25 @@ export default function PlanTable() {
         if (date.getDay() !== 0 && date.getDay() !== 6) {
           const day = date.toLocaleDateString();
           days.push(day);
-          daysOfWeek.push(format(date, 'EEE'));
-
-          sprint.members.forEach((member) => {
-            const task = sprint.tasks[0];
-            member.workingDays.push({ day: day, task: task });
-          });
+          daysOfWeek.push(format(date, 'EEE'));               
         }
       }
-
-      setBusinessDays(days);
-      setDaysOfWeek(daysOfWeek);
+  
+      const updatedMembers = sprint.members.map(member => {
+        const updatedWorkingDays = days.map(day => ({ day, task: sprint.tasks[0] }));
+        return { ...member, workingDays: updatedWorkingDays };
+      });
+      //console.log(updatedMembers);
+      return { days, daysOfWeek, members: updatedMembers };
     }
-  }, [
-    setBusinessDays,
-    setDaysOfWeek,
-    sprint.endDate,
-    sprint.members,
-    sprint.startDate,
-    sprint.tasks,
-  ]);
+    
+    return { days: [], daysOfWeek: [], members: [] };
+  }, [sprint]);
+  dispatch(updateBusinessDays(workingDays.days, workingDays.daysOfWeek));
+  
   return (
     <>
-      {showNotification && (
+      {sprint.showNotification && (
         <Typography
           sx={{
             display: 'flex',
@@ -222,7 +146,7 @@ export default function PlanTable() {
       >
         <TableHead>
           <TableRow sx={{ height: '60px' }}>
-            <TableCell colSpan={businessDays.length + 1}>
+            <TableCell colSpan={sprint.businessDays.length + 1}>
               <Typography variant="h5" fontWeight={500}>
                 Initial Plan
               </Typography>
@@ -235,17 +159,17 @@ export default function PlanTable() {
               color: '#878787',
             }}
           >
-            {Array.from({ length: businessDays.length + 1 }, (_, i) => (
+            {Array.from({ length: sprint.businessDays.length + 1 }, (_, i) => (
               <TableCell key={i} sx={{ textAlign: 'center', color: '#7C7D7C' }}>
-                {i === 0 ? '' : businessDays[i - 1]}
+                {i === 0 ? '' : sprint.businessDays[i - 1]}
               </TableCell>
             ))}
             <TableCell align="center">Total work days</TableCell>
           </TableRow>
           <TableRow sx={{ backgroundColor: '#F9FAFA', height: '48px' }}>
-            {Array.from({ length: businessDays.length + 1 }, (_, i) => (
+            {Array.from({ length: sprint.businessDays.length + 1 }, (_, i) => (
               <TableCell key={i} sx={{ textAlign: 'center' }}>
-                {i === 0 ? '' : `${i}. ` + daysOfWeek[i - 1]}
+                {i === 0 ? '' : `${i}. ` + sprint.daysOfWeek[i - 1]}
               </TableCell>
             ))}
             <TableCell align="center">{totalWorkDays}</TableCell>
@@ -255,7 +179,7 @@ export default function PlanTable() {
           {!sprint.tasks ? (
             <TableRow>
               <TableCell
-                colSpan={businessDays.length + 1}
+                colSpan={sprint.businessDays.length + 1}
                 sx={{ textAlign: 'center' }}
               >
                 No tasks created
@@ -273,7 +197,7 @@ export default function PlanTable() {
                   {member.firstName} {member.lastName}
                 </TableCell>
                 {Array.from(
-                  { length: businessDays.length },
+                  { length: sprint.businessDays.length },
                   (_, i) => i + 1,
                 ).map((day) => (
                   <TableCell
@@ -294,7 +218,7 @@ export default function PlanTable() {
                           width: '85%',
                         }}
                         value={
-                          sprint[member.memberId]?.workingDays[day]?.task
+                          sprint.members[Number(member.memberId)]?.workingDays[day]?.task
                             ?.type ?? ''
                         }
                         onChange={(event) =>
@@ -316,8 +240,8 @@ export default function PlanTable() {
                             />
                           </MenuItem>
                         ))}
-                        <MenuItem value="Education">
-                          {sprint[member.memberId]?.[day] === 'Education' ? (
+                        {/* <MenuItem value="Education">
+                          {sprint.members[member.memberId]?.[day] === 'Education' ? (
                             <TaskKey
                               taskKey={'Education'}
                               keyColor={'#FFFFFF'}
@@ -337,7 +261,7 @@ export default function PlanTable() {
                           ) : (
                             'Vacation'
                           )}
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem value="">None</MenuItem>
                       </Select>
                     </FormControl>
@@ -351,7 +275,7 @@ export default function PlanTable() {
                   }}
                 >
                   {
-                    Object.values(sprint[member.memberId] || {}).filter(
+                    Object.values(sprint.members[Number(member.memberId)] || {}).filter(
                       (value) =>
                         value === 'Task' ||
                         value === 'Technical' ||

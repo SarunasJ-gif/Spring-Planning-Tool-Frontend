@@ -1,5 +1,5 @@
 import * as actions from './NewSprintActionType';
-import { TaskData } from '../../types/NewSprintTypes';
+import { Member, Task, TaskData, MemberWorkingDay } from '../../types/NewSprintTypes';
 import { Dayjs } from 'dayjs';
 
 export const addTask = (task: TaskData) => ({
@@ -26,3 +26,19 @@ export const updateTitle = (title: string) => ({
   type: actions.UPDATE_TITLE,
   payload: title,
 });
+
+export const updateTaskAssign = (person: string, day: number, value: string, id: string) => ({
+  type: actions.UPDATE_TASK_ASSIGN,
+  payload: { person, day, value, id },
+});
+
+export const updateBusinessDays = (businessDays: string[], daysOfWeek: string[]) => ({
+  type: actions.UPDATE_BUSINESS_DAYS,
+  payload: { businessDays, daysOfWeek }
+});
+export const updateShowNotification = (showNotification: boolean) => {
+  return {
+    type: actions.UPDATE_SHOW_NOTIFICATION,
+    payload: showNotification,
+  };
+};
