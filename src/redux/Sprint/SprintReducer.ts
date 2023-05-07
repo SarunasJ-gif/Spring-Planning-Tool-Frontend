@@ -1,5 +1,5 @@
 import { Member, TaskData } from '../../types/NewSprintTypes';
-import mock_task from '../../components/TasksTable/mock_task.json';
+import * as actions from './SprintActionType';
 
 export type Sprint = {
   title: string;
@@ -8,22 +8,46 @@ export type Sprint = {
   tasks: TaskData[];
   memberTeamId: string | null;
   members: Member[];
-  isHistorial: boolean | null;
-  isActive: boolean | null;
-};
-const initialState: Sprint = {
-  title: 'Sourcery - Sprint 1',
-  startDate: '2023-04-24',
-  endDate: '2023-05-05',
-  tasks: mock_task,
-  members: [],
-  memberTeamId: null,
-  isHistorial: null,
-  isActive: null,
+  isHistorial: boolean | undefined;
+  isActive: boolean | undefined;
 };
 
-// @ts-ignore
-const reducer = (state = initialState, { type, payload }) => {
-  return state;
+const initialState = {
+  sprint: null,
+  loading: false,
+  error: null,
+};
+
+const reducer = (state = initialState, action: any) => {
+  switch (action.type) {
+    case actions.GET_SPRINT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.GET_SPRINT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        sprint: {
+          title: action.payload.title,
+          startDate: action.payload.startDate,
+          endDate: action.payload.endDate,
+          tasks: action.payload.tasks,
+          memberTeamId: action.payload.memberTeamId,
+          members: action.payload.members,
+          isHistorial: action.payload.isHistorial,
+          isActive: action.payload.isActive,
+        },
+      };
+    case actions.GET_SPRINT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 export default reducer;

@@ -1,7 +1,6 @@
 import produce from 'immer';
 import * as actions from './NewSprintActionType';
 import { Member, TaskData } from '../../types/NewSprintTypes';
-import mock_task from '../../components/TasksTable/mock_task.json';
 
 export type NewSprint = {
   sprint: {
@@ -20,7 +19,7 @@ const initialState: NewSprint = {
     title: '',
     startDate: null,
     endDate: null,
-    tasks: mock_task,
+    tasks: [],
     memberTeamId: null,
     members: [],
     isHistorical: undefined,

@@ -5,8 +5,8 @@ export type Sprint = {
   endDate: string;
   tasks: TaskData[];
   members: Member[];
-  isHistorial: boolean;
-  isActive: boolean;
+  isHistorial: boolean | undefined;
+  isActive: boolean | undefined;
 };
 
 export type Task = {

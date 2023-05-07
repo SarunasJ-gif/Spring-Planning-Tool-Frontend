@@ -1,5 +1,7 @@
-import { post } from '../../api';
+import { get } from '../../api';
 
-export const createSprint = (sprintData: unknown) => {
-  post('/sprint', sprintData);
+export const getSprint = async (payload: any) => {
+  const { id } = payload;
+  const response = await get(`sprint/${id}`);
+  return response;
 };
