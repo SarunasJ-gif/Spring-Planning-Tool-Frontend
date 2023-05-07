@@ -15,42 +15,39 @@ import {
   Menu,
 } from '@mui/material';
 import { Role } from '../../enums/enums';
+import { rows } from './MockData';
+import { Row, TableRowElementProps, Team } from '../../types/TeamTypes';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function BottonTable() {
-  const [rows] = React.useState([
-    {
-      id: 1,
-      name: 'Laura Sunshine',
-      role: Role.FRONT_END,
-    },
-    {
-      id: 2,
-      name: 'Matt Brok',
-      role: Role.BACK_END,
-    },
-    {
-      id: 3,
-      name: 'Conel Mclane',
-      role: Role.DESIGNER,
-    },
-    {
-      id: 4,
-      name: 'John Smit',
-      role: Role.TESTER,
-    },
-    {
-      id: 5,
-      name: 'Gavin Nealson',
-      role: Role.FRONT_END,
-    },
-  ]);
+interface Props {
+  addMember: { name: string; role: Role };
+}
 
-  interface TableRowElementProps {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    row: any;
-    index: number;
-  }
+export default function BottonTable(props: Props) {
 
+  const dispatch = useDispatch();
+  const { members } = useSelector(
+    (state: { newTeam: Team  }) => state?.newTeam?.team,
+  );
+
+  const [data, setData] = React.useState<Row[]>(rows);
+
+  const handleAddMember = React.useCallback(() => {
+    const newData: Row = {
+      id: data.length + 1,
+      name: props.addMember.name,
+      role: props.addMember.role,
+    };
+    setData([...data, newData]);
+  }, [data, props.addMember]);
+
+  React.useEffect(() => {
+    if (props.addMember.name && props.addMember.role) {
+      handleAddMember();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.addMember]);
+   
   const TableRowElement: React.FC<TableRowElementProps> = ({
     row,
     index,
@@ -79,8 +76,11 @@ export default function BottonTable() {
     };
 
     const handleSave = () => {
-      // Do something with the updated role value
       setShowSaveButton(false);
+    };
+
+    const handleRemoveMember = () => {
+      setData(data.filter((member: { id: number; }) => member.id !== row.id));
     };
 
     return (
@@ -135,7 +135,7 @@ export default function BottonTable() {
             </Menu>
           </TableCell>
           <TableCell align="left" sx={{ width: '80px' }}>
-            <RemoveButton name={row.name} />
+            <RemoveButton name={row.name} handleRemoveMember={handleRemoveMember}/>
           </TableCell>
           <TableCell align="left" sx={{ width: '80px' }}>
             {showSaveButton && <SaveButton onClick={handleSave} />}
@@ -159,7 +159,7 @@ export default function BottonTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {data.map((row, index: any) => (
               <TableRowElement row={row} index={index} key={row.id} />
             ))}
           </TableBody>
@@ -168,3 +168,5 @@ export default function BottonTable() {
     </div>
   );
 }
+
+

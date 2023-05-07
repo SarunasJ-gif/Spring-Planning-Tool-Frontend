@@ -13,7 +13,9 @@ import {
 
 interface RemoveButtonProps {
   name: string;
+  handleRemoveMember: () => void;
 }
+
 export default function RemoveButton(props: RemoveButtonProps) {
   const [saveClicked, setSaveClicked] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -29,6 +31,7 @@ export default function RemoveButton(props: RemoveButtonProps) {
 
   const handleRemove = () => {
     // handle remove action here
+    props.handleRemoveMember();
     setDialogOpen(false);
   };
 
