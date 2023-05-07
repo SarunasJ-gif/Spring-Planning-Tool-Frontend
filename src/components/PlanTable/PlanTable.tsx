@@ -86,8 +86,8 @@ const initialSprint: Sprint = {
       ],
     },
   ],
-  isHistorial: undefined,
-  isActive: undefined,
+  isHistorial: null,
+  isActive: null,
 };
 
 export default function PlanTable() {

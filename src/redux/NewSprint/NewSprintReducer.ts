@@ -10,8 +10,8 @@ export type NewSprint = {
     tasks: TaskData[];
     memberTeamId: string | null;
     members: Member[];
-    isHistorical: boolean | undefined;
-    isActive: boolean | undefined;
+    isHistorical: boolean | null;
+    isActive: boolean | null;
   };
 };
 const initialState: NewSprint = {
@@ -22,8 +22,8 @@ const initialState: NewSprint = {
     tasks: [],
     memberTeamId: null,
     members: [],
-    isHistorical: undefined,
-    isActive: undefined,
+    isHistorical: null,
+    isActive: null,
   },
 };
 

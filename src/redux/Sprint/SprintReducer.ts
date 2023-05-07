@@ -8,8 +8,8 @@ export type Sprint = {
   tasks: TaskData[];
   memberTeamId: string | null;
   members: Member[];
-  isHistorial: boolean | undefined;
-  isActive: boolean | undefined;
+  isHistorial: boolean | null;
+  isActive: boolean | null;
 };
 
 const initialState = {

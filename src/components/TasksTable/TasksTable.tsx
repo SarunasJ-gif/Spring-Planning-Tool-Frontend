@@ -255,6 +255,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                               <TaskKey
                                 taskKey={point.keyValue}
                                 keyColor={point.keyColor}
+                                keyBackgroundColor={point.keyColor}
                               />
                             )}
                           </Box>

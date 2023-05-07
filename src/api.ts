@@ -4,13 +4,15 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 
-axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+axiosInstance.interceptors.request.use(
+  async (config: InternalAxiosRequestConfig) => {
+    const token = await localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+);
 
 const request = <T>(
   method: string,
