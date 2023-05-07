@@ -5,8 +5,12 @@ import TasksTable from '../../components/TasksTable/TasksTable';
 import { ArrowDropDown } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { Sprint } from '../../redux/Sprint/SprintReducer';
+import { getSprint } from '../../redux/Sprint/SprintApi';
 
 export default function MainPage() {
+  React.useEffect(() => {
+    getSprint(2);
+  }, []);
   const sprint = useSelector((state: { sprint: Sprint }) => state.sprint);
   return (
     <Box sx={{ marginLeft: '30mm', marginRight: '10mm', mt: 4 }}>
