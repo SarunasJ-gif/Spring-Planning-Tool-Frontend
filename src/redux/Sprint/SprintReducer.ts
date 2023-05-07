@@ -29,16 +29,7 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        sprint: {
-          title: action.payload.title,
-          startDate: action.payload.startDate,
-          endDate: action.payload.endDate,
-          tasks: action.payload.tasks,
-          memberTeamId: action.payload.memberTeamId,
-          members: action.payload.members,
-          isHistorial: action.payload.isHistorial,
-          isActive: action.payload.isActive,
-        },
+        sprint: action.payload,
       };
     case actions.GET_SPRINT_FAILURE:
       return {
