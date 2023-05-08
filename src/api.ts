@@ -12,27 +12,27 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
-const request = <T>(
+const request = async <T>(
   method: string,
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
-  const token = localStorage.getItem('token');
+  const token = await localStorage.getItem('token');
   if (token) {
     config = { headers: { Authorization: `Bearer ${token}` } };
   }
-  return axiosInstance
-    .request<T>({
+  try {
+    const response = await axiosInstance.request<T>({
       method,
       url,
       data,
       ...config,
-    })
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error;
     });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
