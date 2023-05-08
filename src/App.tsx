@@ -5,16 +5,12 @@ import 'typeface-poppins';
 import './App.css';
 import theme from './theme';
 import { RouterProvider } from 'react-router';
-import { getUser } from './redux/user/userActions';
 import { routes } from './routes/routes';
 import {useAppDispatch} from "./redux/store";
 
 function App() {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
   return (
     <>
       <ThemeProvider theme={theme}>
