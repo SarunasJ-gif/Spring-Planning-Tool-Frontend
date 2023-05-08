@@ -11,8 +11,9 @@ import {
   TextField,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateTeamName } from '../../redux/NewTeam/NewTeamActions';
+import { getTeamData, updateTeamName } from '../../redux/NewTeam/NewTeamActions';
 import { Team } from '../../types/TeamTypes';
+
 
 const LeftAlignedTableCell = styled(TableCell)(() => ({
   textAlign: 'left',
@@ -31,9 +32,22 @@ const rowsTop = [createData('JustasTeam', 5, 12, 847)];
 
 export default function TopTable() {
 
-  const dispatch = useDispatch();
-  useSelector((state: { newTeam: Team }) => state.newTeam.team);
+ const dispatch = useDispatch();
 
+   useSelector((state: { newTeam: Team }) => state.newTeam.team);
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    let memberId;
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      memberId = payload.sub;
+      console.log(memberId)
+    }
+     dispatch(getTeamData(memberId)); 
+  }, [dispatch]);
+
+ 
   const [editingRow, setEditingRow] = React.useState(-1);
   const [editedValue, setEditedValue] = React.useState('');
 
@@ -118,3 +132,4 @@ export default function TopTable() {
     </TableContainer>
   );
 }
+

@@ -5,9 +5,9 @@ export const createNewTeam = (teamData: any) => ({
   type: actions.CREATE_NEW_TEAM,
   payload: teamData,
 });
-export const getTeamData = (teamData: any) => ({
+export const getTeamData = (memberId: number) => ({
   type: actions.GET_TEAM_DATA,
-  payload: teamData,
+  payload: memberId,
 });
 
 export const updateTeamName = (id:number, name: string) => ({
