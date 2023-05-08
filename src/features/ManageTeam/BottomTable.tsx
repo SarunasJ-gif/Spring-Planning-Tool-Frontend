@@ -18,6 +18,7 @@ import { Role } from '../../enums/enums';
 import { rows } from './MockData';
 import { Row, TableRowElementProps, Team } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
+import { addTeamMember, removeTeamMember, updateMemberRole } from '../../redux/NewTeam/NewTeamActions';
 
 interface Props {
   addMember: { name: string; role: Role };
@@ -26,11 +27,10 @@ interface Props {
 export default function BottonTable(props: Props) {
 
   const dispatch = useDispatch();
-  const { members } = useSelector(
-    (state: { newTeam: Team  }) => state?.newTeam?.team,
-  );
+  useSelector((state: { newTeam: Team  }) => state?.newTeam?.team );
 
   const [data, setData] = React.useState<Row[]>(rows);
+
 
   const handleAddMember = React.useCallback(() => {
     const newData: Row = {
@@ -38,8 +38,9 @@ export default function BottonTable(props: Props) {
       name: props.addMember.name,
       role: props.addMember.role,
     };
+    dispatch( addTeamMember(props.addMember.name, props.addMember.role));
     setData([...data, newData]);
-  }, [data, props.addMember]);
+  }, [data, dispatch, props.addMember.name, props.addMember.role]);
 
   React.useEffect(() => {
     if (props.addMember.name && props.addMember.role) {
@@ -48,6 +49,16 @@ export default function BottonTable(props: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.addMember]);
    
+  const handleUpdateMemberRole = React.useCallback((id: number, role: Role) => {
+    dispatch(updateMemberRole(id, role));
+  }, [dispatch]);
+
+  const handleRemoveMember = React.useCallback((id: number) => {
+    dispatch(removeTeamMember(id));
+  }, [dispatch]);
+
+
+
   const TableRowElement: React.FC<TableRowElementProps> = ({
     row,
     index,
@@ -69,6 +80,7 @@ export default function BottonTable(props: Props) {
       setSelectedRole(selectedRole);
       setAnchorEl(null);
       setShowSaveButton(true);
+      handleUpdateMemberRole(row.id, selectedRole);
     };
 
     const handleClose = () => {
@@ -79,8 +91,10 @@ export default function BottonTable(props: Props) {
       setShowSaveButton(false);
     };
 
-    const handleRemoveMember = () => {
+  
+    const handleRemove  = () => {
       setData(data.filter((member: { id: number; }) => member.id !== row.id));
+      handleRemoveMember(row.id);
     };
 
     return (
@@ -135,7 +149,7 @@ export default function BottonTable(props: Props) {
             </Menu>
           </TableCell>
           <TableCell align="left" sx={{ width: '80px' }}>
-            <RemoveButton name={row.name} handleRemoveMember={handleRemoveMember}/>
+            <RemoveButton name={row.name} handleRemoveMember={handleRemove}/>
           </TableCell>
           <TableCell align="left" sx={{ width: '80px' }}>
             {showSaveButton && <SaveButton onClick={handleSave} />}
