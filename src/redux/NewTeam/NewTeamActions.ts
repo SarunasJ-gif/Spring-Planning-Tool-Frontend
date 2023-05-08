@@ -6,11 +6,6 @@ export const createNewTeam = (teamData: any) => ({
   payload: teamData,
 });
 
-export const deleteTeamMemberRequest = (id: number) => ({
-  type: actions.DELETE_TEAM_MEMBER,
-  payload: { id },
-});
-
 export const updateTeamName = (id:number, name: string) => ({
   type: actions.UPDATE_TEAM_NAME,
   payload: { id, name },
@@ -29,7 +24,7 @@ export const updateMemberRole = (memberId: number, role: Role) => ({
   },
 });
 
-export const removeMember = (memberId: number) => ({
-  type: actions.REMOVE_MEMBER,
+export const removeTeamMember = (memberId: number) => ({
+  type: actions.REMOVE_TEAM_MEMBER,
   payload: memberId,
 });
