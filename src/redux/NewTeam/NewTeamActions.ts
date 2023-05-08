@@ -11,21 +11,21 @@ export const deleteTeamMemberRequest = (id: number) => ({
   payload: { id },
 });
 
-export const updateTeamName = (name: string) => ({
+export const updateTeamName = (id:number, name: string) => ({
   type: actions.UPDATE_TEAM_NAME,
-  payload: { name },
+  payload: { id, name },
 });
 
-export const addMember = (name: string, role: Role) => ({
-  type: actions.ADD_MEMBER,
-  payload: { name, role,  },
+export const addTeamMember = (name: string, role: Role) => ({
+  type: actions.ADD_TEAM_MEMBER,
+  payload: { name, role  },
 });
 
 export const updateMemberRole = (memberId: number, role: Role) => ({
   type: actions.UPDATE_MEMBER_ROLE,
   payload: {
     memberId,
-    role,
+    role
   },
 });
 

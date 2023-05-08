@@ -27,7 +27,7 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce (state, (draftState) => {
         draftState.team.name = payload;
         });
-    case actions.ADD_MEMBER:
+    case actions.ADD_TEAM_MEMBER:
       return produce (state, (draftState) => {
         draftState.team.members.push(payload);
           });

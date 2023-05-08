@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { updateTeamName } from '../../redux/NewTeam/NewTeamActions';
 import { Team } from '../../types/TeamTypes';
 
 const LeftAlignedTableCell = styled(TableCell)(() => ({
@@ -32,10 +33,8 @@ export default function TopTable() {
 
   const dispatch = useDispatch();
 
-  const { name } = useSelector(
-    (state: { newTeam: Team }) => state.newTeam.team,
-  );
-  
+  const teams = useSelector((state: { newTeam: Team }) => state.newTeam.team);
+
   const [editingRow, setEditingRow] = React.useState(-1);
   const [editedValue, setEditedValue] = React.useState('');
 
@@ -54,6 +53,7 @@ export default function TopTable() {
     if (editingRow >= 0 && editedValue.trim() !== '') {
       const newRows = [...rowsTop];
       newRows[editingRow].name = editedValue.trim();
+      dispatch(updateTeamName(editingRow, editedValue.trim()));
       setEditingRow(-1);
       setEditedValue('');
     }
@@ -79,40 +79,40 @@ export default function TopTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rowsTop.map((row, index) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              {editingRow === index ? (
-                <LeftAlignedTableCell
-                  component="th"
-                  scope="row"
-                  style={{ width: '350px' }}
-                >
-                  <TextField
-                    fullWidth
-                    value={editedValue}
-                    onChange={(event) => setEditedValue(event.target.value)}
-                    onKeyDown={handleKeyDown}
-                    autoFocus
-                    onBlur={saveEditedValue}
-                  />
-                </LeftAlignedTableCell>
-              ) : (
-                <LeftAlignedTableCell
-                  component="th"
-                  scope="row"
-                  style={{ width: '350px', cursor: 'pointer' }}
-                  onDoubleClick={() => handleDoubleClick(index, row.name)}
-                >
-                  {row.name}
-                </LeftAlignedTableCell>
-              )}
-              <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
-              <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
-              <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell>
-            </TableRow>
+        {rowsTop.map((row, index) => (
+  <TableRow
+    key={row.name}
+    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+  >
+    {editingRow === index ? (
+      <LeftAlignedTableCell
+        component="th"
+        scope="row"
+        style={{ width: '350px' }}
+      >
+        <TextField
+          fullWidth
+          value={editedValue}
+          onChange={(event) => setEditedValue(event.target.value)}
+          onKeyDown={handleKeyDown}
+          autoFocus
+          onBlur={saveEditedValue}
+        />
+      </LeftAlignedTableCell>
+    ) : (
+      <LeftAlignedTableCell
+        component="th"
+        scope="row"
+        style={{ width: '350px', cursor: 'pointer' }}
+        onDoubleClick={() => handleDoubleClick(index, row.name)}
+      >
+        {editedValue && editingRow === index ? editedValue : row.name}
+      </LeftAlignedTableCell>
+    )}
+    <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
+    <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
+    <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell>
+  </TableRow>
           ))}
         </TableBody>
       </Table>
