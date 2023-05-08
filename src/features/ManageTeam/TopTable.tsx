@@ -32,7 +32,7 @@ const rowsTop = [createData('JustasTeam', 5, 12, 847)];
 export default function TopTable() {
 
   const dispatch = useDispatch();
-  const team = useSelector((state: { newTeam: Team }) => state.newTeam.team);
+  useSelector((state: { newTeam: Team }) => state.newTeam.team);
 
   const [editingRow, setEditingRow] = React.useState(-1);
   const [editedValue, setEditedValue] = React.useState('');

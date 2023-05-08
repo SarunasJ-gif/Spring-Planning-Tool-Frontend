@@ -13,7 +13,7 @@ export type NewTeam = {
 };
 const initialState: NewTeam = {
   team: {
-    name: 'x',
+    name: '',
     completedProjects: null,
     completedTasks: null,
     members: [],
@@ -31,10 +31,11 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce (state, (draftState) => {
         draftState.team.members.push(payload);
           });
-    case actions.UPDATE_MEMBER_ROLE:
-      return produce (state, (draftState) => {
-        draftState.team.name = payload;
-           });
+          case actions.UPDATE_MEMBER_ROLE:
+            return produce(state, (draftState) => {
+              draftState.team.members.findIndex((member) => member.memberId === payload.memberId
+              );
+            });
     default:
       return state;
   }

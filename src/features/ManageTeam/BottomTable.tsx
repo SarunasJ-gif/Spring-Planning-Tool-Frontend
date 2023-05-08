@@ -90,8 +90,7 @@ export default function BottonTable(props: Props) {
     const handleSave = () => {
       setShowSaveButton(false);
     };
-
-  
+    
     const handleRemove  = () => {
       setData(data.filter((member: { id: number; }) => member.id !== row.id));
       handleRemoveMember(row.id);
