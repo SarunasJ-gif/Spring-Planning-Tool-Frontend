@@ -16,22 +16,38 @@ import {
   Button,
   Typography,
   Grid,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
 } from '@mui/material';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { ArrowDropDown, DeleteForever } from '@mui/icons-material';
 import PopUp from './PopUp';
 import { GoalType } from '../../enums/enums';
 import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import { addTask, removeTask, updateTaskDescription, updateTaskKeyValue, updateTaskNewPoints, updateTaskOldPoints, updateTaskRemainingPoints, updateTaskType } from '../../redux/NewSprint/NewSprintActions';
+import {
+  addTask,
+  removeTask,
+  updateTaskDescription,
+  updateTaskKeyValue,
+  updateTaskNewPoints,
+  updateTaskOldPoints,
+  updateTaskRemainingPoints,
+  updateTaskType,
+} from '../../redux/NewSprint/NewSprintActions';
 import { Sprint, TaskData } from '../../types/NewSprintTypes';
+import TaskKey from '../TaskKey/TaskKey';
 
+interface TasksProps {
+  isEditMode: boolean;
+}
 
-export default function TasksTable(): JSX.Element {
+export default function TasksTable(props: TasksProps): JSX.Element {
+  const [expanded, setExpanded] = useState(false);
   const { tasks } = useSelector(
     (state: { newSprint: Sprint }) => state.newSprint.sprint,
   );
+  const { isEditMode } = props;
 
   const dispatch = useDispatch();
 
@@ -113,14 +129,12 @@ export default function TasksTable(): JSX.Element {
     );
   };
 
-  const [expanded, setExpanded] = useState(false);
-
   const handleAccordionToggle = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <Box sx={{ ml: 10 }}>
+    <Box sx={isEditMode ? { ml: 10 } : undefined}>
       <Accordion expanded={!expanded}>
         <AccordionSummary
           sx={{
@@ -129,19 +143,14 @@ export default function TasksTable(): JSX.Element {
             justifyContent: 'left',
             height: 5,
             minHeight: 60,
+            ...(!isEditMode ? { display: 'none' } : undefined),
           }}
         >
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography
-                  sx={{
-                    ml: 2,
-                  }}
-                >
-                  <h3>
-                    <b>Tasks</b>
-                  </h3>
+                <Typography variant="h4" fontWeight={500}>
+                  Tasks
                 </Typography>
                 <Button
                   color="primary"
@@ -151,12 +160,13 @@ export default function TasksTable(): JSX.Element {
                     ml: 2,
                   }}
                 >
-                  <ArrowDropUpIcon
+                  <ArrowDropDown
                     sx={{ transform: expanded ? 'rotate(180deg)' : 'none' }}
                   />
                 </Button>
               </Box>
             </Grid>
+
             <Grid item>
               <Button
                 variant="outlined"
@@ -178,11 +188,10 @@ export default function TasksTable(): JSX.Element {
         </AccordionSummary>
         <AccordionDetails
           sx={{
-            padding: '8px 16px', // reduce top and bottom padding
-            marginTop: -8, // reduce top margin
+            marginTop: -8,
           }}
         >
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ overflowY: 'hidden' }}>
             <Table size="medium" aria-label="a dense table">
               {tasks.length === 0 ? (
                 <TableCell
@@ -203,13 +212,19 @@ export default function TasksTable(): JSX.Element {
                 <Table size="medium" aria-label="a dense table">
                   <TableHead sx={{ bgcolor: 'grey.50' }}>
                     <TableRow>
-                      <TableCell>Key</TableCell>
-                      <TableCell>Description</TableCell>
-                      <TableCell>Type</TableCell>
-                      <TableCell align="center">Old pts.</TableCell>
-                      <TableCell align="center">Remaining pts.</TableCell>
-                      <TableCell align="center">New pts.</TableCell>
-                      <TableCell>Delete</TableCell>
+                      <TableCell color="#7C7D7C">Key</TableCell>
+                      <TableCell color="#7C7D7C">Description</TableCell>
+                      <TableCell color="#7C7D7C">Type</TableCell>
+                      <TableCell align="center" color="#7C7D7C">
+                        Old pts.
+                      </TableCell>
+                      <TableCell align="center" color="#7C7D7C">
+                        Remaining pts.
+                      </TableCell>
+                      <TableCell align="center" color="#7C7D7C">
+                        New pts.
+                      </TableCell>
+                      {isEditMode && <TableCell>Delete</TableCell>}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -223,93 +238,133 @@ export default function TasksTable(): JSX.Element {
                           <Box
                             style={{ display: 'flex', alignItems: 'justify' }}
                           >
-                            <TextField
-                              id="keyValue"
-                              variant="standard"
-                              sx={{ minWidth: 70 }}
-                              value={point.keyValue}
-                              onChange={(event) =>
-                                handleKeyChange(point.id, event)
-                              }
-                            />
-                            <PopUp initialColor={point.keyColor} />
+                            {isEditMode ? (
+                              <>
+                                <TextField
+                                  id="keyValue"
+                                  variant="standard"
+                                  sx={{ minWidth: 70 }}
+                                  value={point.keyValue}
+                                  onChange={(event) =>
+                                    handleKeyChange(point.id, event)
+                                  }
+                                />
+                                <PopUp initialColor={point.keyColor} />
+                              </>
+                            ) : (
+                              <TaskKey
+                                taskKey={point.keyValue}
+                                keyColor={point.keyColor}
+                                keyBackgroundColor={point.keyColor}
+                              />
+                            )}
                           </Box>
                         </TableCell>
                         <TableCell sx={{ minWidth: 400 }}>
-                          <TextField
-                            id="standard-basic"
-                            variant="standard"
-                            sx={{ width: 600 }}
-                            value={point.description}
-                            onChange={(event) =>
-                              handleDescriptionChange(point.id, event)
-                            }
-                          />
-                        </TableCell>
-                        <StyledTableCell>
-                          <FormControl variant="standard">
-                            <Select
-                              id={`point-type-select-${point.id}`}
-                              value={point.type}
-                              displayEmpty
+                          {isEditMode ? (
+                            <TextField
+                              id="standard-basic"
+                              variant="standard"
+                              sx={{ width: 600 }}
+                              value={point.description}
                               onChange={(event) =>
-                                handleTypeChange(
-                                  point.id,
-                                  event.target.value as GoalType,
-                                )
+                                handleDescriptionChange(point.id, event)
                               }
-                            >
-                              <MenuItem value={GoalType.GOAL_TYPE}>
-                                Goal
-                              </MenuItem>
-                              <MenuItem value={GoalType.TECHNICAL_TYPE}>
-                                Technical
-                              </MenuItem>
-                            </Select>
-                          </FormControl>
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          <TextField
-                            id={`oldPoints${point.id}`}
-                            variant="standard"
-                            value={point.oldPoints}
-                            onChange={(event) =>
-                              handleOldPointsChange(point.id, event)
-                            }
-                          />
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          <TextField
-                            id={`remainingPoints${point.id}`}
-                            variant="standard"
-                            value={point.remainingPoints}
-                            onChange={(event) =>
-                              handleRemainingPointsChange(point.id, event)
-                            }
-                          />
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          <TextField
-                            id={`newPoints${point.id}`}
-                            variant="standard"
-                            value={point.newPoints}
-                            onChange={(event) =>
-                              handleNewPointsChange(point.id, event)
-                            }
-                          />
-                        </StyledTableCell>
-                        <TableCell sx={{ border: '1px solid #ddd', Width: 80 }}>
-                          <IconButton
-                            onClick={() => handleDeleteTask(point.id)}
-                          >
-                            <DeleteForeverIcon />
-                          </IconButton>
+                            />
+                          ) : (
+                            <Typography>{point.description}</Typography>
+                          )}
                         </TableCell>
+                        <StyledTableCell>
+                          {isEditMode ? (
+                            <FormControl variant="standard">
+                              <Select
+                                id={`point-type-select-${point.id}`}
+                                value={point.type}
+                                displayEmpty
+                                onChange={(event) =>
+                                  handleTypeChange(
+                                    point.id,
+                                    event.target.value as GoalType,
+                                  )
+                                }
+                              >
+                                <MenuItem value={GoalType.GOAL_TYPE}>
+                                  Goal
+                                </MenuItem>
+                                <MenuItem value={GoalType.TECHNICAL_TYPE}>
+                                  Technical
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          ) : (
+                            <Typography>{point.type}</Typography>
+                          )}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ textAlign: 'center' }}>
+                          {isEditMode ? (
+                            <TextField
+                              id={`oldPoints${point.id}`}
+                              variant="standard"
+                              value={point.oldPoints}
+                              onChange={(event) =>
+                                handleOldPointsChange(point.id, event)
+                              }
+                            />
+                          ) : (
+                            <Typography textAlign="center">
+                              {point.oldPoints}
+                            </Typography>
+                          )}
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {isEditMode ? (
+                            <TextField
+                              id={`remainingPoints${point.id}`}
+                              variant="standard"
+                              value={point.remainingPoints}
+                              onChange={(event) =>
+                                handleRemainingPointsChange(point.id, event)
+                              }
+                            />
+                          ) : (
+                            <Typography textAlign="center">
+                              {point.remainingPoints}
+                            </Typography>
+                          )}
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {isEditMode ? (
+                            <TextField
+                              id={`newPoints${point.id}`}
+                              variant="standard"
+                              value={point.newPoints}
+                              onChange={(event) =>
+                                handleNewPointsChange(point.id, event)
+                              }
+                            />
+                          ) : (
+                            <Typography textAlign="center">
+                              {point.newPoints}
+                            </Typography>
+                          )}
+                        </StyledTableCell>
+                        {isEditMode && (
+                          <TableCell
+                            sx={{ border: '1px solid #ddd', Width: 80 }}
+                          >
+                            <IconButton
+                              onClick={() => handleDeleteTask(point.id)}
+                            >
+                              <DeleteForever />
+                            </IconButton>
+                          </TableCell>
+                        )}
                       </TableRow>
                     ))}
                     <TableRow sx={{ bgcolor: 'grey.50' }}>
                       <TableCell></TableCell>
-                      <TableCell></TableCell>
+                      {isEditMode && <TableCell></TableCell>}
                       <TableCell>Total</TableCell>
                       <TableCell
                         align="center"

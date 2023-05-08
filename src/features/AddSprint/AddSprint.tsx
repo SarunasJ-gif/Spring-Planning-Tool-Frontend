@@ -9,7 +9,7 @@ function AddSprint() {
   return (
     <>
       <NewSprintInformation />
-      <TasksTable />
+      <TasksTable isEditMode={true} />
       <PlanTable />
       <Box
         sx={{
@@ -26,4 +26,3 @@ function AddSprint() {
 }
 
 export default AddSprint;
-

@@ -6,4 +6,5 @@ export const SAccordion = styled(Accordion)`
   text-align: center;
   border: 1px;
   border-radius: 0 !important;
+  flex-direction: column;
 `;
