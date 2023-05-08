@@ -17,7 +17,7 @@ import { format } from 'date-fns';
 import produce, { Draft } from 'immer';
 import { Member, MemberWorkingDay, Sprint } from '../../types/NewSprintTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateBusinessDays, updateTaskAssign, updateShowNotification } from '../../redux/NewSprint/NewSprintActions';
+import { setBusinessDays, setDaysOfWeek, updateTaskAssign, updateShowNotification, updateMembers } from '../../redux/NewSprint/NewSprintActions';
 import { RootState } from '../../redux/store';
 
 
@@ -35,11 +35,11 @@ export default function PlanTable() {
   console.log(planTableState);*/
   const handleTaskChange = (
     person: string,
-    day: number,
-    value: string,
-    id: string,
+    day: string | null,
+    value: number,
   ) => {
-    dispatch(updateTaskAssign(person, day, value, id));
+    console.log(person, day, value);
+    dispatch(updateTaskAssign(person, day, value));
     //setSprint(task);
   };
 
@@ -66,14 +66,46 @@ export default function PlanTable() {
   // }, [setSprint, planTableTasks, member, sprint]);
 
   
-  const workingDays = useMemo(() => {
-    const days: string[] = [];
-    const daysOfWeek: string[] = [];
+  // const workingDays = useMemo(() => {
+  //   const days: string[] = [];
+  //   const daysOfWeek: string[] = [];
   
+  //   if (sprint.endDate && sprint.startDate) {
+  //     const startDate = new Date(sprint.startDate);
+  //     const endDate = new Date(sprint.endDate);
+  
+  //     for (
+  //       let date = startDate;
+  //       date <= endDate;
+  //       date.setDate(date.getDate() + 1)
+  //     ) {
+  //       if (date.getDay() !== 0 && date.getDay() !== 6) {
+  //         const day = date.toLocaleDateString();
+  //         days.push(day);
+  //         daysOfWeek.push(format(date, 'EEE'));               
+  //       }
+  //     }
+  
+  //     const updatedMembers = sprint.members.map(member => {
+  //       const updatedWorkingDays = days.map(day => ({ day, task: sprint.tasks[0] }));
+  //       return { ...member, workingDays: updatedWorkingDays };
+  //     });
+  //     //console.log(updatedMembers);
+  //     return { days, daysOfWeek, members: updatedMembers };
+  //   }
+    
+  //   return { days: [], daysOfWeek: [], members: [] };
+  // }, [sprint]);
+  // dispatch(updateBusinessDays(workingDays.days, workingDays.daysOfWeek));
+  useEffect(() => {
     if (sprint.endDate && sprint.startDate) {
       const startDate = new Date(sprint.startDate);
+      //console.log(startDate);
       const endDate = new Date(sprint.endDate);
-  
+      //console.log(endDate);
+      const days: string[] = [];
+      const daysOfWeek: string[] = [];
+
       for (
         let date = startDate;
         date <= endDate;
@@ -82,22 +114,20 @@ export default function PlanTable() {
         if (date.getDay() !== 0 && date.getDay() !== 6) {
           const day = date.toLocaleDateString();
           days.push(day);
-          daysOfWeek.push(format(date, 'EEE'));               
+          daysOfWeek.push(format(date, 'EEE'));
         }
       }
-  
       const updatedMembers = sprint.members.map(member => {
-        const updatedWorkingDays = days.map(day => ({ day, task: sprint.tasks[0] }));
+        const updatedWorkingDays = days.map(day => ({ day, task: null }));
         return { ...member, workingDays: updatedWorkingDays };
       });
-      //console.log(updatedMembers);
-      return { days, daysOfWeek, members: updatedMembers };
+      console.log(days);
+      console.log(daysOfWeek);
+      dispatch(setBusinessDays(days));
+      dispatch(updateMembers(updatedMembers))
+      dispatch(setDaysOfWeek(daysOfWeek));
     }
-    
-    return { days: [], daysOfWeek: [], members: [] };
-  }, [sprint]);
-  dispatch(updateBusinessDays(workingDays.days, workingDays.daysOfWeek));
-  
+  }, [sprint.startDate, sprint.endDate]);
   return (
     <>
       {sprint.showNotification && (
@@ -176,71 +206,58 @@ export default function PlanTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {!sprint.tasks ? (
-            <TableRow>
+          {sprint.members.map((member) => (
+            <TableRow key={member.memberId} sx={{ height: '48px' }}>
               <TableCell
-                colSpan={sprint.businessDays.length + 1}
-                sx={{ textAlign: 'center' }}
+                sx={{
+                  borderRight: '1px solid #e0e0e0',
+                  minWidth: '200px',
+                }}
               >
-                No tasks created
+                {member.firstName} {member.lastName}
               </TableCell>
-            </TableRow>
-          ) : (
-            sprint.members.map((member) => (
-              <TableRow key={member.memberId} sx={{ height: '48px' }}>
+              {
+              member.workingDays.map((day) => (
                 <TableCell
+                  key={`${member}-${day}`}
                   sx={{
-                    borderRight: '1px solid #e0e0e0',
-                    minWidth: '200px',
+                    '&:hover': {
+                      backgroundColor: '#F0F1F3',
+                    },
+                    padding: '0px',
                   }}
                 >
-                  {member.firstName} {member.lastName}
-                </TableCell>
-                {Array.from(
-                  { length: sprint.businessDays.length },
-                  (_, i) => i + 1,
-                ).map((day) => (
-                  <TableCell
-                    key={`${member}-${day}`}
-                    sx={{
-                      '&:hover': {
-                        backgroundColor: '#F0F1F3',
-                      },
-                      padding: '0px',
-                    }}
-                  >
-                    <FormControl variant="standard" fullWidth>
-                      <Select
-                        disableUnderline
-                        inputProps={{ IconComponent: () => null }}
-                        sx={{
-                          maSelectrgin: 'auto',
-                          width: '85%',
-                        }}
-                        value={
-                          sprint.members[Number(member.memberId)]?.workingDays[day]?.task
-                            ?.type ?? ''
-                        }
-                        onChange={(event) =>
-                          handleTaskChange(
-                            member.memberId,
-                            day,
-                            event.target.value,
-                            member.memberId,
-                          )
-                        }
-                        label="Task"
-                      >
-                        {sprint.tasks.map((task) => (
-                          <MenuItem value={task.keyValue} key={task.keyValue}>
-                            <TaskKey
-                              taskKey={task.keyValue}
-                              keyColor="#FFFFFF"
-                              keyBackgroundColor={task.keyColor}
-                            />
-                          </MenuItem>
-                        ))}
-                        {/* <MenuItem value="Education">
+                  <FormControl variant="standard" fullWidth>
+                    <Select
+                      disableUnderline
+                      inputProps={{ IconComponent: () => null }}
+                      sx={{
+                        maSelectrgin: 'auto',
+                        width: '85%',
+                      }}
+                      value={
+                        day?.task?.id
+                          ?? ''
+                      }
+                      onChange={(event) =>
+                        handleTaskChange(
+                          member.memberId,
+                          day.day,
+                          Number(event.target.value),
+                        )
+                      }
+                      label="Task"
+                    >
+                      {sprint.tasks.map((task) => (
+                        <MenuItem value={task.id} key={task.id}>
+                          <TaskKey
+                            taskKey={task.keyValue}
+                            keyColor="#FFFFFF"
+                            keyBackgroundColor={task.keyColor}
+                          />
+                        </MenuItem>
+                      ))}
+                      {/* <MenuItem value="Education">
                           {sprint.members[member.memberId]?.[day] === 'Education' ? (
                             <TaskKey
                               taskKey={'Education'}
@@ -250,43 +267,43 @@ export default function PlanTable() {
                           ) : (
                             'Education'
                           )}
-                        </MenuItem>
-                        <MenuItem value="Vacation">
-                          {sprint[member.memberId]?.[day] === 'Vacation' ? (
-                            <TaskKey
-                              taskKey={'Vacation'}
-                              keyColor={'#FFFFFF'}
-                              keyBackgroundColor={'#878787'}
-                            />
-                          ) : (
-                            'Vacation'
-                          )}
-                        </MenuItem> */}
-                        <MenuItem value="">None</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </TableCell>
-                ))}
-                <TableCell
-                  sx={{
-                    textAlign: 'center',
-                    minWidth: '150px',
-                    borderLeft: '1px solid #e0e0e0',
-                  }}
-                >
-                  {
-                    Object.values(sprint.members[Number(member.memberId)] || {}).filter(
-                      (value) =>
-                        value === 'Task' ||
-                        value === 'Technical' ||
-                        value === 'Goal',
-                    ).length
-                  }
+                      </MenuItem>
+                      <MenuItem value="Vacation">
+                        {sprint[member.memberId]?.[day] === 'Vacation' ? (
+                          <TaskKey
+                            taskKey={'Vacation'}
+                            keyColor={'#FFFFFF'}
+                            keyBackgroundColor={'#878787'}
+                          />
+                        ) : (
+                          'Vacation'
+                        )}
+                      </MenuItem> */}
+                      <MenuItem value="">None</MenuItem>
+                    </Select>
+                  </FormControl>
                 </TableCell>
-              </TableRow>
-            ))
-          )}
+              ))}
+              <TableCell
+                sx={{
+                  textAlign: 'center',
+                  minWidth: '150px',
+                  borderLeft: '1px solid #e0e0e0',
+                }}
+              >
+                {
+                  Object.values(sprint.members[Number(member.memberId)] || {}).filter(
+                    (value) =>
+                      value === 'Task' ||
+                      value === 'Technical' ||
+                      value === 'Goal',
+                  ).length
+                }
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
+
       </Table>
     </>
   );

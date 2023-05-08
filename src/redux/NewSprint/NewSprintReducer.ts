@@ -27,62 +27,13 @@ export const initialState: NewSprint = {
       firstName: 'John',
       lastName: 'Doe',
       memberId: '1',
-      workingDays: [
-        {
-          day: '2023-04-24',
-          task: {
-            keyValue: 'ASDF!123',
-            keyColor: '#FF0000',
-            description: 'Task 1',
-            type: 'Goal',
-            oldPoints: 0,
-            remainingPoints: 0,
-            newPoints: 0,
-          },
-        },
-        {
-          day: '2023-04-25',
-          task: {
-            keyValue: 'QWERTY!456',
-            keyColor: '#0000FF',
-            description: 'Task 2',
-            type: 'Task',
-            oldPoints: 3,
-            remainingPoints: 2,
-            newPoints: 1,
-          },
-        },
-      ],
-    },{
+      workingDays: [],
+    },
+    {
       firstName: 'Jane',
       lastName: 'Smith',
       memberId: '2',
-      workingDays: [
-        {
-          day: '2023-04-24',
-          task: {
-            keyValue: 'ZXCVB!789',
-            keyColor: '#00FF00',
-            description: 'Task 3',
-            type: 'Bug',
-            oldPoints: 2,
-            remainingPoints: 1,
-            newPoints: 0,
-          },
-        },
-        {
-          day: '2023-04-26',
-          task: {
-            keyValue: 'ASDF!123',
-            keyColor: '#FF0000',
-            description: 'Task 1',
-            type: 'Goal',
-            oldPoints: 0,
-            remainingPoints: 0,
-            newPoints: 0,
-          },
-        },
-      ],
+      workingDays: [],
     }],
     businessDays: [],
     daysOfWeek: [],
@@ -162,19 +113,29 @@ const reducer = (state = initialState, { type, payload }) => {
       });
     case actions.UPDATE_TASK_ASSIGN:
       return produce(state, (draftState) => {
-      const memberIndex = draftState.sprint.members.findIndex(
-          (o: Member) => o.memberId === payload.id,
+      const memberIndex = state.sprint.members.findIndex(
+          (o) => o.memberId === payload.person,
       );
-      const tasksIndex = draftState.sprint.members[memberIndex].workingDays.findIndex(
-          (o: MemberWorkingDay) => o.day === payload.day.toString(),
+      // console.log(state.sprint.tasks);
+      // console.log(state.sprint.members);
+      // console.log(memberIndex);
+      console.log(payload.day.toString());
+      const tasksIndex = state.sprint.members[memberIndex].workingDays.findIndex(
+          (o) => o.day === payload.day.toString(),
       );
-      draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = payload.task;
+      const valueIndex = state.sprint.tasks.findIndex(
+        (o) => o.id === payload.value,
+      );
+      draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = draftState.sprint.tasks[valueIndex];
     });
-    case actions.UPDATE_BUSINESS_DAYS: {
-      const { businessDays, daysOfWeek } = payload;
+    case actions.SET_BUSINESS_DAYS: {
       return produce(state, (draftState) => {
-        draftState.sprint.businessDays = businessDays;
-        draftState.sprint.daysOfWeek = daysOfWeek;
+        draftState.sprint.businessDays = [...payload];
+      });
+    }
+    case actions.SET_DAYS_OF_WEEK: {
+      return produce(state, (draftState) => {
+        draftState.sprint.daysOfWeek = [...payload];
       });
     }
     case actions.UPDATE_SHOW_NOTIFICATION: {
@@ -182,7 +143,11 @@ const reducer = (state = initialState, { type, payload }) => {
         draftState.sprint.showNotification = payload;
       });
     }
-    
+    case actions.UPDATE_MEMBERS: {
+      return produce(state, (draftState) => {
+        draftState.sprint.members = [...payload];
+      });
+    }
     default:
       return state;
   }

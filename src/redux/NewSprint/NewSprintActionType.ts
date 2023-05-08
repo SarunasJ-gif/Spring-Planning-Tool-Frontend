@@ -12,5 +12,7 @@ export const UPDATE_TASK_NEW_POINTS = "updateTaskNewPoints";
 export const CREATE_NEW_SPRINT = 'createNewSprint';
 
 export const UPDATE_TASK_ASSIGN = 'updateTaskAssign';
-export const UPDATE_BUSINESS_DAYS='updateBusinessDays';
+export const UPDATE_MEMBERS = 'updateMembers'
+export const SET_BUSINESS_DAYS='setBusinessDays';
+export const SET_DAYS_OF_WEEK='setDaysOfWeek';
 export const UPDATE_SHOW_NOTIFICATION = 'updateShowNotification';

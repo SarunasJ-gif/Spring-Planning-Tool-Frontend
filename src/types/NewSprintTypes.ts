@@ -19,7 +19,7 @@ export type Task = {
 
 export type MemberWorkingDay = {
     day: string;
-    task: Task;
+    task: TaskData | null;
 };
 
 export type Member = {

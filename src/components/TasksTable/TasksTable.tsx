@@ -84,7 +84,7 @@ export default function TasksTable(): JSX.Element {
 
   const handleAddTask = () => {
     const newTaskObject: TaskData = {
-      id: getRandomId(1, 1000),
+      id: getRandomId(1,1000),
       keyValue: '',
       keyColor: '#EC4226',
       description: '',

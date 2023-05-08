@@ -63,16 +63,26 @@ export const createNewSprint = (sprintData: any) => ({
 });
 
 
-export const updateTaskAssign = (person: string, day: number, value: string, id: string) => ({
+export const updateTaskAssign = (person: string, day: string | null, value: number) => ({
   type: actions.UPDATE_TASK_ASSIGN,
-  payload: { person, day, value, id },
+  payload: { person, day, value },
 });
 
-export const updateBusinessDays = (businessDays: string[], daysOfWeek: string[]) => ({
-  type: actions.UPDATE_BUSINESS_DAYS,
-  payload: { businessDays, daysOfWeek }
+export const setBusinessDays = (businessDays: string[]) => ({
+  type: actions.SET_BUSINESS_DAYS,
+  payload: businessDays,
+});
+export const setDaysOfWeek = (daysOfWeek: string[]) => ({
+  type: actions.SET_DAYS_OF_WEEK,
+  payload: daysOfWeek,
 });
 export const updateShowNotification = (showNotification: boolean) => ({
   type: actions.UPDATE_SHOW_NOTIFICATION,
   payload: showNotification,
 });
+
+export const updateMembers = (members: Member[]) => ({
+  type: actions.UPDATE_MEMBERS,
+  payload: members,
+});
+
