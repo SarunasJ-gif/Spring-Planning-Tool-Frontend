@@ -24,7 +24,7 @@ import {
   TextField,
 } from '@mui/material';
 import { Role } from '../../enums/enums';
-import BottomMenuMT from './BottomMenuMT';
+// import BottomMenuMT from './BottomMenuMT';
 
 export default function ManageTeam() {
   const [name, setName] = React.useState('');
@@ -32,10 +32,11 @@ export default function ManageTeam() {
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
 
+  const [addMember, setAddMember] = React.useState({ name: '', role: Role.TESTER });
   const handleAddMember = () => {
     setAddMember({ name, role });
   };
-  const [addMember, setAddMember] = React.useState({ name: '', role: Role.TESTER });
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -83,7 +84,7 @@ export default function ManageTeam() {
                     </Typography>
                   </Grid>
                   <Grid item>
-                  <Button
+                 <Button
                   variant={saveClicked ? 'contained' : 'outlined'}
                   color="primary"
                   size="small"
@@ -153,7 +154,7 @@ export default function ManageTeam() {
           </Grid>
         </Grid>
       </Container>
-      <BottomMenuMT />
+      {/* <BottomMenuMT /> */}
     </Box>
   );
 }

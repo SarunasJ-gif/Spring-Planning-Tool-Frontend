@@ -28,7 +28,7 @@ function createData(
   return { name, members, projects, tasks };
 }
 
-const rowsTop = [createData('JustasTeam', 5, 12, 847)];
+const rowsTop = [createData('Main Team', 5, 12, 847)];
 
 export default function TopTable() {
 

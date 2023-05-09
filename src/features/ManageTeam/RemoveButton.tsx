@@ -30,7 +30,6 @@ export default function RemoveButton(props: RemoveButtonProps) {
   };
 
   const handleRemove = () => {
-    // handle remove action here
     props.handleRemoveMember();
     setDialogOpen(false);
   };
