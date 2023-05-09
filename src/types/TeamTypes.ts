@@ -18,6 +18,9 @@ export type TableRowElementProps = {
 
 export type Row = {
   id: number;
+  memberId: number;
   name: string;
   role: Role;
 }
+
+

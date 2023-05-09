@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addTeamMember, removeTeamMember, updateMemberRole } from '../../redux/NewTeam/NewTeamActions';
 
 interface Props {
-  addMember: { name: string; role: Role };
+  addMember: { memberId: number, name: string; role: Role };
 }
 
 export default function BottonTable(props: Props) {
@@ -35,12 +35,13 @@ export default function BottonTable(props: Props) {
   const handleAddMember = React.useCallback(() => {
     const newData: Row = {
       id: data.length + 1,
+      memberId: props.addMember.memberId,
       name: props.addMember.name,
       role: props.addMember.role,
     };
-    dispatch( addTeamMember(props.addMember.name, props.addMember.role));
+    dispatch( addTeamMember(props.addMember.memberId, props.addMember.name, props.addMember.role));
     setData([...data, newData]);
-  }, [data, dispatch, props.addMember.name, props.addMember.role]);
+  }, [data, dispatch,props.addMember.memberId, props.addMember.name, props.addMember.role]);
 
   React.useEffect(() => {
     if (props.addMember.name && props.addMember.role) {

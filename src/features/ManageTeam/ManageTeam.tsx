@@ -27,17 +27,16 @@ import { Role } from '../../enums/enums';
 // import BottomMenuMT from './BottomMenuMT';
 
 export default function ManageTeam() {
+  const [memberId] = React.useState(0);
   const [name, setName] = React.useState('');
   const [role, setRole] = React.useState<Role>(Role.TESTER);
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
 
-  const [addMember, setAddMember] = React.useState({ name: '', role: Role.TESTER });
+  const [addMember, setAddMember] = React.useState({ memberId: 0, name: '', role: Role.TESTER });
   const handleAddMember = () => {
-    setAddMember({ name, role });
+    setAddMember({ memberId, name, role });
   };
-
-
   const handleClickOpen = () => {
     setOpen(true);
   };

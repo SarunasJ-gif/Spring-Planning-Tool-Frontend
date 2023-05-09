@@ -15,9 +15,9 @@ export const updateTeamName = (id:number, name: string) => ({
   payload: { id, name },
 });
 
-export const addTeamMember = (name: string, role: Role) => ({
+export const addTeamMember = (memberId: number, name: string, role: Role) => ({
   type: actions.ADD_TEAM_MEMBER,
-  payload: { name, role  },
+  payload: { memberId, name, role  },
 });
 
 export const updateMemberRole = (memberId: number, role: Role) => ({
