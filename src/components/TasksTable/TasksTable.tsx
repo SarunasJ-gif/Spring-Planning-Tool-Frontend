@@ -134,13 +134,12 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   };
 
   return (
-    <Box sx={isEditMode ? { ml: 10 } : undefined}>
+    <Box>
       <Accordion expanded={!expanded}>
         <AccordionSummary
           sx={{
             flexDirection: 'row-reverse',
             display: 'flex',
-            justifyContent: 'left',
             height: 5,
             minHeight: 60,
             ...(!isEditMode ? { display: 'none' } : undefined),
@@ -191,14 +190,13 @@ export default function TasksTable(props: TasksProps): JSX.Element {
             marginTop: -8,
           }}
         >
-          <TableContainer component={Paper} sx={{ overflowY: 'hidden' }}>
+          <TableContainer component={Paper} sx={{ overflow: 'hidden' }}>
             <Table size="medium" aria-label="a dense table">
               {tasks.length === 0 ? (
                 <TableCell
                   size="medium"
                   sx={{
                     border: '1px solid #ddd',
-                    width: 1670,
                     textAlign: 'center',
                     height: '80px',
                     display: 'flex',

@@ -38,10 +38,7 @@ export default function AddNewMemberDialog() {
         size="small"
         onClick={handleClickOpen}
         sx={{
-          mt: 1,
-          mr: 11,
-          mb: 0,
-          fontFamily: 'Poppins',
+          mr: 8,
           '&:hover': {
             backgroundColor: 'blue',
             color: 'white',
@@ -52,8 +49,8 @@ export default function AddNewMemberDialog() {
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle sx={{ textAlign: 'center' }}>
-          <h5>Create new member</h5>
+        <DialogTitle sx={{ textAlign: 'center', fontVariant: 'h5' }}>
+          Create new member
         </DialogTitle>
         <DialogContent
           sx={{

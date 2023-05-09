@@ -9,7 +9,7 @@ import { Sprint } from '../../redux/Sprint/SprintReducer';
 export default function MainPage() {
   const sprint = useSelector((state: { sprint: Sprint }) => state.sprint);
   return (
-    <Box sx={{ marginLeft: '30mm', marginRight: '10mm', mt: 4 }}>
+    <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
       <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
         &ldquo;{sprint.title}&rdquo;
       </Typography>
@@ -48,7 +48,7 @@ export default function MainPage() {
           </AccordionSummary>
         </SAccordion>
       </Box>
-      <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: 4, mb: 20 }}>
         <SAccordion
           sx={{ display: 'flex', justifyContent: 'left', top: '-58px' }}
         >
