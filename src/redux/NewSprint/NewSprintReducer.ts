@@ -116,17 +116,37 @@ const reducer = (state = initialState, { type, payload }) => {
       const memberIndex = state.sprint.members.findIndex(
           (o) => o.memberId === payload.person,
       );
-      // console.log(state.sprint.tasks);
-      // console.log(state.sprint.members);
-      // console.log(memberIndex);
-      console.log(payload.day.toString());
       const tasksIndex = state.sprint.members[memberIndex].workingDays.findIndex(
           (o) => o.day === payload.day.toString(),
       );
-      const valueIndex = state.sprint.tasks.findIndex(
-        (o) => o.id === payload.value,
-      );
-      draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = draftState.sprint.tasks[valueIndex];
+      if(payload.value === -1){
+        draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = {
+        id: -1,
+        keyValue: 'Education',
+        keyColor: '#878787',
+        description: 'Education',
+        type: 'Education',
+        oldPoints: 0,
+        remainingPoints: 0,
+        newPoints: 0,
+        };
+      }else if(payload.value === -2){
+        draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = {
+          id: -2,
+          keyValue: 'Vacation',
+          keyColor: '#878787',
+          description: 'Vacation',
+          type: 'Vacation',
+          oldPoints: 0,
+          remainingPoints: 0,
+          newPoints: 0,
+          };
+      }else{
+        const valueIndex = state.sprint.tasks.findIndex(
+          (o) => o.id === payload.value,
+        );
+        draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = draftState.sprint.tasks[valueIndex];
+      };
     });
     case actions.SET_BUSINESS_DAYS: {
       return produce(state, (draftState) => {

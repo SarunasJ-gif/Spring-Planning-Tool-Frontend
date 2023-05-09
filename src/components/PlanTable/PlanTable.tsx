@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Table,
   TableHead,
@@ -14,8 +14,6 @@ import {
 import { Info } from '@mui/icons-material';
 import TaskKey from '../TaskKey/TaskKey';
 import { format } from 'date-fns';
-import produce, { Draft } from 'immer';
-import { Member, MemberWorkingDay, Sprint } from '../../types/NewSprintTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBusinessDays, setDaysOfWeek, updateTaskAssign, updateShowNotification, updateMembers } from '../../redux/NewSprint/NewSprintActions';
 import { RootState } from '../../redux/store';
@@ -25,84 +23,22 @@ export default function PlanTable() {
   const dispatch = useDispatch();
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);
   
-  //const [sprint, setSprint] = useState<Sprint>(initialSprint);
   const handleClearNotification = () => {
     dispatch(updateShowNotification(false));
   };
   const totalWorkDays = 0;
 
-  /*const planTableState = useSelector((state: any)=>state);
-  console.log(planTableState);*/
   const handleTaskChange = (
     person: string,
     day: string | null,
     value: number,
   ) => {
-    console.log(person, day, value);
     dispatch(updateTaskAssign(person, day, value));
-    //setSprint(task);
   };
-
-  // useEffect(() => {
-  //   setSprint(
-  //     produce(sprint, (draft) => {
-  //       draft.members = member.map((memberObject) => ({
-  //         firstName: memberObject.firstName,
-  //         lastName: memberObject.lastName,
-  //         memberId: memberObject.memberId,
-  //         workingDays: [],
-  //       }));
-  //       draft.tasks = planTableTasks.map((task) => ({
-  //         keyValue: task.keyValue,
-  //         keyColor: task.keyColor,
-  //         description: task.description,
-  //         type: task.type,
-  //         oldPoints: task.oldPoints,
-  //         remainingPoints: task.remainingPoints,
-  //         newPoints: task.newPoints,
-  //       }));
-  //     }),
-  //   );
-  // }, [setSprint, planTableTasks, member, sprint]);
-
-  
-  // const workingDays = useMemo(() => {
-  //   const days: string[] = [];
-  //   const daysOfWeek: string[] = [];
-  
-  //   if (sprint.endDate && sprint.startDate) {
-  //     const startDate = new Date(sprint.startDate);
-  //     const endDate = new Date(sprint.endDate);
-  
-  //     for (
-  //       let date = startDate;
-  //       date <= endDate;
-  //       date.setDate(date.getDate() + 1)
-  //     ) {
-  //       if (date.getDay() !== 0 && date.getDay() !== 6) {
-  //         const day = date.toLocaleDateString();
-  //         days.push(day);
-  //         daysOfWeek.push(format(date, 'EEE'));               
-  //       }
-  //     }
-  
-  //     const updatedMembers = sprint.members.map(member => {
-  //       const updatedWorkingDays = days.map(day => ({ day, task: sprint.tasks[0] }));
-  //       return { ...member, workingDays: updatedWorkingDays };
-  //     });
-  //     //console.log(updatedMembers);
-  //     return { days, daysOfWeek, members: updatedMembers };
-  //   }
-    
-  //   return { days: [], daysOfWeek: [], members: [] };
-  // }, [sprint]);
-  // dispatch(updateBusinessDays(workingDays.days, workingDays.daysOfWeek));
   useEffect(() => {
     if (sprint.endDate && sprint.startDate) {
       const startDate = new Date(sprint.startDate);
-      //console.log(startDate);
       const endDate = new Date(sprint.endDate);
-      //console.log(endDate);
       const days: string[] = [];
       const daysOfWeek: string[] = [];
 
@@ -121,8 +57,6 @@ export default function PlanTable() {
         const updatedWorkingDays = days.map(day => ({ day, task: null }));
         return { ...member, workingDays: updatedWorkingDays };
       });
-      console.log(days);
-      console.log(daysOfWeek);
       dispatch(setBusinessDays(days));
       dispatch(updateMembers(updatedMembers))
       dispatch(setDaysOfWeek(daysOfWeek));
@@ -224,6 +158,7 @@ export default function PlanTable() {
                     '&:hover': {
                       backgroundColor: '#F0F1F3',
                     },
+                    textAlign: 'center',
                     padding: '0px',
                   }}
                 >
@@ -257,8 +192,8 @@ export default function PlanTable() {
                           />
                         </MenuItem>
                       ))}
-                      {/* <MenuItem value="Education">
-                          {sprint.members[member.memberId]?.[day] === 'Education' ? (
+                      <MenuItem value='-1'>
+                          {day.task?.keyValue === 'Education' ? (
                             <TaskKey
                               taskKey={'Education'}
                               keyColor={'#FFFFFF'}
@@ -268,8 +203,8 @@ export default function PlanTable() {
                             'Education'
                           )}
                       </MenuItem>
-                      <MenuItem value="Vacation">
-                        {sprint[member.memberId]?.[day] === 'Vacation' ? (
+                      <MenuItem value='-2'>
+                        {day.task?.keyValue === 'Vacation' ? (
                           <TaskKey
                             taskKey={'Vacation'}
                             keyColor={'#FFFFFF'}
@@ -278,7 +213,7 @@ export default function PlanTable() {
                         ) : (
                           'Vacation'
                         )}
-                      </MenuItem> */}
+                      </MenuItem>
                       <MenuItem value="">None</MenuItem>
                     </Select>
                   </FormControl>

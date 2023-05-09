@@ -9,8 +9,8 @@ export const UPDATE_TASK_TYPE = "updateTaskType";
 export const UPDATE_TASK_OLD_POINTS = "updateTaskOldPoints";
 export const UPDATE_TASK_REMAINING_POINTS = "updateTaskRemainingPoints";
 export const UPDATE_TASK_NEW_POINTS = "updateTaskNewPoints";
+export const UPDATE_TASK_COLOR = "updateTaskColor";
 export const CREATE_NEW_SPRINT = 'createNewSprint';
-
 export const UPDATE_TASK_ASSIGN = 'updateTaskAssign';
 export const UPDATE_MEMBERS = 'updateMembers'
 export const SET_BUSINESS_DAYS='setBusinessDays';

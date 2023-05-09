@@ -232,7 +232,7 @@ export default function TasksTable(): JSX.Element {
                                 handleKeyChange(point.id, event)
                               }
                             />
-                            <PopUp initialColor={point.keyColor} />
+                            <PopUp initialColor={point.keyColor} /> 
                           </Box>
                         </TableCell>
                         <TableCell sx={{ minWidth: 400 }}>
