@@ -20,7 +20,7 @@ import {
   AccordionDetails,
   AccordionSummary,
 } from '@mui/material';
-import { ArrowDropDown, DeleteForever } from '@mui/icons-material';
+import { ArrowDropDown, DeleteForever, Add } from '@mui/icons-material';
 import PopUp from './PopUp';
 import { GoalType } from '../../enums/enums';
 import { StyledTableCell } from '../../style/TableCellStyle';
@@ -134,21 +134,26 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   };
 
   return (
-    <Box sx={isEditMode ? { ml: 10 } : undefined}>
+    <Box>
       <Accordion expanded={!expanded}>
         <AccordionSummary
           sx={{
             flexDirection: 'row-reverse',
             display: 'flex',
-            justifyContent: 'left',
             height: 5,
             minHeight: 60,
+            borderBottom: '1px solid #dadada',
             ...(!isEditMode ? { display: 'none' } : undefined),
           }}
         >
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
                 <Typography variant="h4" fontWeight={500}>
                   Tasks
                 </Typography>
@@ -174,14 +179,18 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                 size="small"
                 onClick={handleAddTask}
                 sx={{
-                  fontFamily: 'Poppins',
+                  letterSpacing: 2,
+                  padding: '5px 10px',
+                  fontWeight: 600,
+                  borderColor: '#dadada',
                   '&:hover': {
                     backgroundColor: 'blue',
                     color: 'white',
                   },
                 }}
               >
-                + ADD A TASK
+                <Add sx={{ mr: 1 }} />
+                ADD A TASK
               </Button>
             </Grid>
           </Grid>
@@ -191,22 +200,28 @@ export default function TasksTable(props: TasksProps): JSX.Element {
             marginTop: -8,
           }}
         >
-          <TableContainer component={Paper} sx={{ overflowY: 'hidden' }}>
+          <TableContainer
+            component={Paper}
+            sx={{
+              overflow: 'hidden',
+              boxShadow: 'none',
+              border: 'none',
+            }}
+          >
             <Table size="medium" aria-label="a dense table">
               {tasks.length === 0 ? (
                 <TableCell
                   size="medium"
                   sx={{
-                    border: '1px solid #ddd',
-                    width: 1670,
                     textAlign: 'center',
                     height: '80px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    border: 'none',
                   }}
                 >
-                  No task created.
+                  No tasks created.
                 </TableCell>
               ) : (
                 <Table size="medium" aria-label="a dense table">

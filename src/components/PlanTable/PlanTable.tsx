@@ -182,8 +182,6 @@ export default function PlanTable() {
         <Typography
           sx={{
             display: 'flex',
-            margin: 'auto',
-            maxWidth: '85%',
             py: 3,
           }}
         >
@@ -216,10 +214,9 @@ export default function PlanTable() {
       )}
       <Table
         sx={{
-          maxWidth: '85%',
-          margin: 'auto',
           border: '1px solid #e0e0e0',
           bgcolor: '#fff',
+          marginBottom: 20,
         }}
       >
         <TableHead>
