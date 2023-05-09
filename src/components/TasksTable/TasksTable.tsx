@@ -142,12 +142,18 @@ export default function TasksTable(props: TasksProps): JSX.Element {
             display: 'flex',
             height: 5,
             minHeight: 60,
+            borderBottom: '1px solid #dadada',
             ...(!isEditMode ? { display: 'none' } : undefined),
           }}
         >
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
                 <Typography variant="h4" fontWeight={500}>
                   Tasks
                 </Typography>
@@ -194,21 +200,28 @@ export default function TasksTable(props: TasksProps): JSX.Element {
             marginTop: -8,
           }}
         >
-          <TableContainer component={Paper} sx={{ overflow: 'hidden' }}>
+          <TableContainer
+            component={Paper}
+            sx={{
+              overflow: 'hidden',
+              boxShadow: 'none',
+              border: 'none',
+            }}
+          >
             <Table size="medium" aria-label="a dense table">
               {tasks.length === 0 ? (
                 <TableCell
                   size="medium"
                   sx={{
-                    border: '1px solid #ddd',
                     textAlign: 'center',
                     height: '80px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    border: 'none',
                   }}
                 >
-                  No task created.
+                  No tasks created.
                 </TableCell>
               ) : (
                 <Table size="medium" aria-label="a dense table">
