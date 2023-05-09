@@ -226,12 +226,12 @@ export default function PlanTable() {
                   borderLeft: '1px solid #e0e0e0',
                 }}
               >
-                {
-                  Object.values(sprint.members[Number(member.memberId)] || {}).filter(
-                    (value) =>
-                      value === 'Task' ||
-                      value === 'Technical' ||
-                      value === 'Goal',
+                { 
+                  Object.values(sprint.members[Number(member.memberId)-1].workingDays || {}).filter(
+                    (day) =>
+                      day.task?.type === 'Task' ||
+                      day.task?.type=== 'Technical' ||
+                      day.task?.type === 'Goal',
                   ).length
                 }
               </TableCell>

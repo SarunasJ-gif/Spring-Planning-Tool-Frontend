@@ -1,5 +1,5 @@
 import * as actions from './NewSprintActionType';
-import { Member, Task, TaskData, MemberWorkingDay } from '../../types/NewSprintTypes';
+import { Member, TaskData } from '../../types/NewSprintTypes';
 import { Dayjs } from 'dayjs';
 
 export const addTask = (task: TaskData) => ({

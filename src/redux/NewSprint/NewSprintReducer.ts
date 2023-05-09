@@ -1,6 +1,6 @@
-import produce, { Draft } from 'immer';
+import produce from 'immer';
 import * as actions from './NewSprintActionType';
-import { Member, MemberWorkingDay, Sprint, TaskData } from '../../types/NewSprintTypes';
+import { Member, TaskData } from '../../types/NewSprintTypes';
 
 
 export type NewSprint = {
@@ -147,6 +147,7 @@ const reducer = (state = initialState, { type, payload }) => {
         );
         draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = draftState.sprint.tasks[valueIndex];
       };
+      console.log(Object.values(state.sprint.members || {}));
     });
     case actions.SET_BUSINESS_DAYS: {
       return produce(state, (draftState) => {
