@@ -8,22 +8,14 @@ import PlanTable from '../../components/PlanTable/PlanTable';
 function AddSprint() {
   return (
     <>
-      <NewSprintInformation />
-      <TasksTable />
-      <PlanTable />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          height: '65vh',
-        }}
-      >
-        <BottomMenu />
+      <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
+        <NewSprintInformation />
+        <TasksTable isEditMode={true} />
+        <PlanTable />
       </Box>
+      <BottomMenu />
     </>
   );
 }
 
 export default AddSprint;
-
