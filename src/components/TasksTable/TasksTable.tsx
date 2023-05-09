@@ -20,7 +20,7 @@ import {
   AccordionDetails,
   AccordionSummary,
 } from '@mui/material';
-import { ArrowDropDown, DeleteForever } from '@mui/icons-material';
+import { ArrowDropDown, DeleteForever, Add } from '@mui/icons-material';
 import PopUp from './PopUp';
 import { GoalType } from '../../enums/enums';
 import { StyledTableCell } from '../../style/TableCellStyle';
@@ -173,14 +173,18 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                 size="small"
                 onClick={handleAddTask}
                 sx={{
-                  fontFamily: 'Poppins',
+                  letterSpacing: 2,
+                  padding: '5px 10px',
+                  fontWeight: 600,
+                  borderColor: '#dadada',
                   '&:hover': {
                     backgroundColor: 'blue',
                     color: 'white',
                   },
                 }}
               >
-                + ADD A TASK
+                <Add sx={{ mr: 1 }} />
+                ADD A TASK
               </Button>
             </Grid>
           </Grid>

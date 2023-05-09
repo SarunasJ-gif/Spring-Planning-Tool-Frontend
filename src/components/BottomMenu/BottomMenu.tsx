@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Sprint } from '../../types/NewSprintTypes';
 import { createNewSprint } from '../../redux/NewSprint/NewSprintActions';
 
-
 function BottomMenu() {
-  
   const dispatch = useDispatch();
 
-  const sprint = useSelector((state: { newSprint: Sprint }) => state?.newSprint?.sprint);
+  const sprint = useSelector(
+    (state: { newSprint: Sprint }) => state?.newSprint?.sprint,
+  );
 
   const handleButtonClick = () => {
     const newSprint = { ...sprint };
@@ -57,6 +57,7 @@ function BottomMenu() {
           style={{
             backgroundColor: '#fff',
             color: 'primary',
+            borderColor: '#dadada',
             borderRadius: '5px',
             fontSize: '18px',
           }}
@@ -69,4 +70,3 @@ function BottomMenu() {
 }
 
 export default BottomMenu;
-
