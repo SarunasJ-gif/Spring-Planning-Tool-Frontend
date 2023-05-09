@@ -253,16 +253,26 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                           <Box
                             style={{ display: 'flex', alignItems: 'justify' }}
                           >
-                            <TextField
-                              id="keyValue"
-                              variant="standard"
-                              sx={{ minWidth: 70 }}
-                              value={point.keyValue}
-                              onChange={(event) =>
-                                handleKeyChange(point.id, event)
-                              }
-                            />
-                            <PopUp initialColor={point.keyColor} /> 
+                            {isEditMode ? (
+                              <>
+                                <TextField
+                                  id="keyValue"
+                                  variant="standard"
+                                  sx={{ minWidth: 70 }}
+                                  value={point.keyValue}
+                                  onChange={(event) =>
+                                    handleKeyChange(point.id, event)
+                                  }
+                                />
+                                <PopUp initialColor={point.keyColor} />
+                              </>
+                            ) : (
+                              <TaskKey
+                                taskKey={point.keyValue}
+                                keyColor={point.keyColor}
+                                keyBackgroundColor={point.keyColor}
+                              />
+                            )}
                           </Box>
                         </TableCell>
                         <TableCell sx={{ minWidth: 400 }}>

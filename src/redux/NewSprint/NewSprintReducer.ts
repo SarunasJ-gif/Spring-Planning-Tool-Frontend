@@ -5,8 +5,8 @@ import { Member, TaskData } from '../../types/NewSprintTypes';
 export type NewSprint = {
   sprint: {
     title: string;
-    startDate: string | undefined;
-    endDate: string | undefined;
+    startDate: string | null;
+    endDate: string | null;
     tasks: TaskData[];
     memberTeamId: string | null;
     members: Member[];
@@ -20,8 +20,8 @@ export type NewSprint = {
 export const initialState: NewSprint = {
   sprint: {
     title: '',
-    startDate: undefined,
-    endDate: undefined,
+    startDate: null,
+    endDate: null,
     tasks: [],
     memberTeamId: null,
     members: [{

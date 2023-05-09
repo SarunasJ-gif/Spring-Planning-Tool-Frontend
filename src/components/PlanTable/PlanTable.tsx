@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setBusinessDays, setDaysOfWeek, updateTaskAssign, updateShowNotification, updateMembers } from '../../redux/NewSprint/NewSprintActions';
 import { RootState } from '../../redux/store';
 
-
 export default function PlanTable() {
   const dispatch = useDispatch();
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);

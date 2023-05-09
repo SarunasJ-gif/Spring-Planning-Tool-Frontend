@@ -10,7 +10,8 @@ type TaskKeyProps = {
 
 function TaskKey(props: TaskKeyProps) {
   const KeyStyle = styled(Paper)(() => ({
-    backgroundColor: props.keyColor,
+    color: props.keyColor,
+    backgroundColor: props.keyBackgroundColor,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
