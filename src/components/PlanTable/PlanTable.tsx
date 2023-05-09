@@ -227,6 +227,7 @@ export default function PlanTable() {
                     (day) =>
                       day.task?.type === 'Task' ||
                       day.task?.type=== 'Technical' ||
+                      day.task?.type=== '' ||
                       day.task?.type === 'Goal',
                   ).length
                 }
