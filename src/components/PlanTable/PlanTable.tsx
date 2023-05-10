@@ -154,6 +154,7 @@ export default function PlanTable() {
               </TableCell>
               {member.workingDays.map((day) => (
                 <TableCell
+                  padding="none"
                   key={`${member}-${day}`}
                   sx={{
                     '&:hover': {
@@ -165,13 +166,13 @@ export default function PlanTable() {
                   <FormControl variant="standard" fullWidth>
                     <Select
                       disableUnderline
-                      fullWidth
                       inputProps={{ IconComponent: () => null }}
                       sx={{
                         maSelectrgin: 'auto',
-                        '& .MuiSelect-select': {
-                          padding: '0!important',
+                        '& .MuiInput-input': {
+                          paddingRight: '0!important',
                         },
+                        paddingRight: '0',
                       }}
                       value={day?.task?.id ?? ''}
                       onChange={(event) =>
