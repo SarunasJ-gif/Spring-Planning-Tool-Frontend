@@ -15,13 +15,19 @@ import { Info } from '@mui/icons-material';
 import TaskKey from '../TaskKey/TaskKey';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBusinessDays, setDaysOfWeek, updateTaskAssign, updateShowNotification, updateMembers } from '../../redux/NewSprint/NewSprintActions';
+import {
+  setBusinessDays,
+  setDaysOfWeek,
+  updateTaskAssign,
+  updateShowNotification,
+  updateMembers,
+} from '../../redux/NewSprint/NewSprintActions';
 import { RootState } from '../../redux/store';
 
 export default function PlanTable() {
   const dispatch = useDispatch();
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);
-  
+
   const handleClearNotification = () => {
     dispatch(updateShowNotification(false));
   };
@@ -52,12 +58,12 @@ export default function PlanTable() {
           daysOfWeek.push(format(date, 'EEE'));
         }
       }
-      const updatedMembers = sprint.members.map(member => {
-        const updatedWorkingDays = days.map(day => ({ day, task: null }));
+      const updatedMembers = sprint.members.map((member) => {
+        const updatedWorkingDays = days.map((day) => ({ day, task: null }));
         return { ...member, workingDays: updatedWorkingDays };
       });
       dispatch(setBusinessDays(days));
-      dispatch(updateMembers(updatedMembers))
+      dispatch(updateMembers(updatedMembers));
       dispatch(setDaysOfWeek(daysOfWeek));
     }
   }, [sprint.startDate, sprint.endDate]);
@@ -146,8 +152,7 @@ export default function PlanTable() {
               >
                 {member.firstName} {member.lastName}
               </TableCell>
-              {
-              member.workingDays.map((day) => (
+              {member.workingDays.map((day) => (
                 <TableCell
                   key={`${member}-${day}`}
                   sx={{
@@ -155,21 +160,20 @@ export default function PlanTable() {
                       backgroundColor: '#F0F1F3',
                     },
                     textAlign: 'center',
-                    padding: '0px',
                   }}
                 >
                   <FormControl variant="standard" fullWidth>
                     <Select
                       disableUnderline
+                      fullWidth
                       inputProps={{ IconComponent: () => null }}
                       sx={{
                         maSelectrgin: 'auto',
-                        width: '85%',
+                        '& .MuiSelect-select': {
+                          padding: '0!important',
+                        },
                       }}
-                      value={
-                        day?.task?.id
-                          ?? ''
-                      }
+                      value={day?.task?.id ?? ''}
                       onChange={(event) =>
                         handleTaskChange(
                           member.memberId,
@@ -188,18 +192,18 @@ export default function PlanTable() {
                           />
                         </MenuItem>
                       ))}
-                      <MenuItem value='-1'>
-                          {day.task?.keyValue === 'Education' ? (
-                            <TaskKey
-                              taskKey={'Education'}
-                              keyColor={'#FFFFFF'}
-                              keyBackgroundColor={'#878787'}
-                            />
-                          ) : (
-                            'Education'
-                          )}
+                      <MenuItem value="-1">
+                        {day.task?.keyValue === 'Education' ? (
+                          <TaskKey
+                            taskKey={'Education'}
+                            keyColor={'#FFFFFF'}
+                            keyBackgroundColor={'#878787'}
+                          />
+                        ) : (
+                          'Education'
+                        )}
                       </MenuItem>
-                      <MenuItem value='-2'>
+                      <MenuItem value="-2">
                         {day.task?.keyValue === 'Vacation' ? (
                           <TaskKey
                             taskKey={'Vacation'}
@@ -222,12 +226,15 @@ export default function PlanTable() {
                   borderLeft: '1px solid #e0e0e0',
                 }}
               >
-                { 
-                  Object.values(sprint.members[Number(member.memberId)-1].workingDays || {}).filter(
+                {
+                  Object.values(
+                    sprint.members[Number(member.memberId) - 1].workingDays ||
+                      {},
+                  ).filter(
                     (day) =>
                       day.task?.type === 'Task' ||
-                      day.task?.type=== 'Technical' ||
-                      day.task?.type=== '' ||
+                      day.task?.type === 'Technical' ||
+                      day.task?.type === '' ||
                       day.task?.type === 'Goal',
                   ).length
                 }
@@ -235,7 +242,6 @@ export default function PlanTable() {
             </TableRow>
           ))}
         </TableBody>
-
       </Table>
     </>
   );
