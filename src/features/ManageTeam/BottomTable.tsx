@@ -15,10 +15,11 @@ import {
   Menu,
 } from '@mui/material';
 import { Role } from '../../enums/enums';
-import { rows } from './mock/MockData';
+import { rows } from './MockData';
 import { Row, TableRowElementProps, Team } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTeamMember, removeTeamMember, updateMemberRole } from '../../redux/NewMember/NewMemberActions';
+import { addTeamMember, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageMember/ManageMemberActions';
+import { useEffect } from 'react';
 
 interface Props {
   addMember: { memberId: number, name: string; role: Role };
@@ -27,7 +28,7 @@ interface Props {
 export default function BottonTable(props: Props) {
   const dispatch = useDispatch();
 
-  useSelector((state: { newTeam: Team  }) => state?.newTeam?.team );
+ useSelector((state: { newTeam: Team  }) => state?.newTeam?.team );
 
   const [data, setData] = React.useState<Row[]>(rows);
 
@@ -42,7 +43,7 @@ export default function BottonTable(props: Props) {
     setData([...data, newData]);
   }, [data, dispatch,props.addMember.memberId, props.addMember.name, props.addMember.role]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (props.addMember.name && props.addMember.role) {
       handleAddMember();
     }
@@ -50,7 +51,7 @@ export default function BottonTable(props: Props) {
   }, [props.addMember]);
    
   const handleUpdateMemberRole = React.useCallback((id: number, role: Role) => {
-    dispatch(updateMemberRole(id, role));
+    dispatch(updateTeamMemberRole(id, role));
   }, [dispatch]);
 
 
@@ -76,7 +77,7 @@ export default function BottonTable(props: Props) {
       setAnchorEl(null);
       setShowSaveButton(true);
       handleUpdateMemberRole(row.id, selectedRole);
-      dispatch(updateMemberRole(row.id, selectedRole));
+      dispatch(updateTeamMemberRole(row.id, selectedRole));
     };
 
     const handleClose = () => {

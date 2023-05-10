@@ -6,11 +6,6 @@ import {
   Grid,
   TableContainer,
   Paper,
-} from '@mui/material';
-import BottomTable from './BottomTable';
-import TopTable from './TopTable';
-import { useEffect, useState } from 'react';
-import {
   Select,
   Button,
   Dialog,
@@ -21,13 +16,15 @@ import {
   InputLabel,
   MenuItem,
 } from '@mui/material';
+import BottomTable from './BottomTable';
+import TopTable from './TopTable';
+import { useEffect, useState } from 'react';
 import { Role } from '../../enums/enums';
 import { useDispatch } from 'react-redux';
-import { getMembers } from '../../redux/NewMember/NewMemberActions';
+import { getMembers } from '../../redux/ManageMember/ManageMemberActions';
 import { Member } from '../../types/TeamTypes';
 
 export default function ManageTeam() {
-
   const [memberId] = React.useState(0);
   const [name] = React.useState('');
   const [role] = React.useState<Role>(Role.TESTER);
@@ -35,7 +32,6 @@ export default function ManageTeam() {
   const [saveClicked] = useState(false);
   const [members] = useState<Member[]>([]);
   const [member, setMember] = React.useState({ memberId: 0, name: '', role: Role.TESTER });
-
 
   const handleAddMember = () => {
     setMember({ memberId, name, role });
@@ -52,7 +48,6 @@ export default function ManageTeam() {
   useEffect(() => {
     dispatch(getMembers());
   });
-
 
   return (
     <Box sx={{ height: '100%', width: '100%', marginLeft: 10 }}>
@@ -118,10 +113,8 @@ export default function ManageTeam() {
   }}
 >
   <FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
-    <InputLabel id="demo-simple-select-filled-label">User</InputLabel>
+    <InputLabel>User</InputLabel>
     <Select
-      labelId="demo-simple-select-filled-label"
-      id="demo-simple-select-filled"
       value={memberId}
       onChange={handleAddMember}
     >

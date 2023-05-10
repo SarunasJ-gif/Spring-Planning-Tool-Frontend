@@ -1,7 +1,7 @@
-import { get, post } from "../../api";
+import { get } from "../../api";
 
-export const createNewTeam = (teamData: unknown ) => { post("/team", teamData);} 
-export const getTeamData = () => { get("/team");}
+export const getTeamData = () => { return get("/team");}
 
+//update
 
 

@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
 import  newSprintSaga  from './NewSprint/NewSprint.sagas';
-import  newMemberSaga  from './NewMember/NewMember.sagas';
+import  newMemberSaga  from './ManageMember/ManageMember.sagas';
 import  newTeamSaga from './NewTeam/NewTeam.sagas';
 
 

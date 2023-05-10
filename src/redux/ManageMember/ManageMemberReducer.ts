@@ -1,41 +1,30 @@
-import * as actions from './NewMemberActionType';
-
-export type MemberState = {
-  member: {
+import * as actions from './ManageMemberActionType';
+export type MemberState = { 
+  id: number;
   firstName: string;
   lastName: string;
   memberId: number| null;
   name: string;
   role: string;
-
-};
-}
-
-const initialState: MemberState = {
-  member: {
-    firstName: '',
-    lastName: '',
-    memberId: null,
-    name: '',
-    role: '',
-  }
+  email: string;
 };
 
+const initialState: {members: MemberState[]} = {
+  members: []
+};
 
 // @ts-ignore
 const reducer = (state = initialState,  { type, payload }) => {
   switch (type) {
-      case actions.GET_MEMBER:
+      case actions.GET_MEMBER_REQUEST:
         return {...state };
       case actions.GET_MEMBER_SUCCESS:
+console.log('paylod', payload);
         return { ...state, members: payload };
         case actions.REMOVE_TEAM_MEMBER:
-          return {
-            ...state,
-          };
+          return { ...state,      };
     default:
       return state;
   }
 };
-
 export default reducer;

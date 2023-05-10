@@ -12,34 +12,30 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
-const request = <T>(
-  method: string,
-  url: string,
-  data?: unknown,
-  config?: AxiosRequestConfig,
-): Promise<T> => {
-  const token = localStorage.getItem('token');
-  if (token) {config = { headers: { Authorization: `Bearer ${token}` }}}
-  console.log('request', data );
-  return axiosInstance.request<T>({
-    method,
-    url,
-    data,
-    ...config,
-  }).then(response => response.data ).catch(error => { 
-    console.log( 'metodas - ', method,'url - ',
-      url,'data - ',
-      data, 'configas - ',
-      config
-      );
-    throw error;
+const request = async <T>(
+   method: string,
+   url: string,
+   data?: unknown,
+   config?: AxiosRequestConfig,
+  ): Promise<T> => {
+   const token = await localStorage.getItem('token');
+   if (token) {config = { headers: { Authorization: `Bearer ${token}` }}}
+   try {
+   const response = await axiosInstance.request<T>({
+   method,
+   url,
+   data,
+   ...config,
    });
-};
-
+   return response.data;
+   } catch (error) {
+   throw error;
+   }
+  };
+  
 const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-  console.log('axios');
-  return request<T>('get', url, undefined, config);
-};
+     return await request<T>('get', url, undefined, config);
+    };
 
 const post = async <T>(
   url: string,
