@@ -9,10 +9,9 @@ import {
 } from '@mui/material';
 import BottomTable from './BottomTable';
 import TopTable from './TopTable';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Select,
-  SelectChangeEvent,
   Button,
   Dialog,
   DialogActions,
@@ -21,21 +20,25 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  TextField,
 } from '@mui/material';
 import { Role } from '../../enums/enums';
-// import BottomMenuMT from './BottomMenuMT';
+import { useDispatch } from 'react-redux';
+import { getMembers } from '../../redux/NewMember/NewMemberActions';
+import { Member } from '../../types/TeamTypes';
 
 export default function ManageTeam() {
+
   const [memberId] = React.useState(0);
-  const [name, setName] = React.useState('');
-  const [role, setRole] = React.useState<Role>(Role.TESTER);
+  const [name] = React.useState('');
+  const [role] = React.useState<Role>(Role.TESTER);
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
+  const [members] = useState<Member[]>([]);
+  const [member, setMember] = React.useState({ memberId: 0, name: '', role: Role.TESTER });
 
-  const [addMember, setAddMember] = React.useState({ memberId: 0, name: '', role: Role.TESTER });
+
   const handleAddMember = () => {
-    setAddMember({ memberId, name, role });
+    setMember({ memberId, name, role });
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,12 +46,13 @@ export default function ManageTeam() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
-  const handleRoleChange = (event: SelectChangeEvent) => {
-    setRole(event.target.value as Role);
-  };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMembers());
+  });
+
 
   return (
     <Box sx={{ height: '100%', width: '100%', marginLeft: 10 }}>
@@ -103,43 +107,34 @@ export default function ManageTeam() {
                  </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle sx={{ textAlign: 'center' }}>
-          <h5>Create new member</h5>
+          <h5>Choose new member</h5>
         </DialogTitle>
-        <DialogContent
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 2,
-          }}
-        >
-          <TextField
-          autoFocus
-          margin="dense"
-          label="Name"
-          type="text"
-          variant="filled"
-          fullWidth
-          sx={{ flex: 1 }}
-          value={name}
-          onChange={handleNameChange}
-          />
-          <FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-filled-label">Role</InputLabel>
-            <Select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
-              value={role}
-              onChange={handleRoleChange}
-            >
-              <MenuItem value={Role.DESIGNER}>Designer</MenuItem>
-              <MenuItem value={Role.FRONT_END}>Front-End</MenuItem>
-              <MenuItem value={Role.BACK_END}>Back-End</MenuItem>
-            </Select>
-          </FormControl>
-        </DialogContent>
+<DialogContent
+  sx={{
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  }}
+>
+  <FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
+    <InputLabel id="demo-simple-select-filled-label">User</InputLabel>
+    <Select
+      labelId="demo-simple-select-filled-label"
+      id="demo-simple-select-filled"
+      value={memberId}
+      onChange={handleAddMember}
+    >
+    {members.map((user) => (
+      <MenuItem key={user.memberId} value={user.memberId}>
+        {user.firstName} ({user.lastName})
+      </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end' }}>
-        <Button onClick={handleAddMember}>Create</Button>
+        <Button onClick={handleAddMember}>ADD</Button>
           <Button variant="text" onClick={handleClose}>
             CANCEL
           </Button>
@@ -148,12 +143,11 @@ export default function ManageTeam() {
                   </Grid>
                 </Grid>
               </Box>
-              <BottomTable addMember={addMember}  />
+              <BottomTable addMember={member}  />
             </TableContainer>
           </Grid>
         </Grid>
       </Container>
-      {/* <BottomMenuMT /> */}
     </Box>
   );
 }

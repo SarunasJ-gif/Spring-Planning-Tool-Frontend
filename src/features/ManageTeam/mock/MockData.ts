@@ -1,5 +1,5 @@
-import { Role } from "../../enums/enums";
-import { Row } from "../../types/TeamTypes";
+import { Role } from "../../../enums/enums";
+import { Row } from "../../../types/TeamTypes";
 
 export const rows: Row[] = [
   {

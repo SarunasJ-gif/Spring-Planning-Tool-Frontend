@@ -1,7 +1,7 @@
 import { call, takeLatest } from 'redux-saga/effects';
-import { CREATE_NEW_TEAM, REMOVE_TEAM_MEMBER, GET_TEAM_DATA, ADD_TEAM_MEMBER } from './NewTeamActionType';
-import { createNewTeam, getTeamData, removeTeamMember } from './NewTeamApi';
-import { addTeamMember } from './NewTeamActions';
+import { CREATE_NEW_TEAM,  GET_TEAM_DATA } from './NewTeamActionType';
+import { createNewTeam, getTeamData } from './NewTeamApi';
+
 
 export function* createTeamSaga(action: any) {
   try {
@@ -19,30 +19,12 @@ export function* getTeamDataSaga() {
 }
 }
 
-export function* deleteTeamMemberSaga(action: any) {
-  try {
-    const { id } = action.payload;
-    yield call(removeTeamMember, id);
-  } catch (e) {
-    console.error(e);
-}
-}
-
-export function* addTeamMemberSaga(action: any) {
-  try {
-    const { memberId, name, role } = action.payload;
-    yield call(addTeamMember, memberId, name, role);
-  } catch (e) {
-    console.error(e);
-  }
-}
 
 
 export default function* newTeamSaga() {
   yield takeLatest(CREATE_NEW_TEAM, createTeamSaga);
   yield takeLatest(GET_TEAM_DATA, getTeamDataSaga);
-  yield takeLatest(REMOVE_TEAM_MEMBER, deleteTeamMemberSaga);
-  yield takeLatest(ADD_TEAM_MEMBER, addTeamMemberSaga);
+
 }
 
 

@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { Team } from '../../types/TeamTypes';
-import { createNewTeam } from '../../redux/NewTeam/NewTeamActions';
+import { Team } from '../../../types/TeamTypes';
+import { createNewTeam } from '../../../redux/NewTeam/NewTeamActions';
 
 
 function BottomMenu() {
@@ -12,7 +12,6 @@ function BottomMenu() {
   const handleButtonClick = () => {
       const newTeam = { ...team };
       dispatch(createNewTeam(newTeam));
-      console.log("Vieta button", newTeam);
   };
 
   return (

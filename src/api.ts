@@ -20,15 +20,24 @@ const request = <T>(
 ): Promise<T> => {
   const token = localStorage.getItem('token');
   if (token) {config = { headers: { Authorization: `Bearer ${token}` }}}
+  console.log('request', data );
   return axiosInstance.request<T>({
     method,
     url,
     data,
     ...config,
-  }).then(response => response.data).catch(error => { throw error; });
+  }).then(response => response.data ).catch(error => { 
+    console.log( 'metodas - ', method,'url - ',
+      url,'data - ',
+      data, 'configas - ',
+      config
+      );
+    throw error;
+   });
 };
 
 const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
+  console.log('axios');
   return request<T>('get', url, undefined, config);
 };
 

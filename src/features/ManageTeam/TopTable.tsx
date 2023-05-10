@@ -11,7 +11,7 @@ import {
   TextField,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTeamData, updateTeamName } from '../../redux/NewTeam/NewTeamActions';
+import { updateTeamName } from '../../redux/NewTeam/NewTeamActions';
 import { Team } from '../../types/TeamTypes';
 
 
@@ -36,16 +36,16 @@ export default function TopTable() {
 
    useSelector((state: { newTeam: Team }) => state.newTeam.team);
 
-  React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    let memberId;
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      memberId = payload.sub;
-      console.log(memberId)
-    }
-     dispatch(getTeamData(memberId)); 
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   let memberId;
+  //   if (token) {
+  //     const payload = JSON.parse(atob(token.split('.')[1]));
+  //     memberId = payload.sub;
+  //     console.log(memberId)
+  //   }
+  //    dispatch(getTeamData()); 
+  // }, [dispatch]);
 
  
   const [editingRow, setEditingRow] = React.useState(-1);

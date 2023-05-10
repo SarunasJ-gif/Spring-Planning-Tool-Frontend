@@ -15,22 +15,21 @@ import {
   Menu,
 } from '@mui/material';
 import { Role } from '../../enums/enums';
-import { rows } from './MockData';
+import { rows } from './mock/MockData';
 import { Row, TableRowElementProps, Team } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTeamMember, removeTeamMember, updateMemberRole } from '../../redux/NewTeam/NewTeamActions';
+import { addTeamMember, removeTeamMember, updateMemberRole } from '../../redux/NewMember/NewMemberActions';
 
 interface Props {
   addMember: { memberId: number, name: string; role: Role };
 }
 
 export default function BottonTable(props: Props) {
-
   const dispatch = useDispatch();
+
   useSelector((state: { newTeam: Team  }) => state?.newTeam?.team );
 
   const [data, setData] = React.useState<Row[]>(rows);
-
 
   const handleAddMember = React.useCallback(() => {
     const newData: Row = {
@@ -53,11 +52,6 @@ export default function BottonTable(props: Props) {
   const handleUpdateMemberRole = React.useCallback((id: number, role: Role) => {
     dispatch(updateMemberRole(id, role));
   }, [dispatch]);
-
-  const handleRemoveMember = React.useCallback((id: number) => {
-    dispatch(removeTeamMember(id));
-  }, [dispatch]);
-
 
 
   const TableRowElement: React.FC<TableRowElementProps> = ({
@@ -82,6 +76,7 @@ export default function BottonTable(props: Props) {
       setAnchorEl(null);
       setShowSaveButton(true);
       handleUpdateMemberRole(row.id, selectedRole);
+      dispatch(updateMemberRole(row.id, selectedRole));
     };
 
     const handleClose = () => {
@@ -93,8 +88,9 @@ export default function BottonTable(props: Props) {
     };
     
     const handleRemove  = () => {
-      setData(data.filter((member: { id: number; }) => member.id !== row.id));
-      handleRemoveMember(row.id);
+      setData(data.filter((member: { memberId: number; }) => member.memberId !== row.id));
+      console.log('trinama', row.id);
+      dispatch(removeTeamMember(row.id));
     };
 
     return (
