@@ -21,8 +21,7 @@ const reducer = (state = initialState,  { type, payload }) => {
       case actions.GET_MEMBER_SUCCESS:
 console.log('paylod', payload);
         return { ...state, members: payload };
-        case actions.REMOVE_TEAM_MEMBER:
-          return { ...state,      };
+   
     default:
       return state;
   }

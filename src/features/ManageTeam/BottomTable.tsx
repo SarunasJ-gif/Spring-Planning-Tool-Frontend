@@ -16,10 +16,10 @@ import {
 } from '@mui/material';
 import { Role } from '../../enums/enums';
 import { rows } from './MockData';
-import { Row, TableRowElementProps, Team } from '../../types/TeamTypes';
-import { useDispatch, useSelector } from 'react-redux';
-import { addTeamMember, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageMember/ManageMemberActions';
+import { Row, TableRowElementProps } from '../../types/TeamTypes';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { addTeamMember, removeTeamMemberRequest, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
 
 interface Props {
   addMember: { memberId: number, name: string; role: Role };
@@ -28,7 +28,7 @@ interface Props {
 export default function BottonTable(props: Props) {
   const dispatch = useDispatch();
 
- useSelector((state: { newTeam: Team  }) => state?.newTeam?.team );
+//  useSelector((state: { newTeam: Team  }) => state?.newTeam?.team );
 
   const [data, setData] = React.useState<Row[]>(rows);
 
@@ -91,7 +91,7 @@ export default function BottonTable(props: Props) {
     const handleRemove  = () => {
       setData(data.filter((member: { memberId: number; }) => member.memberId !== row.id));
       console.log('trinama', row.id);
-      dispatch(removeTeamMember(row.id));
+      dispatch(removeTeamMemberRequest(row.id));
     };
 
     return (

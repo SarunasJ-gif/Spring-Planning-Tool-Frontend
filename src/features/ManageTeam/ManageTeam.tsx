@@ -14,24 +14,27 @@ import {
   DialogTitle,
   FormControl,
   InputLabel,
-  MenuItem,
 } from '@mui/material';
 import BottomTable from './BottomTable';
 import TopTable from './TopTable';
 import { useEffect, useState } from 'react';
 import { Role } from '../../enums/enums';
 import { useDispatch } from 'react-redux';
-import { getMembers } from '../../redux/ManageMember/ManageMemberActions';
-import { Member } from '../../types/TeamTypes';
+import { getMembersRequest } from '../../redux/ManageMember/ManageMemberActions';
+
 
 export default function ManageTeam() {
   const [memberId] = React.useState(0);
   const [name] = React.useState('');
   const [role] = React.useState<Role>(Role.TESTER);
+
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
-  const [members] = useState<Member[]>([]);
   const [member, setMember] = React.useState({ memberId: 0, name: '', role: Role.TESTER });
+// stadija kai nera klaidu ir kazkiek veikia 
+
+// netrinti 
+
 
   const handleAddMember = () => {
     setMember({ memberId, name, role });
@@ -46,8 +49,9 @@ export default function ManageTeam() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getMembers());
+    dispatch(getMembersRequest());
   });
+ 
 
   return (
     <Box sx={{ height: '100%', width: '100%', marginLeft: 10 }}>
@@ -114,16 +118,8 @@ export default function ManageTeam() {
 >
   <FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
     <InputLabel>User</InputLabel>
-    <Select
-      value={memberId}
-      onChange={handleAddMember}
-    >
-    {members.map((user) => (
-      <MenuItem key={user.memberId} value={user.memberId}>
-        {user.firstName} ({user.lastName})
-      </MenuItem>
-      ))}
-    </Select>
+    <Select value={memberId} onChange={handleAddMember}>
+        </Select>
   </FormControl>
 </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end' }}>

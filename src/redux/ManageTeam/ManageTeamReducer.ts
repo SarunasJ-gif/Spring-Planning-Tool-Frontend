@@ -1,5 +1,5 @@
 import produce from 'immer';
-import * as actions from './NewTeamActionType';
+import * as actions from './ManageTeamActionType';
 import { Member } from '../../types/NewSprintTypes';
 
 
@@ -27,7 +27,8 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce (state, (draftState) => {
         draftState.team.name = payload;
         });
-
+    case actions.REMOVE_TEAM_MEMBER_REQUEST:
+      return {...state};
     default:
       return state;
   }
