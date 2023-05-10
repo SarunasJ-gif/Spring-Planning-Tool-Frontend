@@ -31,10 +31,6 @@ export default function ManageTeam() {
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
   const [member, setMember] = React.useState({ memberId: 0, name: '', role: Role.TESTER });
-// stadija kai nera klaidu ir kazkiek veikia 
-
-// netrinti 
-
 
   const handleAddMember = () => {
     setMember({ memberId, name, role });
@@ -54,19 +50,20 @@ export default function ManageTeam() {
  
 
   return (
-    <Box sx={{ height: '100%', width: '100%', marginLeft: 10 }}>
-      <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
+    <Box>
+      <Container>
         <Typography
-          variant="h5"
+          variant="h1"
           color="textPrimary"
           fontWeight="bold"
           gutterBottom
-          fontFamily="Poppins"
+          fontSize={32}
+          mt={15}
         >
           Manage team
         </Typography>
-        <Grid container spacing={7}>
-          <Grid item xs={12} md={0} lg={0}>
+        <Grid container>
+          <Grid item xs={12}>
             <TopTable />
           </Grid>
           <Grid item xs={12}>
@@ -133,6 +130,24 @@ export default function ManageTeam() {
                 </Grid>
               </Box>
               <BottomTable addMember={member}  />
+              <Grid
+                container
+                justifyContent="space-between"
+                alignItems="center"
+                pt={3}
+                pb={3}
+                sx={{ borderBottom: '1px solid #E1E1E1' }}
+              >
+                <Grid item>
+                  <Typography variant="h4" marginLeft={8} fontWeight={500}>
+                    Team Members
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <CreateNewMember />
+                </Grid>
+              </Grid>
+              <BottomTable />
             </TableContainer>
           </Grid>
         </Grid>

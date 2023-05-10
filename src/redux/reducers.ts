@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import newSprintReducer from "./NewSprint/NewSprintReducer";
-import newTeamReducer from "./ManageTeam/ManageTeamReducer";
-import newMemberReducer from "./ManageMember/ManageMemberReducer";
+import userReducer from '../redux/user/userReducer';
+import newSprintReducer from './NewSprint/NewSprintReducer';
+import SprintReducer from './Sprint/SprintReducer';
 
-const reducers = combineReducers({ newSprint: newSprintReducer, newTeam: newTeamReducer, newMember: newMemberReducer });
+const reducers = combineReducers({ user: userReducer, newSprint: newSprintReducer });
 
 export default reducers;

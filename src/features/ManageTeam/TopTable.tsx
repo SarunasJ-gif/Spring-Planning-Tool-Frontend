@@ -27,8 +27,8 @@ const rowsTop = [createData('Main Team', 5, 12, 847)];
 export default function TopTable() {
 
   return (
-    <TableContainer component={Paper}>
-      <Table size="medium" aria-label="a dense table">
+    <TableContainer component={Paper} sx={{ overflowX: 'hidden' }}>
+      <Table size="medium" aria-label="a dense table" sx={{ marginLeft: 8 }}>
         <TableHead>
           <TableRow>
             <LeftAlignedTableCell>

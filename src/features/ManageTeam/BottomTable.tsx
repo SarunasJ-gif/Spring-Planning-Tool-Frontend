@@ -10,7 +10,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   MenuItem,
   Menu,
 } from '@mui/material';
@@ -157,26 +156,24 @@ export default function BottonTable(props: Props) {
   };
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ width: '30px' }}></TableCell>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Role</TableCell>
-              <TableCell align="left" />
-              <TableCell align="left" />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row, index: any) => (
-              <TableRowElement row={row} index={index} key={row.id} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+    <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ width: '30px' }}></TableCell>
+            <TableCell align="left">Name</TableCell>
+            <TableCell align="left">Role</TableCell>
+            <TableCell align="left" />
+            <TableCell align="left" />
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row, index: any) => (
+            <TableRowElement row={row} index={index} key={row.id} />
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 

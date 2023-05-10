@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -13,26 +13,28 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 });
 
 const request = async <T>(
-   method: string,
-   url: string,
-   data?: unknown,
-   config?: AxiosRequestConfig,
-  ): Promise<T> => {
-   const token = await localStorage.getItem('token');
-   if (token) {config = { headers: { Authorization: `Bearer ${token}` }}}
-   try {
-   const response = await axiosInstance.request<T>({
-   method,
-   url,
-   data,
-   ...config,
-   });
-   return response.data;
-   } catch (error) {
-   throw error;
-   }
-  };
-  
+  method: string,
+  url: string,
+  data?: unknown,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  const token = await localStorage.getItem('token');
+  if (token) {
+    config = { headers: { Authorization: `Bearer ${token}` } };
+  }
+  try {
+    const response = await axiosInstance.request<T>({
+      method,
+      url,
+      data,
+      ...config,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
      return await request<T>('get', url, undefined, config);
     };
@@ -42,7 +44,7 @@ const post = async <T>(
   data?: unknown,
   config?: AxiosRequestConfig,
 ): Promise<T> => {
-  return request<T>('post', url, data, config );
+  return request<T>('post', url, data, config);
 };
 
 const put = async <T>(

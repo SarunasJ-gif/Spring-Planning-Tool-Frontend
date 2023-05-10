@@ -8,17 +8,16 @@ import { DatePicker } from '@mui/x-date-pickers-pro';
 import { SprintCell } from './SprintCell';
 import theme from './theme';
 import { useDispatch, useSelector } from 'react-redux';
-import { Sprint } from '../../types/NewSprintTypes';
 import * as actions from '../..//redux/NewSprint/NewSprintActions';
+import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
 
 export default function NewSprintInformation() {
-  
   const dispatch = useDispatch();
-  
+
   const { title, startDate, endDate } = useSelector(
-    (state: { newSprint: Sprint }) => state.newSprint.sprint,
+    (state: { newSprint: NewSprint }) => state.newSprint.sprint,
   );
-   
+
   const handleStartDateChange = (newValue: Dayjs | null) => {
     if (dayjs(endDate).isBefore(newValue)) {
       dispatch(actions.updateEndDate(newValue));
@@ -37,15 +36,13 @@ export default function NewSprintInformation() {
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          width: '491px',
+          width: '245px',
           height: '100px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#000000',
           marginTop: '32.5px',
-          padding: '0px',
         }}
       >
         <Typography variant="h1" sx={{ textAlign: 'center' }}>
@@ -57,7 +54,7 @@ export default function NewSprintInformation() {
         sx={{
           width: '512px',
           height: '123px',
-          marginLeft: '500px',
+          marginLeft: '375px',
           marginTop: '-32px',
         }}
       >
@@ -122,6 +119,3 @@ export default function NewSprintInformation() {
     </ThemeProvider>
   );
 }
-
-
-
