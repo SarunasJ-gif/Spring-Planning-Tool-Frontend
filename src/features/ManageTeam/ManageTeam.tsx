@@ -144,10 +144,8 @@ export default function ManageTeam() {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <CreateNewMember />
                 </Grid>
               </Grid>
-              <BottomTable />
             </TableContainer>
           </Grid>
         </Grid>
