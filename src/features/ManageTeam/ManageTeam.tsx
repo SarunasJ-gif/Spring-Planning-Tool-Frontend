@@ -138,13 +138,6 @@ export default function ManageTeam() {
                 pb={3}
                 sx={{ borderBottom: '1px solid #E1E1E1' }}
               >
-                <Grid item>
-                  <Typography variant="h4" marginLeft={8} fontWeight={500}>
-                    Team Members
-                  </Typography>
-                </Grid>
-                <Grid item>
-                </Grid>
               </Grid>
             </TableContainer>
           </Grid>
