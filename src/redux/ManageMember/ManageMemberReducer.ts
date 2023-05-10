@@ -1,4 +1,5 @@
 import * as actions from './ManageMemberActionType';
+
 export type MemberState = { 
   id: number;
   firstName: string;
