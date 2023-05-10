@@ -26,8 +26,7 @@ interface Props {
 
 export default function BottonTable(props: Props) {
   const dispatch = useDispatch();
-
-//  useSelector((state: { newTeam: Team  }) => state?.newTeam?.team );
+  // const sprint = useSelector((state: RootState) => state.newSprint.sprint);
 
   const [data, setData] = React.useState<Row[]>(rows);
 
