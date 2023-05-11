@@ -66,7 +66,7 @@ export default function PlanTable() {
       dispatch(updateMembers(updatedMembers));
       dispatch(setDaysOfWeek(daysOfWeek));
     }
-  }, [sprint.startDate, sprint.endDate, dispatch, sprint.members]);
+  }, [sprint.startDate, sprint.endDate, dispatch]);
   return (
     <>
       {sprint.showNotification && (
