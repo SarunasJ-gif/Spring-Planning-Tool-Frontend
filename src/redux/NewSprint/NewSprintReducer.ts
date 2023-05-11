@@ -24,18 +24,20 @@ export const initialState: NewSprint = {
     endDate: null,
     tasks: [],
     memberTeamId: null,
-    members: [{
-      firstName: 'John',
-      lastName: 'Doe',
-      memberId: '1',
-      workingDays: [],
-    },
-    {
-      firstName: 'Jane',
-      lastName: 'Smith',
-      memberId: '2',
-      workingDays: [],
-    }],
+    members: [
+      {
+        firstName: 'John',
+        lastName: 'Doe',
+        memberId: '1',
+        workingDays: [],
+      },
+      {
+        firstName: 'Jane',
+        lastName: 'Smith',
+        memberId: '2',
+        workingDays: [],
+      },
+    ],
     businessDays: [],
     daysOfWeek: [],
     showNotification: true,
@@ -67,6 +69,12 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_TITLE:
       return produce(state, (draftState) => {
         draftState.sprint.title = payload;
+      });
+    case actions.UPDATE_TASK_KEY_COLOR:
+      return produce(state, (draftState) => {
+        const index = state.sprint.tasks.findIndex((o) => o.id === payload.id);
+        console.log(payload);
+        draftState.sprint.tasks[index].keyColor = payload.value;
       });
 
     case actions.UPDATE_TASK_KEY_VALUE:
@@ -100,44 +108,52 @@ const reducer = (state = initialState, { type, payload }) => {
         const index = state.sprint.tasks.findIndex((o) => o.id === payload.id);
         draftState.sprint.tasks[index].newPoints = payload.value;
       });
+    case actions.UPDATE_TASK_COLOR:
+      return produce(state, (draftState) => {
+        const index = state.sprint.tasks.findIndex((o) => o.id === payload.id);
+        draftState.sprint.tasks[index].keyColor = payload.value;
+      });
     case actions.UPDATE_TASK_ASSIGN:
       return produce(state, (draftState) => {
-      const memberIndex = state.sprint.members.findIndex(
+        const memberIndex = state.sprint.members.findIndex(
           (o) => o.memberId === payload.person,
-      );
-      const tasksIndex = state.sprint.members[memberIndex].workingDays.findIndex(
-          (o) => o.day === payload.day.toString(),
-      );
-      if(payload.value === -1){
-        draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = {
-        id: -1,
-        keyValue: 'Education',
-        keyColor: '#878787',
-        description: 'Education',
-        type: 'Education',
-        oldPoints: 0,
-        remainingPoints: 0,
-        newPoints: 0,
-        };
-      }else if(payload.value === -2){
-        draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = {
-          id: -2,
-          keyValue: 'Vacation',
-          keyColor: '#878787',
-          description: 'Vacation',
-          type: 'Vacation',
-          oldPoints: 0,
-          remainingPoints: 0,
-          newPoints: 0,
-          };
-      }else{
-        const valueIndex = state.sprint.tasks.findIndex(
-          (o) => o.id === payload.value,
         );
-        draftState.sprint.members[memberIndex].workingDays[tasksIndex].task = draftState.sprint.tasks[valueIndex];
-      };
-      console.log(Object.values(state.sprint.members || {}));
-    });
+        const tasksIndex = state.sprint.members[
+          memberIndex
+        ].workingDays.findIndex((o) => o.day === payload.day.toString());
+        if (payload.value === -1) {
+          draftState.sprint.members[memberIndex].workingDays[tasksIndex].task =
+            {
+              id: -1,
+              keyValue: 'Education',
+              keyColor: '#878787',
+              description: 'Education',
+              type: 'Education',
+              oldPoints: 0,
+              remainingPoints: 0,
+              newPoints: 0,
+            };
+        } else if (payload.value === -2) {
+          draftState.sprint.members[memberIndex].workingDays[tasksIndex].task =
+            {
+              id: -2,
+              keyValue: 'Vacation',
+              keyColor: '#878787',
+              description: 'Vacation',
+              type: 'Vacation',
+              oldPoints: 0,
+              remainingPoints: 0,
+              newPoints: 0,
+            };
+        } else {
+          const valueIndex = state.sprint.tasks.findIndex(
+            (o) => o.id === payload.value,
+          );
+          draftState.sprint.members[memberIndex].workingDays[tasksIndex].task =
+            draftState.sprint.tasks[valueIndex];
+        }
+        console.log(Object.values(state.sprint.members || {}));
+      });
     case actions.SET_BUSINESS_DAYS: {
       return produce(state, (draftState) => {
         draftState.sprint.businessDays = [...payload];
