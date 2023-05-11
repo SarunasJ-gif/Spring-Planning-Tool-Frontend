@@ -21,9 +21,7 @@ export default function ColorPickerPopover({
 
   const dispatch = useDispatch();
 
-  const { tasks } = useSelector(
-    (state: { newSprint: NewSprint }) => state.newSprint.sprint,
-  );
+  useSelector((state: { newSprint: NewSprint }) => state.newSprint.sprint);
 
   const [selectedColor, setSelectedColor] = React.useState(initialColor);
 
