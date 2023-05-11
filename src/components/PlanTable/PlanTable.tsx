@@ -31,7 +31,6 @@ export default function PlanTable() {
   const handleClearNotification = () => {
     dispatch(updateShowNotification(false));
   };
-  const totalWorkDays = 0;
 
   const handleTaskChange = (
     person: string,
@@ -138,7 +137,21 @@ export default function PlanTable() {
                 {i === 0 ? '' : `${i}. ` + sprint.daysOfWeek[i - 1]}
               </TableCell>
             ))}
-            <TableCell align="center">{totalWorkDays}</TableCell>
+            <TableCell align="center">
+              {(() => {
+                const totalWorkDays = sprint.members.reduce((acc, member) => {
+                  const workDays = Object.values(sprint.members[Number(member.memberId) - 1].workingDays || {});
+                  const filteredDays = workDays.filter(day =>
+                    day.task?.type === 'Task' ||
+                    day.task?.type === 'Technical' ||
+                    day.task?.type === '' ||
+                    day.task?.type === 'Goal',
+                  );
+                  return acc + filteredDays.length;
+                }, 0);
+                return totalWorkDays;
+              })()}
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
