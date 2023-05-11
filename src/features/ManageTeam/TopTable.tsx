@@ -47,13 +47,11 @@ export default function TopTable() {
         </TableHead>
         <TableBody>
         {rowsTop.map((row) => (
-  <TableRow
-    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-  >
+  <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
  <LeftAlignedTableCell>{row.name}</LeftAlignedTableCell>
     <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
-    <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
-    <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell>
+    {/* <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
+    <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell> */}
   </TableRow>
           ))}
         </TableBody>

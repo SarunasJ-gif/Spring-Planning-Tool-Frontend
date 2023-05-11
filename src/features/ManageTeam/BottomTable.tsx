@@ -14,38 +14,31 @@ import {
   Menu,
 } from '@mui/material';
 import { Role } from '../../enums/enums';
-import { Member, TableRowElementProps } from '../../types/TeamTypes';
+import { TableRowElementProps } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTeamData, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
-import { TeamMembersMock } from './MockData';
+import { getAllTeamMembers, removeTeamMember } from '../../redux/ManageTeam/ManageTeamActions';
 import { useEffect } from 'react';
-
 import { TeamState } from '../../redux/ManageTeam/ManageTeamReducer';
+import { updateTeamMemberRole } from '../../redux/ManageMember/ManageMemberActions';
 
 export default function BottonTable() {
+
   const dispatch = useDispatch();
-  
   useEffect(() => {
-    dispatch(getTeamData());
+    dispatch(getAllTeamMembers());
   }, [dispatch]);
-  
-const localMembers = useSelector((state: { manageTeam: TeamState }) => state.manageTeam.team.members);
 
-console.log('dauomenys gaunami is saugomo redux state', localMembers[0]); //fix this
-const [data, setData] = React.useState<Member[]>(TeamMembersMock);
-console.log('lentele',data);
-
- 
-   
-  const handleUpdateMemberRole = React.useCallback((id: number, role: Role) => {
+  const handleRoleChange = (id: number, role: Role) => {
     dispatch(updateTeamMemberRole(id, role));
-  }, [dispatch]);
+  };
+  
+  const handleRemoveMember = (id: number) => {
+    dispatch(removeTeamMember(id));
+  };
 
+    const members = useSelector((state: { manageTeam: TeamState }) => state.manageTeam.team.members);
 
-  const TableRowElement: React.FC<TableRowElementProps> = ({
-    row,
-    index,
-  }: TableRowElementProps) => {
+    const TableRowElement: React.FC<TableRowElementProps> = ({row, index }: TableRowElementProps) => {
     const [showSaveButton, setShowSaveButton] = React.useState(false);
     const [selectedRole, setSelectedRole] = React.useState(row.role);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -57,14 +50,13 @@ console.log('lentele',data);
 
     const handleMenuItemClick = (
       event: React.MouseEvent<HTMLElement>,
-      index: number,
+      index: number
     ) => {
       const selectedRole = Object.values(Role)[index];
       setSelectedRole(selectedRole);
       setAnchorEl(null);
       setShowSaveButton(true);
-      handleUpdateMemberRole(row.id, selectedRole);
-   
+      dispatch(updateTeamMemberRole(row.id, selectedRole));
     };
 
     const handleClose = () => {
@@ -75,8 +67,7 @@ console.log('lentele',data);
       setShowSaveButton(false);
     };
     
-    const handleRemove  = () => {
-      setData(data.filter((member: { memberId: number; }) => member.memberId !== row.id));
+    const handleRemove = () => {
       dispatch(removeTeamMember(row.id));
     };
 
@@ -102,7 +93,7 @@ console.log('lentele',data);
             />
           </TableCell>
           <TableCell align="left" sx={{ width: '250px' }}>
-            {row.name}
+            {row.email}
           </TableCell>
           <TableCell
             align="left"
@@ -155,13 +146,20 @@ console.log('lentele',data);
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, index: any) => (
-            <TableRowElement row={row} index={index} key={row.id} />
+          {members.map((member, index) => (
+            <TableRowElement
+              key={member.id}
+              row={member}
+              index={index}
+              onRoleChange={handleRoleChange}
+              onRemoveMember={handleRemoveMember}
+            />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
+  
 }
 
 
