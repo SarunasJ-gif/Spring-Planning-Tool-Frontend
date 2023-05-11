@@ -22,6 +22,7 @@ const reducer = (state = initialState,  { type, payload }) => {
       case actions.UPDATE_MEMBER_ROLE: {
           const { memberId, role } = payload;
         return { ...state, members: state.members.map((member) => member.id === memberId ? { ...member, role: role } : member),};}
+
     default:
       return state;
   }

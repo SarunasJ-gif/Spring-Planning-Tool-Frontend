@@ -12,8 +12,6 @@ export type TableRowElementProps = {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
   row: any;
   index: number;
-  onRoleChange: (id: number, role: Role) => void;
-  onRemoveMember: (id: number) => void;
 }
 
 export type Member = {

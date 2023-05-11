@@ -19,24 +19,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllTeamMembers, removeTeamMember } from '../../redux/ManageTeam/ManageTeamActions';
 import { useEffect } from 'react';
 import { TeamState } from '../../redux/ManageTeam/ManageTeamReducer';
-import { updateTeamMemberRole } from '../../redux/ManageMember/ManageMemberActions';
+import { updateTeamMemberRole, getMembersSuccess } from '../../redux/ManageMember/ManageMemberActions';
+
 
 export default function BottonTable() {
-
   const dispatch = useDispatch();
+  const members = useSelector((state: { manageTeam: TeamState }) => state.manageTeam.team.members);
+
   useEffect(() => {
     dispatch(getAllTeamMembers());
   }, [dispatch]);
 
   const handleRoleChange = (id: number, role: Role) => {
     dispatch(updateTeamMemberRole(id, role));
+    const updatedMembers = members.map(member =>
+      member.id === id ? { ...member, role: role } : member
+    );
+    dispatch(getMembersSuccess(updatedMembers));
   };
-  
-  const handleRemoveMember = (id: number) => {
-    dispatch(removeTeamMember(id));
-  };
-
-    const members = useSelector((state: { manageTeam: TeamState }) => state.manageTeam.team.members);
 
     const TableRowElement: React.FC<TableRowElementProps> = ({row, index }: TableRowElementProps) => {
     const [showSaveButton, setShowSaveButton] = React.useState(false);
@@ -56,7 +56,7 @@ export default function BottonTable() {
       setSelectedRole(selectedRole);
       setAnchorEl(null);
       setShowSaveButton(true);
-      dispatch(updateTeamMemberRole(row.id, selectedRole));
+      handleRoleChange(row.id, selectedRole);
     };
 
     const handleClose = () => {
@@ -69,6 +69,8 @@ export default function BottonTable() {
     
     const handleRemove = () => {
       dispatch(removeTeamMember(row.id));
+      const updatedMembers = members.filter(member => member.id !== row.id);
+      dispatch(getMembersSuccess(updatedMembers));
     };
 
     return (
@@ -123,7 +125,8 @@ export default function BottonTable() {
             </Menu>
           </TableCell>
           <TableCell align="left" sx={{ width: '80px' }}>
-            <RemoveButton name={row.name} handleRemoveMember={handleRemove}/>
+             <RemoveButton name={row.name} email={row.email} handleRemoveMember={handleRemove} />
+
           </TableCell>
           <TableCell align="left" sx={{ width: '80px' }}>
             {showSaveButton && <SaveButton onClick={handleSave} />}
@@ -151,8 +154,6 @@ export default function BottonTable() {
               key={member.id}
               row={member}
               index={index}
-              onRoleChange={handleRoleChange}
-              onRemoveMember={handleRemoveMember}
             />
           ))}
         </TableBody>

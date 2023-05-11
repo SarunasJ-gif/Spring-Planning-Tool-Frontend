@@ -13,6 +13,7 @@ import {
 
 interface RemoveButtonProps {
   name: string;
+  email:string;
   handleRemoveMember: () => void;
 }
 
@@ -57,7 +58,7 @@ export default function RemoveButton(props: RemoveButtonProps) {
         <DialogContent>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Avatar src={avatarImage} alt="avatar" sx={{ mr: 2 }} />
-            <Typography variant="subtitle1">{props.name}</Typography>
+            <Typography variant="subtitle1">{props.name} {props.email}</Typography>
           </Box>
         </DialogContent>
         <DialogActions>
