@@ -10,9 +10,7 @@ export type MemberState = {
   email: string;
 };
 
-const initialState: {members: MemberState[]} = {
-  members: []
-};
+const initialState: {members: MemberState[]} = { members: []};
 
 // @ts-ignore
 const reducer = (state = initialState,  { type, payload }) => {
@@ -20,7 +18,6 @@ const reducer = (state = initialState,  { type, payload }) => {
       case actions.GET_MEMBER_REQUEST:
         return {...state };
       case actions.GET_MEMBER_SUCCESS:
-console.log('paylod', payload);
         return { ...state, members: payload };
    
     default:

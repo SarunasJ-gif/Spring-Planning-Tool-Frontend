@@ -3,7 +3,7 @@ import * as actions from './ManageTeamActionType';
 import { Member } from '../../types/NewSprintTypes';
 
 
-export type NewTeam = {
+export type TeamState = {
   team: {
     name: string;
     completedProjects: number| null;
@@ -11,7 +11,7 @@ export type NewTeam = {
     members: Member[];
 }
 };
-const initialState: NewTeam = {
+export const initialState: TeamState = {
   team: {
     name: '',
     completedProjects: null,
@@ -27,7 +27,7 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce (state, (draftState) => {
         draftState.team.name = payload;
         });
-    case actions.REMOVE_TEAM_MEMBER_REQUEST:
+    case actions.REMOVE_TEAM_MEMBER:
       return {...state};
     default:
       return state;

@@ -14,44 +14,28 @@ import {
   Menu,
 } from '@mui/material';
 import { Role } from '../../enums/enums';
-import { rows } from './MockData';
-import { Row, TableRowElementProps } from '../../types/TeamTypes';
-import { useDispatch } from 'react-redux';
+import { Member, TableRowElementProps } from '../../types/TeamTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTeamData, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
+import { TeamMembersMock } from './MockData';
 import { useEffect } from 'react';
-import { addTeamMember, removeTeamMemberRequest, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
+import { RootState } from '../../redux/store';
 
-interface Props {
-  addMember: { memberId: number, name: string; role: Role };
-}
-
-export default function BottonTable(props: Props) {
+export default function BottonTable() {
   const dispatch = useDispatch();
-  // const sprint = useSelector((state: RootState) => state.newSprint.sprint);
-
-  const [data, setData] = React.useState<Row[]>(rows);
-
-  const handleAddMember = React.useCallback(() => {
-    const newData: Row = {
-      id: data.length + 1,
-      memberId: props.addMember.memberId,
-      name: props.addMember.name,
-      role: props.addMember.role,
-    };
-    dispatch( addTeamMember(props.addMember.memberId, props.addMember.name, props.addMember.role));
-    setData([...data, newData]);
-  }, [data, dispatch,props.addMember.memberId, props.addMember.name, props.addMember.role]);
-
+  
   useEffect(() => {
-    if (props.addMember.name && props.addMember.role) {
-      handleAddMember();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.addMember]);
+    dispatch(getTeamData());
+  }, [dispatch]);
+  
+  const localMembers = useSelector((state: RootState) => state.manageTeam.team);
+  console.log('info', localMembers);
+
+  const [data, setData] = React.useState<Member[]>(TeamMembersMock);
    
   const handleUpdateMemberRole = React.useCallback((id: number, role: Role) => {
     dispatch(updateTeamMemberRole(id, role));
   }, [dispatch]);
-
 
   const TableRowElement: React.FC<TableRowElementProps> = ({
     row,
@@ -75,7 +59,7 @@ export default function BottonTable(props: Props) {
       setAnchorEl(null);
       setShowSaveButton(true);
       handleUpdateMemberRole(row.id, selectedRole);
-      dispatch(updateTeamMemberRole(row.id, selectedRole));
+   
     };
 
     const handleClose = () => {
@@ -88,8 +72,7 @@ export default function BottonTable(props: Props) {
     
     const handleRemove  = () => {
       setData(data.filter((member: { memberId: number; }) => member.memberId !== row.id));
-      console.log('trinama', row.id);
-      dispatch(removeTeamMemberRequest(row.id));
+      dispatch(removeTeamMember(row.id));
     };
 
     return (

@@ -14,17 +14,12 @@ export type TableRowElementProps = {
   index: number;
 }
 
-export type Row = {
-  id: number;
-  memberId: number;
-  name: string;
-  role: Role;
-}
-
 export type Member = {
+  id: number;
   firstName: string;
   lastName: string;
   memberId: number;
   name: string;
   role: Role;
 };
+

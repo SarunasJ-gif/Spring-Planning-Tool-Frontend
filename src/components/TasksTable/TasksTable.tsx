@@ -44,9 +44,7 @@ interface TasksProps {
 
 export default function TasksTable(props: TasksProps): JSX.Element {
   const [expanded, setExpanded] = useState(false);
-  const { tasks } = useSelector(
-    (state: { newSprint: Sprint }) => state.newSprint.sprint,
-  );
+  const { tasks } = useSelector( (state: { newSprint: Sprint }) => state.newSprint.sprint );
   const { isEditMode } = props;
 
   const dispatch = useDispatch();

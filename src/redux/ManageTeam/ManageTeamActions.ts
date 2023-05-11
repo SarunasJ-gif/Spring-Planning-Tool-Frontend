@@ -1,7 +1,14 @@
 import { Role } from '../../enums/enums';
+import { Team } from '../../types/TeamTypes';
 import * as actions from './ManageTeamActionType';
 
-export const getTeamData = () => ({ type: actions.GET_TEAM_DATA});
+export const getTeamData = () => ({ 
+  type: actions.GET_TEAM_DATA_REQUEST
+});
+export const getTeamDataSuccess = (teams: Team[]) => ({
+  type: actions.GET_TEAM_DATA_SUCCESS,
+  payload: teams,
+});
 
 export const updateTeamName = (id:number, name: string) => ({
   type: actions.UPDATE_TEAM_NAME,
@@ -13,13 +20,13 @@ export const updateTeamMemberRole = (memberId: number, role: Role) => ({
   payload: { memberId, role },
 });
 
-export const addTeamMember = (memberId: number, name: string, role: Role) => ({
+export const addTeamMember = (memberId: number, role: Role) => ({
   type: actions.ADD_TEAM_MEMBER,
-  payload: { memberId, name, role  },
+  payload: { memberId, role  },
 });
 
-export const removeTeamMemberRequest = (memberId: number) => ({
-  type: actions.REMOVE_TEAM_MEMBER_REQUEST,
+export const removeTeamMember = (memberId: number) => ({
+  type: actions.REMOVE_TEAM_MEMBER,
   payload: { memberId },
 });
 

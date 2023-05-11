@@ -6,7 +6,6 @@ import {
   Grid,
   TableContainer,
   Paper,
-  Select,
   Button,
   Dialog,
   DialogActions,
@@ -14,40 +13,47 @@ import {
   DialogTitle,
   FormControl,
   InputLabel,
+  MenuItem,
+  Select,
 } from '@mui/material';
-import BottomTable from './BottomTable';
 import TopTable from './TopTable';
 import { useEffect, useState } from 'react';
-import { Role } from '../../enums/enums';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getMembersRequest } from '../../redux/ManageMember/ManageMemberActions';
-
+import { RootState } from '../../redux/store';
+import { addTeamMember } from '../../redux/ManageTeam/ManageTeamActions';
+import { Role } from '../../enums/enums';
+import BottomTable from './BottomTable';
 
 export default function ManageTeam() {
-  const [memberId] = React.useState(0);
-  const [name] = React.useState('');
-  const [role] = React.useState<Role>(Role.TESTER);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMembersRequest());
+  }, [dispatch]);
+
+  const localUsers = useSelector((state: RootState) => state.manageMember.members);
 
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
-  const [member, setMember] = React.useState({ memberId: 0, name: '', role: Role.TESTER });
+  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
+  const [selectedMemberRole, setSelectedMemberRole] = useState<Role | null>(null);
 
+
+  
   const handleAddMember = () => {
-    setMember({ memberId, name, role });
+    if (selectedMemberRole !== null) {
+      dispatch(addTeamMember(Number(selectedMemberId), selectedMemberRole));
+      handleClose();
+    }
   };
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getMembersRequest());
-  });
- 
 
   return (
     <Box>
@@ -113,11 +119,23 @@ export default function ManageTeam() {
     gap: 2,
   }}
 >
-  <FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
-    <InputLabel>User</InputLabel>
-    <Select value={memberId} onChange={handleAddMember}>
-        </Select>
-  </FormControl>
+<FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
+      <InputLabel>User</InputLabel>
+      <Select
+  value={selectedMemberId}
+  onChange={(event) => {
+    setSelectedMemberId(Number(event.target.value));
+    const selectedMember = localUsers.find((member: any) => member.id === event.target.value);
+    setSelectedMemberRole(selectedMember?.role || null);
+  }}
+>
+  {localUsers.map((member: any) => (
+    <MenuItem key={member.id} value={member.id}>
+      {member.id} / {member.email} / {member.role}
+    </MenuItem>
+  ))}
+</Select>
+    </FormControl>
 </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end' }}>
         <Button onClick={handleAddMember}>ADD</Button>
@@ -129,7 +147,7 @@ export default function ManageTeam() {
                   </Grid>
                 </Grid>
               </Box>
-              <BottomTable addMember={member}  />
+               <BottomTable />
               <Grid
                 container
                 justifyContent="space-between"
