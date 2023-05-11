@@ -19,8 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTeamData, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
 import { TeamMembersMock } from './MockData';
 import { useEffect } from 'react';
-
-import { TeamState } from '../../redux/ManageTeam/ManageTeamReducer';
+import { RootState } from '../../redux/store';
 
 export default function BottonTable() {
   const dispatch = useDispatch();
@@ -29,12 +28,10 @@ export default function BottonTable() {
     dispatch(getTeamData());
   }, [dispatch]);
   
-const localMembers = useSelector((state: { manageTeam: TeamState }) => state.manageTeam.team.members);
-
-console.log('data is redux', localMembers[0]);
+const localMembers = useSelector((state: RootState) => state.manageTeam.team);
 const [data, setData] = React.useState<Member[]>(TeamMembersMock);
 
- 
+  console.log('info', localMembers);
    
   const handleUpdateMemberRole = React.useCallback((id: number, role: Role) => {
     dispatch(updateTeamMemberRole(id, role));
@@ -63,7 +60,6 @@ const [data, setData] = React.useState<Member[]>(TeamMembersMock);
       setAnchorEl(null);
       setShowSaveButton(true);
       handleUpdateMemberRole(row.id, selectedRole);
-   
     };
 
     const handleClose = () => {

@@ -24,11 +24,13 @@ export const initialState: TeamState = {
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.UPDATE_TEAM_NAME:
-      return produce (state, (draftState) => {
-        draftState.team.name = payload;
-        });
+      return produce (state, (draftState) => { draftState.team.name = payload;  });
     case actions.REMOVE_TEAM_MEMBER:
       return {...state};
+    case actions.GET_TEAM_DATA_SUCCESS:
+      return produce(state, (draftState) => {
+        draftState.team.members = payload;
+      });
     default:
       return state;
   }
