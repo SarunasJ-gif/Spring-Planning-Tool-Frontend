@@ -2,16 +2,27 @@ import * as React from 'react';
 import { Popover, Button, Box } from '@mui/material';
 import { ChromePicker, ColorResult } from 'react-color';
 import ColorizeIcon from '@mui/icons-material/Colorize';
+import { updateTaskKeyColor } from '../../redux/NewSprint/NewSprintActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
 
 interface ColorPickerPopoverProps {
   initialColor: string;
+  taskId: number;
 }
 
 export default function ColorPickerPopover({
   initialColor,
+  taskId,
 }: ColorPickerPopoverProps) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
+  );
+
+  const dispatch = useDispatch();
+
+  const { tasks } = useSelector(
+    (state: { newSprint: NewSprint }) => state.newSprint.sprint,
   );
 
   const [selectedColor, setSelectedColor] = React.useState(initialColor);
@@ -26,6 +37,7 @@ export default function ColorPickerPopover({
 
   const handleColorChange = (color: ColorResult) => {
     setSelectedColor(color.hex);
+    dispatch(updateTaskKeyColor(taskId, color.hex));
   };
 
   const handleColorSelect = () => {
