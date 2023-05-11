@@ -31,8 +31,9 @@ export default function BottonTable() {
   
 const localMembers = useSelector((state: { manageTeam: TeamState }) => state.manageTeam.team.members);
 
-console.log('data is redux', localMembers[0]);
+console.log('dauomenys gaunami is saugomo redux state', localMembers[0]); //fix this
 const [data, setData] = React.useState<Member[]>(TeamMembersMock);
+console.log('lentele',data);
 
  
    

@@ -7,7 +7,7 @@ import { Team } from '../../types/TeamTypes';
 export function* getTeamDataSaga() {
   try {
     const teams: Team[] = yield call(getTeamDataAPI);
-    console.log('gauta sagu endpointe teamu masyvas', teams);
+    console.log('gaunama info sagu endpointe teamu masyvas', teams);
       yield put(getTeamDataSuccess(teams));
   } catch (e) { console.error(e);}
 }

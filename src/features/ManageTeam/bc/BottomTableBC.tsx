@@ -1,7 +1,7 @@
 import * as React from 'react';
 import avatarImage from '../../images/avatar/avatar1.jpg';
-import RemoveButton from './RemoveButton';
-import SaveButton from './SaveButton';
+import RemoveButton from '../RemoveButton';
+import SaveButton from '../SaveButton';
 import {
   Avatar,
   Table,
@@ -13,13 +13,13 @@ import {
   MenuItem,
   Menu,
 } from '@mui/material';
-import { Role } from '../../enums/enums';
-import { Member, TableRowElementProps } from '../../types/TeamTypes';
+import { Role } from '../../../enums/enums';
+import { Member, TableRowElementProps } from '../../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTeamData, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
-import { TeamMembersMock } from './MockData';
+import { getTeamData, removeTeamMember, updateTeamMemberRole } from '../../../redux/ManageTeam/ManageTeamActions';
+import { TeamMembersMock } from '../MockData';
 import { useEffect } from 'react';
-import { RootState } from '../../redux/store';
+import { RootState } from '../../../redux/store';
 
 export default function BottonTable() {
   const dispatch = useDispatch();

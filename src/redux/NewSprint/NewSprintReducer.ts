@@ -1,6 +1,7 @@
 import produce from 'immer';
 import * as actions from './NewSprintActionType';
 import { Member, TaskData } from '../../types/NewSprintTypes';
+import { Role } from '../../enums/enums';
 
 export type NewSprint = {
   sprint: {
@@ -29,12 +30,18 @@ export const initialState: NewSprint = {
       lastName: 'Doe',
       memberId: '1',
       workingDays: [],
+      id: 1,
+      name: '',
+      role: Role.TESTER
     },
     {
       firstName: 'Jane',
       lastName: 'Smith',
       memberId: '2',
       workingDays: [],
+      id: 1,
+      name: '',
+      role: Role.TESTER,
     }],
     businessDays: [],
     daysOfWeek: [],
