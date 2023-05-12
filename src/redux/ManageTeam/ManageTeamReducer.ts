@@ -32,7 +32,7 @@ const reducer = (state = initialState, { type, payload }) => {
  case actions.REMOVE_TEAM_MEMBER:
        return produce(state, (draftState) => {
          const index = draftState.team.members.findIndex( (member) => member.id === payload);
-         if (index !== -1) { draftState.team.members.splice(index, 1);}});                                          
+       draftState.team.members.splice(index, 1);});                                          
       default:
       return state;
   }

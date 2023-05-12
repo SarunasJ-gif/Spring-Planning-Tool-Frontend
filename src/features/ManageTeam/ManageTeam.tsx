@@ -17,7 +17,7 @@ import {
   Select,
 } from '@mui/material';
 import TopTable from './TopTable';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMembersRequest } from '../../redux/ManageMember/ManageMemberActions';
 import { RootState } from '../../redux/store';
@@ -27,9 +27,7 @@ import BottomTable from './BottomTable';
 export default function ManageTeam() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getMembersRequest());
-  }, [dispatch]);
+
 
   const localUsers = useSelector((state: RootState) => state.manageMember.members);
 
@@ -46,6 +44,7 @@ export default function ManageTeam() {
   };
   
   const handleClickOpen = () => {
+    dispatch(getMembersRequest());
     setOpen(true);
   };
   const handleClose = () => {
