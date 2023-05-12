@@ -36,10 +36,13 @@ export default function ManageTeam() {
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
-
+ 
   const handleAddMember = () => {
-      dispatch(addTeamMember(Number(selectedMemberId)));
-      handleClose();
+    const selectedMember = localUsers.find((member: { id: number | null; }) => member.id === selectedMemberId);
+    if (selectedMember) {
+      dispatch(addTeamMember(selectedMember.id, selectedMember.email, selectedMember.role));
+    }
+    handleClose();
   };
   
   const handleClickOpen = () => {
@@ -124,11 +127,11 @@ export default function ManageTeam() {
                               setSelectedMemberId(Number(event.target.value));
                             }}
                           >
-                            {localUsers.map((member: any) => (
-                              <MenuItem key={member.id} value={member.id}>
-                                {member.email}
-                              </MenuItem>
-                            ))}
+                         {localUsers.map((member: any) => (
+                         <MenuItem key={member.id} value={member.id}>
+                         {member.id} / {member.email} / {member.role}
+                         </MenuItem>
+                           ))}
                           </Select>
                         </FormControl>
                       </DialogContent>

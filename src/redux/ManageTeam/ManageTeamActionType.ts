@@ -1,6 +1,3 @@
-export const GET_TEAM_DATA_REQUEST = 'getTeamData'; 
-export const GET_TEAM_DATA_SUCCESS = 'getTeamDataSuccess'; 
-
 export const UPDATE_TEAM_NAME = 'updateTeamName'; 
 
 export const ADD_TEAM_MEMBER = 'addTeamMember'; 

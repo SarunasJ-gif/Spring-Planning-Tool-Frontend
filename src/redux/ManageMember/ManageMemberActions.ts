@@ -1,5 +1,5 @@
 import { Role } from '../../enums/enums';
-import { Member } from '../../types/TeamTypes';
+import { Member } from '../../types/NewSprintTypes';
 import * as actions from './ManageMemberActionType';
 
 export const getMembersRequest = () => ({

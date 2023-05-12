@@ -1,6 +1,7 @@
 import produce from 'immer';
 import * as actions from './ManageTeamActionType';
-import { Member } from '../../types/TeamTypes';
+import { Member } from '../../types/NewSprintTypes';
+
 
 export type TeamState = {
   team: {
@@ -22,17 +23,16 @@ export const initialState: TeamState = {
 // @ts-ignore
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case actions.GET_TEAM_DATA_SUCCESS:
-      return produce(state, (draftState) => { draftState.team = payload; });
     case actions.UPDATE_TEAM_NAME:
       return produce (state, (draftState) => { draftState.team.name = payload; });
     case actions.GET_ALL_TEAM_MEMBERS_SUCCESS:
         return produce(state, (draftState) => {draftState.team.members = payload; });
     case actions.ADD_TEAM_MEMBER:
-      return produce(state, (draftState) => { draftState.team.members.push(payload); });
-    case actions.REMOVE_TEAM_MEMBER:
-      return produce(state, (draftState) => {  draftState.team.members = draftState.team.members.filter((member) => member.id !== payload ); });
-
+      return produce(state, (draftState) => { draftState.team.members.push(payload); });   
+ case actions.REMOVE_TEAM_MEMBER:
+       return produce(state, (draftState) => {
+         const index = draftState.team.members.findIndex( (member) => member.id === payload);
+         if (index !== -1) { draftState.team.members.splice(index, 1);}});                                          
       default:
       return state;
   }

@@ -2,7 +2,8 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { GET_MEMBER_REQUEST, UPDATE_MEMBER_ROLE } from './ManageMemberActionType';
 import { getMembersAPI, updateTeamMemberRoleAPI } from './ManageMemberApi';
 import { getMembersSuccess } from './ManageMemberActions';
-import { Member } from '../../types/TeamTypes';
+import { Member } from '../../types/NewSprintTypes';
+
 
 export function* getMembersSaga() {
   try {

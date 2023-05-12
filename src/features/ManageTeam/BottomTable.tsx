@@ -18,13 +18,14 @@ import { TableRowElementProps } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTeamMembers, removeTeamMember } from '../../redux/ManageTeam/ManageTeamActions';
 import { useEffect } from 'react';
-import { TeamState } from '../../redux/ManageTeam/ManageTeamReducer';
+
 import { updateTeamMemberRole, getMembersSuccess } from '../../redux/ManageMember/ManageMemberActions';
+import { RootState } from '../../redux/store';
 
-
-export default function BottonTable() {
+export default function BottomTable() {
   const dispatch = useDispatch();
-  const members = useSelector((state: { manageTeam: TeamState }) => state.manageTeam.team.members);
+
+  const members = useSelector((state: RootState) => state.manageTeam.team.members);
 
   useEffect(() => {
     dispatch(getAllTeamMembers());
@@ -34,6 +35,7 @@ export default function BottonTable() {
     dispatch(updateTeamMemberRole(id, role));
     const updatedMembers = members.map(member =>
       member.id === id ? { ...member, role: role } : member
+      
     );
     dispatch(getMembersSuccess(updatedMembers));
   };
@@ -69,9 +71,10 @@ export default function BottonTable() {
     
     const handleRemove = () => {
       dispatch(removeTeamMember(row.id));
-      const updatedMembers = members.filter(member => member.id !== row.id);
+      const updatedMembers = members.filter((member) => member.id !== row.id);
       dispatch(getMembersSuccess(updatedMembers));
     };
+   
 
     return (
       <React.Fragment key={row.id}>
