@@ -28,11 +28,21 @@ const reducer = (state = initialState, { type, payload }) => {
         return produce(state, (draftState) => {draftState.team.members = payload; });
     case actions.ADD_TEAM_MEMBER:
       return produce(state, (draftState) => { draftState.team.members.push(payload); });   
- case actions.REMOVE_TEAM_MEMBER:
+    case actions.REMOVE_TEAM_MEMBER:
        return produce(state, (draftState) => {
          const index = draftState.team.members.findIndex( (member) => member.id === payload);
-       draftState.team.members.splice(index, 1);});                                          
-      default:
+       draftState.team.members.splice(index, 1);});     
+    case actions.UPDATE_TEAM_MEMBER_ROLE:
+          return produce(state, (draftState) => {
+            const { memberId, role  } = payload;
+            const member = draftState.team.members.find(
+              (member) => member.id === memberId
+            );
+            if (member) {
+              member.role = role ;
+            }
+          });
+   default:
       return state;
   }
 };

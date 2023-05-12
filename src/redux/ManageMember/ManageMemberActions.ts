@@ -11,8 +11,7 @@ export const getMembersSuccess = (members: Member[]) => ({
   payload: members,
 });
 
-export const updateTeamMemberRole = (memberId: number, role: Role) => ({
+export const updateMemberRole = (memberId: number, role: Role) => ({
   type: actions.UPDATE_MEMBER_ROLE,
   payload: { memberId, role },
 });
-

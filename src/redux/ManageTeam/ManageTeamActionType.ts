@@ -5,6 +5,7 @@ export const ADD_TEAM_MEMBER = 'addTeamMember';
 export const REMOVE_TEAM_MEMBER = "removeTeamMember";
 export const REMOVE_TEAM_MEMBER_SUCCESS = "removeTeamMemberSuccess";
 
-export const GET_ALL_TEAM_MEMBERS = 'GET_ALL_TEAM_MEMBERS';
-export const GET_ALL_TEAM_MEMBERS_SUCCESS = 'GET_ALL_TEAM_MEMBERS_SUCCESS';
+export const GET_ALL_TEAM_MEMBERS = 'getAllTeamMembers';
+export const GET_ALL_TEAM_MEMBERS_SUCCESS = 'getAllTeamMembersSuccess';
 
+export const UPDATE_TEAM_MEMBER_ROLE = 'updateTeamMemberRole';

@@ -16,10 +16,10 @@ import {
 import { Role } from '../../enums/enums';
 import { TableRowElementProps } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTeamMembers, removeTeamMember } from '../../redux/ManageTeam/ManageTeamActions';
+import { getAllTeamMembers, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
 import { useEffect } from 'react';
 
-import { updateTeamMemberRole, getMembersSuccess } from '../../redux/ManageMember/ManageMemberActions';
+import {  getMembersSuccess, updateMemberRole } from '../../redux/ManageMember/ManageMemberActions';
 import { RootState } from '../../redux/store';
 
 export default function BottomTable() {
@@ -31,14 +31,12 @@ export default function BottomTable() {
     dispatch(getAllTeamMembers());
   }, [dispatch]);
 
+
   const handleRoleChange = (id: number, role: Role) => {
+    dispatch(updateMemberRole(id, role));
     dispatch(updateTeamMemberRole(id, role));
-    const updatedMembers = members.map(member =>
-      member.id === id ? { ...member, role: role } : member
-      
-    );
-    dispatch(getMembersSuccess(updatedMembers));
   };
+
 
     const TableRowElement: React.FC<TableRowElementProps> = ({row, index }: TableRowElementProps) => {
     const [showSaveButton, setShowSaveButton] = React.useState(false);
@@ -163,7 +161,6 @@ export default function BottomTable() {
       </Table>
     </TableContainer>
   );
-  
 }
 
 
