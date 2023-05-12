@@ -9,6 +9,8 @@ import {
   TableRow,
   styled,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Team } from '../../types/TeamTypes';
 
 const LeftAlignedTableCell = styled(TableCell)(() => ({
   textAlign: 'left',
@@ -24,7 +26,11 @@ function createData(
 }
 const rowsTop = [createData('Main Team', 5, 12, 847)];
 
+
 export default function TopTable() {
+  const teams = useSelector((state: {manageTeam: Team}) => state.manageTeam);
+  
+console.log(teams);
 
   return (
     <TableContainer component={Paper} sx={{ overflowX: 'hidden' }}>
@@ -50,9 +56,9 @@ export default function TopTable() {
   <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
  <LeftAlignedTableCell>{row.name}</LeftAlignedTableCell>
     <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
-    {/* <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
-    <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell> */} 
-              {/* //unhide if calculations implemented */}
+    <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
+    <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell> 
+
   </TableRow>
           ))}
         </TableBody>

@@ -1,8 +1,15 @@
 import { Role } from '../../enums/enums';
 import { Member } from '../../types/NewSprintTypes';
+import { Team } from '../../types/TeamTypes';
 import * as actions from './ManageTeamActionType';
 
-
+export const getAllTeamData = () => ({
+  type: actions.GET_ALL_TEAM_DATA,
+});
+export const getAllTeamDataSuccess = (teams : Team[]) => ({
+  type: actions.GET_ALL_TEAM_DATA_SUCCESS,
+  payload: teams,
+});
 export const updateTeamName = (id:number, name: string) => ({
   type: actions.UPDATE_TEAM_NAME,
   payload: { id, name },
@@ -32,3 +39,5 @@ export const updateTeamMemberRole = (memberId: number, role: string) => ({
   type: actions.UPDATE_TEAM_MEMBER_ROLE,
   payload: { memberId, role },
 });
+
+

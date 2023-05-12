@@ -22,6 +22,8 @@ const initialState: TeamState = {
 // @ts-ignore
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case actions.GET_ALL_TEAM_DATA_SUCCESS:
+      return produce(state, (draftState) => {draftState.team = payload; });
     case actions.UPDATE_TEAM_NAME:
       return produce (state, (draftState) => { draftState.team.name = payload; });
     case actions.GET_ALL_TEAM_MEMBERS_SUCCESS:

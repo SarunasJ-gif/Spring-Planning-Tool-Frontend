@@ -34,6 +34,7 @@ export type Member = {
   id: number;
   name: string;
   role: Role;
+  email: string;
 };
 
 export type TaskData = {

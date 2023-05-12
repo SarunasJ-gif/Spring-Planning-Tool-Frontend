@@ -9,3 +9,6 @@ export const GET_ALL_TEAM_MEMBERS = 'getAllTeamMembers';
 export const GET_ALL_TEAM_MEMBERS_SUCCESS = 'getAllTeamMembersSuccess';
 
 export const UPDATE_TEAM_MEMBER_ROLE = 'updateTeamMemberRole';
+
+export const GET_ALL_TEAM_DATA = 'getAllTeamData';
+export const GET_ALL_TEAM_DATA_SUCCESS = 'getAllTeamDataSuccess';

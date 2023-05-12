@@ -33,7 +33,8 @@ export const initialState: NewSprint = {
         workingDays: [],
         id: 1,
       name: '',
-      role: Role.TESTER
+      role: Role.TESTER,
+      email: '',
     },
       {
         firstName: 'Jane',
@@ -43,6 +44,7 @@ export const initialState: NewSprint = {
         id: 1,
       name: '',
       role: Role.TESTER,
+      email: '',
     },
     ],
     businessDays: [],

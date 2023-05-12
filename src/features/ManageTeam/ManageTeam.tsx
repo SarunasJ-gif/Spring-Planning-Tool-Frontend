@@ -33,7 +33,7 @@ export default function ManageTeam() {
   const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
  
   const handleAddMember = () => {
-    const selectedMember = localUsers.find((member: { id: number | null; }) => member.id === selectedMemberId);
+    const selectedMember = localUsers.find((member: { id: number; }) => member.id === selectedMemberId);
     if (selectedMember) {
       dispatch(addTeamMember(selectedMember.id, selectedMember.email, selectedMember.role));
     }

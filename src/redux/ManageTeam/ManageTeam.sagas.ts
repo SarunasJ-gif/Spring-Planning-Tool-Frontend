@@ -1,11 +1,16 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { ADD_TEAM_MEMBER, GET_ALL_TEAM_MEMBERS,  REMOVE_TEAM_MEMBER, UPDATE_TEAM_NAME } from './ManageTeamActionType';
-import { addTeamMember, getTeamMembersAPI, removeTeamMember,  updateTeamNameAPI } from './ManageTeamApi';
-import { getAllTeamMembersSuccess, removeTeamMemberSuccess, updateTeamName } from './ManageTeamActions';
+import { ADD_TEAM_MEMBER, GET_ALL_TEAM_DATA, GET_ALL_TEAM_MEMBERS,  REMOVE_TEAM_MEMBER, UPDATE_TEAM_NAME } from './ManageTeamActionType';
+import { addTeamMember, getTeamDataAPI, getTeamMembersAPI, removeTeamMember,  updateTeamNameAPI } from './ManageTeamApi';
+import { getAllTeamDataSuccess, getAllTeamMembersSuccess, removeTeamMemberSuccess, updateTeamName } from './ManageTeamActions';
 import { Member } from '../../types/NewSprintTypes';
+import { Team } from '../../types/TeamTypes';
 
-
-
+export function* getAllTeamDataSaga() {
+  try {
+    const teams: Team[] = yield call(getTeamDataAPI);
+    yield put(getAllTeamDataSuccess(teams));
+  } catch (e) { console.error(e);}
+}
 export function* updateTeamNameSaga(action: any) {
   try {
     const { teamId, newName } = action.payload;
@@ -39,6 +44,7 @@ export default function* newTeamSaga() {
   yield takeLatest(ADD_TEAM_MEMBER, addTeamMemberSaga); 
   yield takeLatest(REMOVE_TEAM_MEMBER, removeTeamMemberSaga); 
   yield takeLatest(GET_ALL_TEAM_MEMBERS, getAllTeamMembersSaga);
+  yield takeLatest(GET_ALL_TEAM_DATA, getAllTeamDataSaga);
 }
 
 

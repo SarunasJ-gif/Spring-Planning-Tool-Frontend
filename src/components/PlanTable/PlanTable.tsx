@@ -66,6 +66,7 @@ export default function PlanTable() {
       dispatch(updateMembers(updatedMembers));
       dispatch(setDaysOfWeek(daysOfWeek));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sprint.startDate, sprint.endDate, dispatch]);
   return (
     <>
