@@ -2,6 +2,8 @@ import { Member, TaskData } from '../../types/NewSprintTypes';
 import * as actions from './SprintActionType';
 
 export type Sprint = {
+  id(id: any): any;
+  sprint: any;
   title: string;
   startDate: string | null;
   endDate: string | null;
