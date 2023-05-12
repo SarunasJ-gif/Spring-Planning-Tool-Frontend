@@ -1,14 +1,15 @@
-import { Effect, call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { getSprint } from './SprintApi';
 import {
   GET_SPRINT,
   GET_SPRINT_SUCCESS,
   GET_SPRINT_FAILURE,
 } from './SprintActionType';
+import { Sprint } from '../../types/NewSprintTypes';
 
-export function* getSprintSaga(action: any): Generator<Effect> {
+export function* getSprintSaga(){
   try {
-    const sprint = yield call(getSprint, action.payload);
+    const sprint : Sprint[] = yield call(getSprint);
     yield put({
       type: GET_SPRINT_SUCCESS,
       payload: sprint,

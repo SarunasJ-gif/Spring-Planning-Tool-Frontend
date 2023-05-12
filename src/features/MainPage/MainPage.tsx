@@ -1,21 +1,32 @@
 import * as React from 'react';
 import { Box, Typography, AccordionSummary } from '@mui/material/';
 import { SAccordion } from '../../style/AccordionStyle';
-import TasksTable from '../../components/TasksTable/TasksTable';
+import TasksTableDisplay from '../../components/TasksTableDisplay/TasksTableDisplay';
 import { ArrowDropDown } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
-import { Sprint } from '../../redux/Sprint/SprintReducer';
+import { useEffect } from 'react';
+import { useDispatch } from  'react-redux';
+import { getSprint } from '../../redux/Sprint/SprintActions';
+import { Sprint } from '../../types/NewSprintTypes';
+
 
 export default function MainPage() {
-  const sprint = useSelector((state: { sprint: Sprint }) => state.sprint);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSprint(1));
+  }, [dispatch]);
+
+  const sprintDisplay = useSelector((state: {sprint : Sprint}) => state.sprint.sprint);
+  console.log(sprintDisplay);
   return (
     <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
       <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
-        &ldquo;{sprint.title}&rdquo;
+        &ldquo;{sprintDisplay?.title}&rdquo;
       </Typography>
       <Box>
         <Typography fontWeight={'bold'}>
-          {sprint.startDate} {' - '} {sprint.endDate}
+          {sprintDisplay?.startDate} {' - '} {sprintDisplay?.endDate}
         </Typography>
       </Box>
       <Box sx={{ mt: 4 }}>
@@ -32,7 +43,7 @@ export default function MainPage() {
               Tasks
             </Typography>
           </AccordionSummary>
-          <TasksTable isEditMode={false} />
+          <TasksTableDisplay isEditMode={false} />
         </SAccordion>
       </Box>
       <Box sx={{ mt: 4 }}>

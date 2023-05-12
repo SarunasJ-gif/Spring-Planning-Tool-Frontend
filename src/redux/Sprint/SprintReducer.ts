@@ -2,6 +2,7 @@ import { Member, TaskData } from '../../types/NewSprintTypes';
 import * as actions from './SprintActionType';
 
 export type Sprint = {
+  sprint: any;
   title: string;
   startDate: string | null;
   endDate: string | null;
@@ -18,7 +19,13 @@ const initialState = {
   error: null,
 };
 
-const reducer = (state = initialState, action: any) => {
+type State = {
+  sprint: Sprint | null;
+  loading: boolean;
+  error: string | null;
+};
+
+const reducer = (state: State = initialState, action: any) => {
   switch (action.type) {
     case actions.GET_SPRINT:
       return {
