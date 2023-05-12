@@ -26,9 +26,6 @@ import BottomTable from './BottomTable';
 
 export default function ManageTeam() {
   const dispatch = useDispatch();
-
-
-
   const localUsers = useSelector((state: RootState) => state.manageMember.members);
 
   const [open, setOpen] = React.useState(false);
@@ -128,7 +125,7 @@ export default function ManageTeam() {
                           >
                          {localUsers.map((member: any) => (
                          <MenuItem key={member.id} value={member.id}>
-                         {member.id} / {member.email} / {member.role}
+                         {member.id} | {member.email} | {member.role}
                          </MenuItem>
                            ))}
                           </Select>

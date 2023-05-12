@@ -1,4 +1,3 @@
-
 import { Member } from "./NewSprintTypes";
 
 export type Team = {
@@ -14,13 +13,3 @@ export type TableRowElementProps = {
   row: any;
   index: number;
 }
-
-// export type Member = {
-//   id: number;
-//   firstName: string;
-//   lastName: string;
-//   memberId: number;
-//   name: string;
-//   role: Role;
-// };
-

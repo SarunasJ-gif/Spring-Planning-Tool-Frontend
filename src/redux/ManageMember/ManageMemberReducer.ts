@@ -10,7 +10,7 @@ export type MemberState = {
   email: string;
 };
 
-export const initialState: {members: MemberState[]} = { members: []};
+const initialState: {members: MemberState[]} = { members: []};
 
 // @ts-ignore
 const reducer = (state = initialState,  { type, payload }) => {
@@ -22,7 +22,6 @@ const reducer = (state = initialState,  { type, payload }) => {
       case actions.UPDATE_MEMBER_ROLE: {
           const { memberId, role } = payload;
         return { ...state, members: state.members.map((member) => member.id === memberId ? { ...member, role: role } : member),};}
-
     default:
       return state;
   }

@@ -2,7 +2,6 @@ import produce from 'immer';
 import * as actions from './ManageTeamActionType';
 import { Member } from '../../types/NewSprintTypes';
 
-
 export type TeamState = {
   team: {
     name: string;
@@ -11,7 +10,7 @@ export type TeamState = {
     members: Member[];
 }
 };
-export const initialState: TeamState = {
+const initialState: TeamState = {
   team: {
     name: '',
     completedProjects: null,

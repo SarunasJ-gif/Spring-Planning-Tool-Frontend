@@ -36,7 +36,6 @@ export type Member = {
   role: Role;
 };
 
-
 export type TaskData = {
   id: number;
   keyValue: string;
