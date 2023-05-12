@@ -264,7 +264,10 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                                     handleKeyChange(point.id, event)
                                   }
                                 />
-                                <PopUp initialColor={point.keyColor} />
+                                <PopUp
+                                  taskId={point.id}
+                                  initialColor={point.keyColor}
+                                />
                               </>
                             ) : (
                               <TaskKey
