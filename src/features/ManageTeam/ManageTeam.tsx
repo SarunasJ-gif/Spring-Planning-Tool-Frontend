@@ -26,8 +26,6 @@ import BottomTable from './BottomTable';
 
 export default function ManageTeam() {
   const dispatch = useDispatch();
-
-
   const localUsers = useSelector((state: RootState) => state.manageMember.members);
 
   const [open, setOpen] = React.useState(false);

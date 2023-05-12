@@ -51,7 +51,8 @@ export default function TopTable() {
  <LeftAlignedTableCell>{row.name}</LeftAlignedTableCell>
     <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
     {/* <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
-    <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell> */}
+    <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell> */} 
+              {/* //unhide if calculations implemented */}
   </TableRow>
           ))}
         </TableBody>
