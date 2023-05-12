@@ -4,13 +4,8 @@ import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
 import Data from './mock_sprint.json';
 
-import { Box, IconButton } from '@mui/material';
-import {
-  EventNoteRounded,
-  AddCircleRounded,
-  PeopleRounded,
-  ArrowLeft,
-} from '@mui/icons-material';
+import { Box, Fab, IconButton } from '@mui/material';
+import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 
 import { Endpoint } from '../../routes/Endpoint';
 import { TypographyItem } from '../TypographyItem/TypographyItem';
@@ -109,14 +104,18 @@ export default function Sidebar(props: { children: React.ReactNode }) {
 
         {!open && (
           <>
-            <SidebarIconButton>
+            <SidebarIconButton sx={{ marginTop: '20px' }}>
               <Link to={Endpoint.ADD_SPRINT} className="link">
-                <AddCircleRounded sx={{ fontSize: '50px', color: 'blue' }} />
+                <Fab color="primary" aria-label="add" size="medium">
+                  <Add sx={{ fontSize: 28 }} />
+                </Fab>
                 <TypographyItem
                   textAlignKey={'center'}
                   fontSizeKey={12}
                   fontFamilyKey={'Open Sans'}
                   fontStyleKey={'normal'}
+                  marginTop="10px"
+                  color={'#202020'}
                 >
                   ADD
                 </TypographyItem>
@@ -125,6 +124,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                   fontSizeKey={12}
                   fontFamilyKey={'Open Sans'}
                   fontStyleKey={'normal'}
+                  color={'#202020'}
                 >
                   SPRINT
                 </TypographyItem>
@@ -132,12 +132,14 @@ export default function Sidebar(props: { children: React.ReactNode }) {
             </SidebarIconButton>
 
             <SidebarIconButton onClick={handleDrawer}>
-              <EventNoteRounded sx={{ fontSize: '32px', color: '#696969' }} />
+              <DateRange sx={{ fontSize: '32px', color: '#696969' }} />
               <TypographyItem
                 textAlignKey={'center'}
                 fontSizeKey={12}
                 fontFamilyKey={'Open Sans'}
                 fontStyleKey={'normal'}
+                marginTop="10px"
+                color={'#202020'}
               >
                 ALL
               </TypographyItem>
@@ -146,6 +148,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                 fontSizeKey={12}
                 fontFamilyKey={'Open Sans'}
                 fontStyleKey={'normal'}
+                color={'#202020'}
               >
                 SPRINTS
               </TypographyItem>
@@ -160,6 +163,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                   fontSizeKey={12}
                   fontFamilyKey={'Open Sans'}
                   fontStyleKey={'normal'}
+                  color={'#202020'}
                 >
                   MANAGE
                 </TypographyItem>
@@ -168,6 +172,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                   fontSizeKey={12}
                   fontFamilyKey={'Open Sans'}
                   fontStyleKey={'normal'}
+                  color={'#202020'}
                 >
                   TEAM
                 </TypographyItem>
@@ -177,18 +182,19 @@ export default function Sidebar(props: { children: React.ReactNode }) {
         )}
         {open && (
           <>
-            <SidebarIconButton>
-              <Link to={Endpoint.ADD_SPRINT} className="link">
-                <AddCircleRounded
-                  sx={{ fontSize: '50px', color: 'blue', marginRight: '200px' }}
-                />
+            <SidebarIconButton sx={{ display: 'flex' }}>
+              <Link to={Endpoint.ADD_SPRINT} className="link openedSideBarLink">
+                <Fab color="primary" aria-label="add" size="medium">
+                  <Add sx={{ fontSize: 28 }} />
+                </Fab>
                 <TypographyItem
                   textAlignKey={'left'}
                   fontSizeKey={13}
                   fontFamilyKey={'Roboto'}
                   fontStyleKey={'normal'}
-                  position="absolute"
-                  marginRight="50px"
+                  marginLeft={'15px'}
+                  color={'#202020'}
+                  letterSpacing={2}
                 >
                   ADD SPRINT
                 </TypographyItem>
@@ -199,6 +205,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               fontSizeKey={13}
               fontFamilyKey={'sans-serif'}
               fontStyleKey={'normal'}
+              color={'#696969'}
               marginLeft="25px"
               marginTop="50px"
             >
@@ -209,6 +216,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               fontSizeKey={18}
               fontFamilyKey={'Avenir'}
               fontStyleKey={'normal'}
+              color={'#696969'}
               marginRight="55px"
             >
               {Data.map((post: { id: number }) => (

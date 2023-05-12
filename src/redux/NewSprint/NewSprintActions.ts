@@ -1,5 +1,5 @@
 import * as actions from './NewSprintActionType';
-import { TaskData } from '../../types/NewSprintTypes';
+import { Member, TaskData } from '../../types/NewSprintTypes';
 import { Dayjs } from 'dayjs';
 
 export const addTask = (task: TaskData) => ({
@@ -8,8 +8,8 @@ export const addTask = (task: TaskData) => ({
 });
 
 export const removeTask = (id: number) => ({
-    type: actions.REMOVE_TASK,
-    payload: id,
+  type: actions.REMOVE_TASK,
+  payload: id,
 });
 
 export const updateStartDate = (startDate: Dayjs | null) => ({
@@ -27,8 +27,18 @@ export const updateTitle = (title: string) => ({
   payload: title,
 });
 
+export const updateTaskKeyColor = (id: number, value: string) => ({
+  type: actions.UPDATE_TASK_KEY_COLOR,
+  payload: { id, value },
+});
+
 export const updateTaskKeyValue = (id: number, value: string) => ({
   type: actions.UPDATE_TASK_KEY_VALUE,
+  payload: { id, value },
+});
+
+export const updateTaskColor = (id: number, value: string) => ({
+  type: actions.UPDATE_TASK_COLOR,
   payload: { id, value },
 });
 
@@ -60,4 +70,33 @@ export const updateTaskNewPoints = (id: number, value: number) => ({
 export const createNewSprint = (sprintData: any) => ({
   type: actions.CREATE_NEW_SPRINT,
   payload: sprintData,
+});
+
+export const updateTaskAssign = (
+  person: string,
+  day: string | null,
+  value: number,
+) => ({
+  type: actions.UPDATE_TASK_ASSIGN,
+  payload: { person, day, value },
+});
+
+export const setBusinessDays = (businessDays: string[]) => ({
+  type: actions.SET_BUSINESS_DAYS,
+  payload: businessDays,
+});
+
+export const setDaysOfWeek = (daysOfWeek: string[]) => ({
+  type: actions.SET_DAYS_OF_WEEK,
+  payload: daysOfWeek,
+});
+
+export const updateShowNotification = (showNotification: boolean) => ({
+  type: actions.UPDATE_SHOW_NOTIFICATION,
+  payload: showNotification,
+});
+
+export const updateMembers = (members: Member[]) => ({
+  type: actions.UPDATE_MEMBERS,
+  payload: members,
 });
