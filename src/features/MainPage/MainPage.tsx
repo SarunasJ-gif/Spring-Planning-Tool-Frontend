@@ -15,6 +15,7 @@ import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
 export default function MainPage() {
   const sprint = useSelector((state: { sprint: Sprint }) => state.sprint);
   const dispatch = useDispatch();
+  const isHistorical = sprint.isHistorical;
 
   const handleStartSprint = () => {
     const newSprint = { ...sprint };
@@ -22,7 +23,10 @@ export default function MainPage() {
   };
 
   const handleEndSprint = () => {
-    dispatch(endSprint(sprint.id));
+    if (isHistorical) {
+    } else {
+      dispatch(endSprint(sprint.id));
+    }
   };
 
   return (
@@ -36,20 +40,20 @@ export default function MainPage() {
             null 
           ):
           (<Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-            variant="contained"
-            sx={{ marginRight: 2 }}
-            onClick={handleStartSprint}
-          >
-            Start Sprint
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={handleEndSprint}
-          >
-            End Sprint
-          </Button>
-        </Box>)
+            <Button
+              variant="contained"
+              sx={{ marginRight: 2 }}
+              onClick={handleStartSprint}
+            >
+              Start Sprint
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={handleEndSprint}
+            >
+              End Sprint
+            </Button>
+          </Box>)
         }
       
       </Box>
@@ -103,5 +107,4 @@ export default function MainPage() {
       </Box>
     </Box>
   );
-        }
-        
+}
