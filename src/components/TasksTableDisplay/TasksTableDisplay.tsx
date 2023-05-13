@@ -8,10 +8,6 @@ import {
   TableHead,
   TableRow,
   TextField,
-  IconButton,
-  MenuItem,
-  FormControl,
-  Select,
   Box,
   Button,
   Typography,
@@ -22,18 +18,10 @@ import {
 } from '@mui/material';
 import { ArrowDropDown, DeleteForever, Add } from '@mui/icons-material';
 import PopUp from '../../components/TasksTable/PopUp';
-import { GoalType } from '../../enums/enums';
 import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addTask,
-  removeTask,
-  updateTaskDescription,
   updateTaskKeyValue,
-  updateTaskNewPoints,
-  updateTaskOldPoints,
-  updateTaskRemainingPoints,
-  updateTaskType,
 } from '../../redux/NewSprint/NewSprintActions';
 import { Sprint, TaskData } from '../../types/NewSprintTypes';
 import TaskKey from '../TaskKey/TaskKey';
@@ -59,63 +47,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   ) => {
     dispatch(updateTaskKeyValue(id, event.target.value));
   };
-
-  const handleDescriptionChange = (
-    id: number,
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    dispatch(updateTaskDescription(id, event.target.value));
-  };
-
-  const handleOldPointsChange = (
-    id: number,
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    dispatch(updateTaskOldPoints(id, Number(event.target.value)));
-  };
-
-  const handleRemainingPointsChange = (
-    id: number,
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    dispatch(updateTaskRemainingPoints(id, Number(event.target.value)));
-  };
-
-  const handleNewPointsChange = (
-    id: number,
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    dispatch(updateTaskNewPoints(id, Number(event.target.value)));
-  };
-
-  const handleDeleteTask = (id: number) => {
-    dispatch(removeTask(id));
-  };
-
-  const handleTypeChange = (id: number, event: GoalType) => {
-    dispatch(updateTaskType(id, event));
-  };
-
-  const getRandomId = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min + 1) + min) * Date.now();
-  };
-
-  const handleAddTask = () => {
-    const newTaskObject: TaskData = {
-      id: getRandomId(1, 1000),
-      keyValue: '',
-      keyColor: '#EC4226',
-      description: '',
-      type: '',
-      oldPoints: 0,
-      remainingPoints: 0,
-      newPoints: 0,
-    };
-
-    dispatch(addTask(newTaskObject));
-    setExpanded(false);
-  };
-
+  
   const calculateTotalOldPoints = (totals: TaskData[]) => {
     const tasks = tasksDisplay?.tasks ?? [];
   
@@ -177,29 +109,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                 </Button>
               </Box>
             </Grid>
-
-            <Grid item>
-              <Button
-                variant="outlined"
-                color="primary"
-                size="small"
-                onClick={handleAddTask}
-                sx={{
-                  letterSpacing: 2,
-                  padding: '5px 10px',
-                  fontWeight: 600,
-                  borderColor: '#dadada',
-                  '&:hover': {
-                    backgroundColor: 'blue',
-                    color: 'white',
-                  },
-                }}
-              >
-                <Add sx={{ mr: 1 }} />
-                ADD A TASK
-              </Button>
             </Grid>
-          </Grid>
         </AccordionSummary>
         <AccordionDetails
           sx={{
@@ -286,105 +196,26 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                           </Box>
                         </TableCell>
                         <TableCell sx={{ minWidth: 400 }}>
-                          {isEditMode ? (
-                            <TextField
-                              id="standard-basic"
-                              variant="standard"
-                              sx={{ width: 600 }}
-                              value={point.description}
-                              onChange={(event) =>
-                                handleDescriptionChange(point.id, event)
-                              }
-                            />
-                          ) : (
-                            <Typography>{point.description}</Typography>
-                          )}
+                        <Typography>{point.description}</Typography>
                         </TableCell>
-                        <StyledTableCell>
-                          {isEditMode ? (
-                            <FormControl variant="standard">
-                              <Select
-                                id={`point-type-select-${point.id}`}
-                                value={point.type}
-                                displayEmpty
-                                onChange={(event) =>
-                                  handleTypeChange(
-                                    point.id,
-                                    event.target.value as GoalType,
-                                  )
-                                }
-                              >
-                                <MenuItem value={GoalType.GOAL_TYPE}>
-                                  Goal
-                                </MenuItem>
-                                <MenuItem value={GoalType.TECHNICAL_TYPE}>
-                                  Technical
-                                </MenuItem>
-                              </Select>
-                            </FormControl>
-                          ) : (
-                            <Typography>{point.type}</Typography>
-                          )}
+                        <StyledTableCell >
+                         <Typography>{point.type}</Typography>
                         </StyledTableCell>
                         <StyledTableCell sx={{ textAlign: 'center' }}>
-                          {isEditMode ? (
-                            <TextField
-                              id={`oldPoints${point.id}`}
-                              variant="standard"
-                              value={point.oldPoints}
-                              onChange={(event) =>
-                                handleOldPointsChange(point.id, event)
-                              }
-                            />
-                          ) : (
-                            <Typography textAlign="center">
-                              {point.oldPoints}
-                            </Typography>
-                          )}
+                        <Typography textAlign="center">
+                         {point.oldPoints}
+                          </Typography>
                         </StyledTableCell>
-                        <StyledTableCell>
-                          {isEditMode ? (
-                            <TextField
-                              id={`remainingPoints${point.id}`}
-                              variant="standard"
-                              value={point.remainingPoints}
-                              onChange={(event) =>
-                                handleRemainingPointsChange(point.id, event)
-                              }
-                            />
-                          ) : (
+                        <StyledTableCell sx={{ textAlign: 'center' }}>
                             <Typography textAlign="center">
                               {point.remainingPoints}
                             </Typography>
-                          )}
                         </StyledTableCell>
-                        <StyledTableCell>
-                          {isEditMode ? (
-                            <TextField
-                              id={`newPoints${point.id}`}
-                              variant="standard"
-                              value={point.newPoints}
-                              onChange={(event) =>
-                                handleNewPointsChange(point.id, event)
-                              }
-                            />
-                          ) : (
+                        <StyledTableCell sx={{ textAlign: 'center' }}>
                             <Typography textAlign="center">
                               {point.newPoints}
                             </Typography>
-                          )}
                         </StyledTableCell>
-                        {isEditMode && (
-                          <TableCell
-                            sx={{ border: '1px solid #ddd', Width: 80 }}
-                          >
-                            <IconButton
-                              onClick={() => handleDeleteTask(point.id)}
-                            >
-                              <DeleteForever />
-                            </IconButton>
-                          </TableCell>
-                        )}
                       </TableRow>
                     ))}
                     <TableRow sx={{ bgcolor: 'grey.50' }}>
