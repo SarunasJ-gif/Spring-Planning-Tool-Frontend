@@ -1,3 +1,4 @@
+import { Role } from '../../enums/enums';
 import * as actions from './ManageMemberActionType';
 
 export type MemberState = { 
@@ -6,7 +7,7 @@ export type MemberState = {
   lastName: string;
   memberId: number| null;
   name: string;
-  role: string;
+  role: Role;
   email: string;
 };
 

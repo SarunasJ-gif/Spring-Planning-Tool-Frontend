@@ -10,27 +10,27 @@ import {
   styled,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { Team } from '../../types/TeamTypes';
+import { RootState } from '../../redux/store';
 
 const LeftAlignedTableCell = styled(TableCell)(() => ({
   textAlign: 'left',
 }));
 
-function createData(
-  name: string,
-  members: number,
-  projects: number,
-  tasks: number,
-) {
-  return { name, members, projects, tasks };
-}
-const rowsTop = [createData('Main Team', 5, 12, 847)];
-
-
 export default function TopTable() {
-  const teams = useSelector((state: {manageTeam: Team}) => state.manageTeam);
-  
-console.log(teams);
+
+  const teams = useSelector((state: RootState) => state.manageTeam.team);
+  console.log('saugykloje teamai - ',teams);
+
+ const rowsTop = teams ? [createData(teams.name, teams.members.length, teams.completedProjects, teams.completedTasks)] : [];
+
+  function createData(
+    name: string,
+    members: number,
+    projects: number | null,
+    tasks: number | null,
+  ) {
+    return { name, members, projects, tasks };
+  }
 
   return (
     <TableContainer component={Paper} sx={{ overflowX: 'hidden' }}>
@@ -44,26 +44,24 @@ console.log(teams);
               <b>Members</b>
             </LeftAlignedTableCell>
             <LeftAlignedTableCell>
-              <b>Projetcs completed</b>
+              <b>Projects completed</b>
             </LeftAlignedTableCell>
             <LeftAlignedTableCell>
-              <b>Task completed</b>
+              <b>Tasks completed</b>
             </LeftAlignedTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-        {rowsTop.map((row) => (
-  <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
- <LeftAlignedTableCell>{row.name}</LeftAlignedTableCell>
-    <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
-    <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
-    <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell> 
-
-  </TableRow>
+          {rowsTop.map((row) => (
+            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={row.name}>
+              <LeftAlignedTableCell>Main team</LeftAlignedTableCell>
+              <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
+              <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
+              <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
-

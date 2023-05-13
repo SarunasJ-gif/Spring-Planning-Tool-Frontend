@@ -6,7 +6,7 @@ import * as actions from './ManageTeamActionType';
 export const getAllTeamData = () => ({
   type: actions.GET_ALL_TEAM_DATA,
 });
-export const getAllTeamDataSuccess = (teams : Team[]) => ({
+export const getAllTeamDataSuccess = (teams : Team) => ({
   type: actions.GET_ALL_TEAM_DATA_SUCCESS,
   payload: teams,
 });

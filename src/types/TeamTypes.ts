@@ -2,7 +2,6 @@ import { Role } from "../enums/enums";
 import { Member } from "./NewSprintTypes";
 
 export type Team = {
-  map(arg0: (team: any) => { name: string; members: number; projects: number; tasks: number; }): unknown;
   id: number;
   name: string;
   completedProjects: number;

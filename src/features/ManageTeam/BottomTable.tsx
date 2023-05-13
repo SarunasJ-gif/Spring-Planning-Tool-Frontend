@@ -16,7 +16,7 @@ import {
 import { Role } from '../../enums/enums';
 import { TableRowElementProps } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTeamMembers, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
+import { getAllTeamData, getAllTeamMembers, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
 import { useEffect } from 'react';
 
 import {  getMembersSuccess, updateMemberRole } from '../../redux/ManageMember/ManageMemberActions';
@@ -24,12 +24,11 @@ import { RootState } from '../../redux/store';
 
 export default function BottomTable() {
   const dispatch = useDispatch();
-
   const members = useSelector((state: RootState) => state.manageTeam.team.members);
-
+ 
   useEffect(() => {
-    dispatch(getAllTeamMembers());
-
+     dispatch(getAllTeamData());
+     dispatch(getAllTeamMembers());
   }, [dispatch]);
 
 
@@ -37,7 +36,6 @@ export default function BottomTable() {
     dispatch(updateMemberRole(id, role));
     dispatch(updateTeamMemberRole(id, role));
   };
-
 
     const TableRowElement: React.FC<TableRowElementProps> = ({row, index }: TableRowElementProps) => {
     const [showSaveButton, setShowSaveButton] = React.useState(false);
@@ -74,7 +72,6 @@ export default function BottomTable() {
       dispatch(getMembersSuccess(updatedMembers));
     };
    
-
     return (
       <React.Fragment key={row.id}>
         <TableRow

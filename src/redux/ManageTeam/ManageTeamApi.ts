@@ -2,7 +2,7 @@ import { get, post, put, remove } from "../../api";
 import { Member } from "../../types/NewSprintTypes";
 import { Team } from "../../types/TeamTypes";
 
-export const getTeamDataAPI = () => { return get<Team[]>("/team");} 
+export const getTeamDataAPI = () => { return get<Team>("/team");} 
 export const updateTeamNameAPI = (teamId: number, name: String) => { return put(`/${teamId}/update/`,{ name }); };//todo
 
 export const getTeamMembersAPI = () => { return get<Member[]>("/member/team/1");} 

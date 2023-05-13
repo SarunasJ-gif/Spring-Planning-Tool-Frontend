@@ -10,6 +10,7 @@ export type TeamState = {
     members: Member[];
 }
 };
+
 const initialState: TeamState = {
   team: {
     name: '',
@@ -23,11 +24,15 @@ const initialState: TeamState = {
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.GET_ALL_TEAM_DATA_SUCCESS:
-      return produce(state, (draftState) => {draftState.team = payload; });
+      return produce(state, (draftState) => {
+        draftState.team = { ...draftState.team, ...payload };
+      });
     case actions.UPDATE_TEAM_NAME:
       return produce (state, (draftState) => { draftState.team.name = payload; });
-    case actions.GET_ALL_TEAM_MEMBERS_SUCCESS:
-        return produce(state, (draftState) => {draftState.team.members = payload; });
+      case actions.GET_ALL_TEAM_MEMBERS_SUCCESS:
+        return produce(state, (draftState) => {
+          draftState.team.members = [...draftState.team.members, ...payload];
+        });
     case actions.ADD_TEAM_MEMBER:
       return produce(state, (draftState) => { draftState.team.members.push(payload); });   
     case actions.REMOVE_TEAM_MEMBER:

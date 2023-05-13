@@ -7,8 +7,9 @@ import { Team } from '../../types/TeamTypes';
 
 export function* getAllTeamDataSaga() {
   try {
-    const teams: Team[] = yield call(getTeamDataAPI);
-    yield put(getAllTeamDataSuccess(teams));
+    const teams: Team = yield call(getTeamDataAPI);
+    console.log('sagose',teams);
+     yield put(getAllTeamDataSuccess(teams));
   } catch (e) { console.error(e);}
 }
 export function* updateTeamNameSaga(action: any) {
@@ -24,6 +25,7 @@ export function* getAllTeamMembersSaga() {
   try {
     const members: Member[] = yield call(getTeamMembersAPI);
     yield put(getAllTeamMembersSuccess(members));
+
   } catch (e) { console.error(e);}
 }
 export function* addTeamMemberSaga(action: any) {
