@@ -19,13 +19,7 @@ const initialState = {
   error: null,
 };
 
-type State = {
-  sprint: Sprint | null;
-  loading: boolean;
-  error: string | null;
-};
-
-const reducer = (state: State = initialState, action: any) => {
+const reducer = (state = initialState, action: any) => {
   switch (action.type) {
     case actions.GET_SPRINT:
       return {

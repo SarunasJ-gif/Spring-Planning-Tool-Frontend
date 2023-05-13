@@ -9,7 +9,7 @@ import { Sprint } from '../../types/NewSprintTypes';
 
 export function* getSprintSaga(){
   try {
-    const sprint : Sprint[] = yield call(getSprint);
+    const sprint: Sprint[] = yield call(getSprint);
     yield put({
       type: GET_SPRINT_SUCCESS,
       payload: sprint,

@@ -12,9 +12,8 @@ import { Sprint } from '../../types/NewSprintTypes';
 
 export default function MainPage() {
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(getSprint(1));
+    dispatch(getSprint("active"));
   }, [dispatch]);
 
   const sprintDisplay = useSelector((state: {sprint : Sprint}) => state.sprint.sprint);

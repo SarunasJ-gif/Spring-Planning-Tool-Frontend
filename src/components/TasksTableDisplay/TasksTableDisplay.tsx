@@ -21,7 +21,7 @@ import {
   AccordionSummary,
 } from '@mui/material';
 import { ArrowDropDown, DeleteForever, Add } from '@mui/icons-material';
-import PopUp from './PopUp';
+import PopUp from '../../components/TasksTable/PopUp';
 import { GoalType } from '../../enums/enums';
 import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,8 +53,6 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   }, [dispatch]);
 
   const tasksDisplay = useSelector((state: {sprint : Sprint}) => state.sprint.sprint);
-  console.log(tasksDisplay?.tasks);
-  console.log(tasksDisplay?.tasks.length);
   const handleKeyChange = (
     id: number,
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
