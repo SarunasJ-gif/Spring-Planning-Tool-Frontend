@@ -4,7 +4,6 @@ import {
   Typography,
   AccordionSummary,
   Button,
-  Alert,
 } from '@mui/material/';
 import { SAccordion } from '../../style/AccordionStyle';
 import TasksTable from '../../components/TasksTable/TasksTable';
@@ -24,38 +23,42 @@ export default function MainPage() {
 
   const handleEndSprint = () => {
     if (sprint.isHistorical) {
-      
-      return;
+      alert("This sprint is done and data is now read-only.");
+    } else {
+      dispatch(endSprint(sprint.id));
     }
-    dispatch(endSprint(sprint.id));
   };
 
   return (
     <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
-      {sprint.isActive ? (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
-            &ldquo;{sprint.title}&rdquo;
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Button
-              variant="contained"
-              sx={{ marginRight: 2 }}
-              onClick={handleStartSprint}
-            >
-              Start Sprint
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={handleEndSprint}
-            >
-              End Sprint
-            </Button>
-          </Box>
-        </Box>
-      ) : (
-        <Alert severity="info">No Active Sprint</Alert>
-      )}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
+          &ldquo;{sprint.title}&rdquo;
+        </Typography>
+        {
+          sprint.isActive ? (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Button
+                variant="contained"
+                sx={{ marginRight: 2 }}
+                onClick={handleStartSprint}
+              >
+                Start Sprint
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={handleEndSprint}
+              >
+                End Sprint
+              </Button>
+            </Box>
+          ) : (
+            <Typography variant="h5" color="text.secondary">
+              No Active Sprint
+            </Typography>
+          )
+        }
+      </Box>
       <Box>
         <Typography fontWeight={'bold'}>
           {sprint.startDate} {' - '} {sprint.endDate}
