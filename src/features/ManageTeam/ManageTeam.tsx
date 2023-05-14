@@ -114,24 +114,21 @@ export default function ManageTeam() {
                           gap: 2,
                         }}
                       >
-                        <FormControl
-                          variant="filled"
-                          sx={{ m: 1, flex: 1, minWidth: 400 }}
-                        >
-                          <InputLabel>User</InputLabel>
-                          <Select
-                            value={selectedMemberId}
-                            onChange={(event) => {
-                              setSelectedMemberId(Number(event.target.value));
-                            }}
-                          >
-                         {localUsers.map((member: any) => (
-                         <MenuItem key={member.id} value={member.id}>
-                         {member.id} | {member.email} | {member.role}
-                         </MenuItem>
-                           ))}
-                          </Select>
-                        </FormControl>
+<FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
+  <InputLabel>User</InputLabel>
+  <Select
+    value={selectedMemberId}
+    onChange={(event) => {
+      setSelectedMemberId(Number(event.target.value));
+    }}
+  >
+    {localUsers.map((member: any) => (
+      <MenuItem key={member.id} value={member.id}>
+        {member.id} | {member.firstName && member.lastName ? `${member.firstName} ${member.lastName}` : member.email} | {member.role}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
                       </DialogContent>
                       <DialogActions sx={{ justifyContent: 'flex-end' }}>
                         <Button onClick={handleAddMember}>ADD</Button>
