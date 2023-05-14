@@ -2,15 +2,14 @@ import { Member, TaskData } from '../../types/NewSprintTypes';
 import * as actions from './SprintActionType';
 
 export type Sprint = {
-  id: (id: any) => any;
-  isHistorical: any;
+  id: (id: number) => number;
   title: string;
   startDate: string | null;
   endDate: string | null;
   tasks: TaskData[];
   memberTeamId: string | null;
   members: Member[];
-  isHistorial: boolean | null;
+  isHistorical: boolean | null;
   isActive: boolean | null;
 };
 

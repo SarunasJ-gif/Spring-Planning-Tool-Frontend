@@ -19,13 +19,12 @@ export default function MainPage() {
 
   const handleStartSprint = () => {
     const newSprint = { ...sprint };
-    dispatch(startSprint(newSprint));
+    dispatch(startSprint(newSprint.id));
   };
 
   const handleEndSprint = () => {
     if (sprint.isHistorical) {
       
-      // Do something if the sprint is historical
       return;
     }
     dispatch(endSprint(sprint.id));
