@@ -4,6 +4,7 @@ import {
   Typography,
   AccordionSummary,
   Button,
+  Alert,
 } from '@mui/material/';
 import { SAccordion } from '../../style/AccordionStyle';
 import TasksTable from '../../components/TasksTable/TasksTable';
@@ -15,7 +16,6 @@ import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
 export default function MainPage() {
   const sprint = useSelector((state: { sprint: Sprint }) => state.sprint);
   const dispatch = useDispatch();
-  const isHistorical = sprint.isHistorical;
 
   const handleStartSprint = () => {
     const newSprint = { ...sprint };
@@ -23,23 +23,22 @@ export default function MainPage() {
   };
 
   const handleEndSprint = () => {
-    if (isHistorical) {
-    } else {
-      dispatch(endSprint(sprint.id));
+    if (sprint.isHistorical) {
+      
+      // Do something if the sprint is historical
+      return;
     }
+    dispatch(endSprint(sprint.id));
   };
 
   return (
     <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
-          &ldquo;{sprint.title}&rdquo;
-        </Typography>
-        {
-          sprint.isActive ? (
-            null 
-          ):
-          (<Box sx={{ display: 'flex', alignItems: 'center' }}>
+      {sprint.isActive ? (
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
+            &ldquo;{sprint.title}&rdquo;
+          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
               variant="contained"
               sx={{ marginRight: 2 }}
@@ -53,10 +52,11 @@ export default function MainPage() {
             >
               End Sprint
             </Button>
-          </Box>)
-        }
-      
-      </Box>
+          </Box>
+        </Box>
+      ) : (
+        <Alert severity="info">No Active Sprint</Alert>
+      )}
       <Box>
         <Typography fontWeight={'bold'}>
           {sprint.startDate} {' - '} {sprint.endDate}
@@ -107,4 +107,4 @@ export default function MainPage() {
       </Box>
     </Box>
   );
-}
+} 
