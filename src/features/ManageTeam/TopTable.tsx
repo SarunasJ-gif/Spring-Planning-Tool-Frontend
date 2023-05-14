@@ -17,11 +17,8 @@ const LeftAlignedTableCell = styled(TableCell)(() => ({
 }));
 
 export default function TopTable() {
-
   const teams = useSelector((state: RootState) => state.manageTeam.team);
-  console.log('saugykloje teamai - ',teams);
-
- const rowsTop = teams ? [createData(teams.name, teams.members.length, teams.completedProjects, teams.completedTasks)] : [];
+  const rowsTop = teams ? [createData(teams.name, teams.members.length, teams.completedProjects, teams.completedTasks)] : [];
 
   function createData(
     name: string,
@@ -54,7 +51,7 @@ export default function TopTable() {
         <TableBody>
           {rowsTop.map((row) => (
             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={row.name}>
-              <LeftAlignedTableCell>Main team</LeftAlignedTableCell>
+              <LeftAlignedTableCell>{row.name}</LeftAlignedTableCell>
               <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
               <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
               <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell>
