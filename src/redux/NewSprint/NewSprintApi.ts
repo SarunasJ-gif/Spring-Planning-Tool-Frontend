@@ -1,3 +1,7 @@
-import { post } from "../../api";
+import { post } from '../../api';
+import { NewSprintData } from './NewSprintReducer';
 
-export const createSprint = (sprintData: unknown) => { post("/sprint", sprintData);}
+export const createSprint = (sprintData: NewSprintData) => {
+  console.log(sprintData);
+  post('/sprint', sprintData);
+};

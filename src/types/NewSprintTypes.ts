@@ -20,14 +20,15 @@ export type Task = {
 };
 
 export type MemberWorkingDay = {
-    day: string;
-    task: TaskData | null;
+  day: string;
+  task: TaskData | null;
 };
 
 export type Member = {
   firstName: string;
   lastName: string;
-  memberId: string;
+  member_id: string;
+  email: string;
   workingDays: MemberWorkingDay[];
 };
 

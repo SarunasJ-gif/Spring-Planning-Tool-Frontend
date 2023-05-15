@@ -1,6 +1,7 @@
 import produce from 'immer';
 import * as actions from './NewSprintActionType';
 import { Member, TaskData } from '../../types/NewSprintTypes';
+import dayjs from 'dayjs';
 
 export type NewSprint = {
   sprint: {
@@ -8,7 +9,6 @@ export type NewSprint = {
     startDate: string | null;
     endDate: string | null;
     tasks: TaskData[];
-    memberTeamId: string | null;
     members: Member[];
     businessDays: string[];
     daysOfWeek: string[];
@@ -17,24 +17,28 @@ export type NewSprint = {
     isActive: boolean | null;
   };
 };
+
+export type NewSprintData = {
+  sprint: {
+    title: string;
+    startDate: string | null;
+    endDate: string | null;
+    tasks: TaskData[];
+    members: Member[];
+  };
+};
 export const initialState: NewSprint = {
   sprint: {
     title: '',
     startDate: null,
     endDate: null,
     tasks: [],
-    memberTeamId: null,
     members: [
       {
         firstName: 'John',
         lastName: 'Doe',
-        memberId: '1',
-        workingDays: [],
-      },
-      {
-        firstName: 'Jane',
-        lastName: 'Smith',
-        memberId: '2',
+        email: 'test@test.com',
+        member_id: '1',
         workingDays: [],
       },
     ],
@@ -116,7 +120,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_TASK_ASSIGN:
       return produce(state, (draftState) => {
         const memberIndex = state.sprint.members.findIndex(
-          (o) => o.memberId === payload.person,
+          (o) => o.member_id === payload.person,
         );
         const tasksIndex = state.sprint.members[
           memberIndex

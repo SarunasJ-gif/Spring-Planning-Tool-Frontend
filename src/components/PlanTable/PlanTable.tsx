@@ -53,7 +53,7 @@ export default function PlanTable() {
         date.setDate(date.getDate() + 1)
       ) {
         if (date.getDay() !== 0 && date.getDay() !== 6) {
-          const day = date.toLocaleDateString();
+          const day = date.toISOString().split('T')[0];
           days.push(day);
           daysOfWeek.push(format(date, 'EEE'));
         }
@@ -143,7 +143,7 @@ export default function PlanTable() {
         </TableHead>
         <TableBody>
           {sprint.members.map((member) => (
-            <TableRow key={member.memberId} sx={{ height: '48px' }}>
+            <TableRow key={member.member_id} sx={{ height: '48px' }}>
               <TableCell
                 sx={{
                   borderRight: '1px solid #e0e0e0',
@@ -177,7 +177,7 @@ export default function PlanTable() {
                       value={day?.task?.id ?? ''}
                       onChange={(event) =>
                         handleTaskChange(
-                          member.memberId,
+                          member.member_id,
                           day.day,
                           Number(event.target.value),
                         )
@@ -229,7 +229,7 @@ export default function PlanTable() {
               >
                 {
                   Object.values(
-                    sprint.members[Number(member.memberId) - 1].workingDays ||
+                    sprint.members[Number(member.member_id) - 1].workingDays ||
                       {},
                   ).filter(
                     (day) =>
