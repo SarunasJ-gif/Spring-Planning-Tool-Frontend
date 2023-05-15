@@ -1,15 +1,17 @@
 import * as actions from './SprintsActionType';
 
-export type Sprint = {
-    title: string;
-    startDate: string | null;
-    endDate: string | null;
-    isHistorial: boolean | null;
-    isActive: boolean | null;
+export type Sprints = {
+    sprint: {
+        title: string;
+        startDate: string | null;
+        endDate: string | null;
+        isHistorial: boolean | null;
+        isActive: boolean | null;
+    }
 };
 
 const initialState = {
-    sprints: null,
+    sprints: [],
     loading: false,
     error: null,
 };
