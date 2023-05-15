@@ -232,12 +232,12 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                 <h5 key={sprint.sprint.id}>
                   &ldquo;Sourcery Students&ldquo; - Sprint {sprint.sprint.title}
                 </h5>
-              )).reverse()},
+              ))},
               {historicalSprints.map((sprint: Sprints) => (
                 <h5 key={sprint.sprint.id}>
                   &ldquo;Sourcery Students&ldquo; - Sprint {sprint.sprint.title}. (Done)
                 </h5>
-              )).reverse()}
+              ))}
             </TypographyItem>
           </>
         )}
