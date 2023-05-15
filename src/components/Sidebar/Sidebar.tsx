@@ -10,6 +10,8 @@ import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 import { Endpoint } from '../../routes/Endpoint';
 import { TypographyItem } from '../TypographyItem/TypographyItem';
 import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
+import { Sprints } from '../../redux/Sprints/SprintsReducer';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 295;
 
@@ -52,6 +54,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Sidebar(props: { children: React.ReactNode }) {
+  const sprints = useSelector((state: { sprints: Sprints }) => state.sprints.sprint);
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
