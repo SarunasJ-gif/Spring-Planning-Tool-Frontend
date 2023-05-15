@@ -60,6 +60,12 @@ export default function Sidebar(props: { children: React.ReactNode }) {
     setOpen(!open);
   };
 
+  const activeSprints = (sprints: Sprints) => sprints
+    .filter((sprint: Sprints) => sprint.sprint.isActive === true);
+
+  const historicalSprints = sprints
+    .filter((sprint: Sprints) => sprint.sprint.isHistorical === true);
+
   return (
     <Box
       sx={{
@@ -222,9 +228,14 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               color={'#696969'}
               marginRight="55px"
             >
-              {Data.map((post: { id: number }) => (
-                <h5 key={post.id}>
-                  &ldquo;Sourcery Students&ldquo; - Sprint {post.id}
+              {activeSprints.map((sprint: Sprints) => (
+                <h5 key={sprint.sprint.id}>
+                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.sprint.title}
+                </h5>
+              )).reverse()},
+              {historicalSprints.map((sprint: Sprints) => (
+                <h5 key={sprint.sprint.id}>
+                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.sprint.title}. (Done)
                 </h5>
               )).reverse()}
             </TypographyItem>
