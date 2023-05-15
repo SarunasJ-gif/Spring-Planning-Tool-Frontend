@@ -16,8 +16,7 @@ function BottomMenu() {
   );
 
   const handleAddClick = () => {
-    const newSprint = { ...sprint };
-    dispatch(createNewSprint(newSprint));
+    dispatch(createNewSprint(sprint));
     dispatch(clearNewSprintState());
     navigate('/');
   };
