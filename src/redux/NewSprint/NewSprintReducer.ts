@@ -1,7 +1,6 @@
 import produce from 'immer';
 import * as actions from './NewSprintActionType';
 import { Member, TaskData } from '../../types/NewSprintTypes';
-import { useSelector } from 'react-redux';
 
 export type NewSprint = {
   sprint: {
