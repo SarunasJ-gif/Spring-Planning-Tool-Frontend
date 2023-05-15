@@ -2,7 +2,6 @@ import * as actions from './SprintsActionType';
 
 export type Sprints = {
     sprint: {
-        filter(arg0: (sprint: Sprints) => boolean): unknown;
         id: number,
         title: string;
         startDate: string | null;
