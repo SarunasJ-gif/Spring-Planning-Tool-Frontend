@@ -1,7 +1,7 @@
 import produce from 'immer';
 import * as actions from './NewSprintActionType';
 import { Member, TaskData } from '../../types/NewSprintTypes';
-import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
 export type NewSprint = {
   sprint: {
@@ -18,15 +18,6 @@ export type NewSprint = {
   };
 };
 
-export type NewSprintData = {
-  sprint: {
-    title: string;
-    startDate: string | null;
-    endDate: string | null;
-    tasks: TaskData[];
-    members: Member[];
-  };
-};
 export const initialState: NewSprint = {
   sprint: {
     title: '',
@@ -178,6 +169,12 @@ const reducer = (state = initialState, { type, payload }) => {
         draftState.sprint.members = [...payload];
       });
     }
+    case actions.CREATE_NEW_SPRINT_SUCCESS:
+      return initialState;
+
+    case actions.CLEAR_NEW_SPRINT_STATE:
+      return initialState;
+
     default:
       return state;
   }

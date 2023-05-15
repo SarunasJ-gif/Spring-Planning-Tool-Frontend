@@ -100,3 +100,11 @@ export const updateMembers = (members: Member[]) => ({
   type: actions.UPDATE_MEMBERS,
   payload: members,
 });
+
+export const createNewSprintSuccess = () => ({
+  type: actions.CREATE_NEW_SPRINT_SUCCESS,
+});
+
+export const clearNewSprintState = () => ({
+  type: actions.CLEAR_NEW_SPRINT_STATE,
+});
