@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { ADD_TEAM_MEMBER, GET_ALL_TEAM_DATA, GET_ALL_TEAM_MEMBERS,  REMOVE_TEAM_MEMBER, UPDATE_TEAM_NAME } from './ManageTeamActionType';
-import { addTeamMember, getTeamDataApiMAIN, getTeamMembersAPI, removeTeamMember,  updateTeamNameAPI } from './ManageTeamApi';
-import { getAllTeamDataSuccess, getAllTeamMembersSuccess, removeTeamMemberSuccess, updateTeamName } from './ManageTeamActions';
+import { addTeamMemberAPI, getTeamDataApiMAIN, getTeamMembersAPI, removeTeamMember,  updateTeamNameAPI } from './ManageTeamApi';
+import { addTeamMember, getAllTeamDataSuccess, getAllTeamMembersSuccess, removeTeamMemberSuccess, updateTeamName } from './ManageTeamActions';
 import { Member } from '../../types/NewSprintTypes';
 import { Team } from '../../types/TeamTypes';
 
@@ -29,8 +29,9 @@ export function* getAllTeamMembersSaga() {
 }
 export function* addTeamMemberSaga(action: any) {
   try {
-    const { memberId } = action.payload;
-    yield call(addTeamMember, memberId);
+    const { memberId, email, role, firstName, lastName } = action.payload;
+    yield call(addTeamMemberAPI, memberId);
+    yield call(addTeamMember, memberId, email, role, firstName, lastName);
   } catch (e) {console.error(e);}
 }
 function* removeTeamMemberSaga(action: any) {

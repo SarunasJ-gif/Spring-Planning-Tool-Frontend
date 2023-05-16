@@ -11,8 +11,7 @@ export type TeamState = {
 }
 };
 
-export const initialState:  TeamState = {  team: { name: '', completedProjects: null, completedTasks: null, members: [] },
-};
+ export const initialState: TeamState = {  team: { name: '', completedProjects: null, completedTasks: null, members: [] },};
 
 
 // @ts-ignore

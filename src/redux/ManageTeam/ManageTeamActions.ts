@@ -14,10 +14,10 @@ export const updateTeamName = (id:number, name: string) => ({
   type: actions.UPDATE_TEAM_NAME,
   payload: { id, name },
 });
-export const addTeamMember = (memberId: number, email: string, role: Role) => {
+export const addTeamMember = (memberId: number, email: string, role: Role, firstName:string, lastName:string ) => {
   return {
     type: actions.ADD_TEAM_MEMBER,
-    payload: { memberId, email, role },
+    payload: { memberId, email, role, firstName, lastName },
   };
 };
 export const removeTeamMember = (memberId: number) => ({

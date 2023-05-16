@@ -9,7 +9,7 @@ const reducer = (state = initialState,  { type, payload }) => {
   switch (type) {
       case actions.GET_MEMBER_REQUEST:
         return {...state };
-      case actions.GET_MEMBER_SUCCESS:
+      case actions.GET_MEMBER_SUCCESS: // need to update
         return { ...state, members: payload };
         case actions.UPDATE_MEMBER_ROLE:
       return { ...state, members: state.members.map((member) =>

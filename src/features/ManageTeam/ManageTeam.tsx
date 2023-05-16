@@ -36,7 +36,7 @@ export default function ManageTeam() {
   const handleAddMember = () => {
     const selectedMember = localUsers.find((member: { id: number; }) => member.id === selectedMemberId);
     if (selectedMember) {
-      dispatch(addTeamMember(selectedMember.id, selectedMember.email, selectedMember.role));
+      dispatch(addTeamMember(selectedMember.id, selectedMember.email, selectedMember.role, selectedMember.firstName, selectedMember.lastName,));
     }
     handleClose();
   };
