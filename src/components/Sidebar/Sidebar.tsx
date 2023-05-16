@@ -74,10 +74,6 @@ export default function Sidebar(props: { children: React.ReactNode }) {
     dispatch(getSprints());
   }, [dispatch]);
 
-  const activeSprints: any[] = sprints.filter((sprints: Sprints) => sprints.sprint.isActive);
-  const historicalSprints: any[] = sprints.filter((sprints: Sprints) => sprints.sprint.isHistorical);
-
-
   return (
     <Box
       sx={{
@@ -240,16 +236,20 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               color={'#696969'}
               marginRight="55px"
             >
-              {activeSprints.map((sprint: Sprints) => (
-                <h5 key={sprint.id}>
-                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}
-                </h5>
-              ))},
-              {historicalSprints.map((sprint: Sprints) => (
-                <h5 key={sprint.id}>
-                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}. (Done)
-                </h5>
-              ))}
+              {sprints
+                .filter((sprint: Sprints) => sprint.isActive)
+                .map((sprint: Sprints) => (
+                  <h5 key={sprint.id}>
+                    &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}
+                  </h5>
+                ))}
+              {sprints
+                .filter((sprint: Sprints) => sprint.isHistorical)
+                .map((sprint: Sprints) => (
+                  <h5 key={sprint.id}>
+                    &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}. (Done)
+                  </h5>
+                ))}
             </TypographyItem>
           </>
         )}
