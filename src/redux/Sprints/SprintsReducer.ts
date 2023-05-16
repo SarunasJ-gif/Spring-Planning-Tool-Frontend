@@ -9,7 +9,7 @@ export type sprint = {
     isActive: boolean | null;
 };
 
-export type SprintsState = {
+export type Sprints = {
     sprints: sprint[];
     loading: boolean;
     error: string | null;
