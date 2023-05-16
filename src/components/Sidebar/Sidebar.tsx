@@ -74,8 +74,8 @@ export default function Sidebar(props: { children: React.ReactNode }) {
     dispatch(getSprints());
   }, [dispatch]);
 
-  const activeSprints: any[] = sprints.filter((sprints: Sprints) => sprints.sprint.isActive);
-  const historicalSprints: any[] = sprints.filter((sprints: Sprints) => sprints.sprint.isHistorical);
+  // const activeSprints: any[] = sprints.filter((sprints: Sprints) => sprints.sprint.isActive);
+  // const historicalSprints: any[] = sprints.filter((sprints: Sprints) => sprints.sprint.isHistorical);
 
 
   return (
@@ -240,12 +240,12 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               color={'#696969'}
               marginRight="55px"
             >
-              {activeSprints.map((sprint: Sprints) => (
+              {sprints.map((sprint: Sprints) => (
                 <h5 key={sprint.id}>
                   &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}
                 </h5>
               ))},
-              {historicalSprints.map((sprint: Sprints) => (
+              {sprints.map((sprint: Sprints) => (
                 <h5 key={sprint.id}>
                   &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}. (Done)
                 </h5>
