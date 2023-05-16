@@ -1,20 +1,18 @@
 import * as actions from './SprintsActionType';
 
-// interface Sprints {
-//     sprints: any[];
-//     loading: boolean;
-//     error: string | null;
-// }
+export type sprint = {
+    id: number;
+    title: string;
+    startDate: string | null;
+    endDate: string | null;
+    isHistorical: boolean | null;
+    isActive: boolean | null;
+};
 
-export type Sprints = {
-    sprint: {
-        id: number,
-        title: string;
-        startDate: string | null;
-        endDate: string | null;
-        isHistorical: boolean | null;
-        isActive: boolean | null;
-    }
+export type SprintsState = {
+    sprints: sprint[];
+    loading: boolean;
+    error: string | null;
 };
 
 const initialState = {

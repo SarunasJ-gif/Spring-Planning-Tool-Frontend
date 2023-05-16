@@ -1,8 +1,8 @@
 import * as actions from './SprintsActionType';
 
-export const getSprints = (payload: any) => ({
+export const getSprints = (sprints: any[]) => ({
     type: actions.GET_SPRINTS,
-    payload,
+    payload: sprints,
 });
 
 export const getSprintsSuccess = (sprints: any[]) => ({

@@ -1,9 +1,7 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
-import Data from './mock_sprint.json';
-
 import { Box, Fab, IconButton } from '@mui/material';
 import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 
@@ -14,12 +12,15 @@ import { Sprints } from '../../redux/Sprints/SprintsReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSprints } from '../../redux/Sprints/SprintsActions';
 
-interface SprintListProps {
-  sprints: any[];
-  loading: boolean;
-  error: string | null;
-  getStrintsSuccess: () => void;
-};
+interface sprint {
+  id: number;
+  title: string;
+  startDate: string | null;
+  endDate: string | null;
+  isHistorical: boolean | null;
+  isActive: boolean | null;
+
+}
 
 const drawerWidth = 295;
 
@@ -63,7 +64,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar(props: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const sprints = useSelector((state: { sprints: Sprints }) => state.sprints.sprint);
+  const sprints: sprint[] = useSelector((state: { sprints: { sprint: sprint[] } }) => state.sprints.sprint);
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
@@ -73,11 +74,8 @@ export default function Sidebar(props: { children: React.ReactNode }) {
     dispatch(getSprints());
   }, [dispatch]);
 
-  const activeSprints = sprints
-    .filter((sprint: { isActive: boolean; }) => sprint.isActive === true);
-
-  const historicalSprints = sprints
-    .filter((sprints: Sprints) => sprints.sprint.isHistorical === true);
+  const activeSprints: Sprints[] = sprints.filter((sprint: { isActive: boolean; }) => sprint.isActive);
+  const historicalSprints: Sprints[] = sprints.filter((sprint: { isHistorical: boolean; }) => sprint.isHistorical);
 
 
   return (
@@ -243,13 +241,13 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               marginRight="55px"
             >
               {activeSprints.map((sprint: Sprints) => (
-                <h5 key={sprint.sprint.id}>
-                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.sprint.title}
+                <h5 key={sprint.id}>
+                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}
                 </h5>
               ))},
               {historicalSprints.map((sprint: Sprints) => (
-                <h5 key={sprint.sprint.id}>
-                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.sprint.title}. (Done)
+                <h5 key={sprint.id}>
+                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}. (Done)
                 </h5>
               ))}
             </TypographyItem>
