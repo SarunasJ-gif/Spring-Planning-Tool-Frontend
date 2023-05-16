@@ -1,34 +1,15 @@
 import * as actions from './SprintsActionType';
 
-export type sprint = {
-    id: number;
-    title: string;
-    startDate: string | null;
-    endDate: string | null;
-    isHistorical: boolean | null;
-    isActive: boolean | null;
-};
+interface Sprints {
+    sprints: any[];
+    loading: boolean;
+    error: string | null;
+}
 
-export type Sprints = {
-    sprint: {
-        id: number;
-        title: string;
-        startDate: string | null;
-        endDate: string | null;
-        isHistorical: boolean | null;
-        isActive: boolean | null;
-    }
-};
-
-const initialState = {
-    sprint: {
-        id: 0,
-        title: "",
-        startDate: "",
-        endDate: "",
-        isHistorical: false,
-        isActive: false,
-    }
+const initialState: Sprints = {
+    sprints: [],
+    loading: false,
+    error: null,
 };
 
 const reducer = (state = initialState, action: any) => {
