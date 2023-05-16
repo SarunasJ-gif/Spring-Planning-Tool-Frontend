@@ -14,7 +14,9 @@ export type TableRowElementProps = {
         id: number;
         role: Role; 
         email: string;
-        name: string
+        name: string;
+        firstName :string;
+        lastName :string;
       };
   index: number;
 }

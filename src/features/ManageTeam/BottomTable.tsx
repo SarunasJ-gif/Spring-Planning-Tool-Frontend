@@ -31,7 +31,6 @@ export default function BottomTable() {
      dispatch(getAllTeamMembers());
   }, [dispatch]);
 
-
   const handleRoleChange = (id: number, role: Role) => {
     dispatch(updateMemberRole(id, role));
     dispatch(updateTeamMemberRole(id, role));
@@ -94,7 +93,7 @@ export default function BottomTable() {
             />
           </TableCell>
           <TableCell align="left" sx={{ width: '250px' }}>
-            {row.email}
+          {row.firstName && row.lastName ? `${row.firstName} ${row.lastName}` : row.email}
           </TableCell>
           <TableCell
             align="left"
