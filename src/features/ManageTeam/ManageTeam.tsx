@@ -22,13 +22,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMembersRequest } from '../../redux/ManageMember/ManageMemberActions';
 import { addTeamMember } from '../../redux/ManageTeam/ManageTeamActions';
 import BottomTable from './BottomTable';
-import { MemberState } from '../../redux/ManageMember/ManageMemberReducer';
-
+import { Member } from '../../types/NewSprintTypes';
 
 export default function ManageTeam() {
   const dispatch = useDispatch();
 
-  const localUsers = useSelector((state: {manageMember: { members: MemberState[] }}) => state.manageMember.members);
+  const localUsers = useSelector((state: {manageMember: { members: Member[] }}) => state.manageMember.members);
 
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);

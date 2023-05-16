@@ -1,17 +1,8 @@
-import { Role } from '../../enums/enums';
+
+import { Member } from '../../types/NewSprintTypes';
 import * as actions from './ManageMemberActionType';
 
-export type MemberState = { 
-  id: number;
-  firstName: string;
-  lastName: string;
-  memberId: number| null;
-  name: string;
-  role: Role;
-  email: string;
-};
-
-export const initialState: {members: MemberState[]} = { members: []};
+ export const initialState: {members: Member[]} = { members: []};
 
 // @ts-ignore
 const reducer = (state = initialState,  { type, payload }) => {

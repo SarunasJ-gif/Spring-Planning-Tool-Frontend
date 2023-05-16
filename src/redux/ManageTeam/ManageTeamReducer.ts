@@ -11,14 +11,9 @@ export type TeamState = {
 }
 };
 
-const initialState: TeamState = {
-  team: {
-    name: '',
-    completedProjects: null,
-    completedTasks: null,
-    members: [],
-  },
+export const initialState:  TeamState = {  team: { name: '', completedProjects: null, completedTasks: null, members: [] },
 };
+
 
 // @ts-ignore
 const reducer = (state = initialState, { type, payload }) => {

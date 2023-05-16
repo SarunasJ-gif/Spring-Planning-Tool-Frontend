@@ -18,13 +18,13 @@ import { TableRowElementProps } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTeamData, getAllTeamMembers, removeTeamMember, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
 import { useEffect } from 'react';
-
 import {  getMembersSuccess, updateMemberRole } from '../../redux/ManageMember/ManageMemberActions';
-import { RootState } from '../../redux/store';
+import { TeamState } from '../../redux/ManageTeam/ManageTeamReducer';
 
 export default function BottomTable() {
   const dispatch = useDispatch();
-  const members = useSelector((state: RootState) => state.manageTeam.team.members);
+
+  const members = useSelector((state: {manageTeam: TeamState}) => state.manageTeam.team.members);
  
   useEffect(() => {
      dispatch(getAllTeamData());
