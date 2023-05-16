@@ -11,7 +11,15 @@ import { Endpoint } from '../../routes/Endpoint';
 import { TypographyItem } from '../TypographyItem/TypographyItem';
 import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
 import { Sprints } from '../../redux/Sprints/SprintsReducer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSprints } from '../../redux/Sprints/SprintsActions';
+
+interface SprintListProps {
+  sprints: any[];
+  loading: boolean;
+  error: string | null;
+  getStrintsSuccess: () => void;
+};
 
 const drawerWidth = 295;
 
@@ -54,17 +62,23 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Sidebar(props: { children: React.ReactNode }) {
+  const dispatch = useDispatch();
   const sprints = useSelector((state: { sprints: Sprints }) => state.sprints.sprint);
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
   };
 
-  const activeSprints = (sprints: Sprints) => sprints
-    .filter((sprint: Sprints) => sprint.sprint.isActive === true);
+  useEffect(() => {
+    dispatch(getSprints());
+  }, [dispatch]);
+
+  const activeSprints = sprints
+    .filter((sprint: { isActive: boolean; }) => sprint.isActive === true);
 
   const historicalSprints = sprints
-    .filter((sprint: Sprints) => sprint.sprint.isHistorical === true);
+    .filter((sprints: Sprints) => sprints.sprint.isHistorical === true);
+
 
   return (
     <Box

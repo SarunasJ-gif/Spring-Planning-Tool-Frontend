@@ -1,5 +1,11 @@
 import * as actions from './SprintsActionType';
 
+// interface Sprints {
+//     sprints: any[];
+//     loading: boolean;
+//     error: string | null;
+// }
+
 export type Sprints = {
     sprint: {
         id: number,
@@ -23,12 +29,13 @@ const reducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 loading: true,
+                error: null,
             };
         case actions.GET_SPRINTS_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                sprint: action.payload,
+                sprints: action.payload,
             };
         case actions.GET_SPRINTS_FAILURE:
             return {
