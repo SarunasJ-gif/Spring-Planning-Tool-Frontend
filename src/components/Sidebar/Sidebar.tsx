@@ -74,8 +74,8 @@ export default function Sidebar(props: { children: React.ReactNode }) {
     dispatch(getSprints());
   }, [dispatch]);
 
-  const activeSprints: Sprints[] = sprints.filter((sprint: { isActive: boolean; }) => sprint.isActive);
-  const historicalSprints: Sprints[] = sprints.filter((sprint: { isHistorical: boolean; }) => sprint.isHistorical);
+  const activeSprints: Sprints[] = sprints.filter(sprint.isHistorical);
+  const historicalSprints: Sprints[] = sprints.filter(sprint.isHistorical);
 
 
   return (
