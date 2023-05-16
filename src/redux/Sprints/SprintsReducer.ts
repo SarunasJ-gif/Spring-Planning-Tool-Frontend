@@ -10,15 +10,25 @@ export type sprint = {
 };
 
 export type Sprints = {
-    sprints: sprint[];
-    loading: boolean;
-    error: string | null;
+    sprint: {
+        id: number;
+        title: string;
+        startDate: string | null;
+        endDate: string | null;
+        isHistorical: boolean | null;
+        isActive: boolean | null;
+    }
 };
 
 const initialState = {
-    sprints: [],
-    loading: false,
-    error: null,
+    sprint: {
+        id: 0,
+        title: "",
+        startDate: "",
+        endDate: "",
+        isHistorical: false,
+        isActive: false,
+    }
 };
 
 const reducer = (state = initialState, action: any) => {

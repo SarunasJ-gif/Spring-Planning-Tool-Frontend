@@ -1,6 +1,17 @@
 import * as actions from './SprintsActionType';
 
-export const getSprints = (sprints: any[]) => ({
+interface Sprints {
+    sprint: {
+        id: number;
+        title: string;
+        startDate: string | null;
+        endDate: string | null;
+        isHistorical: boolean | null;
+        isActive: boolean | null;
+    }
+}
+
+export const getSprints = (sprints: Sprints) => ({
     type: actions.GET_SPRINTS,
     payload: sprints,
 });
@@ -14,3 +25,4 @@ export const getSprintsFailure = (error: string) => ({
     type: actions.GET_SPRINTS_FAILURE,
     payload: error,
 });
+

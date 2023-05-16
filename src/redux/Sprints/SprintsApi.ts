@@ -8,8 +8,3 @@ export const getSprints = async (payload: any) => {
 };
 
 
-// export const getSprints = async () => {
-//     const response = await axios.get(`http://localhost:8080/sprint`);
-//     console.log(response);
-//     return response.data;
-// };

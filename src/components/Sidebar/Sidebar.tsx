@@ -64,7 +64,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar(props: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const sprints: sprint[] = useSelector((state: { sprints: { sprint: sprint[] } }) => state.sprints.sprint);
+  const sprints = useSelector((state: { sprints: { sprints: any[] } }) => state.sprints.sprints);
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
@@ -74,8 +74,8 @@ export default function Sidebar(props: { children: React.ReactNode }) {
     dispatch(getSprints());
   }, [dispatch]);
 
-  const activeSprints: Sprints[] = sprints.filter(sprint.isHistorical);
-  const historicalSprints: Sprints[] = sprints.filter(sprint.isHistorical);
+  const activeSprints: any[] = sprints.filter((sprints: Sprints) => sprints.sprint.isActive);
+  const historicalSprints: any[] = sprints.filter((sprints: Sprints) => sprints.sprint.isHistorical);
 
 
   return (
