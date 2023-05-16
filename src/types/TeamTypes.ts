@@ -10,7 +10,6 @@ export type Team = {
 }
 
 export type TableRowElementProps = {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       row: {
         id: number;
         role: Role; 
