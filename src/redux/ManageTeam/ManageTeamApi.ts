@@ -14,3 +14,4 @@ export const removeTeamMember = (memberId: number) => { return remove(`/team/1/m
 
 export const getMembersAPI = () => { return get<Member[]>("/member") ;} 
 export const updateTeamMemberRoleAPI = (id: number, role: Role) => { return put(`/member/role`, {id, role }); };
+export const updateTeamMemberNameAPI = (email: string, firstName: String, lastName: String ) => { return put(`/member/update`, {email, firstName, lastName }); };
