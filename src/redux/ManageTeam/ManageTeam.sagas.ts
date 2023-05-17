@@ -56,7 +56,6 @@ export function* removeTeamMemberSaga(action: any) {
       } catch (e) {console.error(e);}
     }
 
-
 export default function* newTeamSaga() {
   yield takeLatest(UPDATE_TEAM_NAME, updateTeamNameSaga); 
   yield takeLatest(ADD_TEAM_MEMBER, addTeamMemberSaga); 
@@ -66,7 +65,3 @@ export default function* newTeamSaga() {
   yield takeLatest(GET_MEMBER_REQUEST, getMembersSaga); 
   yield takeLatest(UPDATE_MEMBER_ROLE, updateMemberRoleSaga);
 }
-
-//
-
-

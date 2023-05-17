@@ -40,10 +40,6 @@ export const updateTeamMemberRole = (memberId: number, role: string) => ({
   payload: { memberId, role },
 });
 
-
-//
-
-
 export const getMembersRequest = () => ({
   type: actions.GET_MEMBER_REQUEST
 });

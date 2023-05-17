@@ -2,14 +2,13 @@ import produce from 'immer';
 import * as actions from './ManageTeamActionType';
 import { Member } from '../../types/NewSprintTypes';
 
-// export const initialState: {members: Member[]} = { members: []};
 export type MemberTeamState = {
     name: string;
     completedProjects: number| null;
     completedTasks: number| null;
     members: Member[];
 };
-//
+
   export const initialState: {team: MemberTeamState} = { team: { name: '', completedProjects: null, completedTasks: null, members: [] },};
 
 // @ts-ignore

@@ -12,8 +12,5 @@ export const addTeamMemberAPI = ( id: number) => { post(`/team/1/member`, {id});
 
 export const removeTeamMember = (memberId: number) => { return remove(`/team/1/member/${memberId}`)}; 
 
-
-//
-
 export const getMembersAPI = () => { return get<Member[]>("/member") ;} 
 export const updateTeamMemberRoleAPI = (id: number, role: Role) => { return put(`/member/role`, {id, role }); };

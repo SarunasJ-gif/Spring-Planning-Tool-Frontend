@@ -22,7 +22,7 @@ import { RootState } from '../../redux/store';
 
 export default function BottomTable() {
   const dispatch = useDispatch();
-//
+
   const members = useSelector((state: RootState) => state.manageTeam.team.members);
  
   useEffect(() => {

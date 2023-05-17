@@ -17,7 +17,7 @@ const LeftAlignedTableCell = styled(TableCell)(() => ({
 }));
 
 export default function TopTable() {
-  //
+
   const teams = useSelector((state: RootState) => state.manageTeam.team);
 
   const rowsTop = teams ? [createData(teams.name, teams.members.length, teams.completedProjects, teams.completedTasks)] : [];

@@ -25,7 +25,7 @@ import { RootState } from '../../redux/store';
 
 export default function ManageTeam() {
   const dispatch = useDispatch();
-//
+
 const localUsers = useSelector((state: RootState) => state.manageTeam.team.members);
 
   const [open, setOpen] = React.useState(false);
