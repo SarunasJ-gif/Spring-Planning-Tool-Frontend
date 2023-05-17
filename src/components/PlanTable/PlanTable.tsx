@@ -57,13 +57,9 @@ export default function PlanTable() {
           daysOfWeek.push(format(date, 'EEE'));
         }
       }
-      const updatedMembers = sprint.members.map((member) => {
-        const updatedWorkingDays = days.map((day) => ({ day, task: null }));
-        return { ...member, workingDays: updatedWorkingDays };
-      });
       dispatch(setBusinessDays(days));
-      dispatch(updateMembers(updatedMembers));
       dispatch(setDaysOfWeek(daysOfWeek));
+      dispatch(updateMembers());
     }
   }, [sprint.startDate, sprint.endDate, dispatch]);
   return (
@@ -133,7 +129,7 @@ export default function PlanTable() {
           </TableRow>
           <TableRow sx={{ backgroundColor: '#F9FAFA', height: '48px' }}>
             {Array.from({ length: sprint.businessDays.length + 1 }, (_, i) => (
-              <TableCell key={i} sx={{ textAlign: 'center' }}>
+              <TableCell key={`header-${i}`} sx={{ textAlign: 'center' }}>
                 {i === 0 ? '' : `${i}. ` + sprint.daysOfWeek[i - 1]}
               </TableCell>
             ))}
@@ -168,7 +164,7 @@ export default function PlanTable() {
               {member.workingDays.map((day) => (
                 <TableCell
                   padding="none"
-                  key={`${member.memberId}-${day.day}`}
+                  key={`${member}-${day.day}`}
                   sx={{
                     '&:hover': {
                       backgroundColor: '#F0F1F3',

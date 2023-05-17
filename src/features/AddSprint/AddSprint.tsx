@@ -12,7 +12,7 @@ function AddSprint() {
 
   useEffect(() => {
     dispatch({ type: GET_SPRINT, payload: 1});
-  }, [dispatch, 1]);
+  }, [dispatch]);
   return (
     <>
       <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>

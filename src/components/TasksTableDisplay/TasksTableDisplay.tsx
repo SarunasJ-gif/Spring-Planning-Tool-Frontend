@@ -16,7 +16,7 @@ import {
   AccordionDetails,
   AccordionSummary,
 } from '@mui/material';
-import { ArrowDropDown, DeleteForever, Add } from '@mui/icons-material';
+import { ArrowDropDown } from '@mui/icons-material';
 import PopUp from '../../components/TasksTable/PopUp';
 import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
