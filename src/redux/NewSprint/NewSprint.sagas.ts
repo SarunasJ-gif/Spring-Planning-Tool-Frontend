@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { CREATE_NEW_SPRINT } from './NewSprintActionType';
-import { createSprint } from './NewSprintApi';
+import { createSprintAPI } from './NewSprintApi';
 import {
   createNewSprintSuccess,
   clearNewSprintState,
@@ -8,7 +8,7 @@ import {
 
 export function* createSprintSaga(action: any) {
   try {
-    yield call(createSprint, action.payload);
+    yield call(createSprintAPI, action.payload);
     yield put(createNewSprintSuccess());
     yield put(clearNewSprintState());
   } catch (e) {

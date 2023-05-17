@@ -71,8 +71,7 @@ export default function NavigationBar() {
     setDialogOpen(false);
    
     if (memberId !== undefined) {
-      dispatch(updateTeamMemberName(email,  newFirstName || '', newLastName || ''));
-      console.log('action', memberId, newFirstName, newLastName );
+      dispatch(updateTeamMemberName(email,  newFirstName, newLastName));
     }
   };
 
@@ -108,14 +107,14 @@ export default function NavigationBar() {
           <DialogContent>
           <TextField
             label="First Name"
-            value={firstName}
+            value={newFirstName || firstName}
             fullWidth
             margin="normal"
             onChange={(event) => setNewFirstName(event.target.value)}
           />
           <TextField
             label="Last Name"
-            value={lastName}
+            value={newLastName || lastName}
             fullWidth
             margin="normal"
             onChange={(event) => setNewLastName(event.target.value)}
