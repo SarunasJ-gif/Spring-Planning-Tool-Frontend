@@ -6,11 +6,12 @@ type TaskKeyProps = {
   taskKey: string;
   keyColor: string;
   keyBackgroundColor: string;
+  style?: React.CSSProperties; 
 };
 
 function TaskKey(props: TaskKeyProps) {
   const KeyStyle = styled(Paper)(() => ({
-    color: props.keyColor,
+    color: 'white',
     backgroundColor: props.keyBackgroundColor,
     display: 'flex',
     justifyContent: 'center',

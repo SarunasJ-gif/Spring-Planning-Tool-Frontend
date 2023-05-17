@@ -24,20 +24,7 @@ export const initialState: NewSprint = {
     endDate: null,
     tasks: [],
     memberTeamId: null,
-    members: [
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        memberId: '1',
-        workingDays: [],
-      },
-      {
-        firstName: 'Jane',
-        lastName: 'Smith',
-        memberId: '2',
-        workingDays: [],
-      },
-    ],
+    members: [],
     businessDays: [],
     daysOfWeek: [],
     showNotification: true,
@@ -171,7 +158,11 @@ const reducer = (state = initialState, { type, payload }) => {
     }
     case actions.UPDATE_MEMBERS: {
       return produce(state, (draftState) => {
-        draftState.sprint.members = [...payload];
+        const updatedMembers = state.sprint.members.map((member) => {
+          const updatedWorkingDays = state.sprint.businessDays.map((day) => ({ day, task: null }));
+          return { ...member, workingDays: updatedWorkingDays };
+        });
+        draftState.sprint.members = [...updatedMembers];
       });
     }
     default:
