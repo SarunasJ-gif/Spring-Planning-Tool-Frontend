@@ -8,7 +8,6 @@ export type NewSprint = {
     startDate: string | null;
     endDate: string | null;
     tasks: TaskData[];
-    memberTeamId: string | null;
     members: Member[];
     businessDays: string[];
     daysOfWeek: string[];
@@ -17,13 +16,13 @@ export type NewSprint = {
     isActive: boolean | null;
   };
 };
+
 export const initialState: NewSprint = {
   sprint: {
     title: '',
     startDate: null,
     endDate: null,
     tasks: [],
-    memberTeamId: null,
     members: [],
     businessDays: [],
     daysOfWeek: [],
@@ -159,12 +158,21 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_MEMBERS: {
       return produce(state, (draftState) => {
         const updatedMembers = state.sprint.members.map((member) => {
-          const updatedWorkingDays = state.sprint.businessDays.map((day) => ({ day, task: null }));
+          const updatedWorkingDays = state.sprint.businessDays.map((day) => ({
+            day,
+            task: null,
+          }));
           return { ...member, workingDays: updatedWorkingDays };
         });
         draftState.sprint.members = [...updatedMembers];
       });
     }
+    case actions.CREATE_NEW_SPRINT_SUCCESS:
+      return initialState;
+
+    case actions.CLEAR_NEW_SPRINT_STATE:
+      return initialState;
+
     default:
       return state;
   }

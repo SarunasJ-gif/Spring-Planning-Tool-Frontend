@@ -17,3 +17,5 @@ export const UPDATE_MEMBERS = 'updateMembers';
 export const SET_BUSINESS_DAYS = 'setBusinessDays';
 export const SET_DAYS_OF_WEEK = 'setDaysOfWeek';
 export const UPDATE_SHOW_NOTIFICATION = 'updateShowNotification';
+export const CREATE_NEW_SPRINT_SUCCESS = 'CREATE_NEW_SPRINT_SUCCESS';
+export const CLEAR_NEW_SPRINT_STATE = 'CLEAR_NEW_SPRINT_STATE';
