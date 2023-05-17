@@ -52,7 +52,7 @@ export default function PlanTable() {
         date.setDate(date.getDate() + 1)
       ) {
         if (date.getDay() !== 0 && date.getDay() !== 6) {
-          const day = date.toLocaleDateString();
+          const day = date.toISOString().split('T')[0];
           days.push(day);
           daysOfWeek.push(format(date, 'EEE'));
         }
@@ -136,12 +136,16 @@ export default function PlanTable() {
             <TableCell align="center">
               {(() => {
                 const totalWorkDays = sprint.members.reduce((acc, member) => {
-                  const workDays = Object.values(sprint.members[Number(member.memberId) - 1].workingDays || {});
-                  const filteredDays = workDays.filter(day =>
-                    day.task?.type === 'Task' ||
-                    day.task?.type === 'Technical' ||
-                    day.task?.type === '' ||
-                    day.task?.type === 'Goal',
+                  const workDays = Object.values(
+                    sprint.members[Number(member.memberId) - 1].workingDays ||
+                      {},
+                  );
+                  const filteredDays = workDays.filter(
+                    (day) =>
+                      day.task?.type === 'Task' ||
+                      day.task?.type === 'Technical' ||
+                      day.task?.type === '' ||
+                      day.task?.type === 'Goal',
                   );
                   return acc + filteredDays.length;
                 }, 0);

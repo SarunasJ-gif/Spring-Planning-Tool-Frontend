@@ -99,3 +99,11 @@ export const updateShowNotification = (showNotification: boolean) => ({
 export const updateMembers = () => ({
   type: actions.UPDATE_MEMBERS,
 });
+
+export const createNewSprintSuccess = () => ({
+  type: actions.CREATE_NEW_SPRINT_SUCCESS,
+});
+
+export const clearNewSprintState = () => ({
+  type: actions.CLEAR_NEW_SPRINT_STATE,
+});
