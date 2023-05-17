@@ -19,15 +19,14 @@ import {
 import TopTable from './TopTable';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMembersRequest } from '../../redux/ManageMember/ManageMemberActions';
-import { addTeamMember } from '../../redux/ManageTeam/ManageTeamActions';
+import { addTeamMember, getMembersRequest } from '../../redux/ManageTeam/ManageTeamActions';
 import BottomTable from './BottomTable';
-import { Member } from '../../types/NewSprintTypes';
+import { RootState } from '../../redux/store';
 
 export default function ManageTeam() {
   const dispatch = useDispatch();
-
-  const localUsers = useSelector((state: {manageMember: { members: Member[] }}) => state.manageMember.members);
+//
+const localUsers = useSelector((state: RootState) => state.manageTeam.team.members);
 
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);

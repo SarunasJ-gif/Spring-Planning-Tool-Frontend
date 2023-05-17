@@ -12,3 +12,9 @@ export const UPDATE_TEAM_MEMBER_ROLE = 'updateTeamMemberRole';
 
 export const GET_ALL_TEAM_DATA = 'getAllTeamData';
 export const GET_ALL_TEAM_DATA_SUCCESS = 'getAllTeamDataSuccess';
+//
+
+export const GET_MEMBER_REQUEST = 'getMembersRequest'; 
+export const GET_MEMBER_SUCCESS = 'getMembersSuccess';
+
+export const UPDATE_MEMBER_ROLE = 'updateTeamMemberRole'; 

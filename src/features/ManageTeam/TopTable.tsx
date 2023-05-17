@@ -10,15 +10,15 @@ import {
   styled,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { TeamState } from '../../redux/ManageTeam/ManageTeamReducer';
+import { RootState } from '../../redux/store';
 
 const LeftAlignedTableCell = styled(TableCell)(() => ({
   textAlign: 'left',
 }));
 
 export default function TopTable() {
-  
-  const teams = useSelector((state: {manageTeam: TeamState}) => state.manageTeam.team);
+  //
+  const teams = useSelector((state: RootState) => state.manageTeam.team);
 
   const rowsTop = teams ? [createData(teams.name, teams.members.length, teams.completedProjects, teams.completedTasks)] : [];
 

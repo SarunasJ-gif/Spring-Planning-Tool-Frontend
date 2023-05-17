@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { ADD_TEAM_MEMBER, GET_ALL_TEAM_DATA, GET_ALL_TEAM_MEMBERS,  REMOVE_TEAM_MEMBER, UPDATE_TEAM_NAME } from './ManageTeamActionType';
-import { addTeamMemberAPI, getTeamDataApiMAIN, getTeamMembersAPI, removeTeamMember,  updateTeamNameAPI } from './ManageTeamApi';
-import { addTeamMember, getAllTeamDataSuccess, getAllTeamMembersSuccess, removeTeamMemberSuccess, updateTeamName } from './ManageTeamActions';
+import { ADD_TEAM_MEMBER, GET_ALL_TEAM_DATA, GET_ALL_TEAM_MEMBERS,  GET_MEMBER_REQUEST,  REMOVE_TEAM_MEMBER, UPDATE_MEMBER_ROLE, UPDATE_TEAM_NAME } from './ManageTeamActionType';
+import { addTeamMemberAPI, getMembersAPI, getTeamDataApiMAIN, getTeamMembersAPI, removeTeamMember,  updateTeamMemberRoleAPI,  updateTeamNameAPI } from './ManageTeamApi';
+import { addTeamMember, getAllTeamDataSuccess, getAllTeamMembersSuccess, getMembersSuccess, removeTeamMemberSuccess, updateTeamName } from './ManageTeamActions';
 import { Member } from '../../types/NewSprintTypes';
 import { Team } from '../../types/TeamTypes';
 
@@ -34,24 +34,39 @@ export function* addTeamMemberSaga(action: any) {
     yield call(addTeamMember, memberId, email, role, firstName, lastName);
   } catch (e) {console.error(e);}
 }
-function* removeTeamMemberSaga(action: any) {
+export function* removeTeamMemberSaga(action: any) {
   try {
     const { memberId } = action.payload;
     yield call(removeTeamMember, memberId);
     yield put(removeTeamMemberSuccess(memberId));
   }  catch (e) { console.error(e);}
 }
+  export function* getMembersSaga() {
+    try {
+      const members: Member[] = yield call(getMembersAPI);
+        yield put(getMembersSuccess(members));
+    } catch (e) { console.error(e); }
+  }
+  
+  export function* updateMemberRoleSaga(action: any) {
+      try {
+        const { memberId, role } = action.payload;
+        yield call(updateTeamMemberRoleAPI, memberId, role);
+        yield put({ type: action.UPDATE_MEMBER_ROLE, payload: { memberId, role } });
+      } catch (e) {console.error(e);}
+    }
+
+
 export default function* newTeamSaga() {
   yield takeLatest(UPDATE_TEAM_NAME, updateTeamNameSaga); 
   yield takeLatest(ADD_TEAM_MEMBER, addTeamMemberSaga); 
   yield takeLatest(REMOVE_TEAM_MEMBER, removeTeamMemberSaga); 
   yield takeLatest(GET_ALL_TEAM_MEMBERS, getAllTeamMembersSaga);
   yield takeLatest(GET_ALL_TEAM_DATA, getAllTeamDataSaga);
+  yield takeLatest(GET_MEMBER_REQUEST, getMembersSaga); 
+  yield takeLatest(UPDATE_MEMBER_ROLE, updateMemberRoleSaga);
 }
 
-
-
-
-
+//
 
 
