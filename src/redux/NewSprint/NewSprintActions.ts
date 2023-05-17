@@ -1,5 +1,5 @@
 import * as actions from './NewSprintActionType';
-import { Member, TaskData } from '../../types/NewSprintTypes';
+import { TaskData } from '../../types/NewSprintTypes';
 import { Dayjs } from 'dayjs';
 
 export const addTask = (task: TaskData) => ({
@@ -96,9 +96,8 @@ export const updateShowNotification = (showNotification: boolean) => ({
   payload: showNotification,
 });
 
-export const updateMembers = (members: Member[]) => ({
+export const updateMembers = () => ({
   type: actions.UPDATE_MEMBERS,
-  payload: members,
 });
 
 export const createNewSprintSuccess = () => ({

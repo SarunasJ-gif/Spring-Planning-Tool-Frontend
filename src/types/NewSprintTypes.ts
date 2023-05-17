@@ -1,3 +1,5 @@
+import { Role } from '../enums/enums';
+
 export type Sprint = {
   [id: string]: any;
   title: string;
@@ -27,9 +29,12 @@ export type MemberWorkingDay = {
 export type Member = {
   firstName: string;
   lastName: string;
-  member_id: string;
+  memberId: string;
   email: string;
   workingDays: MemberWorkingDay[];
+  id: number;
+  name: string;
+  role: Role;
 };
 
 export type TaskData = {

@@ -14,46 +14,28 @@ import {
   Menu,
 } from '@mui/material';
 import { Role } from '../../enums/enums';
+import { TableRowElementProps } from '../../types/TeamTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllTeamData, getAllTeamMembers, getMembersSuccess, removeTeamMember, updateMemberRole, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
+import { useEffect } from 'react';
+import { RootState } from '../../redux/store';
 
-export default function BottonTable() {
-  const [rows] = React.useState([
-    {
-      id: 1,
-      name: 'Laura Sunshine',
-      role: Role.FRONT_END,
-    },
-    {
-      id: 2,
-      name: 'Matt Brok',
-      role: Role.BACK_END,
-    },
-    {
-      id: 3,
-      name: 'Conel Mclane',
-      role: Role.DESIGNER,
-    },
-    {
-      id: 4,
-      name: 'John Smit',
-      role: Role.TESTER,
-    },
-    {
-      id: 5,
-      name: 'Gavin Nealson',
-      role: Role.FRONT_END,
-    },
-  ]);
+export default function BottomTable() {
+  const dispatch = useDispatch();
 
-  interface TableRowElementProps {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    row: any;
-    index: number;
-  }
+  const members = useSelector((state: RootState) => state.manageTeam.team.members);
+ 
+  useEffect(() => {
+     dispatch(getAllTeamData());
+     dispatch(getAllTeamMembers());
+  }, [dispatch]);
 
-  const TableRowElement: React.FC<TableRowElementProps> = ({
-    row,
-    index,
-  }: TableRowElementProps) => {
+  const handleRoleChange = (id: number, role: Role) => {
+    dispatch(updateMemberRole(id, role));
+    dispatch(updateTeamMemberRole(id, role));
+  };
+
+    const TableRowElement: React.FC<TableRowElementProps> = ({row, index }: TableRowElementProps) => {
     const [showSaveButton, setShowSaveButton] = React.useState(false);
     const [selectedRole, setSelectedRole] = React.useState(row.role);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -65,12 +47,13 @@ export default function BottonTable() {
 
     const handleMenuItemClick = (
       event: React.MouseEvent<HTMLElement>,
-      index: number,
+      index: number
     ) => {
       const selectedRole = Object.values(Role)[index];
       setSelectedRole(selectedRole);
       setAnchorEl(null);
       setShowSaveButton(true);
+      handleRoleChange(row.id, selectedRole);
     };
 
     const handleClose = () => {
@@ -78,10 +61,15 @@ export default function BottonTable() {
     };
 
     const handleSave = () => {
-      // Do something with the updated role value
       setShowSaveButton(false);
     };
-
+    
+    const handleRemove = () => {
+      dispatch(removeTeamMember(row.id));
+      const updatedMembers = members.filter((member) => member.id !== row.id);
+      dispatch(getMembersSuccess(updatedMembers));
+    };
+   
     return (
       <React.Fragment key={row.id}>
         <TableRow
@@ -104,7 +92,7 @@ export default function BottonTable() {
             />
           </TableCell>
           <TableCell align="left" sx={{ width: '250px' }}>
-            {row.name}
+          {row.firstName && row.lastName ? `${row.firstName} ${row.lastName}` : row.email}
           </TableCell>
           <TableCell
             align="left"
@@ -134,7 +122,8 @@ export default function BottonTable() {
             </Menu>
           </TableCell>
           <TableCell align="left" sx={{ width: '80px' }}>
-            <RemoveButton name={row.name} />
+             <RemoveButton name={row.name} email={row.email} handleRemoveMember={handleRemove} />
+
           </TableCell>
           <TableCell align="left" sx={{ width: '80px' }}>
             {showSaveButton && <SaveButton onClick={handleSave} />}
@@ -157,11 +146,17 @@ export default function BottonTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
-            <TableRowElement row={row} index={index} key={row.id} />
+          {members.map((member, index) => (
+            <TableRowElement
+              key={member.id}
+              row={member}
+              index={index}
+            />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
+
+

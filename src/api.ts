@@ -36,8 +36,8 @@ const request = async <T>(
 };
 
 const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-  return request<T>('get', url, undefined, config);
-};
+     return await request<T>('get', url, undefined, config);
+    };
 
 const post = async <T>(
   url: string,

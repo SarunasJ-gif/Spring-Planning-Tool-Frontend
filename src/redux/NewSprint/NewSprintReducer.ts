@@ -23,15 +23,7 @@ export const initialState: NewSprint = {
     startDate: null,
     endDate: null,
     tasks: [],
-    members: [
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'test@test.com',
-        member_id: '1',
-        workingDays: [],
-      },
-    ],
+    members: [],
     businessDays: [],
     daysOfWeek: [],
     showNotification: true,
@@ -110,7 +102,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_TASK_ASSIGN:
       return produce(state, (draftState) => {
         const memberIndex = state.sprint.members.findIndex(
-          (o) => o.member_id === payload.person,
+          (o) => o.memberId === payload.person,
         );
         const tasksIndex = state.sprint.members[
           memberIndex
@@ -165,7 +157,14 @@ const reducer = (state = initialState, { type, payload }) => {
     }
     case actions.UPDATE_MEMBERS: {
       return produce(state, (draftState) => {
-        draftState.sprint.members = [...payload];
+        const updatedMembers = state.sprint.members.map((member) => {
+          const updatedWorkingDays = state.sprint.businessDays.map((day) => ({
+            day,
+            task: null,
+          }));
+          return { ...member, workingDays: updatedWorkingDays };
+        });
+        draftState.sprint.members = [...updatedMembers];
       });
     }
     case actions.CREATE_NEW_SPRINT_SUCCESS:
