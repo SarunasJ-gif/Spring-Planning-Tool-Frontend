@@ -136,12 +136,16 @@ export default function PlanTable() {
             <TableCell align="center">
               {(() => {
                 const totalWorkDays = sprint.members.reduce((acc, member) => {
-                  const workDays = Object.values(sprint.members[Number(member.memberId) - 1].workingDays || {});
-                  const filteredDays = workDays.filter(day =>
-                    day.task?.type === 'Task' ||
-                    day.task?.type === 'Technical' ||
-                    day.task?.type === '' ||
-                    day.task?.type === 'Goal',
+                  const workDays = Object.values(
+                    sprint.members[Number(member.memberId) - 1].workingDays ||
+                      {},
+                  );
+                  const filteredDays = workDays.filter(
+                    (day) =>
+                      day.task?.type === 'Task' ||
+                      day.task?.type === 'Technical' ||
+                      day.task?.type === '' ||
+                      day.task?.type === 'Goal',
                   );
                   return acc + filteredDays.length;
                 }, 0);
@@ -152,7 +156,7 @@ export default function PlanTable() {
         </TableHead>
         <TableBody>
           {sprint.members.map((member) => (
-            <TableRow key={member.member_id} sx={{ height: '48px' }}>
+            <TableRow key={member.memberId} sx={{ height: '48px' }}>
               <TableCell
                 sx={{
                   borderRight: '1px solid #e0e0e0',
@@ -186,7 +190,7 @@ export default function PlanTable() {
                       value={day?.task?.id ?? ''}
                       onChange={(event) =>
                         handleTaskChange(
-                          member.member_id,
+                          member.memberId,
                           day.day,
                           Number(event.target.value),
                         )
@@ -238,7 +242,7 @@ export default function PlanTable() {
               >
                 {
                   Object.values(
-                    sprint.members[Number(member.member_id) - 1].workingDays ||
+                    sprint.members[Number(member.memberId) - 1].workingDays ||
                       {},
                   ).filter(
                     (day) =>
