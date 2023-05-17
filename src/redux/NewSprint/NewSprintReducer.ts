@@ -24,20 +24,7 @@ export const initialState: NewSprint = {
     endDate: null,
     tasks: [],
     memberTeamId: null,
-    members: [
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        memberId: '1',
-        workingDays: [],
-      },
-      {
-        firstName: 'Jane',
-        lastName: 'Smith',
-        memberId: '2',
-        workingDays: [],
-      },
-    ],
+    members: [],
     businessDays: [],
     daysOfWeek: [],
     showNotification: true,
