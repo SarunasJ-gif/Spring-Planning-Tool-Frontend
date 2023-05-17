@@ -168,7 +168,7 @@ export default function PlanTable() {
               {member.workingDays.map((day) => (
                 <TableCell
                   padding="none"
-                  key={`${member}-${day}`}
+                  key={`${member.memberId}-${day.day}`}
                   sx={{
                     '&:hover': {
                       backgroundColor: '#F0F1F3',
