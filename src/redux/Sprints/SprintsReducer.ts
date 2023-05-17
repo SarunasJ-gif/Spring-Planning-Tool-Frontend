@@ -1,39 +1,20 @@
+import { Sprint } from '../../types/NewSprintTypes';
 import * as actions from './SprintsActionType';
 
-interface Sprints {
-    sprints: any[];
-    loading: boolean;
-    error: string | null;
-}
+export type SprintState = { sprints: Sprint[] };
+export const initialState = { sprints: [] };
 
-const initialState: Sprints = {
-    sprints: [],
-    loading: false,
-    error: null,
-};
-
-const reducer = (state = initialState, action: any) => {
-    switch (action.type) {
-        case actions.GET_SPRINTS:
-            return {
-                ...state,
-                loading: true,
-                error: null,
-            };
+const reducer = (state = initialState, { type, payload }: { type: string, payload: Sprint[] }) => {
+    switch (type) {
+        case actions.GET_SPRINTS_REQUEST:
+            return { ...state };
         case actions.GET_SPRINTS_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                sprints: action.payload,
-            };
-        case actions.GET_SPRINTS_FAILURE:
-            return {
-                ...state,
-                loading: false,
-                error: action.payload,
-            };
+            return { ...state, sprints: payload };
         default:
             return state;
     }
 };
+
 export default reducer;
+
+

@@ -8,19 +8,10 @@ import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 import { Endpoint } from '../../routes/Endpoint';
 import { TypographyItem } from '../TypographyItem/TypographyItem';
 import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
-import { Sprints } from '../../redux/Sprints/SprintsReducer';
+import { SprintState } from '../../redux/Sprints/SprintsReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSprints } from '../../redux/Sprints/SprintsActions';
-
-interface sprint {
-  id: number;
-  title: string;
-  startDate: string | null;
-  endDate: string | null;
-  isHistorical: boolean | null;
-  isActive: boolean | null;
-
-}
+import { getSprintsRequest } from '../../redux/Sprints/SprintsActions';
+import { Sprint } from '../../types/NewSprintTypes';
 
 const drawerWidth = 295;
 
@@ -64,14 +55,14 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar(props: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const sprints = useSelector((state: { sprints: { sprints: any[] } }) => state.sprints.sprints);
+  const sprints = useSelector((state: { sprints: SprintState }) => state.sprints.sprints);
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
   };
 
   useEffect(() => {
-    dispatch(getSprints());
+    dispatch(getSprintsRequest());
   }, [dispatch]);
 
   return (
@@ -237,15 +228,15 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               marginRight="55px"
             >
               {sprints
-                .filter((sprint: Sprints) => sprint.isActive)
-                .map((sprint: Sprints) => (
+                .filter((sprint: Sprint) => sprint.isActive)
+                .map((sprint: Sprint) => (
                   <h5 key={sprint.id}>
                     &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}
                   </h5>
                 ))}
               {sprints
-                .filter((sprint: Sprints) => sprint.isHistorical)
-                .map((sprint: Sprints) => (
+                .filter((sprint: Sprint) => sprint.isHistorical)
+                .map((sprint: Sprint) => (
                   <h5 key={sprint.id}>
                     &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}. (Done)
                   </h5>

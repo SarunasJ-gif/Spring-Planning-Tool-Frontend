@@ -1,9 +1,8 @@
 import { get } from '../../api';
+import { Sprint } from '../../types/NewSprintTypes';
 
-export const getSprints = () => {
-    const response = get(`/sprint`);
-    console.log(response);
-    return response;
+export const getSprintsApi = () => {
+    return get<Sprint[]>('/sprint');
 };
 
 

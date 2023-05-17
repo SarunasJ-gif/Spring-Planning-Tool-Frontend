@@ -1,3 +1,2 @@
-export const GET_SPRINTS = 'GET_SPRINTS';
-export const GET_SPRINTS_SUCCESS = 'GET_SPRINTS_SUCCESS';
-export const GET_SPRINTS_FAILURE = 'GET_SPRINTS_FAILURE';
+export const GET_SPRINTS_REQUEST = 'getSprintsRequest';
+export const GET_SPRINTS_SUCCESS = 'getSprintsSuccess';

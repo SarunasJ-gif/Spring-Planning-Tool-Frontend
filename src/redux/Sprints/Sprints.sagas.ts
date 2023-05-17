@@ -1,26 +1,16 @@
-import { Effect, call, put, takeLatest } from 'redux-saga/effects';
-import { getSprints } from './SprintsApi';
-import {
-    GET_SPRINTS,
-    GET_SPRINTS_SUCCESS,
-    GET_SPRINTS_FAILURE,
-} from './SprintsActionType';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { getSprintsApi } from './SprintsApi';
+import { GET_SPRINTS_REQUEST } from './SprintsActionType';
+import { getSprintsSuccess } from './SprintsActions';
+import { Sprint } from '../../types/NewSprintTypes';
 
-export function* getSprintsSaga(action: any): Generator<Effect> {
+export function* getSprintsSaga() {
     try {
-        const sprints = yield call(getSprints, action.payload);
-        yield put({
-            type: GET_SPRINTS_SUCCESS,
-            payload: sprints,
-        });
-    } catch (error) {
-        yield put({
-            type: GET_SPRINTS_FAILURE,
-            payload: error,
-        });
-    }
+        const sprints: Sprint[] = yield call(getSprintsApi);
+        yield put(getSprintsSuccess(sprints));
+    } catch (error) { console.error(error) };
 }
 
 export default function* newSprintsSaga() {
-    yield takeLatest(GET_SPRINTS, getSprintsSaga);
+    yield takeLatest(GET_SPRINTS_REQUEST, getSprintsSaga);
 }
