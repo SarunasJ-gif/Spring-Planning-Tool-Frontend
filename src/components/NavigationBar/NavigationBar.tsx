@@ -10,6 +10,7 @@ import {
   Avatar,
   Link,
 } from '@mui/material/';
+
 import {
   AccountCircle,
   Share,
@@ -22,7 +23,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { getAllTeamData, updateTeamMemberName} from '../../redux/ManageTeam/ManageTeamActions';
 
-//
 export default function NavigationBar() {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
