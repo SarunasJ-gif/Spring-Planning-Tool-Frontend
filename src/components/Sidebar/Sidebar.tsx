@@ -210,25 +210,26 @@ export default function Sidebar(props: { children: React.ReactNode }) {
             </SidebarIconButton>
             <TypographyItem
               textAlignKey={'left'}
-              fontSizeKey={13}
+              fontSizeKey={14}
               fontFamilyKey={'sans-serif'}
               fontStyleKey={'normal'}
               color={'#696969'}
-              marginLeft="25px"
+              marginLeft="16px"
               marginTop="50px"
+              letterSpacing={1.25}
             >
               ALL SPRINTS
             </TypographyItem>
             <TypographyItem
-              textAlignKey={'center'}
-              fontSizeKey={18}
-              fontFamilyKey={'Avenir'}
+              textAlignKey={'left'}
+              fontSizeKey={14}
+              fontFamilyKey={'Roboto'}
               fontStyleKey={'normal'}
               color={'#696969'}
-              marginRight="55px"
+              padding="16px"
             >
               {sprints.slice().reverse().map((sprint: Sprint) => (
-                <Typography variant="body1" sx={{ fontSize: '15px', marginLeft: '1.2em' }} key={sprint.id}>
+                <Typography sx={{ fontSize: '14px' }} key={sprint.id}>
                   &ldquo;Sourcery Students&ldquo; - {sprint.title}{sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
                 </Typography>
               ))}
