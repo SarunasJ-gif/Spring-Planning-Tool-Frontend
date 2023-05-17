@@ -227,9 +227,9 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               color={'#696969'}
               marginRight="55px"
             >
-              {sprints.map((sprint: Sprint) => (
-                <Typography variant="h5" key={sprint.id}>
-                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}{sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
+              {sprints.slice().reverse().map((sprint: Sprint) => (
+                <Typography variant="body1" sx={{ fontSize: '15px', marginLeft: '1.2em' }} key={sprint.id}>
+                  &ldquo;Sourcery Students&ldquo; - {sprint.title}{sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
                 </Typography>
               ))}
             </TypographyItem>
