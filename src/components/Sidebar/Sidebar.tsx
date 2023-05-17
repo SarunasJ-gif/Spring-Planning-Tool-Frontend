@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
-import { Box, Fab, IconButton } from '@mui/material';
+import { Box, Fab, IconButton, Typography } from '@mui/material';
 import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 
 import { Endpoint } from '../../routes/Endpoint';
@@ -227,20 +227,11 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               color={'#696969'}
               marginRight="55px"
             >
-              {sprints
-                .filter((sprint: Sprint) => sprint.isActive)
-                .map((sprint: Sprint) => (
-                  <h5 key={sprint.id}>
-                    &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}
-                  </h5>
-                ))}
-              {sprints
-                .filter((sprint: Sprint) => sprint.isHistorical)
-                .map((sprint: Sprint) => (
-                  <h5 key={sprint.id}>
-                    &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}. (Done)
-                  </h5>
-                ))}
+              {sprints.map((sprint: Sprint) => (
+                <Typography variant="h5" key={sprint.id}>
+                  &ldquo;Sourcery Students&ldquo; - Sprint {sprint.title}{sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
+                </Typography>
+              ))}
             </TypographyItem>
           </>
         )}
