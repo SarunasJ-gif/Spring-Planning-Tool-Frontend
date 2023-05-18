@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  Box,
-  Typography,
-  AccordionSummary,
-  Button,
-} from '@mui/material/';
+import { Box, Typography, AccordionSummary, Button } from '@mui/material/';
 import { SAccordion } from '../../style/AccordionStyle';
 import TasksTable from '../../components/TasksTable/TasksTable';
 import { ArrowDropDown } from '@mui/icons-material';
@@ -17,15 +12,14 @@ export default function MainPage() {
   const dispatch = useDispatch();
 
   const handleStartSprint = () => {
-    const newSprint = { ...sprint };
-    dispatch(startSprint(newSprint.id));
+    const updatedSprint = { ...sprint, isActive: true };
+    dispatch(startSprint(updatedSprint));
   };
 
   const handleEndSprint = () => {
-    if (sprint.isHistorical) {
-      alert("This sprint is done and data is now read-only.");
-    } else {
-      dispatch(endSprint(sprint.id));
+    if (!sprint.isHistorical) {
+      const updatedSprint = { ...sprint, isActive: false };
+      dispatch(endSprint(updatedSprint));
     }
   };
 
@@ -35,9 +29,9 @@ export default function MainPage() {
         <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
           &ldquo;{sprint.title}&rdquo;
         </Typography>
-        {
-          sprint.isActive ? (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        {!sprint.isHistorical && (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {!sprint.isActive && (
               <Button
                 variant="contained"
                 sx={{ marginRight: 2 }}
@@ -45,31 +39,22 @@ export default function MainPage() {
               >
                 Start Sprint
               </Button>
-              <Button
-                variant="outlined"
-                onClick={handleEndSprint}
-              >
+            )}
+            {sprint.isActive && (
+              <Button variant="outlined" onClick={handleEndSprint}>
                 End Sprint
               </Button>
-            </Box>
-          ) : (
-            <Typography variant="h5" color="text.secondary">
-              No Active Sprint
-            </Typography>
-          )
-        }
+            )}
+          </Box>
+        )}
       </Box>
       <Box>
-        <Typography fontWeight={'bold'}>
+        <Typography fontWeight="bold">
           {sprint.startDate} {' - '} {sprint.endDate}
         </Typography>
       </Box>
       <Box sx={{ mt: 4 }}>
-        <SAccordion
-          sx={{
-            display: 'flex',
-          }}
-        >
+        <SAccordion sx={{ display: 'flex' }}>
           <AccordionSummary
             sx={{ zIndex: '1' }}
             expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
@@ -81,23 +66,21 @@ export default function MainPage() {
           <TasksTable isEditMode={false} />
         </SAccordion>
       </Box>
-      <Box sx={{ mt: 4 }}>
-        <SAccordion
-          sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}
-        >
-          <AccordionSummary
-            expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
-          >
-            <Typography variant="h4" fontWeight={500}>
-              Current Plan
-            </Typography>
-          </AccordionSummary>
-        </SAccordion>
-      </Box>
+      {sprint.isHistorical && (
+        <Box sx={{ mt: 4 }}>
+          <SAccordion sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}>
+            <AccordionSummary
+              expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
+            >
+              <Typography variant="h4" fontWeight={500}>
+                Current Plan
+              </Typography>
+            </AccordionSummary>
+          </SAccordion>
+        </Box>
+      )}
       <Box sx={{ mt: 4, mb: 20 }}>
-        <SAccordion
-          sx={{ display: 'flex', justifyContent: 'left', top: '-58px' }}
-        >
+        <SAccordion sx={{ display: 'flex', justifyContent: 'left', top: '-58px' }}>
           <AccordionSummary
             expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
           >
@@ -105,8 +88,8 @@ export default function MainPage() {
               Initial Plan
             </Typography>
           </AccordionSummary>
-        </SAccordion>
+          </SAccordion>
       </Box>
     </Box>
   );
-} 
+}
