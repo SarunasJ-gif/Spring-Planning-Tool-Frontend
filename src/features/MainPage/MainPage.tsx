@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { Box, Typography, AccordionSummary, Button } from '@mui/material/';
 import { SAccordion } from '../../style/AccordionStyle';
-import TasksTable from '../../components/TasksTable/TasksTable';
+import TasksTableDisplay from '../../components/TasksTableDisplay/TasksTableDisplay';
 import { ArrowDropDown } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
+import { endSprint, getSprint, startSprint } from '../../redux/Sprint/SprintActions';
 import { MainSprint } from '../../types/MainPageTypes';
 
 export default function MainPage() {
   const sprint = useSelector((state: { sprint: MainSprint }) => state.sprint.sprint);
   const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(getSprint("active"));
+  }, [dispatch]);
 
   const handleStartSprint = () => {
     dispatch(startSprint(sprint.id));
@@ -61,7 +64,7 @@ export default function MainPage() {
               Tasks
             </Typography>
           </AccordionSummary>
-          <TasksTable isEditMode={false} />
+          <TasksTableDisplay isEditMode={false} />
         </SAccordion>
       </Box>
       {sprint.isHistorical && (

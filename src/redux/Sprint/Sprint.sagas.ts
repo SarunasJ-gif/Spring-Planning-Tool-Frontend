@@ -9,10 +9,11 @@ import {
   END_SPRINT_SUCCESS,
   END_SPRINT_FAILURE,
 } from './SprintActionType';
+import { Sprint } from '../../types/NewSprintTypes';
 
-export function* getSprintSaga(action: any): Generator<Effect> {
+export function* getSprintSaga(){
   try {
-    const sprint = yield call(getSprint, action.payload);
+    const sprint: Sprint[] = yield call(getSprint);
     yield put({
       type: GET_SPRINT_SUCCESS,
       payload: sprint,

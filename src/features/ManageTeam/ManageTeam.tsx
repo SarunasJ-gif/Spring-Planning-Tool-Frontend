@@ -6,12 +6,48 @@ import {
   Grid,
   TableContainer,
   Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
 } from '@mui/material';
-import BottomTable from './BottomTable';
 import TopTable from './TopTable';
-import CreateNewMember from './CreateNewMember';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTeamMember, getMembersRequest } from '../../redux/ManageTeam/ManageTeamActions';
+import BottomTable from './BottomTable';
+import { RootState } from '../../redux/store';
 
 export default function ManageTeam() {
+  const dispatch = useDispatch();
+
+const localUsers = useSelector((state: RootState) => state.manageTeam.team.members);
+
+  const [open, setOpen] = React.useState(false);
+  const [saveClicked] = useState(false);
+  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
+ 
+  const handleAddMember = () => {
+    const selectedMember = localUsers.find((member: { id: number; }) => member.id === selectedMemberId);
+    if (selectedMember) {
+      dispatch(addTeamMember(selectedMember.id, selectedMember.email, selectedMember.role, selectedMember.firstName, selectedMember.lastName,));
+    }
+    handleClose();
+  };
+  
+  const handleClickOpen = () => {
+    dispatch(getMembersRequest());
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box>
       <Container>
@@ -31,6 +67,78 @@ export default function ManageTeam() {
           </Grid>
           <Grid item xs={12}>
             <TableContainer component={Paper}>
+              <Box sx={{ height: 10, width: '100%', mb: 1 }}>
+                <Grid
+                  container
+                  alignItems="left"
+                  justifyContent="space-between"
+                >
+                  <Grid item>
+                    <Typography
+                      variant="h6"
+                      sx={{ mt: 1, ml: 2, mb: 0, fontFamily: 'Poppins' }}
+                    >
+                      <b>Team Members</b>
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant={saveClicked ? 'contained' : 'outlined'}
+                      color="primary"
+                      size="small"
+                      onClick={handleClickOpen}
+                      sx={{
+                        mt: 1,
+                        mr: 11,
+                        mb: 0,
+                        fontFamily: 'Poppins',
+                        '&:hover': {
+                          backgroundColor: 'blue',
+                          color: 'white',
+                        },
+                      }}
+                    >
+                      + ADD NEW MEMBER
+                    </Button>
+                    <Dialog open={open} onClose={handleClose}>
+                      <DialogTitle sx={{ textAlign: 'center' }}>
+                        <h5>Choose new member</h5>
+                      </DialogTitle>
+                      <DialogContent
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          gap: 2,
+                        }}
+                      >
+<FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
+  <InputLabel>User</InputLabel>
+  <Select
+    value={selectedMemberId}
+    onChange={(event) => {
+      setSelectedMemberId(Number(event.target.value));
+    }}
+  >
+    {localUsers.map((member: any) => (
+      <MenuItem key={member.id} value={member.id}>
+        {member.id} | {member.firstName && member.lastName ? `${member.firstName} ${member.lastName}` : member.email} | {member.role}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+                      </DialogContent>
+                      <DialogActions sx={{ justifyContent: 'flex-end' }}>
+                        <Button onClick={handleAddMember}>ADD</Button>
+                        <Button variant="text" onClick={handleClose}>
+                          CANCEL
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </Grid>
+                </Grid>
+              </Box>
+              <BottomTable />
               <Grid
                 container
                 justifyContent="space-between"
@@ -38,21 +146,11 @@ export default function ManageTeam() {
                 pt={3}
                 pb={3}
                 sx={{ borderBottom: '1px solid #E1E1E1' }}
-              >
-                <Grid item>
-                  <Typography variant="h4" marginLeft={8} fontWeight={500}>
-                    Team Members
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <CreateNewMember />
-                </Grid>
-              </Grid>
-              <BottomTable />
+              ></Grid>
             </TableContainer>
           </Grid>
         </Grid>
       </Container>
     </Box>
-  );
+  );  
 }

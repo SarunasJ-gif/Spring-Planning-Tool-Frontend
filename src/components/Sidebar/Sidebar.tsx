@@ -1,15 +1,17 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
-import Data from './mock_sprint.json';
-
-import { Box, Fab, IconButton } from '@mui/material';
+import { Box, Fab, IconButton, Typography } from '@mui/material';
 import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 
 import { Endpoint } from '../../routes/Endpoint';
 import { TypographyItem } from '../TypographyItem/TypographyItem';
 import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
+import { SprintState } from '../../redux/Sprints/SprintsReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSprintsRequest } from '../../redux/Sprints/SprintsActions';
+import { Sprint } from '../../types/NewSprintTypes';
 
 const drawerWidth = 295;
 
@@ -52,10 +54,16 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Sidebar(props: { children: React.ReactNode }) {
+  const dispatch = useDispatch();
+  const sprints = useSelector((state: { sprints: SprintState }) => state.sprints.sprints);
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    dispatch(getSprintsRequest());
+  }, [dispatch]);
 
   return (
     <Box
@@ -202,28 +210,29 @@ export default function Sidebar(props: { children: React.ReactNode }) {
             </SidebarIconButton>
             <TypographyItem
               textAlignKey={'left'}
-              fontSizeKey={13}
+              fontSizeKey={14}
               fontFamilyKey={'sans-serif'}
               fontStyleKey={'normal'}
               color={'#696969'}
-              marginLeft="25px"
+              marginLeft="16px"
               marginTop="50px"
+              letterSpacing={1.25}
             >
               ALL SPRINTS
             </TypographyItem>
             <TypographyItem
-              textAlignKey={'center'}
-              fontSizeKey={18}
-              fontFamilyKey={'Avenir'}
+              textAlignKey={'left'}
+              fontSizeKey={14}
+              fontFamilyKey={'Roboto'}
               fontStyleKey={'normal'}
               color={'#696969'}
-              marginRight="55px"
+              padding="16px"
             >
-              {Data.map((post: { id: number }) => (
-                <h5 key={post.id}>
-                  &ldquo;Sourcery Students&ldquo; - Sprint {post.id}
-                </h5>
-              )).reverse()}
+              {sprints.slice().reverse().map((sprint: Sprint) => (
+                <Typography sx={{ fontSize: '14px' }} key={sprint.id}>
+                  &ldquo;Sourcery Students&ldquo; - {sprint.title}{sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
+                </Typography>
+              ))}
             </TypographyItem>
           </>
         )}
