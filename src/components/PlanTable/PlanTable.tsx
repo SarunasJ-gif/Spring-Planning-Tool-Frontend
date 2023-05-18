@@ -21,6 +21,7 @@ import {
   updateTaskAssign,
   updateShowNotification,
   updateMembers,
+  addMembersToSprint,
 } from '../../redux/NewSprint/NewSprintActions';
 import { RootState } from '../../redux/store';
 
@@ -39,7 +40,9 @@ export default function PlanTable() {
   ) => {
     dispatch(updateTaskAssign(person, day, value));
   };
+
   useEffect(() => {
+      dispatch(addMembersToSprint()); 
     if (sprint.endDate && sprint.startDate) {
       const startDate = new Date(sprint.startDate);
       const endDate = new Date(sprint.endDate);
@@ -61,7 +64,7 @@ export default function PlanTable() {
       dispatch(setDaysOfWeek(daysOfWeek));
       dispatch(updateMembers());
     }
-  }, [sprint.startDate, sprint.endDate, dispatch]);
+  }, [dispatch, sprint.startDate, sprint.endDate ]);
   return (
     <>
       {sprint.showNotification && (
