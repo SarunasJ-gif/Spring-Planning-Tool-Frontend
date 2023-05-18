@@ -11,12 +11,12 @@ function BottomMenu() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const sprint = useSelector(
-    (state: { newSprint: NewSprint }) => state.newSprint.sprint,
-  );
+  const sprint = useSelector((state: { newSprint: NewSprint }) => state.newSprint.sprint );
+  console.log('sprintas pradiniam state',sprint);
 
   const handleAddClick = () => {
     dispatch(createNewSprint(sprint));
+    console.log('sprintas turi buti su memberiais',sprint);
     dispatch(clearNewSprintState());
     navigate('/');
   };

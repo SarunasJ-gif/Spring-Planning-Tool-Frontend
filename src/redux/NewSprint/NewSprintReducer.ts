@@ -169,10 +169,10 @@ const reducer = (state = initialState, { type, payload }) => {
     }
     case actions.CREATE_NEW_SPRINT_SUCCESS:
       return initialState;
-
     case actions.CLEAR_NEW_SPRINT_STATE:
       return initialState;
-
+    case actions.ADD_MEMBER_TO_SPRINT_SUCCESS:
+     return produce(state, (draftState) => { draftState.sprint.members.push(payload);});
     default:
       return state;
   }

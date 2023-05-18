@@ -26,6 +26,7 @@ import { GoalType } from '../../enums/enums';
 import { StyledTableCell } from '../../style/TableCellStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  addMembersToSprint,
   addTask,
   removeTask,
   updateTaskDescription,
@@ -97,6 +98,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
   };
 
   const handleAddTask = () => {
+
     const newTaskObject: TaskData = {
       id: getRandomId(1, 1000),
       keyValue: '',
@@ -107,7 +109,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
       remainingPoints: 0,
       newPoints: 0,
     };
-
+    dispatch(addMembersToSprint()); //kill switch
     dispatch(addTask(newTaskObject));
     setExpanded(false);
   };

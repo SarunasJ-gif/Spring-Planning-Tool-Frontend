@@ -133,7 +133,7 @@ export default function PlanTable() {
                 {i === 0 ? '' : `${i}. ` + sprint.daysOfWeek[i - 1]}
               </TableCell>
             ))}
-            <TableCell align="center">
+            {/* <TableCell align="center">
               {(() => {
                 const totalWorkDays = sprint.members.reduce((acc, member) => {
                   const workDays = Object.values(
@@ -151,7 +151,7 @@ export default function PlanTable() {
                 }, 0);
                 return totalWorkDays;
               })()}
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -165,7 +165,7 @@ export default function PlanTable() {
               >
                 {member.firstName} {member.lastName}
               </TableCell>
-              {member.workingDays.map((day) => (
+              {/* {member.workingDays.map((day) => (
                 <TableCell
                   padding="none"
                   key={`${member}-${day.day}`}
@@ -232,7 +232,7 @@ export default function PlanTable() {
                     </Select>
                   </FormControl>
                 </TableCell>
-              ))}
+              ))} */}
               <TableCell
                 sx={{
                   textAlign: 'center',
@@ -240,7 +240,7 @@ export default function PlanTable() {
                   borderLeft: '1px solid #e0e0e0',
                 }}
               >
-                {
+                {/* {
                   Object.values(
                     sprint.members[Number(member.memberId) - 1].workingDays ||
                       {},
@@ -251,7 +251,7 @@ export default function PlanTable() {
                       day.task?.type === '' ||
                       day.task?.type === 'Goal',
                   ).length
-                }
+                } */}
               </TableCell>
             </TableRow>
           ))}
