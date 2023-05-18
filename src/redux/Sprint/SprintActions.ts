@@ -1,3 +1,4 @@
+import { Sprint } from '../../types/NewSprintTypes';
 import * as actions from './SprintActionType';
 
 export const getSprint = (payload: any) => ({
@@ -15,44 +16,40 @@ export const getSprintFailure = (payload: any) => ({
   payload,
 });
 
-export function startSprint(sprint: any) {
+export function startSprint(id:number) {
   return {
     type: actions.START_SPRINT,
-    payload: sprint,
+    payload: id,
   };
 }
 
-export function startSprintSuccess(sprint: any) {
+export function startSprintSuccess() {
   return {
     type: actions.START_SPRINT_SUCCESS,
-    payload: sprint,
   };
 }
 
-export function startSprintFailure(error: any) {
+export function startSprintFailure() {
   return {
     type: actions.START_SPRINT_FAILURE,
-    payload: error,
   };
 }
 
-export function endSprint(sprint: (id: any) => any) {
+export function endSprint(id:number) {
   return {
     type: actions.END_SPRINT,
-    payload: sprint,
+    payload: id,
   };
 }
 
-export function endSprintSuccess(sprint: any) {
+export function endSprintSuccess() {
   return {
     type: actions.END_SPRINT_SUCCESS,
-    payload: sprint,
   };
 }
 
-export function endSprintFailure(error: any) {
+export function endSprintFailure() {
   return {
     type: actions.END_SPRINT_FAILURE,
-    payload: error,
   };
 }

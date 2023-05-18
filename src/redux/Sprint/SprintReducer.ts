@@ -2,7 +2,6 @@ import { Member, TaskData } from '../../types/NewSprintTypes';
 import * as actions from './SprintActionType';
 
 export type Sprint = {
-  number(number: any): { type: string; payload: (id: any) => any; };
   id: number;
   title: string;
   startDate: string | null;
@@ -10,14 +9,12 @@ export type Sprint = {
   tasks: TaskData[];
   memberTeamId: string | null;
   members: Member[];
-  isHistorical: boolean | null;
-  isActive: boolean | null;
+  isHistorical: boolean;
+  isActive: boolean;
 };
 
 const initialState = {
   sprint: null,
-  loading: false,
-  error: null,
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -25,22 +22,40 @@ const reducer = (state = initialState, action: any) => {
     case actions.GET_SPRINT:
       return {
         ...state,
-        loading: true,
       };
     case actions.GET_SPRINT_SUCCESS:
       return {
         ...state,
-        loading: false,
         sprint: action.payload,
       };
     case actions.GET_SPRINT_FAILURE:
       return {
         ...state,
-        loading: false,
-        error: action.payload,
       };
+      case actions.START_SPRINT_SUCCESS:
+        return {
+          ...state,
+          isActive: true, isHistorical: false,
+        };  
+         case actions.START_SPRINT_FAILURE:
+        return {
+          ...state,
+          isActive: false, isHistorical: false,
+        }; 
+          case actions.END_SPRINT_FAILURE:
+        return {
+          ...state,
+          isActive: true, isHistorical: false,
+        };  
+         case actions.END_SPRINT_SUCCESS:
+        return {
+          ...state,
+          isActive: false, isHistorical: true,
+        };
     default:
       return state;
   }
+
+
 };
 export default reducer;

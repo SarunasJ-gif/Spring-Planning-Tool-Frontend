@@ -4,26 +4,24 @@ import { SAccordion } from '../../style/AccordionStyle';
 import TasksTable from '../../components/TasksTable/TasksTable';
 import { ArrowDropDown } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { Sprint } from '../../redux/Sprint/SprintReducer';
 import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
+import { MainSprint } from '../../types/MainPageTypes';
 
 export default function MainPage() {
-  const sprint = useSelector((state: { sprint: Sprint }) => state.sprint);
+  const sprint = useSelector((state: { sprint: MainSprint }) => state.sprint.sprint);
   const dispatch = useDispatch();
 
   const handleStartSprint = () => {
-    const updatedSprint = { ...sprint, isActive: true };
-    dispatch(startSprint(updatedSprint));
+    dispatch(startSprint(sprint.id));
   };
 
   const handleEndSprint = () => {
-    if (!sprint.isHistorical) {
-      const updatedSprint = { ...sprint, isActive: false };
-      dispatch(endSprint(updatedSprint));
-    }
+      dispatch(endSprint(sprint.id));
   };
 
   return (
+    <Box>
+      { sprint === null ? <Typography variant="h1" sx={{ textAlign: 'center',paddingTop: '250px' }}>No active sprint</Typography> :
     <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
@@ -90,6 +88,8 @@ export default function MainPage() {
           </AccordionSummary>
           </SAccordion>
       </Box>
+    </Box>
+     }
     </Box>
   );
 }
