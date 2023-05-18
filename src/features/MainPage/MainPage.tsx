@@ -24,7 +24,7 @@ export default function MainPage() {
 
   return (
     <Box>
-      { sprint === null ? <Typography variant="h1" sx={{ textAlign: 'center',paddingTop: '250px' }}>No active sprint</Typography> :
+      { sprint === null ? <Typography variant="h3" sx={{ textAlign: 'center',paddingTop: '250px' }}>No active sprint</Typography> :
     <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
