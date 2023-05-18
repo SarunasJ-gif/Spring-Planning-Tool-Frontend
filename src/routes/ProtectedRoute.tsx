@@ -17,10 +17,8 @@ const validateToken = (token: string): boolean => {
       console.error('JWT token expired');
       return false;
     }
-
     return true;
-  } catch (error) {
-    console.error('Invalid JWT token:', error);
+  } catch {
     return false;
   }
 };
