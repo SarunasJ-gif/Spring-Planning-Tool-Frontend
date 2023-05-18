@@ -84,7 +84,7 @@ export function* removeTeamMemberSaga(action: any) {
       try {
         const { email, firstName, lastName } = action.payload;
         yield call(updateTeamMemberName, email, firstName, lastName);
-        yield put({ type: action.UPDATE_MEMBER_ROLE, payload: { email, firstName, lastName } });
+        yield put({ type: action.UPDATE_MEMBER_NAME, payload: { email, firstName, lastName } });
       } catch (e) {console.error(e);}
     }
 
