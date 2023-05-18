@@ -109,7 +109,7 @@ export default function TasksTable(props: TasksProps): JSX.Element {
       remainingPoints: 0,
       newPoints: 0,
     };
-    dispatch(addMembersToSprint()); //kill switch
+    // dispatch(addMembersToSprint()); //kill switch
     dispatch(addTask(newTaskObject));
     setExpanded(false);
   };
