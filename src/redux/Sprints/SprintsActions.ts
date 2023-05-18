@@ -12,3 +12,12 @@ export const getSprintsSuccess = (sprints: Sprint[]) => ({
 });
 
 
+export const getSelectedSprint = (id: number) => ({
+    type: actions.GET_SELECTED_SPRINT,
+    payload: id,
+});
+
+export const getSelectedSprintSuccess = (sprint: Sprint) => ({
+    type: actions.GET_SELECTED_SPRINT_SUCCESS,
+    payload: sprint,
+});

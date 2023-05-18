@@ -1,15 +1,25 @@
 import { Sprint } from '../../types/NewSprintTypes';
 import * as actions from './SprintsActionType';
 
-export type SprintState = { sprints: Sprint[] };
-export const initialState = { sprints: [] };
+export type SprintState = {
+    sprints: Sprint[];
+    getSelectedSprint: Sprint | null;
+};
+export const initialState = {
+    sprints: [],
+    getSelectedSprint: null,
+};
 
-const reducer = (state = initialState, { type, payload }: { type: string, payload: Sprint[] }) => {
+const reducer = (state = initialState, { type, payload }: { type: string, payload: Sprint[] | Sprint }) => {
     switch (type) {
         case actions.GET_SPRINTS_REQUEST:
             return { ...state };
         case actions.GET_SPRINTS_SUCCESS:
             return { ...state, sprints: payload };
+        case actions.GET_SELECTED_SPRINT:
+            return { ...state };
+        case actions.GET_SELECTED_SPRINT_SUCCESS:
+            return { ...state, getSelectedSprint: payload as Sprint }
         default:
             return state;
     }

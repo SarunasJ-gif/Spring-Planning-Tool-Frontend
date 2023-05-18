@@ -5,9 +5,10 @@ import TasksTableDisplay from '../../components/TasksTableDisplay/TasksTableDisp
 import { ArrowDropDown } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useDispatch } from  'react-redux';
+import { useDispatch } from 'react-redux';
 import { getSprint } from '../../redux/Sprint/SprintActions';
 import { Sprint } from '../../types/NewSprintTypes';
+import { SprintState } from '../../redux/Sprints/SprintsReducer';
 
 
 export default function MainPage() {
@@ -16,7 +17,8 @@ export default function MainPage() {
     dispatch(getSprint("active"));
   }, [dispatch]);
 
-  const sprintDisplay = useSelector((state: {sprint : Sprint}) => state.sprint.sprint);
+  const sprintDisplay = useSelector((state: { sprint: Sprint }) => state.sprint.sprint);
+  const getSelectedSprint = useSelector((state: { sprint: SprintState }) => state.sprint.getSelectedSprint);
   console.log(sprintDisplay);
   return (
     <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
