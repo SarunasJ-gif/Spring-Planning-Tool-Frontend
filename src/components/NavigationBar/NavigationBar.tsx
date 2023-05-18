@@ -22,14 +22,14 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { getAllTeamData, updateTeamMemberName} from '../../redux/ManageTeam/ManageTeamActions';
+import { useState } from 'react';
 
 export default function NavigationBar() {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [newFirstName, setNewFirstName] = React.useState('');
-  const [newLastName, setNewLastName] = React.useState('');
+
 
   const token = localStorage.getItem('token');
 
@@ -40,15 +40,15 @@ export default function NavigationBar() {
     const decodedPayload = atob(encodedPayload);
     const payload = JSON.parse(decodedPayload);
     email = payload.email;
-  } else {
-    console.log('Token not found.');
   }
   const localUser = useSelector((state: RootState) => state.manageTeam.team.members);
   const currentUser = localUser.find((user) => user.email === email);
   const firstName = currentUser?.firstName;
   const lastName = currentUser?.lastName;
-  const memberId = currentUser?.id;
-  console.log(memberId);
+
+  const [newFirstName, setNewFirstName] = useState<string | undefined>(firstName);
+  const [newLastName, setNewLastName] = useState<string | undefined>(lastName);
+  
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -69,10 +69,10 @@ export default function NavigationBar() {
 
   const handleSaveChanges = () => {
     setDialogOpen(false);
-   
-    if (memberId !== undefined) {
-      dispatch(updateTeamMemberName(email,  newFirstName, newLastName));
-    }
+    const firstNameValue = newFirstName || ''; 
+    const lastNameValue = newLastName || ''; 
+    dispatch(updateTeamMemberName(email, firstNameValue, lastNameValue));
+    
   };
 
   const handleLogOut = () => {
@@ -106,19 +106,19 @@ export default function NavigationBar() {
           <DialogTitle>My Account</DialogTitle>
           <DialogContent>
           <TextField
-            label="First Name"
-            value={newFirstName || firstName}
-            fullWidth
-            margin="normal"
-            onChange={(event) => setNewFirstName(event.target.value)}
-          />
-          <TextField
-            label="Last Name"
-            value={newLastName || lastName}
-            fullWidth
-            margin="normal"
-            onChange={(event) => setNewLastName(event.target.value)}
-          />
+  label="First Name"
+  value={newFirstName || ''}
+  fullWidth
+  margin="normal"
+  onChange={(event) => setNewFirstName(event.target.value)}
+/>
+<TextField
+  label="Last Name"
+  value={newLastName || ''}
+  fullWidth
+  margin="normal"
+  onChange={(event) => setNewLastName(event.target.value)}
+/>
           <TextField
             label="Email"
             value={email}

@@ -12,7 +12,6 @@ function BottomMenu() {
 
   const handleAddClick = () => {
     dispatch(createNewSprint(sprint));
-    console.log('sprintas turi buti su memberiais',sprint);
     dispatch(clearNewSprintState());
     navigate('/');
   };
