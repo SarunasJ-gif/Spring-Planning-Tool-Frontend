@@ -15,8 +15,8 @@ import {
   getTeamDataApiMAIN,
   getTeamMembersAPI,
   removeTeamMember,
-  updateTeamMemberNameAPI,
-  updateTeamMemberRoleAPI,
+  updateTeamMemberName,
+  updateTeamMemberRole,
   updateTeamNameAPI 
 } from './ManageTeamApi';
 import {
@@ -76,14 +76,14 @@ export function* removeTeamMemberSaga(action: any) {
   export function* updateMemberRoleSaga(action: any) {
       try {
         const { memberId, role } = action.payload;
-        yield call(updateTeamMemberRoleAPI, memberId, role);
+        yield call(updateTeamMemberRole, memberId, role);
         yield put({ type: action.UPDATE_MEMBER_ROLE, payload: { memberId, role } });
       } catch (e) {console.error(e);}
     }
     export function* updateMemberNameSaga(action: any) {
       try {
         const { email, firstName, lastName } = action.payload;
-        yield call(updateTeamMemberNameAPI, email, firstName, lastName);
+        yield call(updateTeamMemberName, email, firstName, lastName);
         yield put({ type: action.UPDATE_MEMBER_ROLE, payload: { email, firstName, lastName } });
       } catch (e) {console.error(e);}
     }
