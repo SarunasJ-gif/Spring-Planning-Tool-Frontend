@@ -18,41 +18,72 @@ import {
   MoreVert,
   CalendarToday,
 } from '@mui/icons-material/';
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { getAllTeamData, updateTeamMemberName} from '../../redux/ManageTeam/ManageTeamActions';
+import { useState } from 'react';
 
 export default function NavigationBar() {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
-
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+
+  const token = localStorage.getItem('token');
+
+  let email = '';
+
+  if (token) {
+    const encodedPayload = token.split('.')[1];
+    const decodedPayload = atob(encodedPayload);
+    const payload = JSON.parse(decodedPayload);
+    email = payload.email;
+  }
+  const localUser = useSelector((state: RootState) => state.manageTeam.team.members);
+  const currentUser = localUser.find((user) => user.email === email);
+  const firstName = currentUser?.firstName;
+  const lastName = currentUser?.lastName;
+
+  const [newFirstName, setNewFirstName] = useState<string | undefined>(firstName);
+  const [newLastName, setNewLastName] = useState<string | undefined>(lastName);
+  
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
+ 
+  const handleMenuClose = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+    const clickedMenuItem = event.target as HTMLElement;
+    if (clickedMenuItem.innerText === 'My account') {
+      setDialogOpen(true);
+      dispatch(getAllTeamData());
+    }
   };
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleSaveChanges = () => {
+    setDialogOpen(false);
+    const firstNameValue = newFirstName || ''; 
+    const lastNameValue = newLastName || ''; 
+    dispatch(updateTeamMemberName(email, firstNameValue, lastNameValue));
+    
   };
 
   const handleLogOut = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
     localStorage.removeItem('token');
     window.location.reload();
   };
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
+    <>
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
@@ -71,47 +102,39 @@ export default function NavigationBar() {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleLogOut}>Log out</MenuItem>
     </Menu>
-  );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="new mails" color="inherit">
-          <Share />
-        </IconButton>
-      </MenuItem>
-      <MenuItem>
-        <IconButton size="large" aria-label="new notifications" color="inherit">
-          <Notifications />
-        </IconButton>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-      </MenuItem>
-    </Menu>
+          <Dialog open={dialogOpen} onClose={handleDialogClose}>
+          <DialogTitle>My Account</DialogTitle>
+          <DialogContent>
+          <TextField
+  label="First Name"
+  value={newFirstName || ''}
+  fullWidth
+  margin="normal"
+  onChange={(event) => setNewFirstName(event.target.value)}
+/>
+<TextField
+  label="Last Name"
+  value={newLastName || ''}
+  fullWidth
+  margin="normal"
+  onChange={(event) => setNewLastName(event.target.value)}
+/>
+          <TextField
+            label="Email"
+            value={email}
+            disabled
+            fullWidth
+            margin="normal"
+          />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose}>Cancel</Button>
+            <Button onClick={handleSaveChanges} variant="contained" color="primary">
+              Save Changes
+            </Button>
+          </DialogActions>
+        </Dialog>
+        </>
   );
 
   return (
@@ -171,9 +194,7 @@ export default function NavigationBar() {
             <IconButton
               size="large"
               aria-label="show more"
-              aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <MoreVert />
@@ -181,7 +202,6 @@ export default function NavigationBar() {
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
       {renderMenu}
     </Box>
   );

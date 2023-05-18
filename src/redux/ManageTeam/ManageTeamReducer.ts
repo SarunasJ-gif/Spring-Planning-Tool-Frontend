@@ -9,7 +9,7 @@ export type MemberTeamState = {
     members: Member[];
 };
 
-  export const initialState: {team: MemberTeamState} = { team: { name: '', completedProjects: null, completedTasks: null, members: [] },};
+  export const initialState: {team: MemberTeamState} = { team: { name: '', completedProjects: null, completedTasks: null, members: [] }};
 
 // @ts-ignore
 const reducer = (state = initialState, { type, payload }) => {
