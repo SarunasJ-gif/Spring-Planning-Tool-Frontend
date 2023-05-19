@@ -30,20 +30,18 @@ export default function PlanTable() {
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);
 
   useEffect(() => { dispatch(addMembersToSprint());}, [dispatch]);
-  
+
   const handleClearNotification = () => {
     dispatch(updateShowNotification(false));
   };
 
   const handleTaskChange = (
-    person: string,
+    person: number,
     day: string | null,
     value: number,
   ) => {
     dispatch(updateTaskAssign(person, day, value));
   };
-
-
   useEffect(() => {
     if (sprint.endDate && sprint.startDate) {
       const startDate = new Date(sprint.startDate);
@@ -66,7 +64,7 @@ export default function PlanTable() {
       dispatch(setDaysOfWeek(daysOfWeek));
       dispatch(updateMembers());
     }
-  }, [dispatch, sprint.startDate, sprint.endDate ]);
+  }, [sprint.startDate, sprint.endDate, dispatch]);
   return (
     <>
       {sprint.showNotification && (
@@ -160,8 +158,8 @@ export default function PlanTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sprint.members !== undefined && sprint.members.length !== 0 && sprint.members.map((member) => (
-            <TableRow key={member.memberId} sx={{ height: '48px' }}>
+          {sprint.members!==undefined && sprint.members.map((member) => (
+            <TableRow key={member.id} sx={{ height: '48px' }}>
               <TableCell
                 sx={{
                   borderRight: '1px solid #e0e0e0',
@@ -170,7 +168,7 @@ export default function PlanTable() {
               >
                 {member.firstName} {member.lastName}
               </TableCell>
-              {  member.workingDays !== undefined && member.workingDays.length !== 0 && member.workingDays.map((day) => (
+              {member.workingDays!==undefined && member.workingDays.map((day) => (
                 <TableCell
                   padding="none"
                   key={`${member}-${day.day}`}
@@ -195,14 +193,14 @@ export default function PlanTable() {
                       value={day?.task?.id ?? ''}
                       onChange={(event) =>
                         handleTaskChange(
-                          member.memberId,
+                          member.id,
                           day.day,
                           Number(event.target.value),
                         )
                       }
                       label="Task"
                     >
-                      {sprint.tasks !== undefined && sprint.tasks.length !== 0 &&  sprint.tasks.map((task) => (
+                      {sprint.tasks.map((task) => (
                         <MenuItem value={task.id} key={task.id}>
                           <TaskKey
                             taskKey={task.keyValue}
@@ -244,11 +242,11 @@ export default function PlanTable() {
                   minWidth: '150px',
                   borderLeft: '1px solid #e0e0e0',
                 }}
-              >
-                xxx
+              >xxx
                 {/* {
                   Object.values(
-                    sprint.members !== undefined && sprint.members[Number(member.memberId) - 1].workingDays ,
+                    sprint.members[Number(member.memberId) - 1].workingDays ||
+                      {},
                   ).filter(
                     (day) =>
                       day.task?.type === 'Task' ||

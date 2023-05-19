@@ -100,7 +100,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_TASK_ASSIGN:
       return produce(state, (draftState) => {
         const memberIndex = state.sprint.members.findIndex(
-          (o) => o.memberId === payload.person,
+          (o) => o.id === payload.person,
         );
         const tasksIndex = state.sprint.members[
           memberIndex

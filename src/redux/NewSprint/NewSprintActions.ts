@@ -73,7 +73,7 @@ export const createNewSprint = (sprintData: any) => ({
 });
 
 export const updateTaskAssign = (
-  person: string,
+  person: number,
   day: string | null,
   value: number,
 ) => ({
