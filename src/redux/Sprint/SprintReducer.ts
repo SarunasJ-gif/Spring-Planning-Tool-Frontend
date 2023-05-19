@@ -36,18 +36,8 @@ const reducer = (state = initialState, action: any) => {
         return {
           ...state,
           isActive: true, isHistorical: false,
-        };  
-         case actions.START_SPRINT_FAILURE:
-        return {
-          ...state,
-          isActive: false, isHistorical: false,
-        }; 
-          case actions.END_SPRINT_FAILURE:
-        return {
-          ...state,
-          isActive: true, isHistorical: false,
-        };  
-         case actions.END_SPRINT_SUCCESS:
+        };       
+      case actions.END_SPRINT_SUCCESS:
         return {
           ...state,
           isActive: false, isHistorical: true,

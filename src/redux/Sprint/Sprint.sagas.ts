@@ -1,13 +1,11 @@
-import { Effect, call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { endSprint, getSprint, startSprint } from './SprintApi';
 import {
   GET_SPRINT,
   GET_SPRINT_SUCCESS,
   GET_SPRINT_FAILURE,
-  START_SPRINT_SUCCESS,
-  START_SPRINT_FAILURE,
-  END_SPRINT_SUCCESS,
-  END_SPRINT_FAILURE,
+  START_SPRINT,
+  END_SPRINT,
 } from './SprintActionType';
 import { Sprint } from '../../types/NewSprintTypes';
 
@@ -26,34 +24,25 @@ export function* getSprintSaga(){
   }
 }
 
-export function* startSprintSaga(action: any): Generator<Effect> {
+export function* startSprintSaga(action: any) {
   try {
-    yield call(startSprint, action.id);
-    yield put({
-      type: START_SPRINT_SUCCESS,
-    });
-  } catch (error) {
-    yield put({
-      type: START_SPRINT_FAILURE,
-    });
-  }
+    const { id } = action.payload;
+    yield call(startSprint, id);
+    yield put({ type: action.START_SPRINT_SUCCESS,  payload: { id }  });
+  } catch (e) { console.error(e); }
 }
 
-export function* endSprintSaga(action: any): Generator<Effect> {
+export function* endSprintSaga(action: any) {
   try {
-    yield call(endSprint, action.id);
-    yield put({
-      type: END_SPRINT_SUCCESS,
-    });
-  } catch (error) {
-    yield put({
-      type: END_SPRINT_FAILURE,
-    });
-  }
+    const { id } = action.payload;
+    yield call(endSprint, id);
+    yield put({ type: action.END_SPRINT_SUCCESS, payload: { id } });
+  } catch (e) { console.error(e); }
 }
+
 
 export default function* newSprintSaga() {
   yield takeLatest(GET_SPRINT, getSprintSaga);
-  yield takeLatest(START_SPRINT_SUCCESS, startSprintSaga);
-  yield takeLatest(END_SPRINT_SUCCESS, endSprintSaga);
+  yield takeLatest(START_SPRINT, startSprintSaga);
+  yield takeLatest(END_SPRINT, endSprintSaga);
 }

@@ -14,12 +14,12 @@ export default function MainPage() {
     dispatch(getSprint("active"));
   }, [dispatch]);
 
-  const handleStartSprint = () => {
-    dispatch(startSprint(sprint.id));
+  const handleStartSprint = (id: number) => {
+    dispatch(startSprint(id));
   };
 
-  const handleEndSprint = () => {
-      dispatch(endSprint(sprint.id));
+  const handleEndSprint = (id: number) => {
+      dispatch(endSprint(id));
   };
 
   return (
@@ -33,18 +33,18 @@ export default function MainPage() {
         {!sprint.isHistorical && (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {!sprint.isActive && (
-              <Button
-                variant="contained"
-                sx={{ marginRight: 2 }}
-                onClick={handleStartSprint}
-              >
-                Start Sprint
-              </Button>
+       <Button
+       variant="contained"
+       sx={{ marginRight: 2 }}
+       onClick={() => handleStartSprint(sprint.id)}
+     >
+       Start Sprint
+     </Button>
             )}
             {sprint.isActive && (
-              <Button variant="outlined" onClick={handleEndSprint}>
-                End Sprint
-              </Button>
+        <Button variant="outlined" onClick={() => handleEndSprint(sprint.id)}>
+        End Sprint
+      </Button>
             )}
           </Box>
         )}
