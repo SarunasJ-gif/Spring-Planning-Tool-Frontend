@@ -28,7 +28,7 @@ import { RootState } from '../../redux/store';
 export default function PlanTable() {
   const dispatch = useDispatch();
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);
-
+  
   useEffect(() => { dispatch(addMembersToSprint());}, [dispatch]);
 
   const handleClearNotification = () => {
@@ -136,25 +136,27 @@ export default function PlanTable() {
                 {i === 0 ? '' : `${i}. ` + sprint.daysOfWeek[i - 1]}
               </TableCell>
             ))}
-            <TableCell align="center">
-              {/* {(() => {
-                const totalWorkDays = sprint.members.reduce((acc, member) => {
-                  const workDays = Object.values(
-                    sprint.members[Number(member.memberId) - 1].workingDays ||
-                      {},
-                  );
-                  const filteredDays = workDays.filter(
-                    (day) =>
-                      day.task?.type === 'Task' ||
-                      day.task?.type === 'Technical' ||
-                      day.task?.type === '' ||
-                      day.task?.type === 'Goal',
-                  );
-                  return acc + filteredDays.length;
-                }, 0);
-                return totalWorkDays;
-              })()} */}
-            </TableCell>
+<TableCell align="center">
+  {(() => {
+    const totalWorkDays = sprint.members.reduce((acc, member) => {
+      const memberId = Number(member.id);
+      if (memberId >= 1 && memberId <= sprint.members.length) {
+        const workDays = member.workingDays || {};
+        const filteredDays = Object.values(workDays).filter(
+          (day) =>
+            day.task?.type === 'Task' ||
+            day.task?.type === 'Technical' ||
+            day.task?.type === '' ||
+            day.task?.type === 'Goal'
+        );
+        return acc + filteredDays.length;
+      } else {
+        return acc;
+      }
+    }, 0);
+    return totalWorkDays;
+  })()}
+</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -236,26 +238,25 @@ export default function PlanTable() {
                   </FormControl>
                 </TableCell>
               ))}
-              <TableCell
-                sx={{
-                  textAlign: 'center',
-                  minWidth: '150px',
-                  borderLeft: '1px solid #e0e0e0',
-                }}
-              >xxx
-                {/* {
-                  Object.values(
-                    sprint.members[Number(member.memberId) - 1].workingDays ||
-                      {},
-                  ).filter(
-                    (day) =>
-                      day.task?.type === 'Task' ||
-                      day.task?.type === 'Technical' ||
-                      day.task?.type === '' ||
-                      day.task?.type === 'Goal',
-                  ).length
-                } */}
-              </TableCell>
+<TableCell
+  sx={{
+    textAlign: 'center',
+    minWidth: '150px',
+    borderLeft: '1px solid #e0e0e0',
+  }}
+>
+  {sprint.members && member.id && sprint.members.length >= Number(member.id) ? (
+    Object.values(sprint.members[Number(member.id) - 1].workingDays || {}).filter(
+      (day) =>
+        day.task?.type === 'Task' ||
+        day.task?.type === 'Technical' ||
+        day.task?.type === '' ||
+        day.task?.type === 'Goal'
+    ).length
+  ) : (
+    0
+  )}
+</TableCell>
             </TableRow>
           ))}
         </TableBody>
