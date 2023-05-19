@@ -55,7 +55,9 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar(props: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const sprints = useSelector((state: { sprints: SprintState }) => state.sprints.sprints);
+  const sprints = useSelector(
+    (state: { sprints: SprintState }) => state.sprints.sprints,
+  );
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
@@ -77,9 +79,9 @@ export default function Sidebar(props: { children: React.ReactNode }) {
         variant="permanent"
         open={open}
         sx={{
-          boxShadow: 'rgba(0, 0, 0, 0.3) 0px 0px 10px 0px',
           '& .MuiDrawer-paper': {
             width: open ? '295px' : '80px',
+            boxShadow: open ? 'rgba(0, 0, 0, 0.3) 0 0 15px 0' : 'none',
           },
         }}
       >
@@ -228,11 +230,15 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               color={'#696969'}
               padding="16px"
             >
-              {sprints.slice().reverse().map((sprint: Sprint) => (
-                <Typography sx={{ fontSize: '14px' }} key={sprint.id}>
-                  &ldquo;Sourcery Students&ldquo; - {sprint.title}{sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
-                </Typography>
-              ))}
+              {sprints
+                .slice()
+                .reverse()
+                .map((sprint: Sprint) => (
+                  <Typography sx={{ fontSize: '14px' }} key={sprint.id}>
+                    &ldquo;Sourcery Students&ldquo; - {sprint.title}
+                    {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
+                  </Typography>
+                ))}
             </TypographyItem>
           </>
         )}
