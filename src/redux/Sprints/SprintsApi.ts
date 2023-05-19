@@ -6,7 +6,7 @@ export const getSprintsApi = () => {
 };
 
 export const getSelectedSprintApi = (id: number) => {
-    return get<Sprint>('/sprint/${id}');
+    return get<Sprint>(`/sprint/${id}`);
 };
 
 

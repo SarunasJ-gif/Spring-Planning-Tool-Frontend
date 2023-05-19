@@ -19,7 +19,6 @@ export default function MainPage() {
 
 
   const sprintDisplay = useSelector((state: { sprint: Sprint }) => state.sprint.sprint);
-  const getSelectedSprint = useSelector((state: { sprint: SprintState }) => state.sprint.getSelectedSprint);
   console.log(sprintDisplay);
   return (
     <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>

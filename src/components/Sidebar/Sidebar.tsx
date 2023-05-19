@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
-import { Box, Fab, IconButton, List, Typography } from '@mui/material';
+import { Box, Fab, IconButton, Typography } from '@mui/material';
 import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 
 import { Endpoint } from '../../routes/Endpoint';
@@ -238,7 +238,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                   key={sprint.id}
                   onClick={() => handleSprintClick(sprint.id)}
                 >
-                  &ldquo;Sourcery Students&ldquo; - {sprint.title}
+                  {sprint.title}
                   {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
                 </Typography>
               ))}

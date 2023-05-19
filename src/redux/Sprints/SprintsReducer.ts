@@ -16,10 +16,6 @@ const reducer = (state = initialState, { type, payload }: { type: string, payloa
             return { ...state };
         case actions.GET_SPRINTS_SUCCESS:
             return { ...state, sprints: payload };
-        case actions.GET_SELECTED_SPRINT:
-            return { ...state };
-        case actions.GET_SELECTED_SPRINT_SUCCESS:
-            return { ...state, getSelectedSprint: payload as Sprint }
         default:
             return state;
     }
