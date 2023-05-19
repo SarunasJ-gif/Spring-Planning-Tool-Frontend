@@ -17,6 +17,7 @@ export default function MainPage() {
     dispatch(getSprint("active"));
   }, [dispatch]);
 
+
   const sprintDisplay = useSelector((state: { sprint: Sprint }) => state.sprint.sprint);
   const getSelectedSprint = useSelector((state: { sprint: SprintState }) => state.sprint.getSelectedSprint);
   console.log(sprintDisplay);

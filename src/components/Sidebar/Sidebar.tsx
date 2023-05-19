@@ -65,6 +65,10 @@ export default function Sidebar(props: { children: React.ReactNode }) {
     dispatch(getSprintsRequest());
   }, [dispatch]);
 
+  const handleSprintClick = (sprint: Sprint) => {
+
+  };
+
   return (
     <Box
       sx={{
@@ -220,25 +224,25 @@ export default function Sidebar(props: { children: React.ReactNode }) {
             >
               ALL SPRINTS
             </TypographyItem>
-            <List>
+            <TypographyItem
+              textAlignKey={'left'}
+              fontSizeKey={14}
+              fontFamilyKey={'Roboto'}
+              fontStyleKey={'normal'}
+              color={'#696969'}
+              padding="16px"
+            >
               {sprints.slice().reverse().map((sprint: Sprint) => (
-                <Link key={sprint.id} to={`/sprint/${sprint.id}`} style={{ textDecoration: 'none' }}>
-                  <Typography
-                    sx={{
-                      fontSize: '14px',
-                      textAlign: 'left',
-                      fontFamily: 'Roboto',
-                      fontStyle: 'normal',
-                      color: '#696969',
-                      padding: '16px',
-                    }}
-                  >
-                    &ldquo;Sourcery Students&ldquo; - {sprint.title}
-                    {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
-                  </Typography>
-                </Link>
+                <Typography
+                  sx={{ fontSize: '14px', cursor: 'pointer' }}
+                  key={sprint.id}
+                  onClick={() => handleSprintClick(sprint)}
+                >
+                  &ldquo;Sourcery Students&ldquo; - {sprint.title}
+                  {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
+                </Typography>
               ))}
-            </List>
+            </TypographyItem>
           </>
         )}
       </Drawer>
