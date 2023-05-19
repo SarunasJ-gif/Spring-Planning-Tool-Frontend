@@ -44,13 +44,7 @@ export function* updateTeamNameSaga(action: any) {
     console.error(e);
   }
 }
-export function* getAllTeamMembersSaga() {
-  try {
-    const members: Member[] = yield call(getTeamMembersAPI);
-    yield put(getAllTeamMembersSuccess(members));
 
-  } catch (e) { console.error(e);}
-}
 export function* addTeamMemberSaga(action: any) {
   try {
     const { memberId, email, role, firstName, lastName } = action.payload;
@@ -71,7 +65,6 @@ export function* removeTeamMemberSaga(action: any) {
         yield put(getMembersSuccess(members));
     } catch (e) { console.error(e); }
   }
-  
   export function* updateMemberRoleSaga(action: any) {
       try {
         const { memberId, role } = action.payload;
@@ -85,6 +78,14 @@ export function* removeTeamMemberSaga(action: any) {
         yield call(updateTeamMemberName, email, firstName, lastName);
         yield put({ type: action.UPDATE_MEMBER_NAME, payload: { email, firstName, lastName } });
       } catch (e) {console.error(e);}
+    }
+
+    export function* getAllTeamMembersSaga() {
+      try {
+        const members: Member[] = yield call(getTeamMembersAPI);
+        yield put(getAllTeamMembersSuccess(members));
+    
+      } catch (e) { console.error(e);}
     }
 
 export default function* newTeamSaga() {

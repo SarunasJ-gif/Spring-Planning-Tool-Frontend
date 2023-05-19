@@ -9,18 +9,24 @@ import {
   TableRow,
   styled,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { useEffect } from 'react';
+import { getAllTeamData } from '../../redux/ManageTeam/ManageTeamActions';
 
 const LeftAlignedTableCell = styled(TableCell)(() => ({
   textAlign: 'left',
 }));
 
 export default function TopTable() {
-
+  const dispatch = useDispatch();
   const teams = useSelector((state: RootState) => state.manageTeam.team);
-
   const rowsTop = teams ? [createData(teams.name, teams.members.length, teams.completedProjects, teams.completedTasks)] : [];
+
+  useEffect(() => {
+    dispatch(getAllTeamData());
+ }, [dispatch]);
+
 
   function createData(
     name: string,

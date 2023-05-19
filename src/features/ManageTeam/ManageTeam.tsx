@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState} from 'react';
 import {
   Typography,
   Box,
@@ -12,41 +12,54 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
+  TextField,
+  Autocomplete,
 } from '@mui/material';
 import TopTable from './TopTable';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addTeamMember, getMembersRequest } from '../../redux/ManageTeam/ManageTeamActions';
 import BottomTable from './BottomTable';
-import { RootState } from '../../redux/store';
+import { Member } from '../../types/NewSprintTypes';
+import { get } from '../../api';
+import { addTeamMember } from '../../redux/ManageTeam/ManageTeamActions';
+import { useDispatch } from 'react-redux';
 
 export default function ManageTeam() {
   const dispatch = useDispatch();
-
-const localUsers = useSelector((state: RootState) => state.manageTeam.team.members);
-
   const [open, setOpen] = React.useState(false);
   const [saveClicked] = useState(false);
+  const [options, setOptions ] = useState<Member[]>([]);
   const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
- 
+
+
+  useEffect(() => {
+    handleSearchMembers();
+  }, []);
+
+  const handleSearchMembers = async () => {
+    try {
+      const response = await get<Member[]>('/member');
+      console.log(response);
+      setOptions(response);
+    } catch (error) {      console.log('Error fetching members:', error);
+    }
+  };
+  
   const handleAddMember = () => {
-    const selectedMember = localUsers.find((member: { id: number; }) => member.id === selectedMemberId);
+    const selectedMember = options.find((member) => member.id === selectedMemberId);
     if (selectedMember) {
-      dispatch(addTeamMember(selectedMember.id, selectedMember.email, selectedMember.role, selectedMember.firstName, selectedMember.lastName,));
+      const id = selectedMember.id;
+      const email = selectedMember.email;
+      const role = selectedMember.role;
+      const firstName = selectedMember.firstName;
+      const lastName = selectedMember.lastName;
+
+       dispatch(addTeamMember(id, email, role, firstName, lastName ));
+      console.log('Adding member:', selectedMember);
     }
     handleClose();
   };
-  
-  const handleClickOpen = () => {
-    dispatch(getMembersRequest());
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+  const handleClickOpen = () => { setOpen(true); };
+  const handleClose = () => { setOpen(false); };
 
   return (
     <Box>
@@ -112,21 +125,24 @@ const localUsers = useSelector((state: RootState) => state.manageTeam.team.membe
                           gap: 2,
                         }}
                       >
-<FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
-  <InputLabel>User</InputLabel>
-  <Select
-    value={selectedMemberId}
-    onChange={(event) => {
-      setSelectedMemberId(Number(event.target.value));
-    }}
-  >
-    {localUsers.map((member: any) => (
-      <MenuItem key={member.id} value={member.id}>
-        {member.id} | {member.firstName && member.lastName ? `${member.firstName} ${member.lastName}` : member.email} | {member.role}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
+                      <FormControl variant="filled" sx={{ m: 1, flex: 1, minWidth: 400 }}>
+                        <Autocomplete
+                          id="controllable-states-demo"
+                          options={options}
+                          getOptionLabel={(member) => {
+                            const fullName = `${member.firstName} ${member.lastName}`.trim();
+                            return fullName.length > 0 ? fullName : member.email;
+                          }}
+                          onChange={(event, newValue) => setSelectedMemberId(newValue ? newValue.id : null)}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Search input"
+                              InputProps={{ ...params.InputProps, type: 'search' }}
+                            />
+                          )}
+                        />
+                      </FormControl>
                       </DialogContent>
                       <DialogActions sx={{ justifyContent: 'flex-end' }}>
                         <Button onClick={handleAddMember}>ADD</Button>
