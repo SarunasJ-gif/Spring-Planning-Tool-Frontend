@@ -2,7 +2,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { 
   ADD_TEAM_MEMBER,
   GET_ALL_TEAM_DATA,
-  GET_ALL_TEAM_MEMBERS,
   GET_MEMBER_REQUEST,
   REMOVE_TEAM_MEMBER,
   UPDATE_MEMBER_NAME,
@@ -92,7 +91,6 @@ export default function* newTeamSaga() {
   yield takeLatest(UPDATE_TEAM_NAME, updateTeamNameSaga); 
   yield takeLatest(ADD_TEAM_MEMBER, addTeamMemberSaga); 
   yield takeLatest(REMOVE_TEAM_MEMBER, removeTeamMemberSaga); 
-  // yield takeLatest(GET_ALL_TEAM_MEMBERS, getAllTeamMembersSaga);
   yield takeLatest(GET_ALL_TEAM_DATA, getAllTeamDataSaga);
   yield takeLatest(GET_MEMBER_REQUEST, getMembersSaga); 
   yield takeLatest(UPDATE_MEMBER_ROLE, updateMemberRoleSaga);
