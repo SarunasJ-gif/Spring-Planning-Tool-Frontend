@@ -11,6 +11,7 @@ import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
 import ManageTeam from '../features/ManageTeam/ManageTeam';
 import AddSprint from '../features/AddSprint/AddSprint';
+import ProtectedRoute from './ProtectedRoute';
 
 type MyErrorBoundaryProps = {
   children: React.ReactNode;
@@ -53,15 +54,24 @@ const routeOptions: RouteObject[] = [
     children: [
       {
         path: Endpoint.MAIN_PAGE,
-        element: <MainPage />,
+        element: (
+          <ProtectedRoute path={Endpoint.MAIN_PAGE} element={<MainPage />} />
+        ),
       },
       {
         path: Endpoint.ADD_SPRINT,
-        element: <AddSprint />,
+        element: (
+          <ProtectedRoute path={Endpoint.ADD_SPRINT} element={<AddSprint />} />
+        ),
       },
       {
         path: Endpoint.MANAGE_TEAM,
-        element: <ManageTeam />,
+        element: (
+          <ProtectedRoute
+            path={Endpoint.MANAGE_TEAM}
+            element={<ManageTeam />}
+          />
+        ),
       },
     ],
   },

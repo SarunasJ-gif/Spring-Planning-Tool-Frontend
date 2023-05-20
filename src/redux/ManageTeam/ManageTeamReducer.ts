@@ -9,7 +9,7 @@ export type MemberTeamState = {
     members: Member[];
 };
 
-  export const initialState: {team: MemberTeamState} = { team: { name: '', completedProjects: null, completedTasks: null, members: [] },};
+  export const initialState: {team: MemberTeamState} = { team: { name: '', completedProjects: null, completedTasks: null, members: [] }};
 
 // @ts-ignore
 const reducer = (state = initialState, { type, payload }) => {
@@ -42,8 +42,8 @@ const reducer = (state = initialState, { type, payload }) => {
           });
           case actions.GET_MEMBER_REQUEST:
         return {...state };
-      case actions.GET_MEMBER_SUCCESS: 
-        return { ...state, members: payload };
+    case actions.GET_MEMBER_SUCCESS:
+         return { ...state, members: payload };
         case actions.UPDATE_MEMBER_ROLE:
       return { ...state, members: state.team.members.map((member) =>
           member.id === payload.memberId ? { ...member, role: payload.newRole }: member ),}; 

@@ -29,7 +29,6 @@ export type MemberWorkingDay = {
 export type Member = {
   firstName: string;
   lastName: string;
-  memberId: string;
   email: string;
   workingDays: MemberWorkingDay[];
   id: number;

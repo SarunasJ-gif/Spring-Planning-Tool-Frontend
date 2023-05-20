@@ -16,7 +16,7 @@ import {
 import { Role } from '../../enums/enums';
 import { TableRowElementProps } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTeamData, getAllTeamMembers, getMembersSuccess, removeTeamMember, updateMemberRole, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
+import { getAllTeamMembers, getMembersSuccess, removeTeamMember, updateMemberRole, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
 import { useEffect } from 'react';
 import { RootState } from '../../redux/store';
 
@@ -26,7 +26,6 @@ export default function BottomTable() {
   const members = useSelector((state: RootState) => state.manageTeam.team.members);
  
   useEffect(() => {
-     dispatch(getAllTeamData());
      dispatch(getAllTeamMembers());
   }, [dispatch]);
 
@@ -68,7 +67,7 @@ export default function BottomTable() {
       dispatch(removeTeamMember(row.id));
       const updatedMembers = members.filter((member) => member.id !== row.id);
       dispatch(getMembersSuccess(updatedMembers));
-    };
+    };   
    
     return (
       <React.Fragment key={row.id}>
