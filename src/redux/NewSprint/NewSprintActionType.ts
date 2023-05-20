@@ -19,3 +19,6 @@ export const SET_DAYS_OF_WEEK = 'setDaysOfWeek';
 export const UPDATE_SHOW_NOTIFICATION = 'updateShowNotification';
 export const CREATE_NEW_SPRINT_SUCCESS = 'CREATE_NEW_SPRINT_SUCCESS';
 export const CLEAR_NEW_SPRINT_STATE = 'CLEAR_NEW_SPRINT_STATE';
+
+export const ADD_MEMBER_TO_SPRINT_REQUEST = 'addMemberToSprintRequest'; 
+export const ADD_MEMBER_TO_SPRINT_SUCCESS = 'addMemberToSprintSuccess'; 
