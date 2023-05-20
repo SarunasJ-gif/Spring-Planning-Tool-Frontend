@@ -10,7 +10,7 @@ import { TypographyItem } from '../TypographyItem/TypographyItem';
 import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
 import { SprintState } from '../../redux/Sprints/SprintsReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSprintsRequest } from '../../redux/Sprints/SprintsActions';
+import { getSelectedSprint, getSprintsRequest } from '../../redux/Sprints/SprintsActions';
 import { Sprint } from '../../types/NewSprintTypes';
 
 const drawerWidth = 295;
@@ -64,6 +64,10 @@ export default function Sidebar(props: { children: React.ReactNode }) {
   useEffect(() => {
     dispatch(getSprintsRequest());
   }, [dispatch]);
+
+  const handleSprintClick = (id: number) => {
+    dispatch(getSelectedSprint(id))
+  };
 
   return (
     <Box
@@ -229,8 +233,13 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               padding="16px"
             >
               {sprints.slice().reverse().map((sprint: Sprint) => (
-                <Typography sx={{ fontSize: '14px' }} key={sprint.id}>
-                  &ldquo;Sourcery Students&ldquo; - {sprint.title}{sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
+                <Typography
+                  sx={{ fontSize: '14px', cursor: 'pointer' }}
+                  key={sprint.id}
+                  onClick={() => handleSprintClick(sprint.id)}
+                >
+                  {sprint.title}
+                  {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
                 </Typography>
               ))}
             </TypographyItem>
