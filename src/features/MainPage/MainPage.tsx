@@ -3,7 +3,6 @@ import { Box, Typography, AccordionSummary, Button } from '@mui/material/';
 import { SAccordion } from '../../style/AccordionStyle';
 import TasksTableDisplay from '../../components/TasksTableDisplay/TasksTableDisplay';
 import { ArrowDropDown } from '@mui/icons-material';
-import { useEffect } from 'react';
 import { getSprint } from '../../redux/Sprint/SprintActions';
 import { Sprint } from '../../types/NewSprintTypes';
 import { useDispatch, useSelector } from 'react-redux';
