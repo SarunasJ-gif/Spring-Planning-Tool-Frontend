@@ -28,7 +28,6 @@ import { useDispatch } from 'react-redux';
 export default function ManageTeam() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-  const [saveClicked] = useState(false);
   const [options, setOptions] = useState<Member[]>([]);
   const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
 
