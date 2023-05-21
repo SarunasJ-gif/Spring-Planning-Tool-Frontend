@@ -1,5 +1,5 @@
 import * as actions from './NewSprintActionType';
-import { TaskData } from '../../types/NewSprintTypes';
+import { Member, TaskData } from '../../types/NewSprintTypes';
 import { Dayjs } from 'dayjs';
 
 export const addTask = (task: TaskData) => ({
@@ -73,7 +73,7 @@ export const createNewSprint = (sprintData: any) => ({
 });
 
 export const updateTaskAssign = (
-  person: string,
+  person: number,
   day: string | null,
   value: number,
 ) => ({
@@ -106,4 +106,12 @@ export const createNewSprintSuccess = () => ({
 
 export const clearNewSprintState = () => ({
   type: actions.CLEAR_NEW_SPRINT_STATE,
+});
+
+export const addMembersToSprint = () => ({
+  type: actions.ADD_MEMBER_TO_SPRINT_REQUEST,
+});
+export const addMembersToSprintSuccess = (members: Member[]) => ({
+  type: actions.ADD_MEMBER_TO_SPRINT_SUCCESS,
+  payload: members,
 });

@@ -17,7 +17,6 @@ import { Role } from '../../enums/enums';
 import { TableRowElementProps } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getAllTeamData,
   getAllTeamMembers,
   getMembersSuccess,
   removeTeamMember,
@@ -35,7 +34,6 @@ export default function BottomTable() {
   );
 
   useEffect(() => {
-    dispatch(getAllTeamData());
     dispatch(getAllTeamMembers());
   }, [dispatch]);
 

@@ -21,19 +21,22 @@ import {
   updateTaskAssign,
   updateShowNotification,
   updateMembers,
+  addMembersToSprint,
 } from '../../redux/NewSprint/NewSprintActions';
 import { RootState } from '../../redux/store';
 
 export default function PlanTable() {
   const dispatch = useDispatch();
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);
+  
+  useEffect(() => { dispatch(addMembersToSprint());}, [dispatch]);
 
   const handleClearNotification = () => {
     dispatch(updateShowNotification(false));
   };
 
   const handleTaskChange = (
-    person: string,
+    person: number,
     day: string | null,
     value: number,
   ) => {
@@ -133,30 +136,32 @@ export default function PlanTable() {
                 {i === 0 ? '' : `${i}. ` + sprint.daysOfWeek[i - 1]}
               </TableCell>
             ))}
-            <TableCell align="center">
-              {(() => {
-                const totalWorkDays = sprint.members.reduce((acc, member) => {
-                  const workDays = Object.values(
-                    sprint.members[Number(member.memberId) - 1].workingDays ||
-                      {},
-                  );
-                  const filteredDays = workDays.filter(
-                    (day) =>
-                      day.task?.type === 'Task' ||
-                      day.task?.type === 'Technical' ||
-                      day.task?.type === '' ||
-                      day.task?.type === 'Goal',
-                  );
-                  return acc + filteredDays.length;
-                }, 0);
-                return totalWorkDays;
-              })()}
-            </TableCell>
+<TableCell align="center">
+  {(() => {
+    const totalWorkDays = sprint.members.reduce((acc, member) => {
+      const memberId = Number(member.id);
+      if (memberId >= 1 && memberId <= sprint.members.length) {
+        const workDays = member.workingDays || {};
+        const filteredDays = Object.values(workDays).filter(
+          (day) =>
+            day.task?.type === 'Task' ||
+            day.task?.type === 'Technical' ||
+            day.task?.type === '' ||
+            day.task?.type === 'Goal'
+        );
+        return acc + filteredDays.length;
+      } else {
+        return acc;
+      }
+    }, 0);
+    return totalWorkDays;
+  })()}
+</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {sprint.members.map((member) => (
-            <TableRow key={member.memberId} sx={{ height: '48px' }}>
+          {sprint.members!==undefined && sprint.members.map((member) => (
+            <TableRow key={member.id} sx={{ height: '48px' }}>
               <TableCell
                 sx={{
                   borderRight: '1px solid #e0e0e0',
@@ -165,7 +170,7 @@ export default function PlanTable() {
               >
                 {member.firstName} {member.lastName}
               </TableCell>
-              {member.workingDays.map((day) => (
+              {member.workingDays!==undefined && member.workingDays.map((day) => (
                 <TableCell
                   padding="none"
                   key={`${member}-${day.day}`}
@@ -190,7 +195,7 @@ export default function PlanTable() {
                       value={day?.task?.id ?? ''}
                       onChange={(event) =>
                         handleTaskChange(
-                          member.memberId,
+                          member.id,
                           day.day,
                           Number(event.target.value),
                         )
@@ -233,26 +238,25 @@ export default function PlanTable() {
                   </FormControl>
                 </TableCell>
               ))}
-              <TableCell
-                sx={{
-                  textAlign: 'center',
-                  minWidth: '150px',
-                  borderLeft: '1px solid #e0e0e0',
-                }}
-              >
-                {
-                  Object.values(
-                    sprint.members[Number(member.memberId) - 1].workingDays ||
-                      {},
-                  ).filter(
-                    (day) =>
-                      day.task?.type === 'Task' ||
-                      day.task?.type === 'Technical' ||
-                      day.task?.type === '' ||
-                      day.task?.type === 'Goal',
-                  ).length
-                }
-              </TableCell>
+<TableCell
+  sx={{
+    textAlign: 'center',
+    minWidth: '150px',
+    borderLeft: '1px solid #e0e0e0',
+  }}
+>
+  {sprint.members && member.id && sprint.members.length >= Number(member.id) ? (
+    Object.values(sprint.members[Number(member.id) - 1].workingDays || {}).filter(
+      (day) =>
+        day.task?.type === 'Task' ||
+        day.task?.type === 'Technical' ||
+        day.task?.type === '' ||
+        day.task?.type === 'Goal'
+    ).length
+  ) : (
+    0
+  )}
+</TableCell>
             </TableRow>
           ))}
         </TableBody>
