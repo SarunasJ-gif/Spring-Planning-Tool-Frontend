@@ -43,6 +43,10 @@ export default function Login() {
       });
   };
 
+  React.useEffect(() => {
+    localStorage.removeItem('token');
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Link href="/">
