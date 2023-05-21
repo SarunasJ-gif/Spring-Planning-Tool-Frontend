@@ -28,8 +28,10 @@ import { RootState } from '../../redux/store';
 export default function PlanTable() {
   const dispatch = useDispatch();
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);
-  
-  useEffect(() => { dispatch(addMembersToSprint());}, [dispatch]);
+
+  useEffect(() => {
+    dispatch(addMembersToSprint());
+  }, [dispatch]);
 
   const handleClearNotification = () => {
     dispatch(updateShowNotification(false));
@@ -136,129 +138,133 @@ export default function PlanTable() {
                 {i === 0 ? '' : `${i}. ` + sprint.daysOfWeek[i - 1]}
               </TableCell>
             ))}
-<TableCell align="center">
-  {(() => {
-    const totalWorkDays = sprint.members.reduce((acc, member) => {
-      const memberId = Number(member.id);
-      if (memberId >= 1 && memberId <= sprint.members.length) {
-        const workDays = member.workingDays || {};
-        const filteredDays = Object.values(workDays).filter(
-          (day) =>
-            day.task?.type === 'Task' ||
-            day.task?.type === 'Technical' ||
-            day.task?.type === '' ||
-            day.task?.type === 'Goal'
-        );
-        return acc + filteredDays.length;
-      } else {
-        return acc;
-      }
-    }, 0);
-    return totalWorkDays;
-  })()}
-</TableCell>
+            <TableCell align="center">
+              {(() => {
+                const totalWorkDays = sprint.members.reduce((acc, member) => {
+                  const memberId = Number(member.id);
+                  if (memberId >= 1 && memberId <= sprint.members.length) {
+                    const workDays = member.workingDays || {};
+                    const filteredDays = Object.values(workDays).filter(
+                      (day) =>
+                        day.task?.type === 'Task' ||
+                        day.task?.type === 'Technical' ||
+                        day.task?.type === '' ||
+                        day.task?.type === 'Goal',
+                    );
+                    return acc + filteredDays.length;
+                  } else {
+                    return acc;
+                  }
+                }, 0);
+                return totalWorkDays;
+              })()}
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {sprint.members!==undefined && sprint.members.map((member) => (
-            <TableRow key={member.id} sx={{ height: '48px' }}>
-              <TableCell
-                sx={{
-                  borderRight: '1px solid #e0e0e0',
-                  minWidth: '200px',
-                }}
-              >
-                {member.firstName} {member.lastName}
-              </TableCell>
-              {member.workingDays!==undefined && member.workingDays.map((day) => (
+          {sprint.members !== undefined &&
+            sprint.members.map((member) => (
+              <TableRow key={member.id} sx={{ height: '48px' }}>
                 <TableCell
-                  padding="none"
-                  key={`${member}-${day.day}`}
                   sx={{
-                    '&:hover': {
-                      backgroundColor: '#F0F1F3',
-                    },
-                    textAlign: 'center',
+                    borderRight: '1px solid #e0e0e0',
+                    minWidth: '200px',
                   }}
                 >
-                  <FormControl variant="standard" fullWidth>
-                    <Select
-                      disableUnderline
-                      inputProps={{ IconComponent: () => null }}
-                      sx={{
-                        maSelectrgin: 'auto',
-                        '& .MuiInput-input': {
-                          paddingRight: '0!important',
-                        },
-                        paddingRight: '0',
-                      }}
-                      value={day?.task?.id ?? ''}
-                      onChange={(event) =>
-                        handleTaskChange(
-                          member.id,
-                          day.day,
-                          Number(event.target.value),
-                        )
-                      }
-                      label="Task"
-                    >
-                      {sprint.tasks.map((task) => (
-                        <MenuItem value={task.id} key={task.id}>
-                          <TaskKey
-                            taskKey={task.keyValue}
-                            keyColor="#FFFFFF"
-                            keyBackgroundColor={task.keyColor}
-                          />
-                        </MenuItem>
-                      ))}
-                      <MenuItem value="-1">
-                        {day.task?.keyValue === 'Education' ? (
-                          <TaskKey
-                            taskKey={'Education'}
-                            keyColor={'#FFFFFF'}
-                            keyBackgroundColor={'#878787'}
-                          />
-                        ) : (
-                          'Education'
-                        )}
-                      </MenuItem>
-                      <MenuItem value="-2">
-                        {day.task?.keyValue === 'Vacation' ? (
-                          <TaskKey
-                            taskKey={'Vacation'}
-                            keyColor={'#FFFFFF'}
-                            keyBackgroundColor={'#878787'}
-                          />
-                        ) : (
-                          'Vacation'
-                        )}
-                      </MenuItem>
-                      <MenuItem value="">None</MenuItem>
-                    </Select>
-                  </FormControl>
+                  {member.firstName} {member.lastName}
                 </TableCell>
-              ))}
-<TableCell
-  sx={{
-    textAlign: 'center',
-    minWidth: '150px',
-    borderLeft: '1px solid #e0e0e0',
-  }}
->
-  {sprint.members && member.id && sprint.members.length >= Number(member.id) ? (
-    Object.values(sprint.members[Number(member.id) - 1].workingDays || {}).filter(
-      (day) =>
-        day.task?.type === 'Task' ||
-        day.task?.type === 'Technical' ||
-        day.task?.type === '' ||
-        day.task?.type === 'Goal'
-    ).length
-  ) : (
-    0
-  )}
-</TableCell>
-            </TableRow>
-          ))}
+                {member.workingDays !== undefined &&
+                  member.workingDays.map((day) => (
+                    <TableCell
+                      padding="none"
+                      key={`${member}-${day.day}`}
+                      sx={{
+                        '&:hover': {
+                          backgroundColor: '#F0F1F3',
+                        },
+                        textAlign: 'center',
+                      }}
+                    >
+                      <FormControl variant="standard" fullWidth>
+                        <Select
+                          disableUnderline
+                          inputProps={{ IconComponent: () => null }}
+                          sx={{
+                            maSelectrgin: 'auto',
+                            '& .MuiInput-input': {
+                              paddingRight: '0!important',
+                            },
+                            paddingRight: '0',
+                          }}
+                          value={day?.task?.id ?? ''}
+                          onChange={(event) =>
+                            handleTaskChange(
+                              member.id,
+                              day.day,
+                              Number(event.target.value),
+                            )
+                          }
+                          label="Task"
+                        >
+                          {sprint.tasks.map((task) => (
+                            <MenuItem value={task.id} key={task.id}>
+                              <TaskKey
+                                taskKey={task.keyValue}
+                                keyColor="#FFFFFF"
+                                keyBackgroundColor={task.keyColor}
+                              />
+                            </MenuItem>
+                          ))}
+                          <MenuItem value="-1">
+                            {day.task?.keyValue === 'Education' ? (
+                              <TaskKey
+                                taskKey={'Education'}
+                                keyColor={'#FFFFFF'}
+                                keyBackgroundColor={'#878787'}
+                              />
+                            ) : (
+                              'Education'
+                            )}
+                          </MenuItem>
+                          <MenuItem value="-2">
+                            {day.task?.keyValue === 'Vacation' ? (
+                              <TaskKey
+                                taskKey={'Vacation'}
+                                keyColor={'#FFFFFF'}
+                                keyBackgroundColor={'#878787'}
+                              />
+                            ) : (
+                              'Vacation'
+                            )}
+                          </MenuItem>
+                          <MenuItem value="">None</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </TableCell>
+                  ))}
+                <TableCell
+                  sx={{
+                    textAlign: 'center',
+                    minWidth: '150px',
+                    borderLeft: '1px solid #e0e0e0',
+                  }}
+                >
+                  {sprint.members &&
+                  member.id &&
+                  sprint.members.length >= Number(member.id)
+                    ? Object.values(
+                        sprint.members[Number(member.id) - 1].workingDays || {},
+                      ).filter(
+                        (day) =>
+                          day.task?.type === 'Task' ||
+                          day.task?.type === 'Technical' ||
+                          day.task?.type === '' ||
+                          day.task?.type === 'Goal',
+                      ).length
+                    : 0}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </>

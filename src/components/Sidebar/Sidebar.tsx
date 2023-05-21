@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Fab, IconButton, Typography } from '@mui/material';
 import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 
@@ -10,7 +10,10 @@ import { TypographyItem } from '../TypographyItem/TypographyItem';
 import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
 import { SprintState } from '../../redux/Sprints/SprintsReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSelectedSprint, getSprintsRequest } from '../../redux/Sprints/SprintsActions';
+import {
+  getSelectedSprint,
+  getSprintsRequest,
+} from '../../redux/Sprints/SprintsActions';
 import { Sprint } from '../../types/NewSprintTypes';
 
 const drawerWidth = 295;
@@ -55,8 +58,12 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar(props: { children: React.ReactNode }) {
   const dispatch = useDispatch();
-  const sprints = useSelector((state: { sprints: SprintState }) => state.sprints.sprints);
+  const navigate = useNavigate();
+  const sprints = useSelector(
+    (state: { sprints: SprintState }) => state.sprints.sprints,
+  );
   const [open, setOpen] = React.useState(false);
+  const [selectedSprintId, setSelectedSprintId] = React.useState(0);
   const handleDrawer = () => {
     setOpen(!open);
   };
@@ -66,7 +73,9 @@ export default function Sidebar(props: { children: React.ReactNode }) {
   }, [dispatch]);
 
   const handleSprintClick = (id: number) => {
-    dispatch(getSelectedSprint(id))
+    setSelectedSprintId(id);
+    dispatch(getSelectedSprint(id));
+    navigate('/');
   };
 
   return (
@@ -81,9 +90,9 @@ export default function Sidebar(props: { children: React.ReactNode }) {
         variant="permanent"
         open={open}
         sx={{
-          boxShadow: 'rgba(0, 0, 0, 0.3) 0px 0px 10px 0px',
           '& .MuiDrawer-paper': {
             width: open ? '295px' : '80px',
+            boxShadow: open ? 'rgba(0, 0, 0, 0.3) 0 0 15px 0' : 'none',
           },
         }}
       >
@@ -230,18 +239,33 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               fontFamilyKey={'Roboto'}
               fontStyleKey={'normal'}
               color={'#696969'}
-              padding="16px"
             >
-              {sprints.slice().reverse().map((sprint: Sprint) => (
-                <Typography
-                  sx={{ fontSize: '14px', cursor: 'pointer' }}
-                  key={sprint.id}
-                  onClick={() => handleSprintClick(sprint.id)}
-                >
-                  {sprint.title}
-                  {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
-                </Typography>
-              ))}
+              {sprints
+                .slice()
+                .reverse()
+                .map((sprint: Sprint) => (
+                  <Typography
+                    sx={{
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      padding: '16px',
+                      fontWeight: 'medium',
+                      backgroundColor:
+                        sprint.id === selectedSprintId ? '#EBEDFE' : 'inherit',
+                      color:
+                        sprint.id === selectedSprintId ? '#3F51B5' : 'inherit',
+                      '&:hover': {
+                        backgroundColor: '#EBEDFE',
+                        color: '#3F51B5',
+                      },
+                    }}
+                    key={sprint.id}
+                    onClick={() => handleSprintClick(sprint.id)}
+                  >
+                    {sprint.title}
+                    {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
+                  </Typography>
+                ))}
             </TypographyItem>
           </>
         )}

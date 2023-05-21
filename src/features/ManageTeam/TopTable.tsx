@@ -14,19 +14,29 @@ import { RootState } from '../../redux/store';
 import { useEffect } from 'react';
 import { getAllTeamData } from '../../redux/ManageTeam/ManageTeamActions';
 
-const LeftAlignedTableCell = styled(TableCell)(() => ({
+const StyledTableCell = styled(TableCell)(() => ({
   textAlign: 'left',
+  fontWeight: '600',
+  fontSize: '1em',
 }));
 
 export default function TopTable() {
   const dispatch = useDispatch();
   const teams = useSelector((state: RootState) => state.manageTeam.team);
-  const rowsTop = teams ? [createData(teams.name, teams.members.length, teams.completedProjects, teams.completedTasks)] : [];
+  const rowsTop = teams
+    ? [
+        createData(
+          teams.name,
+          teams.members.length,
+          teams.completedProjects,
+          teams.completedTasks,
+        ),
+      ]
+    : [];
 
   useEffect(() => {
     dispatch(getAllTeamData());
- }, [dispatch]);
-
+  }, [dispatch]);
 
   function createData(
     name: string,
@@ -39,30 +49,22 @@ export default function TopTable() {
 
   return (
     <TableContainer component={Paper} sx={{ overflowX: 'hidden' }}>
-      <Table size="medium" aria-label="a dense table" sx={{ marginLeft: 8 }}>
+      <Table size="medium" aria-label="a dense table" sx={{ marginLeft: 6 }}>
         <TableHead>
           <TableRow>
-            <LeftAlignedTableCell>
-              <b>Team Name</b>
-            </LeftAlignedTableCell>
-            <LeftAlignedTableCell>
-              <b>Members</b>
-            </LeftAlignedTableCell>
-            <LeftAlignedTableCell>
-              <b>Projects completed</b>
-            </LeftAlignedTableCell>
-            <LeftAlignedTableCell>
-              <b>Tasks completed</b>
-            </LeftAlignedTableCell>
+            <StyledTableCell>Team Name</StyledTableCell>
+            <StyledTableCell>Members</StyledTableCell>
+            <StyledTableCell>Projects completed</StyledTableCell>
+            <StyledTableCell>Tasks completed</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rowsTop.map((row) => (
-            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={row.name}>
-              <LeftAlignedTableCell>{row.name}</LeftAlignedTableCell>
-              <LeftAlignedTableCell>{row.members}</LeftAlignedTableCell>
-              <LeftAlignedTableCell>{row.projects}</LeftAlignedTableCell>
-              <LeftAlignedTableCell>{row.tasks}</LeftAlignedTableCell>
+            <TableRow key={row.name}>
+              <TableCell sx={{ fontSize: '1em' }}>{row.name}</TableCell>
+              <TableCell sx={{ fontSize: '1em' }}>{row.members}</TableCell>
+              <TableCell sx={{ fontSize: '1em' }}>{row.projects}</TableCell>
+              <TableCell sx={{ fontSize: '1em' }}>{row.tasks}</TableCell>
             </TableRow>
           ))}
         </TableBody>

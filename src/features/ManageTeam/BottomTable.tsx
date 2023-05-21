@@ -1,5 +1,5 @@
 import * as React from 'react';
-import avatarImage from '../../images/avatar/avatar1.jpg';
+import avatarImage from '../../images/avatar/avatar.png';
 import RemoveButton from './RemoveButton';
 import SaveButton from './SaveButton';
 import {
@@ -16,17 +16,25 @@ import {
 import { Role } from '../../enums/enums';
 import { TableRowElementProps } from '../../types/TeamTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTeamMembers, getMembersSuccess, removeTeamMember, updateMemberRole, updateTeamMemberRole } from '../../redux/ManageTeam/ManageTeamActions';
+import {
+  getAllTeamMembers,
+  getMembersSuccess,
+  removeTeamMember,
+  updateMemberRole,
+  updateTeamMemberRole,
+} from '../../redux/ManageTeam/ManageTeamActions';
 import { useEffect } from 'react';
 import { RootState } from '../../redux/store';
 
 export default function BottomTable() {
   const dispatch = useDispatch();
 
-  const members = useSelector((state: RootState) => state.manageTeam.team.members);
- 
+  const members = useSelector(
+    (state: RootState) => state.manageTeam.team.members,
+  );
+
   useEffect(() => {
-     dispatch(getAllTeamMembers());
+    dispatch(getAllTeamMembers());
   }, [dispatch]);
 
   const handleRoleChange = (id: number, role: Role) => {
@@ -34,7 +42,10 @@ export default function BottomTable() {
     dispatch(updateTeamMemberRole(id, role));
   };
 
-    const TableRowElement: React.FC<TableRowElementProps> = ({row, index }: TableRowElementProps) => {
+  const TableRowElement: React.FC<TableRowElementProps> = ({
+    row,
+    index,
+  }: TableRowElementProps) => {
     const [showSaveButton, setShowSaveButton] = React.useState(false);
     const [selectedRole, setSelectedRole] = React.useState(row.role);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -46,13 +57,13 @@ export default function BottomTable() {
 
     const handleMenuItemClick = (
       event: React.MouseEvent<HTMLElement>,
-      index: number
+      index: number,
     ) => {
-      const selectedRole = Object.values(Role)[index];
-      setSelectedRole(selectedRole);
+      const selectedRoleValue = Object.values(Role)[index];
+      setSelectedRole(selectedRoleValue);
       setAnchorEl(null);
       setShowSaveButton(true);
-      handleRoleChange(row.id, selectedRole);
+      handleRoleChange(row.id, selectedRoleValue);
     };
 
     const handleClose = () => {
@@ -62,13 +73,13 @@ export default function BottomTable() {
     const handleSave = () => {
       setShowSaveButton(false);
     };
-    
+
     const handleRemove = () => {
       dispatch(removeTeamMember(row.id));
       const updatedMembers = members.filter((member) => member.id !== row.id);
       dispatch(getMembersSuccess(updatedMembers));
-    };   
-   
+    };
+
     return (
       <React.Fragment key={row.id}>
         <TableRow
@@ -80,23 +91,22 @@ export default function BottomTable() {
             },
           }}
         >
-          <TableCell component="th" scope="row" sx={{ width: '30px' }}>
+          <TableCell component="th" scope="row">
             <Avatar
-              style={{
-                display: 'flex',
-              }}
-              sx={{ ml: 4 }}
+              sx={{ ml: 6, width: '50px', height: '50px' }}
               src={avatarImage}
               alt="avatar"
             />
           </TableCell>
-          <TableCell align="left" sx={{ width: '250px' }}>
-          {row.firstName && row.lastName ? `${row.firstName} ${row.lastName}` : row.email}
+          <TableCell align="left" sx={{ width: '400px', fontSize: '1em' }}>
+            {row.firstName && row.lastName
+              ? `${row.firstName} ${row.lastName}`
+              : row.email}
           </TableCell>
           <TableCell
             align="left"
             onMouseEnter={handleClickListItem}
-            sx={{ width: '300px' }}
+            sx={{ width: '500px', fontSize: '1em' }}
           >
             {selectedRole}
             <Menu
@@ -120,12 +130,15 @@ export default function BottomTable() {
               ))}
             </Menu>
           </TableCell>
-          <TableCell align="left" sx={{ width: '80px' }}>
-             <RemoveButton name={row.name} email={row.email} handleRemoveMember={handleRemove} />
-
+          <TableCell align="right" sx={{ width: '80px' }}>
+            <RemoveButton
+              name={row.name}
+              email={row.email}
+              handleRemoveMember={handleRemove}
+            />
           </TableCell>
-          <TableCell align="left" sx={{ width: '80px' }}>
-            {showSaveButton && <SaveButton onClick={handleSave} />}
+          <TableCell align="left" sx={{ width: '100px' }}>
+            {showSaveButton ? <SaveButton onClick={handleSave} /> : null}
           </TableCell>
         </TableRow>
       </React.Fragment>
@@ -137,25 +150,28 @@ export default function BottomTable() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ width: '30px' }}></TableCell>
-            <TableCell align="left">Name</TableCell>
-            <TableCell align="left">Role</TableCell>
-            <TableCell align="left" />
+            <TableCell width="50px" align="left" />
+            <TableCell
+              align="left"
+              sx={{ fontWeight: '600', padding: '25px 15px', fontSize: '1em' }}
+            >
+              Name
+            </TableCell>
+            <TableCell
+              align="left"
+              sx={{ fontWeight: '600', padding: '25px 15px', fontSize: '1em' }}
+            >
+              Role
+            </TableCell>
             <TableCell align="left" />
           </TableRow>
         </TableHead>
         <TableBody>
           {members.map((member, index) => (
-            <TableRowElement
-              key={member.id}
-              row={member}
-              index={index}
-            />
+            <TableRowElement key={member.id} row={member} index={index} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
-
-

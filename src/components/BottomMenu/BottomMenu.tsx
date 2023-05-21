@@ -1,6 +1,9 @@
 import { Box, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearNewSprintState, createNewSprint} from '../../redux/NewSprint/NewSprintActions';
+import {
+  clearNewSprintState,
+  createNewSprint,
+} from '../../redux/NewSprint/NewSprintActions';
 import { useNavigate } from 'react-router-dom';
 import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
 
@@ -8,7 +11,9 @@ function BottomMenu() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const sprint = useSelector((state: { newSprint: NewSprint }) => state.newSprint.sprint );
+  const sprint = useSelector(
+    (state: { newSprint: NewSprint }) => state.newSprint.sprint,
+  );
 
   const handleAddClick = () => {
     dispatch(createNewSprint(sprint));
