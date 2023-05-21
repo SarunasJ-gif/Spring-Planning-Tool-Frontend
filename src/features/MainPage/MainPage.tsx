@@ -48,8 +48,8 @@ export default function MainPage() {
               alignItems: 'center',
             }}
           >
-            <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
-              &ldquo;{sprint.title}&rdquo;
+            <Typography sx={{ fontWeight: '600', fontSize: 34 }}>
+              {sprint.title}
             </Typography>
             {!sprint.isHistorical && (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>

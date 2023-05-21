@@ -76,7 +76,7 @@ export default function ManageTeam() {
       <Typography
         variant="h1"
         color="textPrimary"
-        fontWeight="bold"
+        fontWeight="600"
         gutterBottom
         fontSize={32}
         mt={15}
