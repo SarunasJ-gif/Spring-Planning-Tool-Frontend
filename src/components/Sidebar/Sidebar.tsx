@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Fab, IconButton, Typography } from '@mui/material';
 import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 
@@ -58,6 +58,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidebar(props: { children: React.ReactNode }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const sprints = useSelector(
     (state: { sprints: SprintState }) => state.sprints.sprints,
   );
@@ -74,6 +75,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
   const handleSprintClick = (id: number) => {
     setSelectedSprintId(id);
     dispatch(getSelectedSprint(id));
+    navigate('/');
   };
 
   return (
@@ -244,7 +246,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                 .map((sprint: Sprint) => (
                   <Typography
                     sx={{
-                      fontSize: '14px',
+                      fontSize: '13px',
                       cursor: 'pointer',
                       padding: '16px',
                       fontWeight: 'medium',
