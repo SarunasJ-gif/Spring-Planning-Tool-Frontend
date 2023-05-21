@@ -26,7 +26,7 @@ export default function SaveButton(props: SaveButtonProps) {
           },
         }}
       >
-        Save
+        SAVE
       </Button>
     </Box>
   );

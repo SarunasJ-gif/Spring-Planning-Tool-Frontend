@@ -10,14 +10,17 @@ import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
 import { MainSprint } from '../../types/MainPageTypes';
 
 export default function MainPage() {
-  const sprint = useSelector((state: { sprint: MainSprint }) => state.sprint.sprint);
+  const sprint = useSelector(
+    (state: { sprint: MainSprint }) => state.sprint.sprint,
+  );
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getSprint("active"));
+    dispatch(getSprint('active'));
   }, [dispatch]);
 
-
-  const sprintDisplay = useSelector((state: { sprint: Sprint }) => state.sprint.sprint);
+  const sprintDisplay = useSelector(
+    (state: { sprint: Sprint }) => state.sprint.sprint,
+  );
   console.log(sprintDisplay);
   const handleStartSprint = (id: number) => {
     dispatch(startSprint(id));
@@ -29,9 +32,22 @@ export default function MainPage() {
 
   return (
     <Box>
-      {sprint === null ? <Typography variant="h3" sx={{ textAlign: 'center', paddingTop: '250px' }}>No active sprint</Typography> :
+      {sprint === null ? (
+        <Typography
+          variant="h3"
+          sx={{ textAlign: 'center', paddingTop: '250px' }}
+        >
+          No active sprint
+        </Typography>
+      ) : (
         <Box sx={{ maxWidth: '85%', margin: 'auto', mt: 15 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <Typography sx={{ fontWeight: 'bold', fontSize: 34 }}>
               &ldquo;{sprint.title}&rdquo;
             </Typography>
@@ -47,7 +63,10 @@ export default function MainPage() {
                   </Button>
                 )}
                 {sprint.isActive && (
-                  <Button variant="outlined" onClick={() => handleEndSprint(sprint.id)}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleEndSprint(sprint.id)}
+                  >
                     End Sprint
                   </Button>
                 )}
@@ -74,7 +93,9 @@ export default function MainPage() {
           </Box>
           {sprint.isHistorical && (
             <Box sx={{ mt: 4 }}>
-              <SAccordion sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}>
+              <SAccordion
+                sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}
+              >
                 <AccordionSummary
                   expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
                 >
@@ -86,7 +107,9 @@ export default function MainPage() {
             </Box>
           )}
           <Box sx={{ mt: 4, mb: 20 }}>
-            <SAccordion sx={{ display: 'flex', justifyContent: 'left', top: '-58px' }}>
+            <SAccordion
+              sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}
+            >
               <AccordionSummary
                 expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
               >
@@ -97,7 +120,7 @@ export default function MainPage() {
             </SAccordion>
           </Box>
         </Box>
-      }
+      )}
     </Box>
   );
 }

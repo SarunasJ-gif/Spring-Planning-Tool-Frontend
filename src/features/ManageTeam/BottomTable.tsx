@@ -1,5 +1,5 @@
 import * as React from 'react';
-import avatarImage from '../../images/avatar/avatar1.jpg';
+import avatarImage from '../../images/avatar/avatar.png';
 import RemoveButton from './RemoveButton';
 import SaveButton from './SaveButton';
 import {
@@ -59,11 +59,11 @@ export default function BottomTable() {
       event: React.MouseEvent<HTMLElement>,
       index: number,
     ) => {
-      const selectedRole = Object.values(Role)[index];
-      setSelectedRole(selectedRole);
+      const selectedRoleValue = Object.values(Role)[index];
+      setSelectedRole(selectedRoleValue);
       setAnchorEl(null);
       setShowSaveButton(true);
-      handleRoleChange(row.id, selectedRole);
+      handleRoleChange(row.id, selectedRoleValue);
     };
 
     const handleClose = () => {
@@ -91,17 +91,14 @@ export default function BottomTable() {
             },
           }}
         >
-          <TableCell component="th" scope="row" sx={{ width: '30px' }}>
+          <TableCell component="th" scope="row">
             <Avatar
-              style={{
-                display: 'flex',
-              }}
-              sx={{ ml: 4 }}
+              sx={{ ml: 6, width: '50px', height: '50px' }}
               src={avatarImage}
               alt="avatar"
             />
           </TableCell>
-          <TableCell align="left" sx={{ width: '250px' }}>
+          <TableCell align="left" sx={{ width: '400px', fontSize: '1em' }}>
             {row.firstName && row.lastName
               ? `${row.firstName} ${row.lastName}`
               : row.email}
@@ -109,7 +106,7 @@ export default function BottomTable() {
           <TableCell
             align="left"
             onMouseEnter={handleClickListItem}
-            sx={{ width: '300px' }}
+            sx={{ width: '500px', fontSize: '1em' }}
           >
             {selectedRole}
             <Menu
@@ -133,15 +130,15 @@ export default function BottomTable() {
               ))}
             </Menu>
           </TableCell>
-          <TableCell align="left" sx={{ width: '80px' }}>
+          <TableCell align="right" sx={{ width: '80px' }}>
             <RemoveButton
               name={row.name}
               email={row.email}
               handleRemoveMember={handleRemove}
             />
           </TableCell>
-          <TableCell align="left" sx={{ width: '80px' }}>
-            {showSaveButton && <SaveButton onClick={handleSave} />}
+          <TableCell align="left" sx={{ width: '100px' }}>
+            {showSaveButton ? <SaveButton onClick={handleSave} /> : null}
           </TableCell>
         </TableRow>
       </React.Fragment>
@@ -153,17 +150,16 @@ export default function BottomTable() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell width="30px"></TableCell>
             <TableCell width="50px" align="left" />
             <TableCell
               align="left"
-              sx={{ fontWeight: '600', padding: '25px 65px' }}
+              sx={{ fontWeight: '600', padding: '25px 15px', fontSize: '1em' }}
             >
               Name
             </TableCell>
             <TableCell
               align="left"
-              sx={{ fontWeight: '600', padding: '25px 85px' }}
+              sx={{ fontWeight: '600', padding: '25px 15px', fontSize: '1em' }}
             >
               Role
             </TableCell>

@@ -88,13 +88,13 @@ export default function ManageTeam() {
           <TopTable />
         </Grid>
         <Grid item xs={12}>
-          <TableContainer component={Paper}>
-            <Box sx={{ mb: 1 }}>
+          <TableContainer component={Paper} sx={{ marginBottom: '100px' }}>
+            <Box>
               <Grid
                 container
                 alignItems="center"
                 justifyContent="space-between"
-                padding="20px 50px"
+                padding="20px 60px"
                 borderBottom="1px solid #E1E1E1"
               >
                 <Grid item>
@@ -175,14 +175,6 @@ export default function ManageTeam() {
               </Grid>
               <BottomTable />
             </Box>
-            <Grid
-              container
-              justifyContent="space-between"
-              alignItems="center"
-              pt={3}
-              pb={3}
-              sx={{ borderBottom: '1px solid #E1E1E1' }}
-            ></Grid>
           </TableContainer>
         </Grid>
       </Grid>

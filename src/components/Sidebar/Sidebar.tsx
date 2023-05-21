@@ -62,6 +62,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
     (state: { sprints: SprintState }) => state.sprints.sprints,
   );
   const [open, setOpen] = React.useState(false);
+  const [selectedSprintId, setSelectedSprintId] = React.useState(0);
   const handleDrawer = () => {
     setOpen(!open);
   };
@@ -71,6 +72,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
   }, [dispatch]);
 
   const handleSprintClick = (id: number) => {
+    setSelectedSprintId(id);
     dispatch(getSelectedSprint(id));
   };
 
@@ -235,14 +237,26 @@ export default function Sidebar(props: { children: React.ReactNode }) {
               fontFamilyKey={'Roboto'}
               fontStyleKey={'normal'}
               color={'#696969'}
-              padding="16px"
             >
               {sprints
                 .slice()
                 .reverse()
                 .map((sprint: Sprint) => (
                   <Typography
-                    sx={{ fontSize: '14px', cursor: 'pointer' }}
+                    sx={{
+                      fontSize: '14px',
+                      cursor: 'pointer',
+                      padding: '16px',
+                      fontWeight: 'medium',
+                      backgroundColor:
+                        sprint.id === selectedSprintId ? '#EBEDFE' : 'inherit',
+                      color:
+                        sprint.id === selectedSprintId ? '#3F51B5' : 'inherit',
+                      '&:hover': {
+                        backgroundColor: '#EBEDFE',
+                        color: '#3F51B5',
+                      },
+                    }}
                     key={sprint.id}
                     onClick={() => handleSprintClick(sprint.id)}
                   >
