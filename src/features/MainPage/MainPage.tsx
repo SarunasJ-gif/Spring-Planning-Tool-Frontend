@@ -4,10 +4,10 @@ import { SAccordion } from '../../style/AccordionStyle';
 import TasksTableDisplay from '../../components/TasksTableDisplay/TasksTableDisplay';
 import { ArrowDropDown } from '@mui/icons-material';
 import { getSprint } from '../../redux/Sprint/SprintActions';
-import { Sprint } from '../../types/NewSprintTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
 import { MainSprint } from '../../types/MainPageTypes';
+import { SprintState } from '../../redux/Sprints/SprintsReducer';
 
 export default function MainPage() {
   const sprint = useSelector(
@@ -18,13 +18,14 @@ export default function MainPage() {
     dispatch(getSprint('active'));
   }, [dispatch]);
 
-  const sprintDisplay = useSelector(
-    (state: { sprint: Sprint }) => state.sprint.sprint,
-  );
-  console.log(sprintDisplay);
-  const handleStartSprint = (id: number) => {
+  const allSprints = useSelector((state: { sprints: SprintState }) => state.sprints.sprints);
+  const activeSprintExists = allSprints.some((sprint) => sprint.isActive && !sprint.isHistorical );
+
+const handleStartSprint = (id: number) => {
+  if (!activeSprintExists) {
     dispatch(startSprint(id));
-  };
+  }
+};
 
   const handleEndSprint = (id: number) => {
     dispatch(endSprint(id));
@@ -53,7 +54,7 @@ export default function MainPage() {
             </Typography>
             {!sprint.isHistorical && (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                {!sprint.isActive && (
+                {!sprint.isActive && !activeSprintExists && (
                   <Button
                     variant="contained"
                     sx={{ marginRight: 2 }}
