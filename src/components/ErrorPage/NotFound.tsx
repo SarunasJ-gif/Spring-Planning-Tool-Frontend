@@ -56,7 +56,7 @@ const NotFound = ({ marginTop }: { marginTop?: string }) => {
           onClick={handleClick}
           sx={{
             fontFamily: 'Roboto',
-            varient: 'contained',
+            variant: 'contained',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',

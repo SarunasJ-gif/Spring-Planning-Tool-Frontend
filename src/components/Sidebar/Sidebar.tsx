@@ -1,15 +1,20 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import { Link } from 'react-router-dom';
-import Data from './mock_sprint.json';
-
-import { Box, Fab, IconButton } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { Box, Fab, IconButton, Typography } from '@mui/material';
 import { DateRange, PeopleRounded, ArrowLeft, Add } from '@mui/icons-material';
 
 import { Endpoint } from '../../routes/Endpoint';
 import { TypographyItem } from '../TypographyItem/TypographyItem';
 import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
+import { SprintState } from '../../redux/Sprints/SprintsReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getSelectedSprint,
+  getSprintsRequest,
+} from '../../redux/Sprints/SprintsActions';
+import { Sprint } from '../../types/NewSprintTypes';
 
 const drawerWidth = 295;
 
@@ -52,9 +57,25 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Sidebar(props: { children: React.ReactNode }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const sprints = useSelector(
+    (state: { sprints: SprintState }) => state.sprints.sprints,
+  );
   const [open, setOpen] = React.useState(false);
+  const [selectedSprintId, setSelectedSprintId] = React.useState(0);
   const handleDrawer = () => {
     setOpen(!open);
+  };
+
+  useEffect(() => {
+    dispatch(getSprintsRequest());
+  }, [dispatch]);
+
+  const handleSprintClick = (id: number) => {
+    setSelectedSprintId(id);
+    dispatch(getSelectedSprint(id));
+    navigate('/');
   };
 
   return (
@@ -69,9 +90,9 @@ export default function Sidebar(props: { children: React.ReactNode }) {
         variant="permanent"
         open={open}
         sx={{
-          boxShadow: 'rgba(0, 0, 0, 0.3) 0px 0px 10px 0px',
           '& .MuiDrawer-paper': {
             width: open ? '295px' : '80px',
+            boxShadow: open ? 'rgba(0, 0, 0, 0.3) 0 0 15px 0' : 'none',
           },
         }}
       >
@@ -202,28 +223,49 @@ export default function Sidebar(props: { children: React.ReactNode }) {
             </SidebarIconButton>
             <TypographyItem
               textAlignKey={'left'}
-              fontSizeKey={13}
+              fontSizeKey={14}
               fontFamilyKey={'sans-serif'}
               fontStyleKey={'normal'}
               color={'#696969'}
-              marginLeft="25px"
+              marginLeft="16px"
               marginTop="50px"
+              letterSpacing={1.25}
             >
               ALL SPRINTS
             </TypographyItem>
             <TypographyItem
-              textAlignKey={'center'}
-              fontSizeKey={18}
-              fontFamilyKey={'Avenir'}
+              textAlignKey={'left'}
+              fontSizeKey={14}
+              fontFamilyKey={'Roboto'}
               fontStyleKey={'normal'}
               color={'#696969'}
-              marginRight="55px"
             >
-              {Data.map((post: { id: number }) => (
-                <h5 key={post.id}>
-                  &ldquo;Sourcery Students&ldquo; - Sprint {post.id}
-                </h5>
-              )).reverse()}
+              {sprints
+                .slice()
+                .reverse()
+                .map((sprint: Sprint) => (
+                  <Typography
+                    sx={{
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      padding: '16px',
+                      fontWeight: 'medium',
+                      backgroundColor:
+                        sprint.id === selectedSprintId ? '#EBEDFE' : 'inherit',
+                      color:
+                        sprint.id === selectedSprintId ? '#3F51B5' : 'inherit',
+                      '&:hover': {
+                        backgroundColor: '#EBEDFE',
+                        color: '#3F51B5',
+                      },
+                    }}
+                    key={sprint.id}
+                    onClick={() => handleSprintClick(sprint.id)}
+                  >
+                    {sprint.title}
+                    {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}
+                  </Typography>
+                ))}
             </TypographyItem>
           </>
         )}

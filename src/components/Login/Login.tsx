@@ -18,7 +18,7 @@ import theme from '../../theme';
 import { post } from '../../api';
 import Copyright from '../Copyright/Copyright';
 import { LoginResponse, FormData } from '../../types/UserTypes';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -36,12 +36,16 @@ export default function Login() {
       .then((response) => {
         const loginResponse = response as LoginResponse;
         localStorage.setItem('token', loginResponse.accessToken);
-        navigate("/");
+        navigate('/');
       })
       .catch((error) => {
         setErrorMessage(error.message);
       });
   };
+
+  React.useEffect(() => {
+    localStorage.removeItem('token');
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

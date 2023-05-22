@@ -74,7 +74,7 @@ export default function NewSprintInformation() {
                 >
                   <DatePicker
                     label="Start Date"
-                    value={dayjs(startDate)}
+                    value={startDate ? dayjs(startDate) : undefined}
                     onChange={handleStartDateChange}
                     format="MMM DD, YYYY"
                     slotProps={{ textField: { variant: 'filled' } }}
@@ -105,7 +105,7 @@ export default function NewSprintInformation() {
                 >
                   <DatePicker
                     label="End Date"
-                    value={dayjs(endDate)}
+                    value={endDate ? dayjs(endDate) : undefined}
                     onChange={handleEndDateChange}
                     format="MMM DD, YYYY"
                     slotProps={{ textField: { variant: 'filled' } }}

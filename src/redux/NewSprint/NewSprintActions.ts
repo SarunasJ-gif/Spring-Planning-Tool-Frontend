@@ -73,7 +73,7 @@ export const createNewSprint = (sprintData: any) => ({
 });
 
 export const updateTaskAssign = (
-  person: string,
+  person: number,
   day: string | null,
   value: number,
 ) => ({
@@ -96,7 +96,22 @@ export const updateShowNotification = (showNotification: boolean) => ({
   payload: showNotification,
 });
 
-export const updateMembers = (members: Member[]) => ({
+export const updateMembers = () => ({
   type: actions.UPDATE_MEMBERS,
+});
+
+export const createNewSprintSuccess = () => ({
+  type: actions.CREATE_NEW_SPRINT_SUCCESS,
+});
+
+export const clearNewSprintState = () => ({
+  type: actions.CLEAR_NEW_SPRINT_STATE,
+});
+
+export const addMembersToSprint = () => ({
+  type: actions.ADD_MEMBER_TO_SPRINT_REQUEST,
+});
+export const addMembersToSprintSuccess = (members: Member[]) => ({
+  type: actions.ADD_MEMBER_TO_SPRINT_SUCCESS,
   payload: members,
 });

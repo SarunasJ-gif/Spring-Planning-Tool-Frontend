@@ -10,8 +10,8 @@ export default function SaveButton(props: SaveButtonProps) {
   const handleSaveClick = () => {
     setSaveClicked(true);
     props.onClick();
-    // handle any other save click logic here
   };
+
   return (
     <Box>
       <Button
@@ -26,7 +26,7 @@ export default function SaveButton(props: SaveButtonProps) {
           },
         }}
       >
-        Save
+        SAVE
       </Button>
     </Box>
   );

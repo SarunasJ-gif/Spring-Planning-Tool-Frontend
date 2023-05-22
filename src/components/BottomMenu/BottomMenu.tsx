@@ -1,18 +1,29 @@
 import { Box, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { Sprint } from '../../types/NewSprintTypes';
-import { createNewSprint } from '../../redux/NewSprint/NewSprintActions';
+import {
+  clearNewSprintState,
+  createNewSprint,
+} from '../../redux/NewSprint/NewSprintActions';
+import { useNavigate } from 'react-router-dom';
+import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
 
 function BottomMenu() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const sprint = useSelector(
-    (state: { newSprint: Sprint }) => state?.newSprint?.sprint,
+    (state: { newSprint: NewSprint }) => state.newSprint.sprint,
   );
 
-  const handleButtonClick = () => {
-    const newSprint = { ...sprint };
-    dispatch(createNewSprint(newSprint));
+  const handleAddClick = () => {
+    dispatch(createNewSprint(sprint));
+    dispatch(clearNewSprintState());
+    navigate('/');
+  };
+
+  const handleCancelClick = () => {
+    dispatch(clearNewSprintState());
+    navigate('/');
   };
 
   return (
@@ -48,7 +59,7 @@ function BottomMenu() {
             marginRight: '15px',
             fontSize: '18px',
           }}
-          onClick={handleButtonClick}
+          onClick={handleAddClick}
         >
           ADD
         </Button>
@@ -61,6 +72,7 @@ function BottomMenu() {
             borderRadius: '5px',
             fontSize: '18px',
           }}
+          onClick={handleCancelClick}
         >
           CANCEL
         </Button>

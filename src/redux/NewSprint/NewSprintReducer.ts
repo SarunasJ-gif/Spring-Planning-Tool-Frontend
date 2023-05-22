@@ -8,7 +8,6 @@ export type NewSprint = {
     startDate: string | null;
     endDate: string | null;
     tasks: TaskData[];
-    memberTeamId: string | null;
     members: Member[];
     businessDays: string[];
     daysOfWeek: string[];
@@ -17,27 +16,14 @@ export type NewSprint = {
     isActive: boolean | null;
   };
 };
+
 export const initialState: NewSprint = {
   sprint: {
     title: '',
     startDate: null,
     endDate: null,
     tasks: [],
-    memberTeamId: null,
-    members: [
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        memberId: '1',
-        workingDays: [],
-      },
-      {
-        firstName: 'Jane',
-        lastName: 'Smith',
-        memberId: '2',
-        workingDays: [],
-      },
-    ],
+    members: [],
     businessDays: [],
     daysOfWeek: [],
     showNotification: true,
@@ -76,13 +62,11 @@ const reducer = (state = initialState, { type, payload }) => {
         console.log(payload);
         draftState.sprint.tasks[index].keyColor = payload.value;
       });
-
     case actions.UPDATE_TASK_KEY_VALUE:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex((o) => o.id === payload.id);
         draftState.sprint.tasks[index].keyValue = payload.value;
       });
-
     case actions.UPDATE_TASK_DESCRIPTION:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex((o) => o.id === payload.id);
@@ -116,7 +100,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_TASK_ASSIGN:
       return produce(state, (draftState) => {
         const memberIndex = state.sprint.members.findIndex(
-          (o) => o.memberId === payload.person,
+          (o) => o.id === payload.person,
         );
         const tasksIndex = state.sprint.members[
           memberIndex
@@ -157,23 +141,36 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.SET_BUSINESS_DAYS: {
       return produce(state, (draftState) => {
         draftState.sprint.businessDays = [...payload];
-      });
-    }
+      });}
     case actions.SET_DAYS_OF_WEEK: {
       return produce(state, (draftState) => {
         draftState.sprint.daysOfWeek = [...payload];
-      });
-    }
+      });}
     case actions.UPDATE_SHOW_NOTIFICATION: {
       return produce(state, (draftState) => {
         draftState.sprint.showNotification = payload;
-      });
-    }
+      });}
     case actions.UPDATE_MEMBERS: {
       return produce(state, (draftState) => {
-        draftState.sprint.members = [...payload];
+        const updatedMembers = state.sprint.members.map((member) => {
+          const updatedWorkingDays = state.sprint.businessDays.map((day) => ({
+            day,
+            task: null,
+          }));
+          return { ...member, workingDays: updatedWorkingDays };
+        });
+        draftState.sprint.members = [...updatedMembers];
+      });}
+    case actions.CREATE_NEW_SPRINT_SUCCESS:
+      return initialState;
+    case actions.CLEAR_NEW_SPRINT_STATE:
+      return initialState;
+     case actions.ADD_MEMBER_TO_SPRINT_SUCCESS:
+      return produce(state, (draftState) => {
+        draftState.sprint.members.push(...payload);
       });
-    }
+
+
     default:
       return state;
   }
