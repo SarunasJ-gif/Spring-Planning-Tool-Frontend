@@ -77,7 +77,9 @@ export default function PlanTable() {
         date.setDate(date.getDate() + 1)
       ) {
         if (date.getDay() !== 0 && date.getDay() !== 6) {
-          const day = date.toISOString().split('T')[0];
+          const currentDate = new Date(date.toISOString().split('T')[0]);
+          currentDate.setDate(currentDate.getDate() + 1);
+          const day = currentDate.toISOString().split('T')[0];
           days.push(day);
           daysOfWeek.push(format(date, 'EEE'));
         }
