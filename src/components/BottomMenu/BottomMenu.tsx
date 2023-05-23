@@ -15,6 +15,8 @@ function BottomMenu() {
     (state: { newSprint: NewSprint }) => state.newSprint.sprint,
   );
 
+  const disableAddButton = sprint.tasks.length !== 0;
+
   const handleAddClick = () => {
     dispatch(createNewSprint(sprint));
     dispatch(clearNewSprintState());
@@ -60,6 +62,7 @@ function BottomMenu() {
             fontSize: '18px',
           }}
           onClick={handleAddClick}
+          disabled={!disableAddButton}
         >
           ADD
         </Button>
