@@ -62,11 +62,13 @@ const reducer = (state = initialState, { type, payload }) => {
         console.log(payload);
         draftState.sprint.tasks[index].keyColor = payload.value;
       });
+
     case actions.UPDATE_TASK_KEY_VALUE:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex((o) => o.id === payload.id);
         draftState.sprint.tasks[index].keyValue = payload.value;
       });
+
     case actions.UPDATE_TASK_DESCRIPTION:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex((o) => o.id === payload.id);
@@ -100,7 +102,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.UPDATE_TASK_ASSIGN:
       return produce(state, (draftState) => {
         const memberIndex = state.sprint.members.findIndex(
-          (o) => o.id === payload.person,
+          (o) => o.memberId === payload.person,
         );
         const tasksIndex = state.sprint.members[
           memberIndex
@@ -141,35 +143,44 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.SET_BUSINESS_DAYS: {
       return produce(state, (draftState) => {
         draftState.sprint.businessDays = [...payload];
-      });}
+      });
+    }
     case actions.SET_DAYS_OF_WEEK: {
       return produce(state, (draftState) => {
         draftState.sprint.daysOfWeek = [...payload];
-      });}
+      });
+    }
     case actions.UPDATE_SHOW_NOTIFICATION: {
       return produce(state, (draftState) => {
         draftState.sprint.showNotification = payload;
-      });}
+      });
+    }
     case actions.UPDATE_MEMBERS: {
       return produce(state, (draftState) => {
         const updatedMembers = state.sprint.members.map((member) => {
           const updatedWorkingDays = state.sprint.businessDays.map((day) => ({
             day,
-            task: null,
+            task: {
+              id: null,
+              keyValue: '',
+              keyColor: '',
+              description: '',
+              type: '',
+              oldPoints: 0,
+              remainingPoints: 0,
+              newPoints: 0,
+            },
           }));
           return { ...member, workingDays: updatedWorkingDays };
         });
         draftState.sprint.members = [...updatedMembers];
-      });}
+      });
+    }
     case actions.CREATE_NEW_SPRINT_SUCCESS:
       return initialState;
+
     case actions.CLEAR_NEW_SPRINT_STATE:
       return initialState;
-     case actions.ADD_MEMBER_TO_SPRINT_SUCCESS:
-      return produce(state, (draftState) => {
-        draftState.sprint.members.push(...payload);
-      });
-
 
     default:
       return state;

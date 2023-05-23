@@ -4,6 +4,8 @@ import { SAccordion } from '../../style/AccordionStyle';
 import TasksTableDisplay from '../../components/TasksTableDisplay/TasksTableDisplay';
 import { ArrowDropDown } from '@mui/icons-material';
 import { getSprint } from '../../redux/Sprint/SprintActions';
+import InitialPlanTable from '../../components/InitialPlanTable/InitialPlanTable';
+import CurrentPlanTable from '../../components/CurrentPlanTable/CurrentPlanTable';
 import { Sprint } from '../../types/NewSprintTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
@@ -91,7 +93,7 @@ export default function MainPage() {
               <TasksTableDisplay isEditMode={false} />
             </SAccordion>
           </Box>
-          {sprint.isHistorical && (
+          {sprint.isActive && (
             <Box sx={{ mt: 4 }}>
               <SAccordion
                 sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}
@@ -103,12 +105,13 @@ export default function MainPage() {
                     Current Plan
                   </Typography>
                 </AccordionSummary>
+                <CurrentPlanTable/>
               </SAccordion>
             </Box>
           )}
           <Box sx={{ mt: 4, mb: 20 }}>
             <SAccordion
-              sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}
+              sx={{ display: 'flex', justifyContent: 'left', top: '-58px' }}
             >
               <AccordionSummary
                 expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
@@ -117,6 +120,7 @@ export default function MainPage() {
                   Initial Plan
                 </Typography>
               </AccordionSummary>
+              <InitialPlanTable/>
             </SAccordion>
           </Box>
         </Box>
