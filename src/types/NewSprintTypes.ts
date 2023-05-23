@@ -34,22 +34,12 @@ export type Task = {
 
 export type MemberWorkingDay = {
   day: string;
-  task: {
-    id: number | null;
-    keyValue: string;
-    keyColor: string;
-    description: string;
-    type: string;
-    oldPoints: number;
-    remainingPoints: number;
-    newPoints: number;
-  };
+  task: TaskData | null;
 };
 
 export type Member = {
   firstName: string;
   lastName: string;
-  memberId: string;
   email: string;
   workingDays: MemberWorkingDay[];
   id: number;
