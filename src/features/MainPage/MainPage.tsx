@@ -41,7 +41,7 @@ export default function MainPage() {
     await dispatch(getSprintsRequest());
     await dispatch(getSprint('active'));
     await navigate('/');
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (
