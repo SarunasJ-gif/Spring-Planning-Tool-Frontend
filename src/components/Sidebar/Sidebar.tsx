@@ -245,6 +245,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                 .reverse()
                 .map((sprint: Sprint) => (
                   <Typography
+                    component="div"
                     sx={{
                       fontSize: '13px',
                       cursor: 'pointer',
@@ -258,9 +259,12 @@ export default function Sidebar(props: { children: React.ReactNode }) {
                         backgroundColor: '#EBEDFE',
                         color: '#3F51B5',
                       },
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
                     }}
                     key={sprint.id}
                     onClick={() => handleSprintClick(sprint.id)}
+                    title={sprint.title}
                   >
                     {sprint.title}
                     {sprint.isHistorical && !sprint.isActive ? ' (Done)' : ''}

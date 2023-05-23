@@ -6,7 +6,7 @@ type TaskKeyProps = {
   taskKey: string;
   keyColor: string;
   keyBackgroundColor: string;
-  style?: React.CSSProperties; 
+  style?: React.CSSProperties;
 };
 
 function TaskKey(props: TaskKeyProps) {
@@ -26,6 +26,8 @@ function TaskKey(props: TaskKeyProps) {
     width: 90,
     height: 35,
     margin: 'auto!important',
+    userSelect: 'none',
+    pointerEvents: 'none',
   }));
   return <KeyStyle>{props.taskKey}</KeyStyle>;
 }
