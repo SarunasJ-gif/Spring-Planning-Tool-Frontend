@@ -22,6 +22,7 @@ import {
   updateShowNotification,
   updateMembers,
   addMembersToSprint,
+  clearNewSprintState,
 } from '../../redux/NewSprint/NewSprintActions';
 import { RootState } from '../../redux/store';
 
@@ -33,6 +34,25 @@ export default function PlanTable() {
     dispatch(addMembersToSprint());
   }, [dispatch]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+      return "Are you sure you want to leave this page? Your changes will not be saved.";
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearNewSprintState());
+    };
+  }, [dispatch]);
   const handleClearNotification = () => {
     dispatch(updateShowNotification(false));
   };
@@ -60,7 +80,9 @@ export default function PlanTable() {
         date.setDate(date.getDate() + 1)
       ) {
         if (date.getDay() !== 0 && date.getDay() !== 6) {
-          const day = date.toISOString().split('T')[0];
+          const currentDate = new Date(date.toISOString().split('T')[0]);
+          currentDate.setDate(currentDate.getDate() + 1);
+          const day = currentDate.toISOString().split('T')[0];
           days.push(day);
           daysOfWeek.push(format(date, 'EEE'));
         }
