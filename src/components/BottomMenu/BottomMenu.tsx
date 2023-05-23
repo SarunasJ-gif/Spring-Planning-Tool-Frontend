@@ -26,6 +26,7 @@ function BottomMenu() {
     navigate('/');
   };
 
+  const isTaskCreated = sprint.tasks.length > 0;
   return (
     <Box
       sx={{
@@ -49,10 +50,11 @@ function BottomMenu() {
           alignItems: 'center',
         }}
       >
+        
         <Button
           variant="contained"
           style={{
-            backgroundColor: 'primary',
+            backgroundColor: isTaskCreated ? 'primary' : '#e0e0e0', 
             color: '#fff',
             borderRadius: '5px',
             border: 'none',
@@ -60,6 +62,7 @@ function BottomMenu() {
             fontSize: '18px',
           }}
           onClick={handleAddClick}
+          disabled={!isTaskCreated} 
         >
           ADD
         </Button>
