@@ -62,9 +62,6 @@ export default function PlanTable() {
     day: string | null,
     value: number,
   ) => {
-    console.log(person);
-    console.log(day);
-    console.log(value);
     dispatch(updateTaskAssign(person, day, value));
   };
   useEffect(() => {

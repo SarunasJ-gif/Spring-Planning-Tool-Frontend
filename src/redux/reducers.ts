@@ -11,8 +11,8 @@ const reducers = combineReducers({
   manageTeam: ManageTeamReducer,
   sprint: SprintReducer,
   initialSprint: InitialSprintReducer,
-  sprints: SprintsReducer,
   workingDay: workingDayReducer,
+  sprints: SprintsReducer
 });
 
 export default reducers;
