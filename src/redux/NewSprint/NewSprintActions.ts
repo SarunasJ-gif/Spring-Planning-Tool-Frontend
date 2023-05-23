@@ -115,3 +115,9 @@ export const addMembersToSprintSuccess = (members: Member[]) => ({
   type: actions.ADD_MEMBER_TO_SPRINT_SUCCESS,
   payload: members,
 });
+
+export const getTasksAddedCount = () => {
+  return {
+    type: actions.GET_TASKS_ADDED_COUNT,
+  };
+};
