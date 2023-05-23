@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
 import {
   Table,
   TableHead,
@@ -9,17 +8,13 @@ import {
   FormControl,
   Select,
   MenuItem,
-  Button,
-  Typography,
 } from '@mui/material';
-import { Info } from '@mui/icons-material';
 import TaskKey from '../TaskKey/TaskKey';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setBusinessDays,
   setDaysOfWeek,
-  updateTaskAssign,
   updateMembers,
 } from '../../redux/NewSprint/NewSprintActions';
 import { RootState } from '../../redux/store';
@@ -30,7 +25,6 @@ import { updateWorkingDay } from '../../redux/WorkingDay/WorkingDayActions';
 export default function PlanTable() {
   
   let nonEducationVacationTasksCount = 0;
-  const [taskCount, setTaskCount] = useState(0);
   const dispatch = useDispatch();
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);
   useEffect(() => {
@@ -38,7 +32,6 @@ export default function PlanTable() {
   }, [dispatch]);
 
   const sprintDisplay = useSelector((state: { sprint: Sprint }) => state.sprint.sprint);
-  console.log(sprintDisplay)
   let updatedSprintDisplay = sprintDisplay;
   
   if (updatedSprintDisplay && updatedSprintDisplay.members) {
@@ -78,16 +71,6 @@ export default function PlanTable() {
       return updatedMembers;
     }
 
-    return null;
-  });
-  
-  const workingDaysDisplay = useSelector((state: { sprint: Sprint }) => {
-    const sprint = state.sprint.sprint;
-  
-    if (sprint && sprint.members) {
-      return sprint.members.map((member: { workingDays: any; }) => member.workingDays);
-    }
-  
     return null;
   });
 

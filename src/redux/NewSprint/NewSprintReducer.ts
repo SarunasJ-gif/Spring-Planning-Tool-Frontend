@@ -155,6 +155,10 @@ const reducer = (state = initialState, { type, payload }) => {
         draftState.sprint.showNotification = payload;
       });
     }
+    case actions.ADD_MEMBER_TO_SPRINT_SUCCESS:
+            return produce(state, (draftState) => {
+        draftState.sprint.members.push(...payload);
+      });
     case actions.UPDATE_MEMBERS: {
       return produce(state, (draftState) => {
         const updatedMembers = state.sprint.members.map((member) => {
