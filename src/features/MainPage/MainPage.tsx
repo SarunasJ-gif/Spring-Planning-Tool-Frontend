@@ -6,7 +6,6 @@ import { ArrowDropDown } from '@mui/icons-material';
 import { getSprint } from '../../redux/Sprint/SprintActions';
 import InitialPlanTable from '../../components/InitialPlanTable/InitialPlanTable';
 import CurrentPlanTable from '../../components/CurrentPlanTable/CurrentPlanTable';
-import { Sprint } from '../../types/NewSprintTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
 import { MainSprint } from '../../types/MainPageTypes';
