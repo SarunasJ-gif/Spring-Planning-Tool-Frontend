@@ -40,13 +40,11 @@ const reducer = (state = initialState, { type, payload }) => {
     case actions.ADD_TASK:
       return produce(state, (draftState) => {
         draftState.sprint.tasks.push(payload);
-        draftState.sprint.numberTasksAdded = + 1;
       });
     case actions.REMOVE_TASK:
       return produce(state, (draftState) => {
         const index = state.sprint.tasks.findIndex((o) => o.id === payload);
         draftState.sprint.tasks.splice(index, 1);
-        draftState.sprint.numberTasksAdded = + 1;
       });
     case actions.UPDATE_START_DATE:
       return produce(state, (draftState) => {

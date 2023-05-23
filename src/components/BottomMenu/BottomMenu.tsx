@@ -17,10 +17,10 @@ function BottomMenu() {
     (state: { newSprint: NewSprint }) => state.newSprint.sprint,
   );
 
-   const disableAddButton  = useSelector(  (state: { newSprint: NewSprint }) => state.newSprint.sprint.numberTasksAdded );
+   const disableAddButton  = sprint.numberTasksAdded;
   useEffect(() => {
      dispatch(getTasksAddedCount());
-  }, );
+  }, [dispatch, sprint.tasks]);
 
 
   const handleAddClick = () => {
