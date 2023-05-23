@@ -38,7 +38,7 @@ export default function PlanTable() {
   }, [dispatch]);
 
   const sprintDisplay = useSelector((state: { sprint: Sprint }) => state.sprint.sprint);
-
+  console.log(sprintDisplay)
   let updatedSprintDisplay = sprintDisplay;
   
   if (updatedSprintDisplay && updatedSprintDisplay.members) {
@@ -58,7 +58,6 @@ export default function PlanTable() {
       }),
     };
   }
-  console.log(updatedSprintDisplay);
   const memberDisplay = useSelector((state: { sprint: Sprint }) => {
     const sprint = state.sprint.sprint;
 
@@ -82,7 +81,6 @@ export default function PlanTable() {
     return null;
   });
   
-  console.log(memberDisplay);
   const workingDaysDisplay = useSelector((state: { sprint: Sprint }) => {
     const sprint = state.sprint.sprint;
   
@@ -144,7 +142,6 @@ export default function PlanTable() {
 
     return null;
   });
-  console.log(taskDisplay);
   const handleWorkingDayChange = (id: number, taskKeyValue: string, memberId: number, keyColor: string) => {
   
     dispatch(updateWorkingDay(id, taskKeyValue));
@@ -348,10 +345,10 @@ export default function PlanTable() {
                       <div style={{ display: "flex" }}>
                       {tasksForMemberAndDay?.map((task) => (
                         <TaskKey
-                          taskKey={task.task.keyValue === "Education" ? "Education" : task.task.keyValue}
-                          keyColor={task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor}
-                          keyBackgroundColor={task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor}
-                          style={{ color: task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor }}
+                          taskKey={task.task.keyValue === "Education" ? "Education": task.task.keyValue === "Vacation" ? "Vacation" : task.task.keyValue}
+                          keyColor={task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor}
+                          keyBackgroundColor={task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor}
+                          style={{ color: task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor }}
                         />
                       ))}
                       </div>
