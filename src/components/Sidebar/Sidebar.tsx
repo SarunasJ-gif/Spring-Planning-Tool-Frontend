@@ -11,6 +11,7 @@ import { SidebarIconButton } from '../SidebarIconButton/SideBarIconButton';
 import { SprintState } from '../../redux/Sprints/SprintsReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  getInitialSelectedSprint,
   getSelectedSprint,
   getSprintsRequest,
 } from '../../redux/Sprints/SprintsActions';
@@ -64,6 +65,7 @@ export default function Sidebar(props: { children: React.ReactNode }) {
   );
   const [open, setOpen] = React.useState(false);
   const [selectedSprintId, setSelectedSprintId] = React.useState(0);
+  const [selectedInitialSprintId, setSelectedInitialSprintId] = React.useState(0);
   const handleDrawer = () => {
     setOpen(!open);
   };
@@ -74,7 +76,9 @@ export default function Sidebar(props: { children: React.ReactNode }) {
 
   const handleSprintClick = (id: number) => {
     setSelectedSprintId(id);
+    setSelectedInitialSprintId(id);
     dispatch(getSelectedSprint(id));
+    dispatch(getInitialSelectedSprint(id));
     navigate('/');
   };
 
