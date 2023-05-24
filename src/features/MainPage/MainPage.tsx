@@ -25,8 +25,12 @@ export default function MainPage() {
     dispatch(getSprintsRequest());
   }, [dispatch]);
 
-  const allSprints = useSelector((state: { sprints: SprintState }) => state.sprints.sprints);
-  const activeSprintExists = allSprints.some((sprint) => sprint.isActive && !sprint.isHistorical);
+  const allSprints = useSelector(
+    (state: { sprints: SprintState }) => state.sprints.sprints,
+  );
+  const activeSprintExists = allSprints.some(
+    (sprint) => sprint.isActive && !sprint.isHistorical,
+  );
 
   const handleStartSprint = async (id: number) => {
     if (!activeSprintExists) {
@@ -108,7 +112,7 @@ export default function MainPage() {
           {sprint.isActive && (
             <Box sx={{ mt: 4 }}>
               <SAccordion
-                sx={{ display: 'flex', justifyContent: 'left', top: '-30px' }}
+                sx={{ display: 'flex', justifyContent: 'left', top: '-10px' }}
               >
                 <AccordionSummary
                   expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
@@ -123,7 +127,7 @@ export default function MainPage() {
           )}
           <Box sx={{ mt: 4, mb: 20 }}>
             <SAccordion
-              sx={{ display: 'flex', justifyContent: 'left', top: '-58px' }}
+              sx={{ display: 'flex', justifyContent: 'left', top: '-25px' }}
             >
               <AccordionSummary
                 expandIcon={<ArrowDropDown style={{ fill: '#404CFA' }} />}
