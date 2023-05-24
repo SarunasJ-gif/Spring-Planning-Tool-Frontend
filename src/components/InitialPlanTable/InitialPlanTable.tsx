@@ -184,11 +184,11 @@ export default function PlanTable() {
                   <React.Fragment key={day.id}>
                     <TableCell align="center">
                       {tasksForMemberAndDay?.map((task) => (
-                      <TaskKey
-                      taskKey={task.task.keyValue}
-                      keyColor={task.task.keyColor}
-                      keyBackgroundColor={task.task.keyColor}
-                      style={{ color: task.task.keyColor }}
+                        <TaskKey
+                        taskKey={task.task.keyValue === "Education" ? "Education": task.task.keyValue === "Vacation" ? "Vacation" : task.task.keyValue}
+                        keyColor={task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor}
+                        keyBackgroundColor={task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor}
+                        style={{ color: task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor }}
                       />
                       ))}
                     </TableCell>
