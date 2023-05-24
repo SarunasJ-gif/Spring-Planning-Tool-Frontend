@@ -10,27 +10,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import { endSprint, startSprint } from '../../redux/Sprint/SprintActions';
 import { MainSprint } from '../../types/MainPageTypes';
 import { SprintState } from '../../redux/Sprints/SprintsReducer';
+import { useNavigate } from 'react-router';
+import { getSprintsRequest } from '../../redux/Sprints/SprintsActions';
 
 export default function MainPage() {
   const sprint = useSelector(
     (state: { sprint: MainSprint }) => state.sprint.sprint,
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     dispatch(getSprint('active'));
+    dispatch(getSprintsRequest());
   }, [dispatch]);
 
   const allSprints = useSelector((state: { sprints: SprintState }) => state.sprints.sprints);
-  const activeSprintExists = allSprints.some((sprint) => sprint.isActive && !sprint.isHistorical );
+  const activeSprintExists = allSprints.some((sprint) => sprint.isActive && !sprint.isHistorical);
 
-const handleStartSprint = (id: number) => {
-  if (!activeSprintExists) {
-    dispatch(startSprint(id));
-  }
-};
+  const handleStartSprint = async (id: number) => {
+    if (!activeSprintExists) {
+      await dispatch(startSprint(id));
+      await dispatch(getSprint('active'));
+      navigate('/');
+    }
+  };
 
-  const handleEndSprint = (id: number) => {
+  const handleEndSprint = async (id: number) => {
     dispatch(endSprint(id));
+    await dispatch(getSprintsRequest());
+    await dispatch(getSprint('active'));
+    await navigate('/');
+    window.location.reload();
   };
 
   return (
@@ -106,7 +117,7 @@ const handleStartSprint = (id: number) => {
                     Current Plan
                   </Typography>
                 </AccordionSummary>
-                <CurrentPlanTable/>
+                <CurrentPlanTable />
               </SAccordion>
             </Box>
           )}
@@ -121,7 +132,7 @@ const handleStartSprint = (id: number) => {
                   Initial Plan
                 </Typography>
               </AccordionSummary>
-              <InitialPlanTable/>
+              <InitialPlanTable />
             </SAccordion>
           </Box>
         </Box>
