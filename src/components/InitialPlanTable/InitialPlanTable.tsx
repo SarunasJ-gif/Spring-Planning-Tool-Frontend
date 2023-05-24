@@ -23,19 +23,24 @@ export default function PlanTable() {
   const dispatch = useDispatch();
   const sprint = useSelector((state: RootState) => state.newSprint.sprint);
   useEffect(() => {
-    dispatch(getInitialSprint("active"));
+    dispatch(getInitialSprint('active'));
   }, [dispatch]);
 
-  const sprintDisplay = useSelector((state: { initialSprint : InitialSprint}) => state.initialSprint.initialSprint);
-  const memberDisplay = useSelector((state: { initialSprint: InitialSprint }) => {
-    const initialSprint = state.initialSprint.initialSprint;
-  
-    if (initialSprint && initialSprint.members) {
-      return initialSprint.members;
-    }
-  
-    return null;
-  });
+  const sprintDisplay = useSelector(
+    (state: { initialSprint: InitialSprint }) =>
+      state.initialSprint.initialSprint,
+  );
+  const memberDisplay = useSelector(
+    (state: { initialSprint: InitialSprint }) => {
+      const initialSprint = state.initialSprint.initialSprint;
+
+      if (initialSprint && initialSprint.members) {
+        return initialSprint.members;
+      }
+
+      return null;
+    },
+  );
 
   const taskDisplay = useSelector((state: { initialSprint: InitialSprint }) => {
     const initialSprint = state.initialSprint.initialSprint;
@@ -47,15 +52,25 @@ export default function PlanTable() {
         task: { keyValue: string; keyColor: string };
       }[] = [];
 
-      initialSprint.members.forEach((member: { workingDays: any[]; memberId: any }) => {
-        member.workingDays.forEach((day: { id: React.Key | null | undefined; task: { keyValue: string; keyColor: string } }) => {
-          tasks.push({
-            memberId: member.memberId,
-            dayId: day.id,
-            task: day.task || { keyValue: 'No task assigned', keyColor: 'N/A' },
-          });
-        });
-      });
+      initialSprint.members.forEach(
+        (member: { workingDays: any[]; memberId: any }) => {
+          member.workingDays.forEach(
+            (day: {
+              id: React.Key | null | undefined;
+              task: { keyValue: string; keyColor: string };
+            }) => {
+              tasks.push({
+                memberId: member.memberId,
+                dayId: day.id,
+                task: day.task || {
+                  keyValue: 'No task assigned',
+                  keyColor: 'N/A',
+                },
+              });
+            },
+          );
+        },
+      );
 
       return tasks;
     }
@@ -116,72 +131,122 @@ export default function PlanTable() {
               </TableCell>
             ))}
             <TableCell align="center">
-              {memberDisplay?.map((member: {
-                memberId: React.Key | null | undefined;
-                firstName: any;
-                lastName: any;
-                workingDays: any[];
-              }) => {
-                const tasksForMember = taskDisplay?.filter(task => task.memberId === member.memberId);
-                let counter = 0; 
+              {memberDisplay
+                ?.map(
+                  (member: {
+                    memberId: React.Key | null | undefined;
+                    firstName: any;
+                    lastName: any;
+                    workingDays: any[];
+                  }) => {
+                    const tasksForMember = taskDisplay?.filter(
+                      (task) => task.memberId === member.memberId,
+                    );
+                    let counter = 0;
 
-                member.workingDays.forEach((day) => {
-                  const tasksForMemberAndDay = tasksForMember?.filter(task => task.dayId === day.id);
-                  
-                  tasksForMemberAndDay?.forEach((task) => {
-                    if (task.task.keyValue !== "Education" && task.task.keyValue !== "Vacation") {
-                      counter++; 
-                    }
-                  });
-                });
+                    member.workingDays.forEach((day) => {
+                      const tasksForMemberAndDay = tasksForMember?.filter(
+                        (task) => task.dayId === day.id,
+                      );
 
-                return counter;
-              }).reduce((a: any, b: any) => a + b, 0)}
+                      tasksForMemberAndDay?.forEach((task) => {
+                        if (
+                          task.task.keyValue !== 'Education' &&
+                          task.task.keyValue !== 'Vacation'
+                        ) {
+                          counter++;
+                        }
+                      });
+                    });
+
+                    return counter;
+                  },
+                )
+                .reduce((a: any, b: any) => a + b, 0)}
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-        {memberDisplay?.map((member: { memberId: React.Key | null | undefined; firstName: any; lastName: any; workingDays: any[] }) => {
-          const tasksForMember = taskDisplay?.filter(task => task.memberId === member.memberId);
-          nonEducationVacationTasksCount=0;
-          return (
-            <TableRow key={member.memberId} sx={{ height: '48px' }}>
-              <TableCell
-                sx={{
-                  borderRight: '1px solid #e0e0e0',
-                  minWidth: '200px',
-                }}
-              >
-                {member.firstName} {member.lastName}
-              </TableCell>
-              {member.workingDays.map((day) => {
-                const tasksForMemberAndDay = tasksForMember?.filter(task => task.dayId === day.id);
-                tasksForMemberAndDay?.forEach((task) => {
-                  if (task.task.keyValue !== "Education" && task.task.keyValue !== "Vacation") {
-                    nonEducationVacationTasksCount++;
-                  }
-                });
-                return (
-                  <React.Fragment key={day.id}>
-                    <TableCell align="center">
-                      {tasksForMemberAndDay?.map((task) => (
-                        <TaskKey
-                        taskKey={task.task.keyValue === "Education" ? "Education": task.task.keyValue === "Vacation" ? "Vacation" : task.task.keyValue}
-                        keyColor={task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor}
-                        keyBackgroundColor={task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor}
-                        style={{ color: task.task.keyValue === "Education" ? "grey" : task.task.keyValue === "Vacation" ? "grey" : task.task.keyColor }}
-                      />
-                      ))}
-                    </TableCell>
-                  </React.Fragment>
-                );
-              })}
-              <TableCell align="center">
-              {nonEducationVacationTasksCount}
-              </TableCell>
-            </TableRow>
-          );
-        })}
+          {memberDisplay?.map(
+            (member: {
+              memberId: React.Key | null | undefined;
+              firstName: any;
+              lastName: any;
+              workingDays: any[];
+            }) => {
+              const tasksForMember = taskDisplay?.filter(
+                (task) => task.memberId === member.memberId,
+              );
+              nonEducationVacationTasksCount = 0;
+              return (
+                <TableRow key={member.memberId} sx={{ height: '48px' }}>
+                  <TableCell
+                    sx={{
+                      borderRight: '1px solid #e0e0e0',
+                      minWidth: '200px',
+                    }}
+                  >
+                    {member.firstName} {member.lastName}
+                  </TableCell>
+                  {member.workingDays.map((day) => {
+                    const tasksForMemberAndDay = tasksForMember?.filter(
+                      (task) => task.dayId === day.id,
+                    );
+                    tasksForMemberAndDay?.forEach((task) => {
+                      if (
+                        task.task.keyValue !== 'Education' &&
+                        task.task.keyValue !== 'Vacation'
+                      ) {
+                        nonEducationVacationTasksCount++;
+                      }
+                    });
+                    return (
+                      <React.Fragment key={day.id}>
+                        <TableCell align="center">
+                          {tasksForMemberAndDay?.map((task) => (
+                            <TaskKey
+                              taskKey={
+                                task.task.keyValue === 'Education'
+                                  ? 'Education'
+                                  : task.task.keyValue === 'Vacation'
+                                  ? 'Vacation'
+                                  : task.task.keyValue
+                              }
+                              keyColor={
+                                task.task.keyValue === 'Education'
+                                  ? 'grey'
+                                  : task.task.keyValue === 'Vacation'
+                                  ? 'grey'
+                                  : task.task.keyColor
+                              }
+                              keyBackgroundColor={
+                                task.task.keyValue === 'Education'
+                                  ? 'grey'
+                                  : task.task.keyValue === 'Vacation'
+                                  ? 'grey'
+                                  : task.task.keyColor
+                              }
+                              style={{
+                                color:
+                                  task.task.keyValue === 'Education'
+                                    ? 'grey'
+                                    : task.task.keyValue === 'Vacation'
+                                    ? 'grey'
+                                    : task.task.keyColor,
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                      </React.Fragment>
+                    );
+                  })}
+                  <TableCell align="center">
+                    {nonEducationVacationTasksCount}
+                  </TableCell>
+                </TableRow>
+              );
+            },
+          )}
         </TableBody>
       </Table>
     </>
