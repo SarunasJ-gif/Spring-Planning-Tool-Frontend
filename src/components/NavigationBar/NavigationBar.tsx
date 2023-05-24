@@ -84,6 +84,7 @@ export default function NavigationBar() {
     const firstNameValue = newFirstName || '';
     const lastNameValue = newLastName || '';
     dispatch(updateTeamMemberName(email, firstNameValue, lastNameValue));
+    window.location.reload();
   };
 
   const handleLogOut = () => {
