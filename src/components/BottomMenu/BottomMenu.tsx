@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   clearNewSprintState,
   createNewSprint,
+  getTasksAddedCount,
 } from '../../redux/NewSprint/NewSprintActions';
 import { useNavigate } from 'react-router-dom';
 import { NewSprint } from '../../redux/NewSprint/NewSprintReducer';
@@ -17,9 +18,12 @@ function BottomMenu() {
     (state: { newSprint: NewSprint }) => state.newSprint.sprint,
   );
 
+  const disableAddButton  = sprint.numberTasksAdded;
   useEffect(() => {
-    dispatch(getSprintsRequest());
-  }, [dispatch]);
+     dispatch(getSprintsRequest());
+     dispatch(getTasksAddedCount());
+  }, [dispatch, sprint.tasks]);
+
 
 
   const handleAddClick = async () => {
@@ -71,6 +75,7 @@ function BottomMenu() {
             fontSize: '18px',
           }}
           onClick={handleAddClick}
+       disabled={!disableAddButton}
         >
           ADD
         </Button>

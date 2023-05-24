@@ -14,6 +14,7 @@ export type NewSprint = {
     showNotification: boolean;
     isHistorical: boolean | null;
     isActive: boolean | null;
+    numberTasksAdded: Number;
   };
 };
 
@@ -29,6 +30,7 @@ export const initialState: NewSprint = {
     showNotification: true,
     isHistorical: null,
     isActive: null,
+    numberTasksAdded: 0,
   },
 };
 
@@ -169,7 +171,10 @@ const reducer = (state = initialState, { type, payload }) => {
       return produce(state, (draftState) => {
         draftState.sprint.members.push(...payload);
       });
-
+      case actions.GET_TASKS_ADDED_COUNT:
+        return produce(state, (draftState) => {
+          draftState.sprint.numberTasksAdded = state.sprint.tasks.length;
+        });
 
     default:
       return state;

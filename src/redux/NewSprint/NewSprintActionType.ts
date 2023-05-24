@@ -22,3 +22,5 @@ export const CLEAR_NEW_SPRINT_STATE = 'CLEAR_NEW_SPRINT_STATE';
 
 export const ADD_MEMBER_TO_SPRINT_REQUEST = 'addMemberToSprintRequest'; 
 export const ADD_MEMBER_TO_SPRINT_SUCCESS = 'addMemberToSprintSuccess'; 
+
+export const GET_TASKS_ADDED_COUNT = 'getTaskAddedCount';
