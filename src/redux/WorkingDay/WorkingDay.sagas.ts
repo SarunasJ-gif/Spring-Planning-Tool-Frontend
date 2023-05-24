@@ -5,7 +5,6 @@ import {
 import { 
   updateWorkingDay
 } from './WorkingDayApi';
-import { WorkingDay } from '../../types/NewSprintTypes';
 
   export function* updateWorkingDaySaga(action: any) {
       try {
