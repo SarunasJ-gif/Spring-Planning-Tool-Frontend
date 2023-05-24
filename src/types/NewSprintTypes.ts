@@ -11,6 +11,17 @@ export type Sprint = {
   isActive: boolean | null;
 };
 
+export type InitialSprint = {
+  [id: string]: any;
+  title: string;
+  startDate: string;
+  endDate: string;
+  tasks: TaskData[];
+  members: Member[];
+  isHistorial: boolean | null;
+  isActive: boolean | null;
+};
+
 export type Task = {
   keyValue: string;
   keyColor: string;
@@ -34,6 +45,11 @@ export type Member = {
   id: number;
   name: string;
   role: Role;
+};
+
+export type WorkingDay = {
+  id: number;
+  taskKeyValue: string;
 };
 
 export type TaskData = {

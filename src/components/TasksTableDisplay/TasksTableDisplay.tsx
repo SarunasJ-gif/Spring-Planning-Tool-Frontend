@@ -161,6 +161,8 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                   <TableBody>
                     {tasksDisplay?.tasks.map((point: TaskData, index: number) => (
                       <TableRow key={index}>
+                        {point.keyValue !== 'Education' && (
+                          <>
                         <TableCell
                           component="th"
                           scope="rowsTop"
@@ -216,6 +218,8 @@ export default function TasksTable(props: TasksProps): JSX.Element {
                               {point.newPoints}
                             </Typography>
                         </StyledTableCell>
+                        </>
+                        )}
                       </TableRow>
                     ))}
                     <TableRow sx={{ bgcolor: 'grey.50' }}>
