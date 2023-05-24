@@ -8,7 +8,7 @@ export type Sprint = {
     endDate: string | null;
     tasks: TaskData[];
     members: Member[];
-    workingDays: WorkingDay[]; // Updated type
+    workingDays: WorkingDay[]; 
     daysOfWeek: string[];
     showNotification: boolean;
     isHistorical: boolean | null;
